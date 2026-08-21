@@ -1161,6 +1161,21 @@
       "first_run_banner_body": "Multica デスクトップアプリは現在 multica.ai に接続しています。セルフホストの場合は、設定 → バックエンドを開いて API URL を設定してください。",
       "first_run_banner_action": "バックエンド設定を開く",
       "first_run_banner_dismiss": "閉じる"
+    },
+    "welcome": {
+      "title": "Multica へようこそ",
+      "subtitle": "Multica デスクトップアプリは Multica クラウドとセルフホストのバックエンドに接続できます。どちらを使うか選んで開始してください。設定 → バックエンド から後で変更できます。",
+      "use_cloud": "Multica クラウドを使用",
+      "use_cloud_saving": "保存中…",
+      "connect_selfhost": "セルフホストに接続",
+      "selfhost_label": "セルフホスト API URL",
+      "selfhost_placeholder": "https://api.example.com",
+      "selfhost_save": "保存して再起動",
+      "selfhost_saving": "保存中…",
+      "saved_toast": "バックエンド設定を保存しました。再起動後に有効になります。",
+      "restart_now": "今すぐ再起動",
+      "footer_note": "設定 → バックエンド から後で変更できます。",
+      "error_save": "バックエンド設定を保存できませんでした"
     }
   },
   "members": {

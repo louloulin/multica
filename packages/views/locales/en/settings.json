@@ -1163,6 +1163,21 @@
       "first_run_banner_body": "Multica Desktop currently connects to multica.ai. If you self-host, open Settings → Backend to configure the API URL.",
       "first_run_banner_action": "Open Backend settings",
       "first_run_banner_dismiss": "Dismiss"
+    },
+    "welcome": {
+      "title": "Welcome to Multica",
+      "subtitle": "Multica Desktop can connect to Multica Cloud or to a self-hosted backend. Pick one to get started — you can change it later in Settings → Backend.",
+      "use_cloud": "Use Multica Cloud",
+      "use_cloud_saving": "Saving…",
+      "connect_selfhost": "Connect to self-hosted",
+      "selfhost_label": "Self-hosted API URL",
+      "selfhost_placeholder": "https://api.example.com",
+      "selfhost_save": "Save and restart",
+      "selfhost_saving": "Saving…",
+      "saved_toast": "Backend settings saved — restart Multica for changes to take effect.",
+      "restart_now": "Restart now",
+      "footer_note": "You can change this later in Settings → Backend.",
+      "error_save": "Couldn't save backend settings"
     }
   },
   "members": {

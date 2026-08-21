@@ -17,6 +17,8 @@ import { DesktopAuthRecoveryPage } from "./pages/auth-recovery";
 import { DesktopShell } from "./components/desktop-layout";
 import { UpdateNotification } from "./components/update-notification";
 import { IssueWindow } from "./components/issue-window";
+import { WelcomeGate } from "./components/welcome-gate";
+import { shouldShowWelcome } from "./components/should-show-welcome";
 import { useTabStore } from "./stores/tab-store";
 import { useWindowOverlayStore } from "./stores/window-overlay-store";
 import { useOpenSettingsShortcut } from "./hooks/use-open-settings-shortcut";
@@ -383,6 +385,21 @@ export default function App() {
   // restarting Electron; packaged builds always expose windowContext.
   const windowContext =
     window.desktopAPI.windowContext ?? { kind: "main" as const };
+  // First-launch detection: do we already have a `~/.multica/desktop.json`?
+  // `null` means the IPC roundtrip is still in flight — `shouldShowWelcome`
+  // treats that as "don't render yet", so we never flash the gate during
+  // the load. After the file exists the gate never fires again on this
+  // machine, so this single fetch is the only IPC we need.
+  const [configPresent, setConfigPresent] = useState<boolean | null>(null);
+  useEffect(() => {
+    let mounted = true;
+    void window.desktopAPI.isRuntimeConfigPresent().then((present) => {
+      if (mounted) setConfigPresent(present);
+    });
+    return () => {
+      mounted = false;
+    };
+  }, []);
   useCmdWCloseTab();
   // Mounted at the App root for the same reason as Cmd+W: the chord has to
   // work in every renderer state, not only inside the tab shell.
@@ -450,7 +467,24 @@ export default function App() {
 
   return (
     <ThemeProvider>
-      {runtimeConfigResult.ok ? (
+      {!runtimeConfigResult.ok ? (
+        <BlockingRuntimeConfigError message={runtimeConfigResult.error.message} />
+      ) : shouldShowWelcome({
+          configPresent,
+          apiUrl: runtimeConfigResult.config.apiUrl,
+        }) ? (
+        // First-launch hard gate. Renders before any auth/workspace/overlay
+        // state has a chance to mount, so a brand-new install is forced to
+        // commit a backend choice before it ever sees the cloud login page.
+        <WelcomeGate
+          onSaved={() => {
+            // Requesting the restart from the gate (rather than from
+            // inside WelcomeGate itself) keeps IPC coupling at the App
+            // root, where every other desktop-only IPC handler also lives.
+            void window.desktopAPI.requestAppRestart();
+          }}
+        />
+      ) : (
         <CoreProvider
           apiBaseUrl={runtimeConfigResult.config.apiUrl}
           wsUrl={runtimeConfigResult.config.wsUrl}
@@ -475,8 +509,6 @@ export default function App() {
             <AppContent />
           )}
         </CoreProvider>
-      ) : (
-        <BlockingRuntimeConfigError message={runtimeConfigResult.error.message} />
       )}
       <Toaster />
       {windowContext.kind === "main" && <UpdateNotification />}

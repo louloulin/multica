@@ -1161,6 +1161,21 @@
       "first_run_banner_body": "Multica 桌面端当前连接 multica.ai。如果你自托管，请打开 设置 → 后端 配置 API URL。",
       "first_run_banner_action": "打开后端设置",
       "first_run_banner_dismiss": "忽略"
+    },
+    "welcome": {
+      "title": "欢迎使用 Multica",
+      "subtitle": "Multica 桌面端可以连接 Multica 云端，也可以连接自托管的后端。请选择一项开始使用 —— 你之后可以在 设置 → 后端 中随时更改。",
+      "use_cloud": "使用 Multica 云端",
+      "use_cloud_saving": "保存中…",
+      "connect_selfhost": "连接自托管后端",
+      "selfhost_label": "自托管 API URL",
+      "selfhost_placeholder": "https://api.example.com",
+      "selfhost_save": "保存并重启",
+      "selfhost_saving": "保存中…",
+      "saved_toast": "后端设置已保存——重启 Multica 后生效。",
+      "restart_now": "立即重启",
+      "footer_note": "你之后可以在 设置 → 后端 中随时更改。",
+      "error_save": "保存后端设置失败"
     }
   },
   "members": {
