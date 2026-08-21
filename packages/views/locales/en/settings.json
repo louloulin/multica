@@ -1115,7 +1115,8 @@
   },
   "desktop": {
     "tabs": {
-      "updates": "Updates"
+      "updates": "Updates",
+      "backend": "Backend"
     },
     "updates": {
       "title": "Updates",
@@ -1130,6 +1131,38 @@
       "downloading": "v{{version}} is downloading in the background — you'll be notified when it's ready to install.",
       "check_now": "Check now",
       "checking": "Checking…"
+    },
+    "backend": {
+      "title": "Backend server",
+      "description": "Point Desktop at a self-hosted Multica backend. Changes take effect after restart.",
+      "card_server_title": "Backend server",
+      "card_server_description": "API URL is required. Web and WebSocket URLs are derived automatically — override only if your deployment does not match the api.<host> convention.",
+      "api_url_label": "API URL",
+      "api_url_placeholder": "https://api.example.com",
+      "web_url_label": "Web URL (override)",
+      "web_url_placeholder": "https://example.com",
+      "ws_url_label": "WebSocket URL (override)",
+      "ws_url_placeholder": "wss://api.example.com/ws",
+      "derived_urls_label": "Derived from API URL",
+      "test_connection": "Test connection",
+      "testing_connection": "Testing…",
+      "test_ok": "Reachable.",
+      "test_failed": "Unreachable: {{message}}",
+      "save_failed": "Couldn't save backend settings",
+      "saved_toast": "Backend settings saved — restart Multica for changes to take effect.",
+      "restart_now": "Restart now",
+      "reset_card_title": "Reset to cloud",
+      "reset_card_description": "Stop using a custom backend and return to the default multica.ai. Removes ~/.multica/desktop.json.",
+      "reset_confirm_label": "Type multica.ai to confirm",
+      "reset_confirm_placeholder": "multica.ai",
+      "reset_button": "Reset to cloud",
+      "reset_button_busy": "Resetting…",
+      "reset_toast": "Backend reset — restart Multica to load the default.",
+      "reset_failed": "Couldn't reset backend",
+      "first_run_banner_title": "Point Desktop at your backend",
+      "first_run_banner_body": "Multica Desktop currently connects to multica.ai. If you self-host, open Settings → Backend to configure the API URL.",
+      "first_run_banner_action": "Open Backend settings",
+      "first_run_banner_dismiss": "Dismiss"
     }
   },
   "members": {

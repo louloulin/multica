@@ -1,5 +1,5 @@
 import { ElectronAPI } from "@electron-toolkit/preload";
-import type { RuntimeConfigResult } from "../shared/runtime-config";
+import type { RuntimeConfig, RuntimeConfigResult } from "../shared/runtime-config";
 import type { NavigationGesture } from "../shared/navigation-gestures";
 import type { RendererRouteContextInput } from "../shared/renderer-route-context";
 import type { FreezeBreadcrumb } from "../shared/freeze-breadcrumb";
@@ -29,6 +29,23 @@ interface DesktopAPI {
   onSystemLocaleChanged: (callback: (locale: string) => void) => () => void;
   /** Validated runtime endpoint config, or a blocking config error. */
   runtimeConfig: RuntimeConfigResult;
+  /** Persist a new runtime config. Restart required for the change to take
+   *  effect on the running ApiClient / WSClient. */
+  updateRuntimeConfig: (config: RuntimeConfig) => Promise<
+    { ok: true } | { ok: false; error: string }
+  >;
+  /** Whether `~/.multica/desktop.json` exists on disk — drives the first-run
+   *  onboarding banner. */
+  isRuntimeConfigPresent: () => Promise<boolean>;
+  /** Delete `~/.multica/desktop.json`. Used by the "Reset to cloud" path. */
+  clearRuntimeConfig: () => Promise<
+    { ok: true } | { ok: false; error: string }
+  >;
+  /** Relaunch the app with the same args. Idempotent. */
+  requestAppRestart: () => Promise<{
+    ok: true;
+    alreadyPending?: boolean;
+  }>;
   /** Main tabbed window or a dedicated issue-only window. */
   windowContext: DesktopWindowContext;
   /** Read any freeze/crash breadcrumb from a previous session, so the renderer

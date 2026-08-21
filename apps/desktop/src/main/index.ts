@@ -15,7 +15,12 @@ import { installNavigationGuard } from "./navigation-guard";
 import { createRendererWebPreferences } from "./renderer-web-preferences";
 import { getAppVersion } from "./app-version";
 import { loadRuntimeConfig } from "./runtime-config-loader";
-import type { RuntimeConfigResult } from "../shared/runtime-config";
+import {
+  clearRuntimeConfig,
+  isRuntimeConfigPresent,
+  saveRuntimeConfig,
+} from "./runtime-config-loader";
+import type { RuntimeConfig, RuntimeConfigResult } from "../shared/runtime-config";
 import {
   RENDERER_ROUTE_CONTEXT_CHANNEL,
   sanitizeRendererRouteContext,
@@ -148,6 +153,20 @@ let runtimeConfigResult: RuntimeConfigResult = {
   ok: false,
   error: { message: "Runtime config has not loaded yet" },
 };
+
+// Structural check for the IPC payload. We intentionally keep this loose —
+// `saveRuntimeConfig` re-parses through `parseRuntimeConfig`, which is the
+// authoritative validator. Anything the parser would have refused cannot
+// land on disk.
+function isRuntimeConfigLike(value: unknown): value is RuntimeConfig {
+  return Boolean(value) && typeof value === "object";
+}
+
+// Single-flight guard for `requestAppRestart`. The renderer can issue multiple
+// requests (e.g. double-click on the Restart button or a fast Save → Restart
+// sequence); without this guard each call would re-issue app.relaunch and
+// queue duplicate relaunches that race each other on exit.
+let appRelaunchInFlight = false;
 
 // --- Deep link helpers ---------------------------------------------------
 
@@ -711,6 +730,61 @@ if (!gotTheLock) {
     // blocking error and must not silently fall back to the cloud defaults.
     ipcMain.on("runtime-config:get", (event) => {
       event.returnValue = runtimeConfigResult;
+    });
+
+    // Async IPC: write a new runtime config to disk. The renderer validates
+    // through `parseRuntimeConfig` first; `saveRuntimeConfig` re-validates
+    // by round-tripping the JSON, so a malformed payload cannot land on disk.
+    // Existing listeners (`runtime-config:get` returns the in-memory copy at
+    // boot, so the saved file takes effect on next launch only — the toast
+    // reminds the user to restart.
+    ipcMain.handle(
+      "desktop:set-runtime-config",
+      (event, payload: unknown): Promise<{ ok: true } | { ok: false; error: string }> => {
+        const sourceWindow = BrowserWindow.fromWebContents(event.sender);
+        if (!sourceWindow) {
+          return Promise.resolve({ ok: false, error: "no_window" });
+        }
+        if (!isRuntimeConfigLike(payload)) {
+          return Promise.resolve({
+            ok: false,
+            error: "Invalid runtime config payload",
+          });
+        }
+        return saveRuntimeConfig(payload).then(
+          () => ({ ok: true } as const),
+          (err) => ({
+            ok: false,
+            error: err instanceof Error ? err.message : String(err),
+          }),
+        );
+      },
+    );
+
+    ipcMain.handle("desktop:is-runtime-config-present", () =>
+      isRuntimeConfigPresent(),
+    );
+
+    ipcMain.handle("desktop:clear-runtime-config", () =>
+      clearRuntimeConfig().then(
+        () => ({ ok: true } as const),
+        (err) => ({
+          ok: false,
+          error: err instanceof Error ? err.message : String(err),
+        }),
+      ),
+    );
+
+    // Async IPC: ask main to relaunch the app with the same args. The
+    // single-flight guard collapses duplicate clicks into a single relaunch
+    // so the renderer doesn't need its own idempotence.
+    ipcMain.handle("desktop:request-restart", () => {
+      if (appRelaunchInFlight) return { ok: true, alreadyPending: true };
+      appRelaunchInFlight = true;
+      const argv = process.argv.slice(1);
+      app.relaunch({ args: argv });
+      app.exit(0);
+      return { ok: true };
     });
 
     ipcMain.on(RENDERER_ROUTE_CONTEXT_CHANNEL, (event, context: unknown) => {

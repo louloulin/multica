@@ -1,6 +1,6 @@
 import { contextBridge, ipcRenderer } from "electron";
 import { electronAPI } from "@electron-toolkit/preload";
-import type { RuntimeConfigResult } from "../shared/runtime-config";
+import type { RuntimeConfig, RuntimeConfigResult } from "../shared/runtime-config";
 import type { FreezeBreadcrumb } from "../shared/freeze-breadcrumb";
 import type {
   ManualUpdateCheckResult,
@@ -117,6 +117,31 @@ const desktopAPI = {
   },
   /** Validated runtime endpoint config, or a blocking config error. */
   runtimeConfig,
+  /** Update the persisted runtime config (`~/.multica/desktop.json`).
+   *  Resolves once the file is written. The renderer's running ApiClient
+   *  / WSClient are NOT rebound — a restart is required for the change to
+   *  take effect; the Settings UI surfaces that as a Restart button. */
+  updateRuntimeConfig: (config: RuntimeConfig) =>
+    ipcRenderer.invoke("desktop:set-runtime-config", config) as Promise<
+      { ok: true } | { ok: false; error: string }
+    >,
+  /** Whether `~/.multica/desktop.json` is present on disk, so the renderer
+   *  can decide whether to show a first-run onboarding banner. */
+  isRuntimeConfigPresent: () =>
+    ipcRenderer.invoke("desktop:is-runtime-config-present") as Promise<boolean>,
+  /** Delete `~/.multica/desktop.json`, falling back to the cloud default
+   *  on next launch. Used by the Settings → Backend "Reset to cloud" path. */
+  clearRuntimeConfig: () =>
+    ipcRenderer.invoke("desktop:clear-runtime-config") as Promise<
+      { ok: true } | { ok: false; error: string }
+    >,
+  /** Ask main to relaunch the app with the same args. Idempotent — a
+   *  double-click on the Restart button issues at most one relaunch. */
+  requestAppRestart: () =>
+    ipcRenderer.invoke("desktop:request-restart") as Promise<{
+      ok: true;
+      alreadyPending?: boolean;
+    }>,
   /** Identifies whether this renderer owns the main tabbed window or a
    *  dedicated issue window, parsed from validated launch arguments. */
   windowContext,

@@ -166,6 +166,10 @@ multica daemon status
 3. Go to **Settings → Agents** and create a new agent
 4. Create an issue and assign it to your agent — it will pick up the task automatically
 
+### Desktop client (optional)
+
+Multica Desktop works against a self-hosted backend out of the box — open **Settings → Backend** in the app and paste your API URL. The app writes `~/.multica/desktop.json`, derives the web and WebSocket URLs automatically, and prompts you to restart. Full reference: [`SELF_HOSTING_DESKTOP.md`](SELF_HOSTING_DESKTOP.md).
+
 ---
 
 ## Kubernetes Deployment (Alternative)

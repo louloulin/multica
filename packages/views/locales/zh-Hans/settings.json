@@ -1113,7 +1113,8 @@
   },
   "desktop": {
     "tabs": {
-      "updates": "更新"
+      "updates": "更新",
+      "backend": "后端"
     },
     "updates": {
       "title": "更新",
@@ -1128,6 +1129,38 @@
       "downloading": "v{{version}} 正在后台下载——准备好安装时会通知你。",
       "check_now": "立即检查",
       "checking": "检查中..."
+    },
+    "backend": {
+      "title": "后端服务器",
+      "description": "将桌面端指向自托管的 Multica 后端。改动需重启后生效。",
+      "card_server_title": "后端服务器",
+      "card_server_description": "API URL 为必填。Web 与 WebSocket URL 会自动从 API URL 推导——只有当部署不符合 api.<host> 约定时才需要手动覆盖。",
+      "api_url_label": "API URL",
+      "api_url_placeholder": "https://api.example.com",
+      "web_url_label": "Web URL（覆盖）",
+      "web_url_placeholder": "https://example.com",
+      "ws_url_label": "WebSocket URL（覆盖）",
+      "ws_url_placeholder": "wss://api.example.com/ws",
+      "derived_urls_label": "由 API URL 推导",
+      "test_connection": "测试连接",
+      "testing_connection": "测试中...",
+      "test_ok": "可达。",
+      "test_failed": "无法连接：{{message}}",
+      "save_failed": "保存后端设置失败",
+      "saved_toast": "后端设置已保存——重启 Multica 后生效。",
+      "restart_now": "立即重启",
+      "reset_card_title": "恢复为云端",
+      "reset_card_description": "停止使用自定义后端，恢复默认的 multica.ai。会删除 ~/.multica/desktop.json。",
+      "reset_confirm_label": "输入 multica.ai 以确认",
+      "reset_confirm_placeholder": "multica.ai",
+      "reset_button": "恢复为云端",
+      "reset_button_busy": "重置中...",
+      "reset_toast": "后端已重置——重启 Multica 加载默认。",
+      "reset_failed": "重置后端失败",
+      "first_run_banner_title": "将桌面端指向你的后端",
+      "first_run_banner_body": "Multica 桌面端当前连接 multica.ai。如果你自托管，请打开 设置 → 后端 配置 API URL。",
+      "first_run_banner_action": "打开后端设置",
+      "first_run_banner_dismiss": "忽略"
     }
   },
   "members": {

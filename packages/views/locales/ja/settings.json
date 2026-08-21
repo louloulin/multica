@@ -1113,7 +1113,8 @@
   },
   "desktop": {
     "tabs": {
-      "updates": "アップデート"
+      "updates": "アップデート",
+      "backend": "バックエンド"
     },
     "updates": {
       "title": "アップデート",
@@ -1128,6 +1129,38 @@
       "downloading": "v{{version}} をバックグラウンドでダウンロード中です。インストールの準備が整うとお知らせします。",
       "check_now": "今すぐ確認",
       "checking": "確認中…"
+    },
+    "backend": {
+      "title": "バックエンドサーバー",
+      "description": "デスクトップアプリをセルフホストの Multica バックエンドに接続します。変更は再起動後に有効になります。",
+      "card_server_title": "バックエンドサーバー",
+      "card_server_description": "API URL は必須です。Web / WebSocket URL は API URL から自動導出します。api.<host> 規約と異なる場合のみ手動で上書きしてください。",
+      "api_url_label": "API URL",
+      "api_url_placeholder": "https://api.example.com",
+      "web_url_label": "Web URL (上書き)",
+      "web_url_placeholder": "https://example.com",
+      "ws_url_label": "WebSocket URL (上書き)",
+      "ws_url_placeholder": "wss://api.example.com/ws",
+      "derived_urls_label": "API URL から導出",
+      "test_connection": "接続テスト",
+      "testing_connection": "テスト中…",
+      "test_ok": "到達できます。",
+      "test_failed": "到達できません: {{message}}",
+      "save_failed": "バックエンド設定を保存できませんでした",
+      "saved_toast": "バックエンド設定を保存しました。再起動後に有効になります。",
+      "restart_now": "今すぐ再起動",
+      "reset_card_title": "クラウドに戻す",
+      "reset_card_description": "カスタムバックエンドの使用を停止し、デフォルトの multica.ai に戻します。~/.multica/desktop.json を削除します。",
+      "reset_confirm_label": "確認のため multica.ai と入力",
+      "reset_confirm_placeholder": "multica.ai",
+      "reset_button": "クラウドに戻す",
+      "reset_button_busy": "リセット中…",
+      "reset_toast": "バックエンドをリセットしました。再起動してデフォルトを読み込んでください。",
+      "reset_failed": "バックエンドのリセットに失敗しました",
+      "first_run_banner_title": "デスクトップアプリをバックエンドに接続",
+      "first_run_banner_body": "Multica デスクトップアプリは現在 multica.ai に接続しています。セルフホストの場合は、設定 → バックエンドを開いて API URL を設定してください。",
+      "first_run_banner_action": "バックエンド設定を開く",
+      "first_run_banner_dismiss": "閉じる"
     }
   },
   "members": {

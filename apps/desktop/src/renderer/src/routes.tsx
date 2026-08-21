@@ -31,9 +31,10 @@ import { InboxPage } from "@multica/views/inbox";
 import { ChatPage } from "@multica/views/chat";
 import { SettingsPage } from "@multica/views/settings";
 import { useT } from "@multica/views/i18n";
-import { Download, Server } from "lucide-react";
+import { Download, Globe, Server } from "lucide-react";
 import { DaemonSettingsTab } from "./components/daemon-settings-tab";
 import { UpdatesSettingsTab } from "./components/updates-settings-tab";
+import { BackendSettingsTab } from "./components/backend-settings-tab";
 import { WorkspaceRouteLayout } from "./components/workspace-route-layout";
 import { DesktopRouteErrorPage } from "./components/route-error-page";
 
@@ -58,6 +59,12 @@ function DesktopSettingsRoute() {
           label: t(($) => $.desktop.tabs.updates),
           icon: Download,
           content: <UpdatesSettingsTab />,
+        },
+        {
+          value: "backend",
+          label: t(($) => $.desktop.tabs.backend),
+          icon: Globe,
+          content: <BackendSettingsTab />,
         },
       ]}
     />
