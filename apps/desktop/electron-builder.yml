@@ -1,5 +1,11 @@
 appId: ai.multica.desktop
 productName: Multica
+# Use the Electron macOS zip already unzipped under build/electron-cache so
+# electron-builder skips its own download step. The cache is populated by
+# `node scripts/refresh-electron-cache.mjs` (or by hand from the registry
+# mirror) before `pnpm run package` and is excluded from git via
+# `.gitignore`. CI can run the same script against an internal mirror.
+electronDist: ./build/electron-cache
 directories:
   buildResources: build
 files:
@@ -22,6 +28,8 @@ files:
   # because the first arch writes into dist/ mid-run before the second is
   # packaged.
   - "!dist/**"
+  # Local-only Electron zip extraction used by `electronDist`; never pack it.
+  - "!build/electron-cache/**"
 # Ship the license and attribution notices inside the packaged app, so the
 # NOTICE obligations travel with the installer rather than only the git repo.
 extraResources:
