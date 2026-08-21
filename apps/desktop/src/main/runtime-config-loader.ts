@@ -1,10 +1,12 @@
 import { app } from "electron";
-import { readFile } from "fs/promises";
-import { join } from "path";
+import { mkdir, readFile, writeFile, unlink } from "fs/promises";
+import { existsSync } from "fs";
+import { dirname, join } from "path";
 import {
   DEFAULT_RUNTIME_CONFIG,
   parseRuntimeConfig,
   runtimeConfigFromDevEnv,
+  serializeRuntimeConfig,
   type RuntimeConfig,
   type RuntimeConfigEnv,
   type RuntimeConfigResult,
@@ -42,6 +44,44 @@ export async function loadRuntimeConfig(options: {
 
 export function desktopConfigPath(): string {
   return join(app.getPath("home"), ".multica", "desktop.json");
+}
+
+/**
+ * Persist a runtime config to disk. Validates by re-parsing the serialized
+ * form so the renderer never sees a malformed file next launch. Throws on
+ * filesystem errors; the IPC handler converts those into a rejected promise
+ * with the original message so the renderer can surface it inline.
+ */
+export async function saveRuntimeConfig(
+  config: RuntimeConfig,
+  options?: { configPath?: string },
+): Promise<void> {
+  const configPath = options?.configPath ?? desktopConfigPath();
+  // Round-trip through the parser before hitting disk: catches any drift
+  // between `serializeRuntimeConfig` and `parseRuntimeConfig`, and rejects
+  // shapes the parser would have refused (e.g. missing apiUrl).
+  const serialized = serializeRuntimeConfig(parseRuntimeConfig(JSON.stringify(config)));
+  await mkdir(dirname(configPath), { recursive: true });
+  await writeFile(configPath, serialized, "utf-8");
+}
+
+export async function clearRuntimeConfig(options?: {
+  configPath?: string;
+}): Promise<void> {
+  const configPath = options?.configPath ?? desktopConfigPath();
+  try {
+    await unlink(configPath);
+  } catch (err) {
+    if (isMissingFileError(err)) return;
+    throw err;
+  }
+}
+
+export function isRuntimeConfigPresent(options?: {
+  configPath?: string;
+}): boolean {
+  const configPath = options?.configPath ?? desktopConfigPath();
+  return existsSync(configPath);
 }
 
 function isMissingFileError(err: unknown): boolean {

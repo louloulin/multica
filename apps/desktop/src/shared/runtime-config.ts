@@ -1,5 +1,7 @@
+export const RUNTIME_CONFIG_SCHEMA_VERSION = 1 as const;
+
 export interface RuntimeConfig {
-  schemaVersion: 1;
+  schemaVersion: typeof RUNTIME_CONFIG_SCHEMA_VERSION;
   apiUrl: string;
   wsUrl: string;
   appUrl: string;
@@ -14,14 +16,14 @@ export type RuntimeConfigResult =
   | { ok: false; error: RuntimeConfigError };
 
 export const DEFAULT_RUNTIME_CONFIG: RuntimeConfig = Object.freeze({
-  schemaVersion: 1,
+  schemaVersion: RUNTIME_CONFIG_SCHEMA_VERSION,
   apiUrl: "https://api.multica.ai",
   wsUrl: "wss://api.multica.ai/ws",
   appUrl: "https://multica.ai",
 });
 
 const LOCAL_DEV_RUNTIME_CONFIG: RuntimeConfig = Object.freeze({
-  schemaVersion: 1,
+  schemaVersion: RUNTIME_CONFIG_SCHEMA_VERSION,
   apiUrl: "http://localhost:8080",
   wsUrl: "ws://localhost:8080/ws",
   appUrl: "http://localhost:3000",
@@ -39,7 +41,7 @@ export function runtimeConfigFromDevEnv(env: RuntimeConfigEnv): RuntimeConfig {
     "VITE_API_URL",
   );
   return {
-    schemaVersion: 1,
+    schemaVersion: RUNTIME_CONFIG_SCHEMA_VERSION,
     apiUrl,
     wsUrl: env.wsUrl
       ? normalizeWsUrl(env.wsUrl, "VITE_WS_URL")
@@ -65,8 +67,10 @@ export function parseRuntimeConfig(raw: string): RuntimeConfig {
   }
 
   const obj = parsed as Record<string, unknown>;
-  if (obj.schemaVersion !== 1) {
-    throw new Error("Unsupported desktop runtime config schemaVersion: expected 1");
+  if (obj.schemaVersion !== RUNTIME_CONFIG_SCHEMA_VERSION) {
+    throw new Error(
+      `Unsupported desktop runtime config schemaVersion: expected ${RUNTIME_CONFIG_SCHEMA_VERSION}`,
+    );
   }
 
   const apiUrl = requiredString(obj.apiUrl, "apiUrl");
@@ -75,11 +79,31 @@ export function parseRuntimeConfig(raw: string): RuntimeConfig {
 
   const normalizedApiUrl = normalizeHttpUrl(apiUrl, "apiUrl");
   return {
-    schemaVersion: 1,
+    schemaVersion: RUNTIME_CONFIG_SCHEMA_VERSION,
     apiUrl: normalizedApiUrl,
     wsUrl: wsUrl ? normalizeWsUrl(wsUrl, "wsUrl") : deriveWsUrl(normalizedApiUrl),
     appUrl: appUrl ? normalizeHttpUrl(appUrl, "appUrl") : deriveAppUrl(normalizedApiUrl),
   };
+}
+
+/**
+ * Render a RuntimeConfig as the canonical JSON string the loader writes.
+ * Round-trips with `parseRuntimeConfig` — the loader's write path always
+ * produces this exact shape, so a hand-edited `~/.multica/desktop.json`
+ * survives the user re-saving from the UI without silently rewriting
+ * fields.
+ */
+export function serializeRuntimeConfig(config: RuntimeConfig): string {
+  return JSON.stringify(
+    {
+      schemaVersion: config.schemaVersion,
+      apiUrl: config.apiUrl,
+      wsUrl: config.wsUrl,
+      appUrl: config.appUrl,
+    },
+    null,
+    2,
+  );
 }
 
 export function deriveWsUrl(apiUrl: string): string {
