@@ -43,6 +43,15 @@ protocols:
       - multica
 asarUnpack:
   - resources/**
+# asar packaging stays ON (default). Nested transitive deps that pnpm
+# refuses to hoist (e.g. execa@9's get-stream@6 / signal-exit@4) are
+# resolved via `pnpm.overrides` in package.json, which pins those deps
+# to a single top-level version and lets electron-builder's collector
+# find them at /node_modules/<dep>/. Disabling asar altogether was tried
+# in 0.4.31-29-g28322f7c3-dirty and broke because electron-builder falls
+# back to copying apps/desktop/node_modules/ verbatim — which is empty
+# in a pnpm hoisted workspace, since every dep lives in the monorepo
+# root.
 mac:
   entitlementsInherit: build/entitlements.mac.plist
   target:
