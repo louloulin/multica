@@ -15,9 +15,12 @@ import { api } from "@/data/api";
 import { queryClient } from "@/data/query-client";
 import { useAuthStore } from "@/data/auth-store";
 import { useWorkspaceStore } from "@/data/workspace-store";
+import { useRuntimeConfigStore } from "@/data/runtime-config-store";
 import { LightboxProvider, prewarmHighlighter } from "@/lib/markdown";
 import { NAV_THEME } from "@/lib/theme";
 import { getThemeColors, useColorScheme } from "@/lib/use-color-scheme";
+import { shouldShowWelcome } from "@/lib/should-show-welcome";
+import WelcomeScreen from "./(auth)/welcome";
 
 // Kick off Shiki highlighter init at module load — fires once per process,
 // finishes before the user navigates to any screen with a code block. If
@@ -59,9 +62,38 @@ function AuthInitializer({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }
 
+/** Hydrates the runtime config store on mount, then keeps `api.baseUrl`
+ *  in sync. Sits inside AuthInitializer so the ApiClient already has the
+ *  correct base URL by the time the first getMe() call fires. */
+function RuntimeConfigInitializer({ children }: { children: React.ReactNode }) {
+  const hydrate = useRuntimeConfigStore((s) => s.hydrate);
+  const status = useRuntimeConfigStore((s) => s.status);
+  const apiUrl = useRuntimeConfigStore((s) => s.config.apiUrl);
+
+  useEffect(() => {
+    void hydrate();
+  }, [hydrate]);
+
+  useEffect(() => {
+    if (status === "hydrated") api.setBaseUrl(apiUrl);
+  }, [status, apiUrl]);
+
+  return <>{children}</>;
+}
+
 export default function RootLayout() {
   const { colorScheme } = useColorScheme();
   const themeColors = getThemeColors(colorScheme);
+  const status = useRuntimeConfigStore((s) => s.status);
+  const hasUserChosenBackend = useRuntimeConfigStore(
+    (s) => s.hasUserChosenBackend,
+  );
+  const config = useRuntimeConfigStore((s) => s.config);
+  const showWelcome = shouldShowWelcome({
+    status,
+    hasUserChosenBackend,
+    config,
+  });
 
   useEffect(() => {
     if (Platform.OS !== "android") return;
@@ -76,22 +108,28 @@ export default function RootLayout() {
         <KeyboardProvider>
           <QueryClientProvider client={queryClient}>
             <ThemeProvider value={NAV_THEME[colorScheme]}>
-              <AuthInitializer>
-                <LightboxProvider>
-                  <StatusBar
-                    style={themeColors.statusBarStyle}
-                    backgroundColor={
-                      Platform.OS === "android" ? themeColors.background : undefined
-                    }
-                  />
-                  <Stack screenOptions={{ headerShown: false }}>
-                    <Stack.Screen name="index" />
-                    <Stack.Screen name="(auth)" />
-                    <Stack.Screen name="(app)" />
-                  </Stack>
-                  <PortalHost />
-                </LightboxProvider>
-              </AuthInitializer>
+              <RuntimeConfigInitializer>
+                <AuthInitializer>
+                  <LightboxProvider>
+                    <StatusBar
+                      style={themeColors.statusBarStyle}
+                      backgroundColor={
+                        Platform.OS === "android" ? themeColors.background : undefined
+                      }
+                    />
+                    {showWelcome ? (
+                      <WelcomeScreen />
+                    ) : (
+                      <Stack screenOptions={{ headerShown: false }}>
+                        <Stack.Screen name="index" />
+                        <Stack.Screen name="(auth)" />
+                        <Stack.Screen name="(app)" />
+                      </Stack>
+                    )}
+                    <PortalHost />
+                  </LightboxProvider>
+                </AuthInitializer>
+              </RuntimeConfigInitializer>
             </ThemeProvider>
           </QueryClientProvider>
         </KeyboardProvider>

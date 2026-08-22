@@ -86,6 +86,7 @@ export default function SettingsPage() {
   const goProfile = () => router.push(`/${currentSlug}/more/settings/profile`);
   const goNotifications = () =>
     router.push(`/${currentSlug}/more/settings/notifications`);
+  const goServer = () => router.push(`/${currentSlug}/more/settings/server`);
 
   return (
     <ScrollView
@@ -117,6 +118,13 @@ export default function SettingsPage() {
           chevronColor={mutedFg}
           title="Notifications"
           subtitle="Inbox and system alerts"
+        />
+        <Separator />
+        <NavRow
+          onPress={goServer}
+          chevronColor={mutedFg}
+          title="Backend"
+          subtitle="Switch between Multica Cloud and a self-hosted instance"
         />
       </SectionGroup>
 
