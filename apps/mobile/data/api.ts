@@ -122,18 +122,10 @@ import {
 } from "./schemas";
 import type { ZodType } from "zod";
 import { getCurrentSlug } from "./workspace-store";
+import { getApiUrl } from "./runtime-config-store";
 import { parseWithFallback } from "@/lib/parse-response";
 import { createRequestId } from "@/lib/request-id";
 import { buildCommentUpdateBody } from "./revision";
-
-const API_URL = process.env.EXPO_PUBLIC_API_URL;
-
-if (!API_URL) {
-  throw new Error(
-    "EXPO_PUBLIC_API_URL is not set. Add it to apps/mobile/.env.development.local " +
-      "(see apps/mobile/.env.staging for an example).",
-  );
-}
 
 export interface LoginResponse {
   token: string;
@@ -184,6 +176,16 @@ export interface ApiClientOptions {
 class ApiClient {
   private token: string | null = null;
   private options: ApiClientOptions = {};
+  /** Backend base URL. Default is the build-time / SecureStore value
+   *  resolved through `getApiUrl()`; the runtime-config store pushes a
+   *  fresh URL via `setBaseUrl()` once hydrate settles, and the Settings →
+   *  Backend subscreen calls it again when the user saves a self-host URL.
+   *  See `app/_layout.tsx → RuntimeConfigInitializer`. */
+  private baseUrl: string;
+
+  constructor() {
+    this.baseUrl = getApiUrl();
+  }
 
   setToken(token: string | null) {
     this.token = token;
@@ -191,6 +193,19 @@ class ApiClient {
 
   setOptions(options: ApiClientOptions) {
     this.options = { ...this.options, ...options };
+  }
+
+  /** Switch the backend URL at runtime. Takes effect on the next fetch —
+   *  no app restart required. Caller is responsible for invalidating
+   *  any cached auth state (useAuthStore.logout + queryClient.clear)
+   *  before navigating, since the existing JWT was issued by the
+   *  previous backend. */
+  setBaseUrl(url: string): void {
+    this.baseUrl = url;
+  }
+
+  getBaseUrl(): string {
+    return this.baseUrl;
   }
 
   private async fetch<T>(
@@ -245,7 +260,7 @@ class ApiClient {
 
     let res: Response;
     try {
-      res = await fetch(`${API_URL}${path}`, {
+      res = await fetch(`${this.baseUrl}${path}`, {
         ...init,
         signal: controller.signal,
         headers,
@@ -1252,7 +1267,7 @@ class ApiClient {
 
     console.log(`[api] → POST ${path}`, { rid, filename: asset.name });
 
-    const res = await fetch(`${API_URL}${path}`, {
+    const res = await fetch(`${this.baseUrl}${path}`, {
       method: "POST",
       headers,
       body: formData,
