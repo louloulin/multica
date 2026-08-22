@@ -1,0 +1,83 @@
+name: Mobile release
+
+# Tag-triggered internal APK build for Multica mobile.
+#
+# Mobile release cadence is decoupled from main `v*.*.*` tags (server /
+# CLI / desktop). Push a `mobile-v*.*.*` tag to archive an Android
+# release APK and an iOS archive (no Play Store / AAB automation —
+# distribution is local/internal per apps/mobile/CLAUDE.md).
+#
+# Required secrets (Android):
+#   ORG_GRADLE_PROJECT_MULTICA_RELEASE_STORE_FILE
+#   ORG_GRADLE_PROJECT_MULTICA_RELEASE_STORE_PASSWORD
+#   ORG_GRADLE_PROJECT_MULTICA_RELEASE_KEY_ALIAS
+#   ORG_GRADLE_PROJECT_MULTICA_RELEASE_KEY_PASSWORD
+#
+# Required secrets (iOS):
+#   EXPO_APPLE_TEAM_ID
+#   MATCH_PASSWORD           (if using fastlane match)
+#   MATCH_DEPLOY_KEY         (SSH key for match git repo)
+#
+# With secrets absent the Android job still runs via the debug-signing
+# fallback in `apps/mobile/plugins/with-android-release-signing.js` so
+# contributors can sanity-check the release pipeline without credentials.
+
+on:
+  push:
+    tags: ['mobile-v*.*.*']
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  android-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Setup Java
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Type check, lint, and test
+        run: pnpm exec turbo typecheck lint test --filter=@multica/mobile
+
+      - name: Prebuild Android project
+        run: pnpm --filter @multica/mobile exec expo prebuild --platform android --non-interactive
+
+      - name: Verify release signing config
+        run: pnpm android:mobile:verify-signing
+
+      - name: Assemble Android release APK
+        run: ./gradlew assembleRelease
+        working-directory: apps/mobile/android
+
+      - name: Upload release APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: multica-mobile-android-release
+          path: apps/mobile/android/app/build/outputs/apk/release/*.apk
+          if-no-files-found: error
+          retention-days: 30
