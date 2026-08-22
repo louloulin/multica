@@ -130,7 +130,16 @@ export default ({ config }: ConfigContext): ExpoConfig => {
       [
         "expo-build-properties",
         {
-          android: {},
+          android: {
+            // Self-hosted Multica deployments frequently live behind a
+            // private LAN / VPN reverse proxy on plain HTTP. The user
+            // typed the URL in Welcome → Backend explicitly, so the trust
+            // boundary is their decision; Android's default
+            // cleartextTrafficPermitted=false would refuse every
+            // http:// request, surfacing a generic "Can't reach Multica"
+            // error and blocking the whole feature.
+            usesCleartextTraffic: true,
+          },
           ios: {
             buildReactNativeFromSource: true,
           },
