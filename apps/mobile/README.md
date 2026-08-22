@@ -243,12 +243,36 @@ Building a personal copy under a namespace you own? Override with `EXPO_ANDROID_
 
 ## Pointing at a different backend
 
-Edit `EXPO_PUBLIC_API_URL` in `.env.staging`, `.env.production`, or `.env.development.local` (whichever variant you're running). Then:
+There are two ways to pick a backend:
+
+### At build time (env var)
+
+Edit `EXPO_PUBLIC_API_URL` in `.env.staging`, `.env.production`, or `.env.development.local` (whichever variant you're running). This is the value Metro bakes into the JS bundle for every `api.fetch` / `new WebSocket` call.
 
 - For an installed **Debug build**: restart Metro (`pnpm dev:mobile:staging`) so the next JS bundle picks up the new value.
 - For an installed **Release build**: re-run the corresponding `*:release` command (`ios:mobile:device:staging:release` / `android:mobile:prod:release`) — the value is baked into the embedded bundle at build time.
+
+The env value is also the fallback used at first launch when no runtime config has been saved yet, and when SecureStore reads fail. So it always matters; you don't get to skip it.
 
 For local backend testing, `localhost` won't reach your machine from the phone or emulator:
 
 - **iOS device / simulator, Android USB device** — use your machine's LAN IP (`ipconfig getifaddr en0` on macOS, `hostname -I` on Linux).
 - **Android emulator** — use `http://10.0.2.2:<port>`, the emulator's alias for the host loopback.
+
+### At runtime (self-hosted)
+
+Installations made through the App Store / Play Store (or sideloaded release APKs) can't easily change the build-time URL — every tweak would need a re-build. For that case the mobile app ships a runtime config layer that mirrors the desktop Welcome gate:
+
+- **First launch** (or any time the device has no saved config): the app opens to a full-screen **Welcome** page. Pick *Use Multica Cloud* for the public deployment, or paste a self-hosted backend URL (e.g. `http://192.168.1.42:8080`, `https://multica.internal.example`) and tap *Connect*.
+- **Settings → Backend** (More tab → Settings → Backend row on any signed-in screen) lets a signed-in user switch the active backend, run a *Test connection* probe against `/health`, see diagnostics (current backend, derived WebSocket URL, derived web URL, source = saved vs build-time fallback), and *Reset to Multica Cloud* (typed-confirmation required — type `multica.ai`).
+
+Saving always signs the user out of the current session, clears the workspace store + TanStack Query cache, and routes to `/login`. The previous JWT was issued by the old backend; keeping it around produces 401-loops on every subsequent fetch, so clearing proactively is cleaner than waiting for the 401 hook.
+
+Implementation:
+
+- The pure schema lives in `apps/mobile/data/runtime-config.ts` (mirror of `apps/desktop/src/shared/runtime-config.ts`). Only `apiUrl` is persisted; `wsUrl` and `appUrl` are derived via `deriveWsUrl` / `deriveAppUrl` so saving a self-host URL never produces a stale-cached `wsUrl` mismatch.
+- The persisted record sits in `expo-secure-store` under the key `multica_runtime_config`. Schema version is `1`; a future upgrade that changes the shape must use the same `parseRuntimeConfig` reject path (bump `RUNTIME_CONFIG_SCHEMA_VERSION` and treat unknown payloads as "no saved config").
+- `api.setBaseUrl(url)` / `api.getBaseUrl()` on `ApiClient` carry the runtime URL — every method that built URLs from the module-level constant now reads `this.baseUrl`. The realtime-provider subscribes to `useRuntimeConfigStore((s) => s.config.apiUrl)` so changing the backend drops the existing WebSocket and reopens at the new `deriveWsUrl(apiUrl)`.
+- Hydration runs once at app start from `RuntimeConfigInitializer` in `app/_layout.tsx`, wrapping the existing `AuthInitializer` so the first `getMe()` after login lands on the right base URL.
+
+Strings for both screens are centralised in `apps/mobile/lib/runtime-config-strings.ts` (English-only; mobile has no i18n infrastructure yet, per `apps/mobile/CLAUDE.md`). When i18n lands, replace the imports with `t(...)` lookups — the namespace shape already matches the desktop `desktop.welcome.*` / `desktop.backend.*` keys.
