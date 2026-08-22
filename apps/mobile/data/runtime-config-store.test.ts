@@ -113,7 +113,7 @@ describe("runtime-config-store", () => {
     );
   });
 
-  it("resetToDefault clears SecureStore, resets to DEFAULT, marks chosen", async () => {
+  it("resetToDefault persists DEFAULT to SecureStore, marks chosen", async () => {
     secureStoreState.value = JSON.stringify({
       schemaVersion: RUNTIME_CONFIG_SCHEMA_VERSION,
       apiUrl: "https://self-host.example.com",
@@ -125,7 +125,33 @@ describe("runtime-config-store", () => {
     const after = useStore.getState();
     expect(after.config.apiUrl).toBe(DEFAULT_RUNTIME_CONFIG.apiUrl);
     expect(after.hasUserChosenBackend).toBe(true);
-    expect(secureStoreState.value).toBeNull();
+    // Must remain present in SecureStore — empty would force the next
+    // launch to re-show the Welcome gate, undoing the user's choice.
+    expect(secureStoreState.value).toBeTruthy();
+    expect(JSON.parse(secureStoreState.value!).apiUrl).toBe(
+      DEFAULT_RUNTIME_CONFIG.apiUrl,
+    );
+  });
+
+  it("after resetToDefault, a fresh hydrate still sees the user-chosen flag", async () => {
+    // End-to-end check: the bug we previously shipped was resetToDefault()
+    // deleting SecureStore, which made the next hydrate() treat the app
+    // as first-run again. Must not regress.
+    secureStoreState.value = JSON.stringify({
+      schemaVersion: RUNTIME_CONFIG_SCHEMA_VERSION,
+      apiUrl: "https://self-host.example.com",
+    });
+    const useStore = await loadStore();
+    await useStore.getState().hydrate();
+    await useStore.getState().resetToDefault();
+    expect(useStore.getState().hasUserChosenBackend).toBe(true);
+
+    // Simulate a fresh process: drop the in-memory store and re-import.
+    vi.resetModules();
+    const fresh = (await import("./runtime-config-store")).useRuntimeConfigStore;
+    await fresh.getState().hydrate();
+    expect(fresh.getState().hasUserChosenBackend).toBe(true);
+    expect(fresh.getState().config.apiUrl).toBe(DEFAULT_RUNTIME_CONFIG.apiUrl);
   });
 
   it("hydrate is idempotent — second call is a no-op", async () => {

@@ -116,8 +116,22 @@ export const useRuntimeConfigStore = create<State>((set, get) => ({
   },
 
   resetToDefault: async () => {
-    await SecureStore.deleteItemAsync(SECURE_STORE_KEY).catch(() => {
-      // Best-effort cleanup; absence is not an error.
+    // Write DEFAULT to SecureStore (don't delete) so the next launch can
+    // distinguish "user explicitly chose Multica Cloud" from "first run,
+    // no choice yet". An empty SecureStore is the only signal hydrate()
+    // has to show the Welcome gate — if resetToDefault() deleted the
+    // record, the gate would reappear on every relaunch after a reset.
+    await SecureStore.setItemAsync(
+      SECURE_STORE_KEY,
+      serializeRuntimeConfig({
+        schemaVersion: RUNTIME_CONFIG_SCHEMA_VERSION,
+        apiUrl: DEFAULT_RUNTIME_CONFIG.apiUrl,
+      }),
+    ).catch((err) => {
+      console.warn(
+        "[runtime-config] Failed to persist reset, will fall back to default on next launch",
+        err,
+      );
     });
     set({
       config: {
