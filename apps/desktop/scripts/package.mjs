@@ -27,7 +27,7 @@
 // real `git describe` invocation against a throwaway repo.
 
 import { execFileSync, spawnSync } from "node:child_process";
-import { rmSync } from "node:fs";
+import { existsSync, readFileSync, rmSync } from "node:fs";
 import { delimiter, dirname, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
@@ -306,6 +306,43 @@ function formatTarget(target) {
   return `${PLATFORM_CONFIG[target.platform].label} ${target.arch}`;
 }
 
+function localElectronDist(target) {
+  if (
+    target.platform !== "mac" ||
+    target.arch !== process.arch ||
+    process.platform !== "darwin"
+  ) {
+    return undefined;
+  }
+  const candidate = resolve(desktopRoot, "build/electron-cache");
+  const versionFile = resolve(candidate, "version");
+  if (!existsSync(resolve(candidate, "Electron.app", "Contents", "Info.plist"))) {
+    return undefined;
+  }
+  try {
+    const cachedVersion = readFileSync(versionFile, "utf8").trim();
+    const declaredVersion = requireElectronVersion();
+    return cachedVersion === declaredVersion ? candidate : undefined;
+  } catch {
+    return undefined;
+  }
+}
+
+function requireElectronVersion() {
+  const manifestPaths = [
+    resolve(desktopRoot, "node_modules/electron/package.json"),
+    resolve(desktopRoot, "..", "..", "node_modules/electron/package.json"),
+  ];
+  for (const manifestPath of manifestPaths) {
+    try {
+      return JSON.parse(readFileSync(manifestPath, "utf8")).version;
+    } catch {
+      continue;
+    }
+  }
+  return undefined;
+}
+
 export function builderArgsForTarget(
   target,
   parsed,
@@ -314,10 +351,12 @@ export function builderArgsForTarget(
     disableMacNotarize = false,
     hostPlatform = process.platform,
     useScopedOutputDir = false,
+    electronDist,
   } = {},
 ) {
   const builderArgs = [];
   if (version) builderArgs.push(`-c.extraMetadata.version=${version}`);
+  if (electronDist) builderArgs.push(`-c.electronDist=${electronDist}`);
   if (disableMacNotarize) builderArgs.push("-c.mac.notarize=false");
   builderArgs.push(PLATFORM_CONFIG[target.platform].builderFlag);
   const requestedTargets = parsed.platformTargets[target.platform];
@@ -447,10 +486,16 @@ function main() {
       },
     );
 
+    const electronDist = localElectronDist(target);
+    if (electronDist) {
+      console.log(`[package] using local Electron distribution → ${electronDist}`);
+    }
+
     const builderArgs = builderArgsForTarget(target, parsed, version, {
       disableMacNotarize,
       hostPlatform: process.platform,
       useScopedOutputDir,
+      electronDist,
     });
 
     // Step 4: invoke electron-builder for the current target only.

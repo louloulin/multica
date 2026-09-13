@@ -395,6 +395,23 @@ describe("builderArgsForTarget", () => {
       "never",
     ]);
   });
+
+  it("passes a verified local Electron distribution when available", () => {
+    expect(
+      builderArgsForTarget(
+        { platform: "mac", arch: "arm64" },
+        {
+          allPlatforms: false,
+          sharedArgs: ["--publish", "never"],
+          platformTargets: { mac: [], win: [], linux: [] },
+          requestedPlatforms: ["mac"],
+          requestedArchs: ["arm64"],
+        },
+        "1.2.3",
+        { electronDist: "build/electron-cache" },
+      ),
+    ).toContain("-c.electronDist=build/electron-cache");
+  });
 });
 
 describe("envWithLocalBins", () => {
@@ -429,7 +446,29 @@ describe("envWithLocalBins", () => {
   });
 });
 
-describe("electron-builder.yml packaging config", () => {
+describe("electron packaging config", () => {
+  it("bundles workspace core imports into the main process", () => {
+    const configPath = [
+      resolve(process.cwd(), "electron.vite.config.ts"),
+      resolve(process.cwd(), "apps/desktop/electron.vite.config.ts"),
+    ].find((candidate) => existsSync(candidate));
+    expect(configPath, "electron.vite.config.ts not found").toBeTruthy();
+    expect(readFileSync(configPath, "utf-8")).toMatch(
+      /externalizeDepsPlugin\(\{\s*exclude:\s*\["@multica\/core"\]/,
+    );
+  });
+
+  it("keeps electron-builder packaging rules intact", () => {
+    const configPath = [
+      resolve(process.cwd(), "electron-builder.yml"),
+      resolve(process.cwd(), "apps/desktop/electron-builder.yml"),
+    ].find((candidate) => existsSync(candidate));
+    expect(configPath, "electron-builder.yml not found").toBeTruthy();
+    const raw = readFileSync(configPath, "utf-8");
+    expect(raw).toContain("!build/electron-cache/**");
+    expect(raw).toContain("!dist/**");
+  });
+
   // Regression guard for github.com/multica-ai/multica/issues/5595. The
   // multi-arch release build writes each target's output to
   // dist/<platform>-<arch> in the same apps/desktop dir; electron-builder

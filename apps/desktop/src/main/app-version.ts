@@ -34,7 +34,6 @@ export function resolveDevelopmentVersion(): void {
     {
       cwd: app.getAppPath(),
       encoding: "utf-8",
-      stdio: ["ignore", "pipe", "ignore"],
       timeout: GIT_VERSION_TIMEOUT_MS,
       killSignal: "SIGKILL",
     },

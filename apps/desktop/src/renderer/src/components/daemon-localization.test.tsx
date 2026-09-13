@@ -16,7 +16,6 @@ vi.mock("../platform/daemon-reauth", () => ({
 }));
 
 let emitLogLine: (line: string) => void = () => {};
-let emitLogLines: (lines: readonly string[]) => void = () => {};
 
 function installDaemonAPI(status: DaemonStatus) {
   Object.defineProperty(window, "daemonAPI", {
@@ -29,10 +28,7 @@ function installDaemonAPI(status: DaemonStatus) {
       onStatusChange: vi.fn(() => () => {}),
       startLogStream: vi.fn(),
       stopLogStream: vi.fn(),
-      onLogLines: vi.fn((handler: (lines: readonly string[]) => void) => {
-        emitLogLines = handler;
-        return () => {};
-      }),
+      onLogLines: vi.fn(() => () => {}),
       onLogLine: vi.fn((handler: (line: string) => void) => {
         emitLogLine = handler;
         return () => {};
@@ -51,7 +47,6 @@ function renderInSimplifiedChinese(element: ReactNode) {
 
 beforeEach(() => {
   emitLogLine = () => {};
-  emitLogLines = () => {};
 });
 
 describe("Desktop daemon localization with real zh-Hans resources", () => {
