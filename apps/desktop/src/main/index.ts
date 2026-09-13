@@ -13,7 +13,7 @@ import { handleAppShortcut } from "./keyboard-shortcuts";
 import { installNavigationGestures } from "./navigation-gestures";
 import { installNavigationGuard } from "./navigation-guard";
 import { createRendererWebPreferences } from "./renderer-web-preferences";
-import { getAppVersion } from "./app-version";
+import { getAppVersion, resolveDevelopmentVersion } from "./app-version";
 import { loadRuntimeConfig } from "./runtime-config-loader";
 import {
   clearRuntimeConfig,
@@ -63,11 +63,24 @@ import {
 } from "../shared/main-renderer-messages";
 import { AuthSessionCoordinator } from "./auth-session-coordinator";
 import {
+  clientDiagnostics,
+  type ClientDiagnosticEvent,
+} from "@multica/core/diagnostics";
+import {
   NotificationGate,
   parseNativeNotificationPayload,
 } from "./notification-gate";
 
-// Guards against registering the will-download handler more than once on the
+const mainDiagnostics = clientDiagnostics;
+
+
+function broadcastDiagnostic(event: ClientDiagnosticEvent): void {
+  for (const window of BrowserWindow.getAllWindows()) {
+    if (!window.isDestroyed()) window.webContents.send("diagnostics:event", event);
+  }
+}
+
+mainDiagnostics.subscribe(broadcastDiagnostic);
 // same session. window.webContents.session is shared, and createWindow() can
 // be called again on macOS (app "activate" after all windows are closed).
 const downloadDialogSessions = new WeakSet<Electron.Session>();
@@ -468,6 +481,9 @@ function createWindow(): BrowserWindow {
       ? undefined
       : () =>
           clearFreezeBreadcrumb(freezeBreadcrumbPath(), `main:${window.id}`),
+    onDiagnostic: (event) => {
+      mainDiagnostics.record(event);
+    },
     log: devLog,
   });
 
@@ -677,7 +693,20 @@ if (!gotTheLock) {
       return openExternalSafely(url);
     });
 
-    // Renderer requests its own window close (e.g. Cmd+W on the last main
+    ipcMain.handle("diagnostics:set-enabled", (event, enabled: unknown) => {
+      if (!BrowserWindow.fromWebContents(event.sender) || typeof enabled !== "boolean") return;
+      mainDiagnostics.setEnabled(enabled);
+    });
+    ipcMain.handle("diagnostics:get", (event) => {
+      if (!BrowserWindow.fromWebContents(event.sender)) {
+        return { events: [], droppedCount: 0, enabled: false };
+      }
+      return mainDiagnostics.snapshot();
+    });
+    ipcMain.handle("diagnostics:clear", (event) => {
+      if (BrowserWindow.fromWebContents(event.sender)) mainDiagnostics.clear();
+    });
+
     // tab, or Cmd+W anywhere in a dedicated issue window).
     ipcMain.on("window:close", (event) => {
       BrowserWindow.fromWebContents(event.sender)?.close();
@@ -907,6 +936,7 @@ if (!gotTheLock) {
     });
 
     desktopInitialized = true;
+    resolveDevelopmentVersion();
     createWindow();
 
     setupAutoUpdater(() => mainWindow);

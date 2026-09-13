@@ -94,17 +94,28 @@ export function DaemonPanel({
     idCounterRef.current = 0;
 
     window.daemonAPI.startLogStream();
-    const unsub = window.daemonAPI.onLogLine((line) => {
-      setLogs((prev) => {
-        const id = ++idCounterRef.current;
-        const parsed = parseLogLine(line, id);
-        const next =
-          prev.length >= MAX_LOG_LINES
-            ? [...prev.slice(prev.length - MAX_LOG_LINES + 1), parsed]
-            : [...prev, parsed];
-        return next;
-      });
-    });
+    const unsub = window.daemonAPI.onLogLines
+      ? window.daemonAPI.onLogLines((lines) => {
+          setLogs((prev) => {
+            const next = [...prev];
+            for (const line of lines) {
+              const id = ++idCounterRef.current;
+              next.push(parseLogLine(line, id));
+            }
+            return next.length > MAX_LOG_LINES
+              ? next.slice(next.length - MAX_LOG_LINES)
+              : next;
+          });
+        })
+      : window.daemonAPI.onLogLine((line) => {
+          setLogs((prev) => {
+            const id = ++idCounterRef.current;
+            const next = [...prev, parseLogLine(line, id)];
+            return next.length > MAX_LOG_LINES
+              ? next.slice(next.length - MAX_LOG_LINES)
+              : next;
+          });
+        });
     return () => {
       unsub();
       window.daemonAPI.stopLogStream();

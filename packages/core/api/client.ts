@@ -1,4 +1,6 @@
 import { configStore } from "../config";
+import { DeadlineError, withTimeout } from "../async/deadline";
+import { clientDiagnostics } from "../diagnostics";
 import type {
   Issue,
   IssuePriority,
@@ -470,6 +472,8 @@ export interface ApiClientOptions {
   onUnauthorized?: () => void;
   /** Identifies the client to the server. Sent as X-Client-* headers. */
   identity?: ApiClientIdentity;
+  /** Maximum time a normal request may remain pending, including body reads. */
+  requestTimeoutMs?: number;
 }
 
 export interface ClientRuntimeSnapshot {
@@ -713,9 +717,17 @@ export class ApiClient {
     this.options.onUnauthorized?.();
   }
 
-  private async parseErrorMessage(res: Response, fallback: string): Promise<string> {
+  private async parseErrorMessage(
+    res: Response,
+    fallback: string,
+    signal?: AbortSignal,
+  ): Promise<string> {
     try {
-      const data = await res.json() as { error?: string };
+      const data = await withTimeout(
+        () => this.readResponseJson<{ error?: string }>(res, signal),
+        this.options.requestTimeoutMs ?? 30_000,
+        signal,
+      );
       if (typeof data.error === "string" && data.error) return data.error;
     } catch {
       // Ignore non-JSON error bodies.
@@ -726,9 +738,17 @@ export class ApiClient {
   // Reads the response body once for both human-readable error message and
   // structured fields. The Response stream can only be consumed once, so
   // both pieces have to come from a single read.
-  private async parseErrorBody(res: Response, fallback: string): Promise<{ message: string; body: unknown }> {
+  private async parseErrorBody(
+    res: Response,
+    fallback: string,
+    signal?: AbortSignal,
+  ): Promise<{ message: string; body: unknown }> {
     try {
-      const data = await res.json() as { error?: string };
+      const data = await withTimeout(
+        () => this.readResponseJson<{ error?: string }>(res, signal),
+        this.options.requestTimeoutMs ?? 30_000,
+        signal,
+      );
       const message = typeof data.error === "string" && data.error ? data.error : fallback;
       return { message, body: data };
     } catch {
@@ -741,6 +761,33 @@ export class ApiClient {
   // structured ApiError, status-aware log level). Returns the raw Response so
   // callers can decide how to decode the body — JSON for the typed `fetch<T>`
   // path, plain text for the attachment-preview proxy, etc.
+  private readResponseJson<T = unknown>(
+    res: Response,
+    signal?: AbortSignal,
+  ): Promise<T> {
+    return withTimeout(
+      () => res.json() as Promise<T>,
+      this.options.requestTimeoutMs ?? 30_000,
+      signal,
+    );
+  }
+
+  private readResponseText(res: Response, signal?: AbortSignal): Promise<string> {
+    return withTimeout(
+      () => res.text(),
+      this.options.requestTimeoutMs ?? 30_000,
+      signal,
+    );
+  }
+
+  private readResponseBlob(res: Response, signal?: AbortSignal): Promise<Blob> {
+    return withTimeout(
+      () => res.blob(),
+      this.options.requestTimeoutMs ?? 30_000,
+      signal,
+    );
+  }
+
   private async fetchRaw(
     path: string,
     init?: RequestInit & { extraHeaders?: Record<string, string> },
@@ -758,15 +805,46 @@ export class ApiClient {
 
     this.logger.info(`→ ${method} ${path}`, { rid });
 
-    const res = await fetch(`${this.baseUrl}${path}`, {
-      ...init,
-      headers,
-      credentials: "include",
+    let res: Response;
+    try {
+      res = await withTimeout(
+        (signal) =>
+          fetch(`${this.baseUrl}${path}`, {
+            ...init,
+            signal,
+            headers,
+            credentials: "include",
+          }),
+        this.options.requestTimeoutMs ?? 30_000,
+        init?.signal ?? undefined,
+      );
+    } catch (error) {
+      clientDiagnostics.record({
+        category: "request",
+        operation: "api_request",
+        phase: error instanceof DeadlineError ? "timeout" : "error",
+        durationMs: Date.now() - start,
+        errorCode:
+          error instanceof DeadlineError ? error.reason : "request_failed",
+      });
+      throw error;
+    }
+
+    clientDiagnostics.record({
+      category: "request",
+      operation: "api_request",
+      phase: "completed",
+      durationMs: Date.now() - start,
+      statusCode: res.status,
     });
 
     if (!res.ok) {
       if (res.status === 401) this.handleUnauthorized();
-      const { message, body } = await this.parseErrorBody(res, `API error: ${res.status} ${res.statusText}`);
+      const { message, body } = await this.parseErrorBody(
+        res,
+        `API error: ${res.status} ${res.statusText}`,
+        init?.signal ?? undefined,
+      );
       const logLevel = res.status === 404 ? "warn" : "error";
       this.logger[logLevel](`← ${res.status} ${path}`, { rid, duration: `${Date.now() - start}ms`, error: message });
       throw new ApiError(message, res.status, res.statusText, body);
@@ -785,7 +863,7 @@ export class ApiClient {
     if (res.status === 204) {
       return undefined as T;
     }
-    return res.json() as Promise<T>;
+    return this.readResponseJson<T>(res, init?.signal ?? undefined);
   }
 
   // Auth
@@ -1671,7 +1749,7 @@ export class ApiClient {
       body: JSON.stringify(data),
       extraHeaders: { "Content-Type": "application/json" },
     });
-    const raw = await res.json() as unknown;
+    const raw = await this.readResponseJson(res);
     return parseWithFallback(
       raw,
       CloudRuntimeNodeSchema,
@@ -1774,7 +1852,7 @@ export class ApiClient {
       body: JSON.stringify(data),
       extraHeaders: { "Content-Type": "application/json" },
     });
-    const raw = (await res.json()) as unknown;
+    const raw = await this.readResponseJson(res);
     return parseWithFallback(
       raw,
       CreateBillingCheckoutSessionResponseSchema,
@@ -1808,7 +1886,7 @@ export class ApiClient {
       // payload today. fetchRaw with no body skips the Content-Type
       // default; that's fine because there's nothing to declare.
     });
-    const raw = (await res.json()) as unknown;
+    const raw = await this.readResponseJson(res);
     return parseWithFallback(
       raw,
       CreateBillingPortalSessionResponseSchema,
@@ -1866,7 +1944,7 @@ export class ApiClient {
         },
       },
     );
-    const raw = (await res.json()) as unknown;
+    const raw = await this.readResponseJson(res);
     return parseWithFallback<CreateWorkspaceSubscriptionCheckoutResponse | null>(
       raw,
       CreateWorkspaceSubscriptionCheckoutResponseSchema,
@@ -1881,7 +1959,7 @@ export class ApiClient {
     const res = await this.fetchRaw("/api/cloud-subscriptions/seats/reconcile", {
       method: "POST",
     });
-    const raw = (await res.json()) as unknown;
+    const raw = await this.readResponseJson(res);
     return parseWithFallback<WorkspaceSubscriptionSeatReconcileResult | null>(
       raw,
       WorkspaceSubscriptionSeatReconcileResultSchema,
@@ -1901,7 +1979,7 @@ export class ApiClient {
         extraHeaders: { "Content-Type": "application/json" },
       },
     );
-    const raw = (await res.json()) as unknown;
+    const raw = await this.readResponseJson(res);
     return parseWithFallback<WorkspaceSeatPurchasePreview | null>(
       raw,
       WorkspaceSeatPurchasePreviewSchema,
@@ -1931,7 +2009,7 @@ export class ApiClient {
         },
       },
     );
-    const raw = (await res.json()) as unknown;
+    const raw = await this.readResponseJson(res);
     return parseWithFallback<PurchaseWorkspaceSeatsResponse | null>(
       raw,
       PurchaseWorkspaceSeatsResponseSchema,
@@ -1947,7 +2025,7 @@ export class ApiClient {
       method: "POST",
       extraHeaders: { "Idempotency-Key": idempotencyKey },
     });
-    const raw = (await res.json()) as unknown;
+    const raw = await this.readResponseJson(res);
     return parseWithFallback<CreateWorkspaceSubscriptionPortalResponse | null>(
       raw,
       CreateWorkspaceSubscriptionPortalResponseSchema,
@@ -2716,17 +2794,25 @@ export class ApiClient {
     const formData = new FormData();
     formData.append("bundle", bundle);
 
-    const res = await fetch(`${this.baseUrl}/api/workspaces/${workspaceId}/plugins/packages`, {
-      method: "POST",
-      headers: this.authHeaders(),
-      body: formData,
-      credentials: "include",
-    });
+    const res = await withTimeout(
+      (requestSignal) =>
+        fetch(`${this.baseUrl}/api/workspaces/${workspaceId}/plugins/packages`, {
+          method: "POST",
+          headers: this.authHeaders(),
+          body: formData,
+          credentials: "include",
+          signal: requestSignal,
+        }),
+      this.options.requestTimeoutMs ?? 30_000,
+    );
     if (!res.ok) {
       if (res.status === 401) this.handleUnauthorized();
-      throw new Error(await this.parseErrorMessage(res, `Publishing failed: ${res.status}`));
+      throw new Error(await this.parseErrorMessage(
+        res,
+        `Publishing failed: ${res.status}`,
+      ));
     }
-    const raw = (await res.json()) as unknown;
+    const raw = await this.readResponseJson(res);
     return parseWithFallback(raw, PluginPackageSchema, EMPTY_PLUGIN_PACKAGE, {
       endpoint: "POST /api/workspaces/{id}/plugins/packages",
     });
@@ -3088,7 +3174,7 @@ export class ApiClient {
       throw remapSkillImportError(err);
     }
 
-    const raw = (await res.json()) as unknown;
+    const raw = await this.readResponseJson(res);
     return skillFromImportResult(raw, "POST /api/skills/import");
   }
 
@@ -3184,23 +3270,40 @@ export class ApiClient {
     const start = Date.now();
     this.logger.info("→ POST /api/upload-file", { rid });
 
-    const res = await fetch(`${this.baseUrl}/api/upload-file`, {
+    const request = fetch(`${this.baseUrl}/api/upload-file`, {
       method: "POST",
       headers: this.authHeaders(),
       body: formData,
       credentials: "include",
       signal,
     });
+    let timeout: ReturnType<typeof setTimeout> | undefined;
+    const timeoutPromise = new Promise<never>((_, reject) => {
+      timeout = setTimeout(
+        () => reject(new DeadlineError("timeout")),
+        this.options.requestTimeoutMs ?? 30_000,
+      );
+    });
+    let res: Response;
+    try {
+      res = await Promise.race([request, timeoutPromise]);
+    } finally {
+      if (timeout) clearTimeout(timeout);
+    }
 
     if (!res.ok) {
       if (res.status === 401) this.handleUnauthorized();
-      const message = await this.parseErrorMessage(res, `Upload failed: ${res.status}`);
+      const message = await this.parseErrorMessage(
+        res,
+        `Upload failed: ${res.status}`,
+        signal,
+      );
       this.logger.error(`← ${res.status} /api/upload-file`, { rid, duration: `${Date.now() - start}ms`, error: message });
       throw new Error(message);
     }
 
     this.logger.info(`← ${res.status} /api/upload-file`, { rid, duration: `${Date.now() - start}ms` });
-    const raw = (await res.json()) as unknown;
+    const raw = await this.readResponseJson(res, signal);
     return parseWithFallback(raw, AttachmentResponseSchema, EMPTY_ATTACHMENT, {
       endpoint: "POST /api/upload-file",
     });
@@ -3537,7 +3640,7 @@ export class ApiClient {
       throw err;
     }
     return {
-      text: await res.text(),
+      text: await this.readResponseText(res),
       originalContentType: res.headers.get("X-Original-Content-Type") ?? "",
     };
   }
@@ -3562,7 +3665,7 @@ export class ApiClient {
   // where CORS is not configured for a JS fetch.
   async getAttachmentBlob(id: string): Promise<Blob> {
     const res = await this.fetchRaw(`/api/attachments/${id}/download`);
-    return res.blob();
+    return this.readResponseBlob(res);
   }
 
   // Projects

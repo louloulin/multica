@@ -6,6 +6,7 @@ import type { WSMessage } from "../types/events";
 // query string.  We don't simulate the full WS lifecycle here — only the
 // upgrade URL construction, which is what carries client identity.
 class FakeWebSocket {
+  static OPEN = 1;
   static lastUrl: string | null = null;
   static lastInstance: FakeWebSocket | null = null;
   // Fields read by WSClient.connect()/disconnect(), all no-op here.
@@ -18,8 +19,8 @@ class FakeWebSocket {
     FakeWebSocket.lastUrl = url;
     FakeWebSocket.lastInstance = this;
   }
-  close() {}
-  send() {}
+  close = vi.fn();
+  send = vi.fn();
 }
 
 describe("WSClient", () => {
@@ -203,6 +204,57 @@ describe("WSClient", () => {
       "user-123",
       "user",
     );
+  });
+
+  describe("handshake deadline", () => {
+    beforeEach(() => {
+      vi.useFakeTimers();
+      vi.stubGlobal(
+        "Math",
+        new Proxy(Math, {
+          get(target, prop) {
+            if (prop === "random") return () => 0.5;
+            return (target as any)[prop];
+          },
+        }),
+      );
+    });
+
+    afterEach(() => {
+      vi.useRealTimers();
+    });
+
+    it("closes a socket that never completes the handshake and schedules recovery", () => {
+      const logger = {
+        debug: vi.fn(),
+        info: vi.fn(),
+        warn: vi.fn(),
+        error: vi.fn(),
+      };
+      const ws = new WSClient("ws://example.test/ws", { logger });
+      ws.connect();
+
+      vi.advanceTimersByTime(15_000);
+
+      expect(FakeWebSocket.lastInstance?.close).toHaveBeenCalledTimes(1);
+      expect(logger.warn).toHaveBeenCalledWith("ws: handshake timed out");
+      vi.advanceTimersByTime(1_000);
+      expect(FakeWebSocket.lastInstance).not.toBeNull();
+      ws.disconnect();
+    });
+
+    it("clears the handshake deadline after authentication", () => {
+      const ws = new WSClient("ws://example.test/ws");
+      ws.connect();
+      const instance = FakeWebSocket.lastInstance!;
+      instance.readyState = FakeWebSocket.OPEN;
+      instance.onopen?.();
+
+      vi.advanceTimersByTime(15_000);
+
+      expect(instance.close).not.toHaveBeenCalled();
+      ws.disconnect();
+    });
   });
 
   // ── Reconnect backoff tests ────────────────────────────────────────

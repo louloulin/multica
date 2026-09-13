@@ -18,6 +18,7 @@
 // platform branch here.
 
 import { captureEvent } from "../analytics";
+import { clientDiagnostics } from "./client-diagnostics";
 import { getDiagnosticRoute } from "./diagnostic-context";
 
 // 2s is well above the normal switch/render cost (measured 50–600ms) and just
@@ -57,6 +58,13 @@ export function installFreezeWatchdog(): void {
         const now = Date.now();
         if (now - lastEmitMs < COOLDOWN_MS) continue;
         lastEmitMs = now;
+        clientDiagnostics.record({
+          category: "renderer",
+          operation: "renderer_long_task",
+          phase: "timeout",
+          durationMs: entry.duration,
+          errorCode: "longtask",
+        });
         captureEvent("client_unresponsive", {
           source: "longtask",
           duration_ms: Math.round(entry.duration),

@@ -143,13 +143,21 @@ export function BackendSettingsTab() {
     if (!target) return;
     setTestState({ status: "testing" });
     try {
-      // The /api/config endpoint is the same one SELF_HOSTING.md exposes as
-      // a public reachability probe. A 2xx is enough — we don't need the
-      // payload, only confirmation that the URL serves Multica.
-      const response = await fetch(`${target.replace(/\/+$/, "")}/api/config`, {
-        method: "GET",
-        headers: { Accept: "application/json" },
-      });
+      const controller = new AbortController();
+      const timeout = window.setTimeout(() => controller.abort(), 10_000);
+      let response: Response;
+      try {
+        // The /api/config endpoint is the same one SELF_HOSTING.md exposes as
+        // a public reachability probe. A 2xx is enough — we don't need the
+        // payload, only confirmation that the URL serves Multica.
+        response = await fetch(`${target.replace(/\/+$/, "")}/api/config`, {
+          method: "GET",
+          headers: { Accept: "application/json" },
+          signal: controller.signal,
+        });
+      } finally {
+        window.clearTimeout(timeout);
+      }
       if (!response.ok) {
         setTestState({
           status: "error",

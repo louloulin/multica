@@ -7,6 +7,7 @@ import { join, dirname } from "path";
 import { pipeline } from "stream/promises";
 import { tmpdir } from "os";
 import { Readable } from "stream";
+import { withTimeout } from "@multica/core/async/deadline";
 
 import { selectPlatformReleaseAssetName } from "./cli-release-asset";
 
@@ -25,14 +26,34 @@ export function managedCliPath(): string {
   return join(app.getPath("userData"), "bin", binaryName());
 }
 
-function run(cmd: string, args: string[], cwd?: string): Promise<void> {
+const BOOTSTRAP_TIMEOUT_MS = 120_000;
+
+function run(
+  cmd: string,
+  args: string[],
+  cwd?: string,
+  signal?: AbortSignal,
+): Promise<void> {
   return new Promise((resolve, reject) => {
-    execFile(cmd, args, { cwd }, (err) => (err ? reject(err) : resolve()));
+    if (signal?.aborted) {
+      reject(signal.reason ?? new Error("operation aborted"));
+      return;
+    }
+    const child = execFile(cmd, args, { cwd }, (err) =>
+      err ? reject(err) : resolve(),
+    );
+    const abort = () => child.kill("SIGTERM");
+    signal?.addEventListener("abort", abort, { once: true });
+    child.once("close", () => signal?.removeEventListener("abort", abort));
   });
 }
 
-async function downloadToFile(url: string, dest: string): Promise<void> {
-  const res = await fetch(url, { redirect: "follow" });
+async function downloadToFile(
+  url: string,
+  dest: string,
+  signal: AbortSignal,
+): Promise<void> {
+  const res = await fetch(url, { redirect: "follow", signal });
   if (!res.ok || !res.body) {
     throw new Error(`download failed: ${res.status} ${res.statusText}`);
   }
@@ -44,9 +65,9 @@ async function downloadToFile(url: string, dest: string): Promise<void> {
 
 // Fetch goreleaser's published checksums.txt and parse it into a
 // filename → sha256 lookup. Format is `<hex>  <filename>` per line.
-async function fetchChecksums(): Promise<Map<string, string>> {
+async function fetchChecksums(signal: AbortSignal): Promise<Map<string, string>> {
   const url = `${GITHUB_LATEST_BASE}/checksums.txt`;
-  const res = await fetch(url, { redirect: "follow" });
+  const res = await fetch(url, { redirect: "follow", signal });
   if (!res.ok) {
     throw new Error(
       `checksums.txt fetch failed: ${res.status} ${res.statusText}`,
@@ -82,17 +103,21 @@ async function verifyChecksum(
   }
 }
 
-async function extractArchive(archive: string, dest: string): Promise<void> {
+async function extractArchive(
+  archive: string,
+  dest: string,
+  signal: AbortSignal,
+): Promise<void> {
   await mkdir(dest, { recursive: true });
   // Modern OSes all ship a `tar` that auto-detects tar.gz and zip:
   // - macOS/Linux: GNU tar or bsdtar
   // - Windows 10+: bsdtar is bundled as `tar.exe` since build 17063
-  await run("tar", ["-xf", archive, "-C", dest]);
+  await run("tar", ["-xf", archive, "-C", dest], undefined, signal);
 }
 
-async function installFresh(): Promise<string> {
+async function installFresh(signal: AbortSignal): Promise<string> {
   const target = managedCliPath();
-  const checksums = await fetchChecksums();
+  const checksums = await fetchChecksums(signal);
   const assetName = selectPlatformReleaseAssetName(checksums.keys());
   const expectedChecksum = checksums.get(assetName);
   if (!expectedChecksum) {
@@ -108,13 +133,13 @@ async function installFresh(): Promise<string> {
   try {
     const archivePath = join(workDir, assetName);
     console.log(`[cli-bootstrap] downloading ${url}`);
-    await downloadToFile(url, archivePath);
+    await downloadToFile(url, archivePath, signal);
 
     console.log(`[cli-bootstrap] verifying ${assetName} against checksums.txt`);
     await verifyChecksum(archivePath, assetName, expectedChecksum);
 
     console.log(`[cli-bootstrap] extracting ${assetName}`);
-    await extractArchive(archivePath, workDir);
+    await extractArchive(archivePath, workDir, signal);
 
     const extractedBin = join(workDir, binaryName());
     if (!existsSync(extractedBin)) {
@@ -131,7 +156,7 @@ async function installFresh(): Promise<string> {
     // macOS: ad-hoc sign so spawning the child never hits a gatekeeper quirk.
     // Non-fatal: unsigned binaries still execute when the parent app is trusted.
     if (process.platform === "darwin") {
-      await run("codesign", ["-s", "-", "--force", target]).catch((err) => {
+      await run("codesign", ["-s", "-", "--force", target], undefined, signal).catch((err) => {
         console.warn("[cli-bootstrap] ad-hoc codesign failed:", err);
       });
     }
@@ -153,5 +178,8 @@ export async function ensureManagedCli(
 ): Promise<string> {
   const target = managedCliPath();
   if (existsSync(target) && !options.forceInstall) return target;
-  return installFresh();
+  return withTimeout(
+    (signal) => installFresh(signal),
+    BOOTSTRAP_TIMEOUT_MS,
+  );
 }

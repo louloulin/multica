@@ -1156,7 +1156,27 @@
   "desktop": {
     "tabs": {
       "updates": "Updates",
-      "backend": "Backend"
+      "backend": "Backend",
+      "diagnostics": "Debug"
+    },
+    "diagnostics": {
+      "title": "Debug diagnostics",
+      "description": "Enable a bounded, redacted event log to investigate timeouts and reconnects. It stays off by default.",
+      "enable_label": "Enable debug diagnostics",
+      "enable_description": "Only safe operation metadata is retained on this device. Tokens, request bodies, and response bodies are never recorded.",
+      "events_title": "Recent events",
+      "events_description": "Events are kept in a bounded buffer and cleared when debug diagnostics are disabled.",
+      "filter": "Filter category",
+      "all_categories": "All categories",
+      "event_count": "{{count}} events",
+      "dropped_count": "{{count}} dropped",
+      "active_operations": "Active operations",
+      "empty": "No diagnostic events yet.",
+      "disabled": "Enable debug diagnostics to collect events.",
+      "copy": "Copy JSON",
+      "copied": "Diagnostics copied",
+      "copy_failed": "Could not copy diagnostics",
+      "clear": "Clear"
     },
     "updates": {
       "title": "Updates",

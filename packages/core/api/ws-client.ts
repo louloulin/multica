@@ -1,5 +1,6 @@
 import type { WSMessage, WSEventType } from "../types/events";
 import { type Logger, noopLogger } from "../logger";
+import { clientDiagnostics } from "../diagnostics";
 
 type EventHandler = (payload: unknown, actorId?: string, actorType?: string) => void;
 
@@ -15,6 +16,7 @@ const UNPARSEABLE_LOG_MAX_CHARS = 200;
 // expose a visible disconnected state or manual retry action.
 const RECONNECT_BASE_DELAY_MS = 1_000;
 const RECONNECT_MAX_DELAY_MS = 30_000;
+const HANDSHAKE_TIMEOUT_MS = 15_000;
 
 function summarizeUnparseable(data: unknown): string {
   const text = typeof data === "string" ? data : String(data);
@@ -41,6 +43,7 @@ export class WSClient {
   private identity: WSClientIdentity | undefined;
   private handlers = new Map<WSEventType, Set<EventHandler>>();
   private reconnectTimer: ReturnType<typeof setTimeout> | null = null;
+  private handshakeTimer: ReturnType<typeof setTimeout> | null = null;
   private reconnectAttempt = 0;
   private hasConnectedBefore = false;
   // One-shot per connection. A non-conforming frame can repeat hundreds of
@@ -71,7 +74,21 @@ export class WSClient {
   }
 
   connect() {
+    if (this.reconnectTimer) {
+      clearTimeout(this.reconnectTimer);
+      this.reconnectTimer = null;
+    }
+    if (this.ws) {
+      this.ws.onclose = null;
+      this.ws.onerror = null;
+      this.ws.close();
+    }
+    if (this.handshakeTimer) {
+      clearTimeout(this.handshakeTimer);
+      this.handshakeTimer = null;
+    }
     this.badFrameLogged = false;
+    const startedAt = Date.now();
     const url = new URL(this.baseUrl);
     // Token is never sent as a URL query parameter — it would be logged by
     // proxies, CDNs, and browser history.  In cookie mode the HttpOnly cookie
@@ -87,6 +104,28 @@ export class WSClient {
       url.searchParams.set("client_os", this.identity.os);
 
     this.ws = new WebSocket(url.toString());
+    clientDiagnostics.record({
+      category: "realtime",
+      operation: "websocket_handshake",
+      phase: "started",
+    });
+    this.handshakeTimer = setTimeout(() => {
+      if (this.ws && this.ws.readyState !== WebSocket.OPEN) {
+        clientDiagnostics.record({
+          category: "realtime",
+          operation: "websocket_handshake",
+          phase: "timeout",
+          durationMs: Date.now() - startedAt,
+          errorCode: "timeout",
+        });
+        this.logger.warn("ws: handshake timed out");
+        this.ws.onclose = null;
+        this.ws.onerror = null;
+        this.ws.close();
+        this.ws = null;
+        this.scheduleReconnect();
+      }
+    }, HANDSHAKE_TIMEOUT_MS);
 
     this.ws.onopen = () => {
       if (!this.cookieAuth && this.token) {
@@ -146,6 +185,10 @@ export class WSClient {
     };
 
     this.ws.onclose = () => {
+      if (this.handshakeTimer) {
+        clearTimeout(this.handshakeTimer);
+        this.handshakeTimer = null;
+      }
       this.scheduleReconnect();
     };
 
@@ -180,6 +223,15 @@ export class WSClient {
   }
 
   private onAuthenticated() {
+    if (this.handshakeTimer) {
+      clearTimeout(this.handshakeTimer);
+      this.handshakeTimer = null;
+    }
+    clientDiagnostics.record({
+      category: "realtime",
+      operation: "websocket_handshake",
+      phase: "completed",
+    });
     this.logger.info("connected");
     const recoveredConnection = this.hasConnectedBefore || this.reconnectAttempt > 0;
     this.reconnectAttempt = 0;
@@ -199,6 +251,10 @@ export class WSClient {
     if (this.reconnectTimer) {
       clearTimeout(this.reconnectTimer);
       this.reconnectTimer = null;
+    }
+    if (this.handshakeTimer) {
+      clearTimeout(this.handshakeTimer);
+      this.handshakeTimer = null;
     }
     if (this.ws) {
       // Remove handlers before close to prevent onclose from scheduling a reconnect

@@ -1,3 +1,5 @@
+import type { ClientDiagnosticEvent } from "@multica/core/diagnostics";
+
 export type RendererRecoveryWindow = {
   isDestroyed: () => boolean;
   on: (event: "unresponsive" | "responsive", handler: () => void) => unknown;
@@ -33,6 +35,9 @@ type RendererRecoveryOptions = {
    * process never recovers.
    */
   clearBreadcrumb?: () => void;
+  onDiagnostic?: (
+    event: Omit<ClientDiagnosticEvent, "timestamp">,
+  ) => void;
   log?: (tag: string, ...args: unknown[]) => void;
   unresponsivePromptDelayMs?: number;
 };
@@ -47,6 +52,7 @@ export function installRendererRecoveryHandlers(
     getDiagnosticContext,
     persistBreadcrumb,
     clearBreadcrumb,
+    onDiagnostic,
     log = noopDevLog,
     unresponsivePromptDelayMs = 1500,
   }: RendererRecoveryOptions,
@@ -69,6 +75,12 @@ export function installRendererRecoveryHandlers(
   };
 
   window.webContents.on("render-process-gone", (_event, details) => {
+    onDiagnostic?.({
+      category: "renderer",
+      operation: "renderer_process",
+      phase: "error",
+      errorCode: "render_process_gone",
+    });
     if (isDev) log("process-gone", JSON.stringify(details));
     if (!isRecoverableRendererExit(details)) return;
     const payload: ReloadPromptPayload = {
@@ -84,6 +96,12 @@ export function installRendererRecoveryHandlers(
   // on that same preload exposing `getLastFreeze` — if preload is broken, the
   // next boot couldn't read it back anyway. We only prompt for reload here.
   window.webContents.on("preload-error", (_event, preloadPath, error) => {
+    onDiagnostic?.({
+      category: "renderer",
+      operation: "renderer_process",
+      phase: "error",
+      errorCode: "preload_error",
+    });
     if (isDev) log("preload-error", `path=${preloadPath} err=${formatError(error)}`);
     maybePromptReload({
       kind: "preload-error",
@@ -100,6 +118,12 @@ export function installRendererRecoveryHandlers(
   });
 
   const reportHang = () => {
+    onDiagnostic?.({
+      category: "renderer",
+      operation: "renderer_responsiveness",
+      phase: "timeout",
+      errorCode: "unresponsive",
+    });
     const payload: ReloadPromptPayload = {
       kind: "unresponsive",
       context: mergeDiagnosticContext({}),
@@ -110,6 +134,12 @@ export function installRendererRecoveryHandlers(
   };
 
   window.on("responsive", () => {
+    onDiagnostic?.({
+      category: "renderer",
+      operation: "renderer_responsiveness",
+      phase: "completed",
+      state: "responsive",
+    });
     if (unresponsivePromptTimer) {
       clearTimeout(unresponsivePromptTimer);
       unresponsivePromptTimer = null;

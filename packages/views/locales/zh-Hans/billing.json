@@ -34,6 +34,7 @@
     "fetch_failed_unknown": "未知错误",
     "final_status": "最终状态：{{status}}",
     "polling_status": "正在轮询订单状态…当前：{{status}}",
+    "polling_timeout": "付款超过两分钟仍未完成确认。请稍后刷新页面再次检查。",
     "status_unknown": "unknown",
     "label_order": "订单",
     "label_tier": "档位",

@@ -82,6 +82,8 @@ export function billingPriceTiersOptions() {
   });
 }
 
+export const CHECKOUT_POLL_INTERVAL_MS = 2_000;
+export const CHECKOUT_POLL_TIMEOUT_MS = 2 * 60 * 1_000;
 // Stripe-success-redirect polling: when the page loads with
 // `?session_id=...` in the URL, the user just came back from Stripe and
 // the topup is racing through `pending → paid → credited`. Poll until
@@ -91,6 +93,7 @@ export function billingPriceTiersOptions() {
 // Caller is expected to short-circuit by passing `enabled: !!sessionId`
 // — that's why we don't gate inside queryOptions itself.
 export function billingCheckoutSessionOptions(sessionId: string) {
+  const pollingStartedAt = Date.now();
   return queryOptions({
     queryKey: billingKeys.checkoutSession(sessionId),
     queryFn: () => api.getCloudBillingCheckoutSession(sessionId),
@@ -101,7 +104,10 @@ export function billingCheckoutSessionOptions(sessionId: string) {
       if (status === "credited" || status === "failed" || status === "canceled") {
         return false;
       }
-      return 2000;
+      if (Date.now() - pollingStartedAt >= CHECKOUT_POLL_TIMEOUT_MS) {
+        return false;
+      }
+      return CHECKOUT_POLL_INTERVAL_MS;
     },
     staleTime: 0,
   });

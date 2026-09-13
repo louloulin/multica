@@ -2,6 +2,7 @@ import { contextBridge, ipcRenderer } from "electron";
 import { electronAPI } from "@electron-toolkit/preload";
 import type { RuntimeConfig, RuntimeConfigResult } from "../shared/runtime-config";
 import type { FreezeBreadcrumb } from "../shared/freeze-breadcrumb";
+import type { ClientDiagnosticEvent } from "@multica/core/diagnostics";
 import type {
   ManualUpdateCheckResult,
   UpdaterPreferences,
@@ -101,9 +102,26 @@ function subscribeToMainRendererChannel<T>(
 }
 
 const desktopAPI = {
-  /** App version + normalized OS. Read once at preload time so the renderer
-   *  can use it synchronously when initializing the API client. */
+  /** App version + normalized OS, captured synchronously at preload time. */
   appInfo,
+  /** Enable or disable bounded client diagnostics in the main process. */
+  setDiagnosticsEnabled: (enabled: boolean) =>
+    ipcRenderer.invoke("diagnostics:set-enabled", enabled) as Promise<void>,
+  /** Read the sanitized main-process diagnostics snapshot. */
+  getDiagnostics: () =>
+    ipcRenderer.invoke("diagnostics:get") as Promise<{
+      events: readonly ClientDiagnosticEvent[];
+      droppedCount: number;
+      enabled: boolean;
+    }>,
+  /** Subscribe to sanitized main-process diagnostic events. */
+  onDiagnosticEvent: (callback: (event: ClientDiagnosticEvent) => void) => {
+    const handler = (_event: Electron.IpcRendererEvent, payload: ClientDiagnosticEvent) =>
+      callback(payload);
+    ipcRenderer.on("diagnostics:event", handler);
+    return () => ipcRenderer.removeListener("diagnostics:event", handler);
+  },
+  clearDiagnostics: () => ipcRenderer.invoke("diagnostics:clear") as Promise<void>,
   /** OS-preferred locale (BCP 47), passed from main via additionalArguments.
    *  Used by the renderer's LocaleAdapter as the system-preference signal. */
   systemLocale,
@@ -316,6 +334,11 @@ const daemonAPI = {
     ipcRenderer.invoke("daemon:retry-install"),
   startLogStream: () => ipcRenderer.send("daemon:start-log-stream"),
   stopLogStream: () => ipcRenderer.send("daemon:stop-log-stream"),
+  onLogLines: (callback: (lines: readonly string[]) => void) => {
+    const handler = (_unknown: unknown, lines: readonly string[]) => callback(lines);
+    ipcRenderer.on("daemon:log-lines", handler);
+    return () => ipcRenderer.removeListener("daemon:log-lines", handler);
+  },
   onLogLine: (callback: (line: string) => void) => {
     const handler = (_: unknown, line: string) => callback(line);
     ipcRenderer.on("daemon:log-line", handler);

@@ -34,6 +34,7 @@
     "fetch_failed_unknown": "unknown error",
     "final_status": "Final status: {{status}}",
     "polling_status": "Polling status… current: {{status}}",
+    "polling_timeout": "Payment is still pending after two minutes. Refresh later to check again.",
     "status_unknown": "unknown",
     "label_order": "Order",
     "label_tier": "Tier",

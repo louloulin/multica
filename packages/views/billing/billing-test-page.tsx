@@ -30,6 +30,7 @@ import {
   billingBalanceOptions,
   billingBatchesOptions,
   billingCheckoutSessionOptions,
+  CHECKOUT_POLL_TIMEOUT_MS,
   billingPriceTiersOptions,
   billingTopupsOptions,
   billingTransactionsOptions,
@@ -124,6 +125,19 @@ function CheckoutSessionStatusBanner({
   const status = data?.status ?? (isLoading ? "loading" : "");
   const terminal =
     status === "credited" || status === "failed" || status === "canceled";
+  const [pollingTimedOut, setPollingTimedOut] = useState(false);
+
+  useEffect(() => {
+    if (terminal || isError) {
+      setPollingTimedOut(false);
+      return;
+    }
+    const timeout = window.setTimeout(
+      () => setPollingTimedOut(true),
+      CHECKOUT_POLL_TIMEOUT_MS,
+    );
+    return () => window.clearTimeout(timeout);
+  }, [isError, sessionId, terminal]);
 
   // When the polling reaches a terminal state, the rest of the page
   // (balance, transactions, batches, topups) is still showing the
@@ -163,9 +177,11 @@ function CheckoutSessionStatusBanner({
                 })
               : terminal
                 ? t(($) => $.checkout.final_status, { status })
-                : t(($) => $.checkout.polling_status, {
-                    status: status || t(($) => $.checkout.status_unknown),
-                  })}
+                : pollingTimedOut
+                  ? t(($) => $.checkout.polling_timeout)
+                  : t(($) => $.checkout.polling_status, {
+                      status: status || t(($) => $.checkout.status_unknown),
+                    })}
         </CardDescription>
       </CardHeader>
       {data && (

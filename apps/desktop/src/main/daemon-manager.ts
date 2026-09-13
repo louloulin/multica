@@ -16,6 +16,8 @@ import {
 } from "fs";
 import { join } from "path";
 import { homedir, hostname } from "os";
+import { clientDiagnostics } from "@multica/core/diagnostics";
+import { withTimeout } from "@multica/core/async/deadline";
 import type {
   DaemonStatus,
   DaemonPrefs,
@@ -86,6 +88,7 @@ interface ActiveProfile {
 let statusPollTimer: ReturnType<typeof setInterval> | null = null;
 let logTailWatcher: { path: string; listener: StatsListener } | null = null;
 let currentState: DaemonStatus["state"] = "installing_cli";
+let lastDiagnosticDaemonState: DaemonStatus["state"] | null = null;
 let getMainWindow: () => BrowserWindow | null = () => null;
 let statusPollInProgress = false;
 let cachedCliBinary: string | null | undefined = undefined;
@@ -163,7 +166,35 @@ function urlsMatch(a: string, b: string): boolean {
   return na.length > 0 && na === nb;
 }
 
+function diagnosticErrorCode(error: unknown): string {
+  if (error && typeof error === "object") {
+    const reason = (error as { reason?: unknown }).reason;
+    if (reason === "timeout" || reason === "aborted") return reason;
+    const code = (error as { code?: unknown }).code;
+    if (typeof code === "string" && code.length > 0) return code;
+  }
+  return "error";
+}
+
+function recordDaemonError(operation: string, error: unknown): void {
+  clientDiagnostics.record({
+    category: "daemon",
+    operation,
+    phase: "error",
+    errorCode: diagnosticErrorCode(error),
+  });
+}
+
 function sendStatus(status: DaemonStatus): void {
+  if (lastDiagnosticDaemonState !== status.state) {
+    lastDiagnosticDaemonState = status.state;
+    clientDiagnostics.record({
+      category: "daemon",
+      operation: "daemon_lifecycle",
+      phase: "state",
+      state: status.state,
+    });
+  }
   const win = getMainWindow();
   win?.webContents.send("daemon:status", status);
 }
@@ -538,6 +569,7 @@ async function resolveCliBinary(): Promise<string | null> {
         `[daemon] managed CLI at ${installed} failed validation after install`,
       );
     } catch (err) {
+      recordDaemonError("daemon_cli_bootstrap", err);
       console.warn("[daemon] CLI auto-install failed, falling back to PATH:", err);
     }
 
@@ -650,15 +682,20 @@ async function mintPat(jwt: string): Promise<string> {
     throw new Error("mint PAT: target API URL not set");
   }
   const url = `${targetApiBaseUrl.replace(/\/+$/, "")}/api/tokens`;
-  const res = await fetch(url, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${jwt}`,
-    },
-    // Omit expires_in_days → server treats as null → non-expiring PAT.
-    body: JSON.stringify({ name: "Multica Desktop" }),
-  });
+  const res = await withTimeout(
+    (signal) =>
+      fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${jwt}`,
+        },
+        // Omit expires_in_days → server treats as null → non-expiring PAT.
+        body: JSON.stringify({ name: "Multica Desktop" }),
+        signal,
+      }),
+    15_000,
+  );
   if (!res.ok) {
     const body = await res.text().catch(() => "");
     // Attach the status so callers can tell a genuine auth rejection (401 — the
@@ -669,7 +706,10 @@ async function mintPat(jwt: string): Promise<string> {
       { status: res.status },
     );
   }
-  const data = (await res.json()) as { token?: unknown };
+  const data = await withTimeout(
+    () => res.json() as Promise<{ token?: unknown }>,
+    15_000,
+  );
   if (typeof data.token !== "string" || !data.token.startsWith("mul_")) {
     throw new Error("mint PAT: response missing token");
   }
@@ -1001,6 +1041,7 @@ async function startDaemon(
       { timeout: DAEMON_START_EXEC_TIMEOUT_MS, env: desktopSpawnEnv() },
       (err) => {
         if (err) {
+          recordDaemonError("daemon_start", err);
           currentState = "stopped";
           sendStatus({ state: "stopped" });
           resolve({ success: false, error: err.message });
@@ -1059,6 +1100,7 @@ async function stopDaemon(): Promise<{ success: boolean; error?: string }> {
   return new Promise((resolve) => {
     execFile(bin, args, { timeout: 15_000 }, (err) => {
       if (err) {
+        recordDaemonError("daemon_stop", err);
         resolve({ success: false, error: err.message });
       } else {
         resolve({ success: true });
@@ -1200,6 +1242,7 @@ async function pollOnce(): Promise<void> {
         void lifecycleOperations
           .runBackground(() => attemptDaemonRecovery(active))
           .catch((err) => {
+            recordDaemonError("daemon_recovery", err);
             console.warn("[daemon] background recovery failed:", err);
           });
       }
@@ -1210,6 +1253,7 @@ async function pollOnce(): Promise<void> {
       void lifecycleOperations
         .runBackground(() => ensureRunningDaemonVersionMatches())
         .catch((err) => {
+          recordDaemonError("daemon_version_restart", err);
           console.warn("[daemon] deferred version restart failed:", err);
         });
     }
@@ -1269,9 +1313,8 @@ async function readLogRange(
 
 function sendLines(win: BrowserWindow, text: string): void {
   const lines = text.split("\n").filter((line) => line.length > 0);
-  for (const line of lines) {
-    win.webContents.send("daemon:log-line", line);
-  }
+  if (lines.length === 0 || win.isDestroyed()) return;
+  win.webContents.send("daemon:log-lines", lines);
 }
 
 // Cross-platform tail -f replacement: read the tail of the file once, then
@@ -1307,9 +1350,7 @@ function startLogTail(win: BrowserWindow, retryCount = 0): void {
           .split("\n")
           .filter((line) => line.length > 0)
           .slice(-LOG_TAIL_INITIAL_LINES);
-        for (const line of lines) {
-          win.webContents.send("daemon:log-line", line);
-        }
+        sendLines(win, lines.join("\n"));
       }
       position = initialStats.size;
     } catch (err) {
@@ -1474,8 +1515,15 @@ export function setupDaemonManager(
   // First-run CLI install kicks off here. Status bar shows "Setting up…"
   // until the managed binary is on disk (instant on subsequent launches).
   currentState = "installing_cli";
+  clientDiagnostics.record({
+    category: "daemon",
+    operation: "daemon_cli_bootstrap",
+    phase: "started",
+  });
   sendStatus({ state: "installing_cli" });
-  void lifecycleOperations.runBackground(() => bootstrapCli());
+  void lifecycleOperations.runBackground(() => bootstrapCli()).catch((err) => {
+    recordDaemonError("daemon_cli_bootstrap", err);
+  });
 
   let isQuitting = false;
   app.on("before-quit", (event) => {

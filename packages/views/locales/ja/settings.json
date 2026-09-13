@@ -1153,7 +1153,27 @@
   "desktop": {
     "tabs": {
       "updates": "アップデート",
-      "backend": "バックエンド"
+      "backend": "バックエンド",
+      "diagnostics": "デバッグ"
+    },
+    "diagnostics": {
+      "title": "デバッグ診断",
+      "description": "タイムアウトや再接続を調査するため、安全に制限・匿名化されたイベントログを有効にします。デフォルトでは無効です。",
+      "enable_label": "デバッグ診断を有効化",
+      "enable_description": "このデバイスには安全な操作メタデータのみ保存されます。トークン、リクエスト本文、レスポンス本文は記録されません。",
+      "events_title": "最近のイベント",
+      "events_description": "イベントは上限付きバッファに保存され、デバッグ診断を無効にすると消去されます。",
+      "filter": "カテゴリを絞り込む",
+      "all_categories": "すべてのカテゴリ",
+      "event_count": "{{count}} 件のイベント",
+      "dropped_count": "{{count}} 件を破棄",
+      "active_operations": "実行中の操作",
+      "empty": "診断イベントはまだありません。",
+      "disabled": "デバッグ診断を有効にするとイベントを収集します。",
+      "copy": "JSON をコピー",
+      "copied": "診断情報をコピーしました",
+      "copy_failed": "診断情報をコピーできませんでした",
+      "clear": "クリア"
     },
     "updates": {
       "title": "アップデート",

@@ -17,6 +17,7 @@ import type {
   LocalRuntimeProbe,
 } from "../shared/daemon-types";
 import type { TabSelectionShortcutKey } from "../shared/main-renderer-messages";
+import type { ClientDiagnosticEvent } from "@multica/core/diagnostics";
 
 interface DesktopAPI {
   /** App version + normalized OS, captured synchronously at preload time. */
@@ -24,6 +25,15 @@ interface DesktopAPI {
     version: string;
     os: "macos" | "windows" | "linux" | "unknown";
   };
+  /** Enable or disable bounded client diagnostics. */
+  setDiagnosticsEnabled: (enabled: boolean) => Promise<void>;
+  getDiagnostics: () => Promise<{
+    events: readonly ClientDiagnosticEvent[];
+    droppedCount: number;
+    enabled: boolean;
+  }>;
+  onDiagnosticEvent: (callback: (event: ClientDiagnosticEvent) => void) => () => void;
+  clearDiagnostics: () => Promise<void>;
   /** OS-preferred locale (BCP 47) injected by main via additionalArguments. */
   systemLocale: string;
   /** Subscribe to OS language changes detected after boot. Returns an unsubscribe function. */
@@ -166,6 +176,7 @@ interface DaemonAPI {
   retryInstall: () => Promise<void>;
   startLogStream: () => void;
   stopLogStream: () => void;
+  onLogLines: (callback: (lines: readonly string[]) => void) => () => void;
   onLogLine: (callback: (line: string) => void) => () => void;
   openLogFile: () => Promise<{ success: boolean; error?: string }>;
 }

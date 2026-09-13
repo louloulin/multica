@@ -1,5 +1,9 @@
 import { app } from "electron";
-import { execFileSync } from "node:child_process";
+import { execFile } from "node:child_process";
+
+const GIT_VERSION_TIMEOUT_MS = 2_000;
+let resolvedVersion: string | undefined;
+let versionResolutionStarted = false;
 
 /**
  * Resolve the running app version. In packaged builds this is the value
@@ -16,25 +20,27 @@ import { execFileSync } from "node:child_process";
  * unavailable for whatever reason, we just return the package.json value.
  */
 export function getAppVersion(): string {
-  if (app.isPackaged) {
-    return app.getVersion();
-  }
-  try {
-    // argv array, not a shell string: the `v[0-9]*` match pattern must reach
-    // git as one literal argument. A shell string breaks on Windows, where
-    // cmd.exe keeps the single quotes and git matches no tag.
-    const raw = execFileSync(
-      "git",
-      ["describe", "--tags", "--match", "v[0-9]*", "--always", "--dirty"],
-      {
-        cwd: app.getAppPath(),
-        encoding: "utf-8",
-        stdio: ["ignore", "pipe", "ignore"],
-      },
-    ).trim();
-    if (!raw) return app.getVersion();
-    return raw.replace(/^v/, "");
-  } catch {
-    return app.getVersion();
-  }
+  if (resolvedVersion) return resolvedVersion;
+  return app.getVersion();
+}
+
+export function resolveDevelopmentVersion(): void {
+  if (app.isPackaged || versionResolutionStarted) return;
+  versionResolutionStarted = true;
+  const fallback = app.getVersion();
+  execFile(
+    "git",
+    ["describe", "--tags", "--match", "v[0-9]*", "--always", "--dirty"],
+    {
+      cwd: app.getAppPath(),
+      encoding: "utf-8",
+      stdio: ["ignore", "pipe", "ignore"],
+      timeout: GIT_VERSION_TIMEOUT_MS,
+      killSignal: "SIGKILL",
+    },
+    (_error, stdout) => {
+      const raw = typeof stdout === "string" ? stdout.trim() : "";
+      resolvedVersion = raw ? raw.replace(/^v/, "") : fallback;
+    },
+  );
 }

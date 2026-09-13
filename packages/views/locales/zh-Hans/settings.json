@@ -1153,7 +1153,27 @@
   "desktop": {
     "tabs": {
       "updates": "更新",
-      "backend": "后端"
+      "backend": "后端",
+      "diagnostics": "调试"
+    },
+    "diagnostics": {
+      "title": "调试诊断",
+      "description": "启用有界且已脱敏的事件日志，用于排查超时和重连问题。默认关闭。",
+      "enable_label": "启用调试诊断",
+      "enable_description": "仅在本设备保留安全的操作元数据，绝不会记录令牌、请求正文或响应正文。",
+      "events_title": "最近事件",
+      "events_description": "事件保存在有界缓冲区中，关闭调试诊断后会清空。",
+      "filter": "筛选类别",
+      "all_categories": "全部类别",
+      "event_count": "{{count}} 个事件",
+      "dropped_count": "丢弃 {{count}} 个",
+      "active_operations": "进行中的操作",
+      "empty": "暂无诊断事件。",
+      "disabled": "启用调试诊断后开始收集事件。",
+      "copy": "复制 JSON",
+      "copied": "诊断信息已复制",
+      "copy_failed": "无法复制诊断信息",
+      "clear": "清空"
     },
     "updates": {
       "title": "更新",

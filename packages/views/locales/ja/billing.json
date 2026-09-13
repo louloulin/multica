@@ -34,6 +34,7 @@
     "fetch_failed_unknown": "不明なエラー",
     "final_status": "最終ステータス: {{status}}",
     "polling_status": "ステータスを確認中… 現在: {{status}}",
+    "polling_timeout": "2分経過後も支払いが保留中です。しばらくしてから再度確認してください。",
     "status_unknown": "unknown",
     "label_order": "注文",
     "label_tier": "Tier",

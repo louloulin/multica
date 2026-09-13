@@ -1,7 +1,7 @@
 import { execFileSync } from "node:child_process";
 import { existsSync, mkdtempSync, readFileSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
-import { delimiter, join, resolve } from "node:path";
+import { delimiter, dirname, join, resolve } from "node:path";
 import { afterEach, describe, it, expect } from "vitest";
 import {
   builderArgsForTarget,
@@ -466,6 +466,26 @@ describe("electron-builder.yml packaging config", () => {
     }
     return entries;
   }
+
+  it("does not require a local Electron distribution", () => {
+    expect(configPath, "electron-builder.yml not found").toBeTruthy();
+    const raw = readFileSync(configPath, "utf-8");
+    expect(raw).not.toMatch(/^electronDist\s*:/m);
+  });
+
+  it("keeps the ignored local Electron cache out of packaged files", () => {
+    expect(configPath, "electron-builder.yml not found").toBeTruthy();
+    const entries = readFilesBlock(readFileSync(configPath, "utf-8"));
+    expect(entries).toContain("!build/electron-cache/**");
+  });
+
+  it("keeps shadcn as a build-time dependency", () => {
+    const manifest = JSON.parse(
+      readFileSync(resolve(dirname(configPath), "package.json"), "utf-8"),
+    );
+    expect(manifest.dependencies).not.toHaveProperty("shadcn");
+    expect(manifest.devDependencies).toHaveProperty("shadcn", "^4.1.0");
+  });
 
   it("excludes prior architecture output from packaged files", () => {
     expect(configPath, "electron-builder.yml not found").toBeTruthy();

@@ -6,6 +6,6 @@ out
 *.log*
 # CLI binary bundled at build time (from server/bin/)
 resources/bin/
-# Local cached Electron dist unpacked by `electronDist`; regenerated on
-# demand before `pnpm run package` from the registry mirror.
+# Keep any developer-local Electron distribution out of git. Packaging uses
+# electron-builder's platform-aware standard cache instead of this directory.
 build/electron-cache/
