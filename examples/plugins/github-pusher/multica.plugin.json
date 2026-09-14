@@ -1,0 +1,122 @@
+{
+  "manifest_version": 1,
+  "key": "ai.multica.github-pusher",
+  "name": "GitHub Pusher",
+  "description": "Pushes files and small commits to a GitHub repository using a workspace-scoped Personal Access Token. Built for environments where direct git access is blocked but the GitHub REST API is reachable: every push is replayed server-side via the Git Database API (blobs, trees, commits, refs), so the host never has to speak github.com on the wire.",
+  "version": "1.0.0",
+  "author": { "name": "multica", "url": "https://multica.ai" },
+
+  "scopes": [
+    "issues:read",
+    "comments:write",
+    "storage:workspace",
+    "net:api.github.com"
+  ],
+
+  "config": {
+    "github_token": {
+      "type": "secret",
+      "label": "GitHub Personal Access Token",
+      "description": "Needs `repo` scope. Stays on the plugin author's server; never reaches the iframe.",
+      "required": true
+    },
+    "repo_owner": {
+      "type": "string",
+      "label": "Repository owner",
+      "required": true,
+      "placeholder": "acme-corp"
+    },
+    "repo_name": {
+      "type": "string",
+      "label": "Repository name",
+      "required": true,
+      "placeholder": "checkout-api"
+    },
+    "default_branch": {
+      "type": "string",
+      "label": "Default base branch",
+      "required": true,
+      "placeholder": "main"
+    },
+    "default_committer_name": {
+      "type": "string",
+      "label": "Committer name",
+      "required": true
+    },
+    "default_committer_email": {
+      "type": "string",
+      "label": "Committer email",
+      "required": true
+    }
+  },
+
+  "contributes": {
+    "surfaces": [
+      {
+        "key": "pusher",
+        "type": "issue_panel",
+        "name": "GitHub Pusher",
+        "entry": "ui/main.js",
+        "platforms": ["web", "desktop"]
+      }
+    ],
+
+    "hooks": [
+      {
+        "key": "push_files",
+        "name": "Push files to GitHub",
+        "description": "Commits one or more files to the configured repository via the Git Database API. Each call lands as one commit on the chosen branch; the API is used end-to-end so this works even when `github.com` itself is unreachable from the caller's network.",
+        "input_schema": {
+          "type": "object",
+          "required": ["branch", "message", "files"],
+          "properties": {
+            "branch": {
+              "type": "string",
+              "description": "Target branch. Created from the default base branch when missing."
+            },
+            "message": {
+              "type": "string",
+              "description": "Commit message. First line is the summary; the rest is body."
+            },
+            "files": {
+              "type": "object",
+              "description": "Map of repo-relative path to UTF-8 file content. Paths must be POSIX-style and may not start with '/' or contain '..'.",
+              "additionalProperties": { "type": "string" }
+            },
+            "update_only": {
+              "type": "boolean",
+              "description": "When true, refuse to add or remove files; only patch existing ones."
+            }
+          }
+        },
+        "triggers": ["agent", "manual", "ui"],
+        "transport": { "type": "http", "url": "https://github-pusher.example.com/hooks/push" },
+        "timeout_ms": 20000
+      },
+      {
+        "key": "create_branch",
+        "name": "Create branch from base",
+        "description": "Creates `new_branch` from `base_branch` when it does not exist. Refuses silently if the branch is already present; the push hook reuses this branch transparently.",
+        "input_schema": {
+          "type": "object",
+          "required": ["new_branch"],
+          "properties": {
+            "new_branch": { "type": "string" },
+            "base_branch": { "type": "string", "description": "Defaults to the configured default branch." }
+          }
+        },
+        "triggers": ["agent", "manual", "ui"],
+        "transport": { "type": "http", "url": "https://github-pusher.example.com/hooks/branch" },
+        "timeout_ms": 15000
+      }
+    ],
+
+    "resources": [
+      {
+        "type": "skill",
+        "key": "github-pusher",
+        "entry": "skills/github-pusher/SKILL.md"
+      }
+    ]
+  }
+}
