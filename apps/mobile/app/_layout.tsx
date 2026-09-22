@@ -1,10 +1,10 @@
 import "../global.css";
 
 import { useEffect, useRef } from "react";
+import { AppState, Platform, type AppStateStatus } from "react-native";
 import { Stack, router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import * as SystemUI from "expo-system-ui";
-import { Platform } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { KeyboardProvider } from "react-native-keyboard-controller";
@@ -12,9 +12,11 @@ import { QueryClientProvider, useQueryClient } from "@tanstack/react-query";
 import { ThemeProvider } from "@react-navigation/native";
 import { PortalHost } from "@rn-primitives/portal";
 import { api } from "@/data/api";
+import { maybeRenewSession } from "@/data/session-renewal";
 import { queryClient } from "@/data/query-client";
 import { useAuthStore } from "@/data/auth-store";
 import { useWorkspaceStore } from "@/data/workspace-store";
+import { SessionActivityBoundary } from "@/components/auth/session-activity-boundary";
 import { useRuntimeConfigStore } from "@/data/runtime-config-store";
 import { LightboxProvider, prewarmHighlighter } from "@/lib/markdown";
 import { NAV_THEME } from "@/lib/theme";
@@ -56,8 +58,23 @@ function AuthInitializer({ children }: { children: React.ReactNode }) {
         })();
       },
     });
-    initialize();
+    // Launch check for the sliding session (MUL-7436). Runs after the token
+    // is restored and the identity probe has settled, so it never races the
+    // first getMe(); a no-op when there is no session to extend.
+    void initialize().then(() => maybeRenewSession());
   }, [initialize, qc]);
+
+  // Foreground transitions are one of the two "someone is using this" signals;
+  // SessionActivityBoundary below supplies the other, so an app that stays
+  // foregrounded for longer than the check interval still renews. Deliberately
+  // not a timer: a backgrounded or untouched app must not keep the session of
+  // someone who stopped using it alive.
+  useEffect(() => {
+    const sub = AppState.addEventListener("change", (status: AppStateStatus) => {
+      if (status === "active") maybeRenewSession();
+    });
+    return () => sub.remove();
+  }, []);
 
   return <>{children}</>;
 }
@@ -110,24 +127,28 @@ export default function RootLayout() {
             <ThemeProvider value={NAV_THEME[colorScheme]}>
               <RuntimeConfigInitializer>
                 <AuthInitializer>
-                  <LightboxProvider>
-                    <StatusBar
-                      style={themeColors.statusBarStyle}
-                      backgroundColor={
-                        Platform.OS === "android" ? themeColors.background : undefined
-                      }
-                    />
-                    {showWelcome ? (
-                      <WelcomeScreen />
-                    ) : (
-                      <Stack screenOptions={{ headerShown: false }}>
-                        <Stack.Screen name="index" />
-                        <Stack.Screen name="(auth)" />
-                        <Stack.Screen name="(app)" />
-                      </Stack>
-                    )}
-                    <PortalHost />
-                  </LightboxProvider>
+                  <SessionActivityBoundary>
+                    <LightboxProvider>
+                      <StatusBar
+                        style={themeColors.statusBarStyle}
+                        backgroundColor={
+                          Platform.OS === "android"
+                            ? themeColors.background
+                            : undefined
+                        }
+                      />
+                      {showWelcome ? (
+                        <WelcomeScreen />
+                      ) : (
+                        <Stack screenOptions={{ headerShown: false }}>
+                          <Stack.Screen name="index" />
+                          <Stack.Screen name="(auth)" />
+                          <Stack.Screen name="(app)" />
+                        </Stack>
+                      )}
+                      <PortalHost />
+                    </LightboxProvider>
+                  </SessionActivityBoundary>
                 </AuthInitializer>
               </RuntimeConfigInitializer>
             </ThemeProvider>

@@ -18,6 +18,8 @@ name: Mobile Verify
 # tests under apps/mobile/lib/*.test.ts — see apps/mobile/vitest.config.ts).
 # RN component-level rendering is not exercised here; Android native
 # viability is covered separately via assembleDebug below.
+# Repository-wide radius checks run once in CI: frontend-build owns them when
+# selected, otherwise frontend-quality handles docs/mobile-only changes.
 
 on:
   push:
@@ -75,11 +77,6 @@ jobs:
 
       - name: Type check, lint, and test
         run: pnpm exec turbo typecheck lint test --filter=@multica/mobile
-
-      - name: Check UI radius tokens
-        run: |
-          node --test scripts/check-ui-radius-tokens.test.mjs
-          node scripts/check-ui-radius-tokens.mjs
 
       - name: Prebuild Android project
         run: pnpm --filter @multica/mobile exec expo prebuild --platform android --non-interactive

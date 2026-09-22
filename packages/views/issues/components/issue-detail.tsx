@@ -4,7 +4,6 @@ import {
   issueBehavesAs,
   issueBehavesAsAny,
   issueStatusCategory,
-  statusCategoryOfKey,
 } from "@multica/core/issues";
 import { useStatusLabel } from "../utils/status-label";
 import { priorityLabel } from "../utils/priority-label";
@@ -63,13 +62,21 @@ import { PropRow } from "../../common/prop-row";
 import { PropertyIcon } from "../../common/property-icon";
 import type { Attachment, Issue, IssueProperty, IssueStatus, IssueStatusCategory, IssuePriority, TimelineEntry, UpdateIssueRequest } from "@multica/core/types";
 import { contentReferencesAttachment } from "@multica/core/types";
-import { STATUS_CONFIG } from "@multica/core/issues/config";
+import { isBuiltInIssueStatus } from "@multica/core/issue-statuses";
+import { commentLandingTarget } from "@multica/core/issues/comment-deletion";
 import { formatDateOnly, isPastDateOnly } from "@multica/core/issues/date";
 import { useUpdateIssue } from "@multica/core/issues/mutations";
 import { toast } from "sonner";
 import { errorCode } from "@multica/core/api";
-import { StatusIcon, PriorityIcon, StatusPicker, PriorityPicker, StagePicker, StartDatePicker, DueDatePicker, AssigneePicker, LabelPicker } from ".";
-import { maxSiblingStage } from "./pickers/stage-picker";
+import { StatusIcon } from "./status-icon";
+import { PriorityIcon } from "./priority-icon";
+import { StatusPicker } from "./pickers/status-picker";
+import { PriorityPicker } from "./pickers/priority-picker";
+import { StagePicker, maxSiblingStage } from "./pickers/stage-picker";
+import { StartDatePicker } from "./pickers/start-date-picker";
+import { DueDatePicker } from "./pickers/due-date-picker";
+import { AssigneePicker } from "./pickers/assignee-picker";
+import { LabelPicker } from "./pickers/label-picker";
 import { CustomPropertyValueEditor, CustomPropertyValueDisplay } from "./pickers/custom-property-picker";
 import { Switch } from "@multica/ui/components/ui/switch";
 import { IssueActionsDropdown, useIssueActions, IssueActionsContextMenu, IssueContextMenuProvider } from "../actions";
@@ -85,12 +92,14 @@ import { issueTasksOptions } from "@multica/core/issues/queries";
 import { SourceContextBadge } from "./source-context-viewer";
 import { RevisionConflictCompare } from "./revision-conflict-compare";
 import { CommentInput } from "./comment-input";
+import { useCommentAnnotations } from "./use-comment-annotations";
 import { CurrentIssueRenderContextProvider } from "../current-issue-render-context";
 import { ResolvedThreadBar } from "./resolved-thread-bar";
 import { ThreadMinimap, type ThreadMinimapThread } from "./thread-minimap";
 import { collectThreadParticipants, collectThreadReplies, deriveThreadResolution } from "./thread-utils";
 import { IssueAgentHeaderChip } from "./issue-agent-header-chip";
 import { ExecutionLogSection } from "./execution-log-section";
+import { WakeupsSection } from "./wakeups-section";
 import { QuickActionsSection } from "./quick-actions-section";
 import { PluginPanelSection } from "../../plugins";
 import { PullRequestList } from "./pull-request-list";
@@ -280,8 +289,8 @@ function statusLabel(
   resolveLabel?: (statusKey: string) => string,
 ): string {
   if (resolveLabel) return resolveLabel(status);
-  if (status in STATUS_CONFIG) {
-    return t(($) => $.status[statusCategoryOfKey(status)]);
+  if (isBuiltInIssueStatus(status)) {
+    return t(($) => $.status[status]);
   }
   return status;
 }
@@ -534,6 +543,7 @@ function ActivityBlock({
   resolveStatusLabel,
   resolveStatusCategory,
   resolveStatusColor,
+  resolveStatusIcon,
   t,
   timeAgo,
   locale,
@@ -552,6 +562,7 @@ function ActivityBlock({
   resolveStatusCategory: (statusKey: string) => IssueStatusCategory;
   /** A custom status's own `#rrggbb`; null for built-ins and unknown keys. */
   resolveStatusColor: (statusKey: string) => string | null;
+  resolveStatusIcon: (statusKey: string) => string | null;
   t: ActivityT;
   timeAgo: (dateStr: string) => string;
   locale: string;
@@ -620,6 +631,7 @@ function ActivityBlock({
               status={details.to as IssueStatus}
               category={resolveStatusCategory(details.to ?? "")}
               color={resolveStatusColor(details.to ?? "")}
+              icon={resolveStatusIcon(details.to ?? "")}
               className="h-4 w-4 shrink-0"
             />
           );
@@ -702,10 +714,11 @@ function SubIssueRow({
   const paths = useWorkspacePaths();
   const updateIssue = useUpdateIssue();
   const selected = useIssueSelectionStore((s) => s.selectedIds.has(child.id));
+  const childStatusCatalog = useIssueStatuses(useWorkspaceId());
   const toggleSelected = useIssueSelectionStore((s) => s.toggle);
   // Category, not key: a custom status in the done/cancelled categories is
   // finished work and has to strike through like any other. (MUL-6243)
-  const isDone = issueBehavesAsAny(child, ["done", "cancelled"]);
+  const isDone = issueBehavesAsAny(child, ["done", "closed"]);
   const labels = rowProps.labels ? (child.labels ?? []) : [];
   const customPropsWithValue = customProperties.filter(
     (p) => child.properties?.[p.id] !== undefined,
@@ -781,6 +794,9 @@ function SubIssueRow({
           trigger={
             <StatusIcon
               status={child.status}
+              category={childStatusCatalog.categoryOf(child.status)}
+              color={childStatusCatalog.colorOf(child.status)}
+              icon={childStatusCatalog.iconOf(child.status)}
               className="h-[15px] w-[15px] shrink-0"
             />
           }
@@ -1157,13 +1173,9 @@ export function IssueDetail({ issueId, onDelete, onDone, defaultSidebarOpen = tr
   const { data: allIssues = [] } = useQuery(issueListOptions(wsId));
   const { getActorName } = useActorName();
   const resolveStatusLabel = useStatusLabel(wsId);
-  // The glyph set is per CATEGORY (MUL-6243), so a status-change entry for a
-  // custom status drew the same icon as the built-in it sits beside — an
-  // "In Review → Awaiting Response" line looked like nothing had moved. Colour
-  // is what carries a custom status's own identity, as the inbox row and the
-  // status-changed detail label already render it. `colorOf` is what keeps a
-  // built-in on its semantic token instead of the catalog's seed hex.
-  const { categoryOf: resolveStatusCategory, colorOf: resolveStatusColor } =
+  // Activity and issue visuals share the catalog's custom geometry and color;
+  // built-ins keep their fixed glyph and semantic token.
+  const { categoryOf: resolveStatusCategory, colorOf: resolveStatusColor, iconOf: resolveStatusIcon } =
     useIssueStatuses(wsId);
   // Description autosave is deliberately NOT gated (no explicit submit; the
   // editor already strips `blob:` before serializing and binds ids on the
@@ -1370,6 +1382,18 @@ export function IssueDetail({ issueId, onDelete, onDone, defaultSidebarOpen = tr
       return cached?.description != null ? cached : undefined;
     },
   });
+  const descriptionSourceId = `description:${id}`;
+  const descriptionAnnotations = useCommentAnnotations({
+    draftKey: `new:${id}`,
+    sources: [{ id: descriptionSourceId, name: "Description", revision: issue?.revision }],
+    enabled: !!user && !!issue,
+    editable: true,
+  });
+  const canAnnotateDescription = !!user;
+  const descriptionSelectionAction = useMemo(() => canAnnotateDescription ? {
+    label: t(($) => $.reply.annotations.add_comment),
+    onSelect: descriptionAnnotations.addSelection,
+  } : undefined, [canAnnotateDescription, t, descriptionAnnotations.addSelection]);
   const openCommentSubIssue = useCallback((commentId: string) => {
     if (!issue) return;
     openModal("quick-create-issue", {
@@ -1916,7 +1940,17 @@ export function IssueDetail({ issueId, onDelete, onDone, defaultSidebarOpen = tr
       }
     }
 
-    const el = document.getElementById(`comment-${highlightCommentId}`);
+    // A deleted reply renders nothing, so the id a notification or share link
+    // carries has no anchor to scroll to and no row to flash. Land on the
+    // comment above where it was; the id itself stays this landing's identity
+    // for the guards and the memento below.
+    const threadRootId = rootId ?? highlightCommentId;
+    const landingId = commentLandingTarget(
+      highlightCommentId,
+      threadRootId,
+      timelineView.threadReplies.get(threadRootId) ?? EMPTY_REPLIES,
+    );
+    const el = document.getElementById(`comment-${landingId}`);
     const container = scrollContainerEl;
     if (!el || !container) return;
 
@@ -1957,7 +1991,7 @@ export function IssueDetail({ issueId, onDelete, onDone, defaultSidebarOpen = tr
     };
     rafId = requestAnimationFrame(center);
 
-    setHighlightedId(highlightCommentId);
+    setHighlightedId(landingId);
     const fade = window.setTimeout(() => setHighlightedId(null), 2500);
     return () => {
       cancelAnimationFrame(rafId);
@@ -2474,6 +2508,7 @@ export function IssueDetail({ issueId, onDelete, onDone, defaultSidebarOpen = tr
           click an action they cannot run, and the refusal is explained at run
           time rather than by a silently shorter list. */}
       <QuickActionsSection issueId={issue.id} />
+      <WakeupsSection issueId={issue.id} closed={["done", "closed"].includes(resolveStatusCategory(issue.status))} />
       <PluginPanelSection issueId={issue.id} />
 
       {/* Parent issue — standalone section, only when the issue has a
@@ -2498,6 +2533,8 @@ export function IssueDetail({ issueId, onDelete, onDone, defaultSidebarOpen = tr
               >
                 <StatusIcon
                   status={parentIssue.status}
+                  color={resolveStatusColor(parentIssue.status)}
+                  icon={resolveStatusIcon(parentIssue.status)}
                   category={issueStatusCategory(parentIssue) ?? undefined}
                   className="h-3.5 w-3.5 shrink-0"
                 />
@@ -2624,6 +2661,7 @@ export function IssueDetail({ issueId, onDelete, onDone, defaultSidebarOpen = tr
             onReplyAccepted: scrollToTimelineBottom, onEdit: editComment, onDelete: deleteComment,
             onToggleReaction: handleToggleReaction, onCreateSubIssue: openCommentSubIssue,
             onResolveToggle: handleResolveToggle,
+            onCopyLink: actions.copyCommentLink,
             onCollapseResolved: reply.resolved_at ? () => toggleResolvedExpand(reply.id, false) : undefined,
             expandedResolvedIds: expandedResolved, onResolvedExpandChange: toggleResolvedExpand,
             highlightedCommentId: highlightedId,
@@ -2661,6 +2699,7 @@ export function IssueDetail({ issueId, onDelete, onDone, defaultSidebarOpen = tr
             onToggleReaction={handleToggleReaction}
             onCreateSubIssue={openCommentSubIssue}
             onResolveToggle={handleResolveToggle}
+            onCopyLink={actions.copyCommentLink}
             onCollapseResolved={isResolved ? () => toggleResolvedExpand(item.id, false) : undefined}
             expandedResolvedIds={expandedResolved}
             onResolvedExpandChange={toggleResolvedExpand}
@@ -2689,6 +2728,7 @@ export function IssueDetail({ issueId, onDelete, onDone, defaultSidebarOpen = tr
         resolveStatusLabel={resolveStatusLabel}
         resolveStatusCategory={resolveStatusCategory}
         resolveStatusColor={resolveStatusColor}
+        resolveStatusIcon={resolveStatusIcon}
         t={t}
         timeAgo={timeAgo}
         locale={locale}
@@ -2760,7 +2800,7 @@ export function IssueDetail({ issueId, onDelete, onDone, defaultSidebarOpen = tr
                 it never overlaps the title (which truncates to make room).
                 It self-hides when no agent is active. */}
             <IssueAgentHeaderChip issueId={id} />
-            {onDone && !issueBehavesAsAny(issue, ["done", "cancelled"]) && (
+            {onDone && !issueBehavesAsAny(issue, ["done", "closed"]) && (
               <Tooltip>
                 <TooltipTrigger
                   render={
@@ -2971,6 +3011,8 @@ export function IssueDetail({ issueId, onDelete, onDone, defaultSidebarOpen = tr
               <span className="font-medium shrink-0">{t(($) => $.detail.sub_issue_of)}</span>
               <StatusIcon
                   status={parentIssue.status}
+                  color={resolveStatusColor(parentIssue.status)}
+                  icon={resolveStatusIcon(parentIssue.status)}
                   category={issueStatusCategory(parentIssue) ?? undefined}
                   className="h-3.5 w-3.5 shrink-0"
                 />
@@ -3011,6 +3053,8 @@ export function IssueDetail({ issueId, onDelete, onDone, defaultSidebarOpen = tr
 
           <div
             {...descDropZoneProps}
+            {...descriptionAnnotations.captureProps}
+            ref={descriptionAnnotations.cardRef}
             className="relative mt-5 rounded-lg"
             onFocusCapture={() => {
               if (!descriptionEditingRef.current) {
@@ -3023,47 +3067,51 @@ export function IssueDetail({ issueId, onDelete, onDone, defaultSidebarOpen = tr
               }
             }}
           >
-            <ContentEditor
-              ref={descEditorRef}
-              key={id}
-              value={issue.description ?? ""}
-              placeholder={t(($) => $.detail.desc_placeholder)}
-              onUpdate={(md, baseMarkdown) => {
-                // Bind any pending uploads still referenced in the markdown
-                // so they appear in `issueAttachments` after refresh and the
-                // editor's text/code preview keeps working past reload.
-                //
-                // Match with `contentReferencesAttachment`, NOT `md.includes(a.url)`:
-                // the editor persists the durable `markdownLink`
-                // (`/api/attachments/<id>/download` / `markdown_url`) into the
-                // body, never the raw storage `a.url`. A bare `md.includes(a.url)`
-                // therefore never matches, so the upload is never linked via
-                // `attachment_ids`. After reload it's absent from
-                // `issueAttachments`, the renderer can't resolve it to a
-                // freshly-signed `download_url`, and the persisted auth-gated
-                // download endpoint fails to load as a native <img> on clients
-                // whose origin isn't the API host (Desktop/Electron, mobile
-                // webview) — while still working on web via the cookie/proxy.
-                // This mirrors the comment/reply/chat composers, which already
-                // bind via `contentReferencesAttachment` (MUL-3130 / MUL-3192).
-                const ids = descPendingAttachmentsRef.current
-                  .filter((a) => contentReferencesAttachment(md, a))
-                  .map((a) => a.id);
-                queueDescriptionSave({
-                  markdown: md,
-                  baseMarkdown,
-                  attachmentIds: ids,
-                });
-              }}
-              onUploadFile={handleDescriptionUpload}
-              debounceMs={1500}
-              // Closing the issue modal must save what the user last saw —
-              // without the flush, a paste followed by a quick close loses
-              // the image markdown and its attachment_ids bind (MUL-3254).
-              flushPendingOnUnmount
-              currentIssueId={id}
-              attachments={descEditorAttachments}
-            />
+            {descriptionAnnotations.popup}
+            <div data-comment-content={descriptionSourceId}>
+              <ContentEditor
+                ref={descEditorRef}
+                key={id}
+                value={issue.description ?? ""}
+                placeholder={t(($) => $.detail.desc_placeholder)}
+                onUpdate={(md, baseMarkdown) => {
+                  // Bind any pending uploads still referenced in the markdown
+                  // so they appear in `issueAttachments` after refresh and the
+                  // editor's text/code preview keeps working past reload.
+                  //
+                  // Match with `contentReferencesAttachment`, NOT `md.includes(a.url)`:
+                  // the editor persists the durable `markdownLink`
+                  // (`/api/attachments/<id>/download` / `markdown_url`) into the
+                  // body, never the raw storage `a.url`. A bare `md.includes(a.url)`
+                  // therefore never matches, so the upload is never linked via
+                  // `attachment_ids`. After reload it's absent from
+                  // `issueAttachments`, the renderer can't resolve it to a
+                  // freshly-signed `download_url`, and the persisted auth-gated
+                  // download endpoint fails to load as a native <img> on clients
+                  // whose origin isn't the API host (Desktop/Electron, mobile
+                  // webview) — while still working on web via the cookie/proxy.
+                  // This mirrors the comment/reply/chat composers, which already
+                  // bind via `contentReferencesAttachment` (MUL-3130 / MUL-3192).
+                  const ids = descPendingAttachmentsRef.current
+                    .filter((a) => contentReferencesAttachment(md, a))
+                    .map((a) => a.id);
+                  queueDescriptionSave({
+                    markdown: md,
+                    baseMarkdown,
+                    attachmentIds: ids,
+                  });
+                }}
+                onUploadFile={handleDescriptionUpload}
+                debounceMs={1500}
+                // Closing the issue modal must save what the user last saw —
+                // without the flush, a paste followed by a quick close loses
+                // the image markdown and its attachment_ids bind (MUL-3254).
+                flushPendingOnUnmount
+                currentIssueId={id}
+                selectionAction={descriptionSelectionAction}
+                attachments={descEditorAttachments}
+              />
+            </div>
 
             <div className="flex items-center gap-1 mt-3">
               <ReactionBar
@@ -3431,6 +3479,7 @@ export function IssueDetail({ issueId, onDelete, onDone, defaultSidebarOpen = tr
               issueId={id}
               onSubmit={submitComment}
               onAccepted={scrollToTimelineBottom}
+              onEditAnnotation={(annotationId) => descriptionAnnotations.editAnnotation(annotationId, true)}
             />
           </div>
         </div>

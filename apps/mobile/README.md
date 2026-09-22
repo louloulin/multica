@@ -1,6 +1,6 @@
 # Multica Mobile (iOS + Android)
 
-Expo + React Native mobile client for Multica. Independent from web/desktop — shares only types from `@multica/core/`. See [`CLAUDE.md`](./CLAUDE.md) for the locked tech-stack baseline and import rules.
+Expo + React Native mobile client for Multica. Independent from web/desktop — shares types and pure utilities from `@multica/core/`. See [`AGENTS.md`](./AGENTS.md) for mobile architecture and development rules; `package.json` records the current dependency versions.
 
 Both platforms build from the same JS/TS source and the same `app.config.ts`. iOS is documented first (it shipped first); the [Android](#android) section below covers everything Android-specific.
 
