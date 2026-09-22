@@ -1,0 +1,187 @@
+- generic [active] [ref=f4e1]:
+  - generic [ref=f4e2]:
+    - generic [ref=f4e4]:
+      - generic [ref=f4e5]:
+        - list [ref=f4e6]:
+          - listitem [ref=f4e7]:
+            - button "L lumos" [ref=f4e8]:
+              - generic [ref=f4e9]: L
+              - generic [ref=f4e11]: lumos
+        - list [ref=f4e14]:
+          - listitem [ref=f4e15]:
+            - button "搜索..." [ref=f4e16]:
+              - generic [aria-hidden]:
+                - generic [aria-hidden]: K
+          - listitem [ref=f4e21]:
+            - button "新建任务" [ref=f4e22]:
+              - generic [aria-hidden]:
+                - generic [aria-hidden]: C
+      - generic [ref=f4e28]:
+        - list [ref=f4e31]:
+          - listitem [ref=f4e32]:
+            - link "收件箱" [ref=f4e33] [cursor=pointer]:
+              - /url: /lumos/inbox
+          - listitem [ref=f4e38]:
+            - link "聊天" [ref=f4e39] [cursor=pointer]:
+              - /url: /lumos/chat
+          - listitem [ref=f4e43]:
+            - link "我的任务" [ref=f4e44] [cursor=pointer]:
+              - /url: /lumos/my-issues
+        - generic [ref=f4e51]:
+          - button "固定 18" [expanded] [ref=f4e52] [cursor=pointer]:
+            - generic [ref=f4e53]: 固定
+            - generic [ref=f4e56]: "18"
+          - generic [ref=f4e58]:
+            - list [ref=f4e59]:
+              - listitem [ref=f4e60]
+              - listitem [ref=f4e64]
+              - button [ref=f4e68]:
+                - link "openbuddy" [ref=f4e69] [cursor=pointer]:
+                  - /url: /lumos/projects/45829db6-ad1e-404d-867d-7b2428dd0525
+                  - generic [aria-hidden] [ref=f4e70]: 📁
+              - listitem [ref=f4e72]
+              - listitem [ref=f4e76]
+              - listitem [ref=f4e80]
+              - listitem [ref=f4e84]
+              - listitem [ref=f4e88]
+              - listitem [ref=f4e92]
+              - listitem [ref=f4e96]
+              - listitem [ref=f4e100]
+              - listitem [ref=f4e104]
+              - listitem [ref=f4e108]
+              - listitem [ref=f4e112]
+              - listitem [ref=f4e116]
+              - listitem [ref=f4e120]
+              - listitem [ref=f4e124]
+              - listitem [ref=f4e128]
+            - status [ref=f4e132]
+        - generic [ref=f4e133]:
+          - generic [ref=f4e134]: 工作区
+          - list [ref=f4e136]:
+            - listitem [ref=f4e137]:
+              - link "任务" [ref=f4e138] [cursor=pointer]:
+                - /url: /lumos/issues
+            - listitem [ref=f4e143]:
+              - link "项目" [ref=f4e144] [cursor=pointer]:
+                - /url: /lumos/projects
+            - listitem [ref=f4e148]:
+              - link "自动化" [ref=f4e149] [cursor=pointer]:
+                - /url: /lumos/autopilots
+            - listitem [ref=f4e153]:
+              - link "智能体" [ref=f4e154] [cursor=pointer]:
+                - /url: /lumos/agents
+            - listitem [ref=f4e159]:
+              - link "小队" [ref=f4e160] [cursor=pointer]:
+                - /url: /lumos/squads
+            - listitem [ref=f4e167]:
+              - link "统计" [ref=f4e168] [cursor=pointer]:
+                - /url: /lumos/usage
+        - generic [ref=f4e172]:
+          - generic [ref=f4e173]: 配置
+          - list [ref=f4e175]:
+            - listitem [ref=f4e176]:
+              - link "运行时" [ref=f4e177] [cursor=pointer]:
+                - /url: /lumos/runtimes
+            - listitem [ref=f4e181]:
+              - link "Skills" [ref=f4e182] [cursor=pointer]:
+                - /url: /lumos/skills
+            - listitem [ref=f4e186]:
+              - link "设置" [ref=f4e187] [cursor=pointer]:
+                - /url: /lumos/settings
+      - generic [ref=f4e193]:
+        - generic [ref=f4e194]:
+          - link "加入 Discord" [ref=f4e195] [cursor=pointer]:
+            - /url: https://discord.gg/W8gYBn226t
+          - button "关闭" [ref=f4e199] [cursor=pointer]
+        - button "帮助" [ref=f4e203] [cursor=pointer]
+      - button "切换左侧边栏" [ref=f4e207]
+    - main [ref=f4e208]:
+      - generic [ref=f4e209]:
+        - generic [ref=f4e212]:
+          - generic [ref=f4e213]:
+            - button "切换左侧边栏" [ref=f4e214]
+            - generic [ref=f4e216]:
+              - link "项目" [ref=f4e217] [cursor=pointer]:
+                - /url: /lumos/projects
+              - generic [ref=f4e220]: openbuddy
+            - generic [ref=f4e221]:
+              - button "从侧边栏取消固定" [ref=f4e222]
+              - button [ref=f4e223]
+              - button [ref=f4e224]
+          - generic [ref=f4e226]:
+            - generic [ref=f4e228]:
+              - button "全部" [ref=f4e230]
+              - button "成员" [ref=f4e233]
+              - button "智能体" [ref=f4e236]
+              - status [ref=f4e238]
+              - button "视图" [ref=f4e239]
+            - generic [ref=f4e240]:
+              - button "工作中的智能体：—" [ref=f4e241]
+              - generic [ref=f4e243]:
+                - button "筛选" [ref=f4e244]
+                - button "显示" [ref=f4e246]
+                - button "看板" [ref=f4e248]
+        - separator
+        - generic [ref=f4e275]:
+          - generic [ref=f4e276]:
+            - button "📁" [ref=f4e277] [cursor=pointer]
+            - textbox "项目标题" [ref=f4e279]:
+              - paragraph [ref=f4e280]: openbuddy
+          - generic [ref=f4e281]:
+            - button "属性" [ref=f4e282]
+            - generic [ref=f4e285]:
+              - generic [ref=f4e286]:
+                - generic [ref=f4e287]: 状态
+                - button "计划中" [ref=f4e289]
+              - generic [ref=f4e292]:
+                - generic [ref=f4e293]: 优先级
+                - button "紧急" [ref=f4e295]
+              - generic [ref=f4e300]:
+                - generic [ref=f4e301]: 负责人
+                - button "Unknown Agent" [ref=f4e303]:
+                  - link [ref=f4e305] [cursor=pointer]
+              - generic [ref=f4e312]:
+                - generic [ref=f4e313]: 开始日期
+                - button "开始日期" [ref=f4e315] [cursor=pointer]
+              - generic [ref=f4e321]:
+                - generic [ref=f4e322]: 截止日期
+                - button "截止日期" [ref=f4e324] [cursor=pointer]
+          - generic [ref=f4e328]:
+            - button "进度" [ref=f4e329]
+            - generic [ref=f4e332]: 44/138
+          - generic [ref=f4e336]:
+            - button "描述" [ref=f4e337]
+            - generic [ref=f4e340]:
+              - paragraph [ref=f4e344]: openbuddy改造
+              - paragraph [ref=f4e345]: 会作为项目上下文提供给智能体，应用于该项目下的每次运行。
+          - generic [ref=f4e346]:
+            - button "资源" [ref=f4e347]
+            - generic [ref=f4e350]:
+              - paragraph [ref=f4e351]: 还没有关联资源。
+              - button "添加资源" [ref=f4e352]
+      - generic:
+        - generic:
+          - generic:
+            - button
+            - generic:
+              - button "新对话"
+          - generic:
+            - button
+            - button
+        - generic:
+          - generic:
+            - heading "和你的智能体对话" [level=3]
+            - paragraph: 让它做一份总结、规划你的一天，或交给它一个小任务。
+        - generic:
+          - generic:
+            - generic:
+              - generic:
+                - generic:
+                  - generic:
+                    - paragraph: 绑定运行时后继续
+            - generic: 暂无智能体
+            - generic:
+              - button "发送" [disabled]
+      - button "问 Multica" [ref=f4e353]
+  - region "Notifications alt+T"
+  - alert [ref=f4e356]
