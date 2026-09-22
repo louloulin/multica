@@ -1,14 +1,14 @@
 "use client";
 
 import { useRef, useState, useCallback, useEffect, useMemo } from "react";
-import { cn } from "@multica/ui/lib/utils";
+import { cn } from "@lumen/ui/lib/utils";
 import { ContentEditor, type ContentEditorRef, useFileDropZone, FileDropOverlay, useLazyEditor, useUploadGate, useComposerSubmit } from "../../editor";
-import { FileUploadButton } from "@multica/ui/components/common/file-upload-button";
-import { SubmitButton } from "@multica/ui/components/common/submit-button";
-import { contentReferencesAttachment } from "@multica/core/types";
-import { formatShortcut, useShortcut } from "@multica/core/shortcuts";
-import { useCommentDraftStore } from "@multica/core/issues/stores";
-import { composeAnnotatedReply, hasReplyIntent } from "@multica/core/drafts/reply-annotation";
+import { FileUploadButton } from "@lumen/ui/components/common/file-upload-button";
+import { SubmitButton } from "@lumen/ui/components/common/submit-button";
+import { contentReferencesAttachment } from "@lumen/core/types";
+import { formatShortcut, useShortcut } from "@lumen/core/shortcuts";
+import { useCommentDraftStore } from "@lumen/core/issues/stores";
+import { composeAnnotatedReply, hasReplyIntent } from "@lumen/core/drafts/reply-annotation";
 import { ReplyAnnotations } from "./reply-annotations";
 import { useT } from "../../i18n";
 import { CommentTriggerChips } from "./comment-trigger-chips";

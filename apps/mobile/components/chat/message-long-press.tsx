@@ -18,7 +18,7 @@
 import { useCallback, useState } from "react";
 import * as Clipboard from "expo-clipboard";
 import * as Haptics from "expo-haptics";
-import type { ChatMessage } from "@multica/core/types";
+import type { ChatMessage } from "@lumen/core/types";
 import { useChatSelectStore } from "@/data/chat-select-store";
 import { showActionSheetWithOptions } from "@/lib/action-sheet";
 

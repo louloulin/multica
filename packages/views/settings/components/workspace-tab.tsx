@@ -2,9 +2,9 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { LogOut } from "lucide-react";
-import { Input } from "@multica/ui/components/ui/input";
-import { Textarea } from "@multica/ui/components/ui/textarea";
-import { Button } from "@multica/ui/components/ui/button";
+import { Input } from "@lumen/ui/components/ui/input";
+import { Textarea } from "@lumen/ui/components/ui/textarea";
+import { Button } from "@lumen/ui/components/ui/button";
 import {
   AlertDialog,
   AlertDialogContent,
@@ -14,25 +14,25 @@ import {
   AlertDialogFooter,
   AlertDialogCancel,
   AlertDialogAction,
-} from "@multica/ui/components/ui/alert-dialog";
+} from "@lumen/ui/components/ui/alert-dialog";
 import { toast } from "sonner";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useAuthStore } from "@multica/core/auth";
-import { useLeaveWorkspace, useDeleteWorkspace } from "@multica/core/workspace/mutations";
+import { useAuthStore } from "@lumen/core/auth";
+import { useLeaveWorkspace, useDeleteWorkspace } from "@lumen/core/workspace/mutations";
 import {
   memberListOptions,
   workspaceKeys,
   workspaceListOptions,
-} from "@multica/core/workspace/queries";
-import { issueKeys } from "@multica/core/issues/queries";
-import { api } from "@multica/core/api";
+} from "@lumen/core/workspace/queries";
+import { issueKeys } from "@lumen/core/issues/queries";
+import { api } from "@lumen/core/api";
 import {
   resolvePostAuthDestination,
   useCurrentWorkspace,
   useHasOnboarded,
-} from "@multica/core/paths";
-import { setCurrentWorkspace } from "@multica/core/platform";
-import type { Workspace } from "@multica/core/types";
+} from "@lumen/core/paths";
+import { setCurrentWorkspace } from "@lumen/core/platform";
+import type { Workspace } from "@lumen/core/types";
 import { AvatarUploadControl } from "../../common/avatar-upload-control";
 import { useNavigation } from "../../navigation";
 import { DeleteWorkspaceDialog } from "./delete-workspace-dialog";

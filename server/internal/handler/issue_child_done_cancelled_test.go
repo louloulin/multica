@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	"github.com/jackc/pgx/v5/pgtype"
-	db "github.com/multica-ai/multica/server/pkg/db/generated"
+	db "github.com/lumen-ai/lumen/server/pkg/db/generated"
 )
 
 func TestStageProgressSummarySeparatesCancelledFromDone(t *testing.T) {

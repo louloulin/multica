@@ -12,8 +12,8 @@ import {
   Plus,
   RefreshCw,
 } from "lucide-react";
-import { ApiError, errorCode } from "@multica/core/api";
-import { autopilotQuotaUsageOptions } from "@multica/core/autopilots";
+import { ApiError, errorCode } from "@lumen/core/api";
+import { autopilotQuotaUsageOptions } from "@lumen/core/autopilots";
 import {
   useCreateWorkspaceSubscriptionCheckout,
   useCreateWorkspaceSubscriptionPortal,
@@ -22,20 +22,20 @@ import {
   issueLimitUsageOptions,
   workspaceSubscriptionPricesOptions,
   workspaceSubscriptionSummaryOptions,
-} from "@multica/core/billing";
-import { useFeatureEnabled } from "@multica/core/config";
-import { BILLING_WORKSPACE_SUBSCRIPTIONS_FLAG } from "@multica/core/feature-flags";
-import { useCurrentWorkspace } from "@multica/core/paths";
+} from "@lumen/core/billing";
+import { useFeatureEnabled } from "@lumen/core/config";
+import { BILLING_WORKSPACE_SUBSCRIPTIONS_FLAG } from "@lumen/core/feature-flags";
+import { useCurrentWorkspace } from "@lumen/core/paths";
 import type {
   PurchaseWorkspaceSeatsRequest,
   WorkspaceSeatPurchasePreview,
   WorkspaceSubscriptionInterval,
-} from "@multica/core/types";
+} from "@lumen/core/types";
 import {
   Alert,
   AlertDescription,
   AlertTitle,
-} from "@multica/ui/components/ui/alert";
+} from "@lumen/ui/components/ui/alert";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -45,9 +45,9 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@multica/ui/components/ui/alert-dialog";
-import { Badge } from "@multica/ui/components/ui/badge";
-import { Button } from "@multica/ui/components/ui/button";
+} from "@lumen/ui/components/ui/alert-dialog";
+import { Badge } from "@lumen/ui/components/ui/badge";
+import { Button } from "@lumen/ui/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -55,20 +55,20 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@multica/ui/components/ui/dialog";
-import { Input } from "@multica/ui/components/ui/input";
+} from "@lumen/ui/components/ui/dialog";
+import { Input } from "@lumen/ui/components/ui/input";
 import {
   Popover,
   PopoverContent,
   PopoverDescription,
   PopoverTrigger,
-} from "@multica/ui/components/ui/popover";
+} from "@lumen/ui/components/ui/popover";
 import {
   Progress,
   ProgressLabel,
   ProgressValue,
-} from "@multica/ui/components/ui/progress";
-import { Skeleton } from "@multica/ui/components/ui/skeleton";
+} from "@lumen/ui/components/ui/progress";
+import { Skeleton } from "@lumen/ui/components/ui/skeleton";
 import { useLocale, useT } from "../../i18n";
 import { useNavigation } from "../../navigation";
 import { openExternal } from "../../platform";

@@ -1,11 +1,11 @@
 # Self-Hosting — Desktop Client
 
-This document covers the desktop client side of a self-hosted Multica
+This document covers the desktop client side of a self-hosted Lumen
 deployment. For the server install, see [SELF_HOSTING.md](SELF_HOSTING.md).
 
 ## What the desktop client needs
 
-The desktop app reaches Multica through three URLs:
+The desktop app reaches Lumen through three URLs:
 
 | URL | Purpose |
 | --- | --- |
@@ -13,22 +13,22 @@ The desktop app reaches Multica through three URLs:
 | `appUrl` | Web app loaded inside the Electron renderer (for issue boards, settings, etc.). |
 | `wsUrl` | WebSocket endpoint for realtime updates. |
 
-The desktop bundles one binary that serves both Multica Cloud and self-host
+The desktop bundles one binary that serves both Lumen Cloud and self-host
 deployments — there is no separate self-host build. Switching which backend it
 points at is a runtime config change, not an install-time decision.
 
 ## First-launch Welcome
 
-When Multica Desktop starts for the first time and `~/.multica/desktop.json`
+When Lumen Desktop starts for the first time and `~/.lumen/desktop.json`
 does not exist yet, it shows a **Welcome** screen before the renderer mounts
 anything else (login page, workspace list, settings). Pick one:
 
-- **Use Multica Cloud** — saves the default Cloud configuration so the next
+- **Use Lumen Cloud** — saves the default Cloud configuration so the next
   launch skips Welcome and goes straight to the login page.
 - **Connect to self-hosted** — paste your API URL; Desktop derives
   `appUrl` / `wsUrl` automatically and asks you to restart.
 
-There is no skip option. The choice persists to `~/.multica/desktop.json` —
+There is no skip option. The choice persists to `~/.lumen/desktop.json` —
 the file's existence (and matching the Cloud default if it was the
 Cloud-choice write) is what keeps Welcome from re-firing on subsequent
 launches. Returning users with an existing config never see this screen.
@@ -38,16 +38,16 @@ including a destructive **Reset to cloud** action that deletes the file.
 
 ## Configure via Settings → Backend (recommended for changes after first launch)
 
-1. Open Multica Desktop.
+1. Open Lumen Desktop.
 2. Open **Settings → Backend**.
 3. Paste your API URL (for example `https://api.example.com`).
 4. Click **Save**.
 5. Click **Restart now** in the toast that appears.
 
-Desktop writes `~/.multica/desktop.json`, derives `appUrl` and `wsUrl`
+Desktop writes `~/.lumen/desktop.json`, derives `appUrl` and `wsUrl`
 automatically, and asks you to restart. The full URL round-trip and override
 fields are documented in the
-[user docs](https://multica.ai/docs/desktop-app#connecting-to-a-self-hosted-instance).
+[user docs](https://lumen.ai/docs/desktop-app#connecting-to-a-self-hosted-instance).
 
 ### How the derivation works
 
@@ -66,7 +66,7 @@ subdomain.
 ### "Reset to cloud"
 
 The same panel has a destructive **Reset to cloud** action. It requires typing
-the keyword `multica.ai` to confirm, deletes `~/.multica/desktop.json`, and asks
+the keyword `lumen.ai` to confirm, deletes `~/.lumen/desktop.json`, and asks
 the desktop client to restart. Use this to return to the default Cloud
 configuration without uninstalling.
 
@@ -78,9 +78,9 @@ directory has been moved or redirected, use its actual path:
 
 | Platform | Path |
 | --- | --- |
-| macOS | `/Users/<you>/.multica/desktop.json` |
-| Linux | `/home/<you>/.multica/desktop.json` |
-| Windows | `C:\Users\<you>\.multica\desktop.json` |
+| macOS | `/Users/<you>/.lumen/desktop.json` |
+| Linux | `/home/<you>/.lumen/desktop.json` |
+| Windows | `C:\Users\<you>\.lumen\desktop.json` |
 
 Minimal config — only `apiUrl` is required; the other two are derived:
 
@@ -129,10 +129,10 @@ to return to the default Cloud configuration.
 
 ### Not the CLI config
 
-`~/.multica/desktop.json` is **not** the CLI's `~/.multica/config.json`, and
+`~/.lumen/desktop.json` is **not** the CLI's `~/.lumen/config.json`, and
 the key names differ: the CLI uses `server_url`, Desktop uses `apiUrl`. Desktop
 never reads the CLI's config — it manages a separate daemon profile under
-`~/.multica/profiles/desktop-<host>/`. Editing `config.json` does not change
+`~/.lumen/profiles/desktop-<host>/`. Editing `config.json` does not change
 which server Desktop connects to.
 
 ## Network reachability
@@ -161,6 +161,6 @@ sidebar, etc.) is on the roadmap but not in this release.
 
 The bundled CLI binary is the same for both Cloud and self-host — only the API
 URL changes. The CLI's own bootstrap step (`cli-bootstrap.ts`) continues to pull
-from the upstream `multica-ai/multica` releases channel, which is fine for
+from the upstream `lumen-ai/lumen` releases channel, which is fine for
 self-host: the CLI binary is identical, and Desktop already passes the
-configured server URL when invoking `multica daemon`.
+configured server URL when invoking `lumen daemon`.

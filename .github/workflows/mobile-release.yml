@@ -1,6 +1,6 @@
 name: Mobile release
 
-# Tag-triggered internal APK build for Multica mobile.
+# Tag-triggered internal APK build for Lumen mobile.
 #
 # Mobile release cadence is decoupled from main `v*.*.*` tags (server /
 # CLI / desktop). Push a `mobile-v*.*.*` tag to archive an Android
@@ -8,10 +8,10 @@ name: Mobile release
 # distribution is local/internal per apps/mobile/CLAUDE.md).
 #
 # Required secrets (Android):
-#   ORG_GRADLE_PROJECT_MULTICA_RELEASE_STORE_FILE
-#   ORG_GRADLE_PROJECT_MULTICA_RELEASE_STORE_PASSWORD
-#   ORG_GRADLE_PROJECT_MULTICA_RELEASE_KEY_ALIAS
-#   ORG_GRADLE_PROJECT_MULTICA_RELEASE_KEY_PASSWORD
+#   ORG_GRADLE_PROJECT_LUMEN_RELEASE_STORE_FILE
+#   ORG_GRADLE_PROJECT_LUMEN_RELEASE_STORE_PASSWORD
+#   ORG_GRADLE_PROJECT_LUMEN_RELEASE_KEY_ALIAS
+#   ORG_GRADLE_PROJECT_LUMEN_RELEASE_KEY_PASSWORD
 #
 # Required secrets (iOS):
 #   EXPO_APPLE_TEAM_ID
@@ -62,10 +62,10 @@ jobs:
         run: pnpm install
 
       - name: Type check, lint, and test
-        run: pnpm exec turbo typecheck lint test --filter=@multica/mobile
+        run: pnpm exec turbo typecheck lint test --filter=@lumen/mobile
 
       - name: Prebuild Android project
-        run: pnpm --filter @multica/mobile exec expo prebuild --platform android --non-interactive
+        run: pnpm --filter @lumen/mobile exec expo prebuild --platform android --non-interactive
 
       - name: Verify release signing config
         run: pnpm android:mobile:verify-signing
@@ -77,7 +77,7 @@ jobs:
       - name: Upload release APK
         uses: actions/upload-artifact@v4
         with:
-          name: multica-mobile-android-release
+          name: lumen-mobile-android-release
           path: apps/mobile/android/app/build/outputs/apk/release/*.apk
           if-no-files-found: error
           retention-days: 30

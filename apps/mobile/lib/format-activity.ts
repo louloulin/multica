@@ -10,8 +10,8 @@
  * mobile clients in the wild must render them as a generic fallback, not
  * crash).
  */
-import type { IssuePriority, TimelineEntry } from "@multica/core/types";
-import { formatDateOnly } from "@multica/core/issues/date";
+import type { IssuePriority, TimelineEntry } from "@lumen/core/types";
+import { formatDateOnly } from "@lumen/core/issues/date";
 import { STATUS_LABEL, isBuiltInIssueStatus } from "@/lib/issue-status";
 
 const PRIORITY_LABEL: Record<IssuePriority, string> = {

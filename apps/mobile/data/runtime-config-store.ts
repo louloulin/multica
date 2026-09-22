@@ -5,7 +5,7 @@
  *
  * Hydrate order (called once from `RuntimeConfigInitializer` in
  * `app/_layout.tsx`):
- *   1. Read raw JSON from SecureStore under `multica_runtime_config`.
+ *   1. Read raw JSON from SecureStore under `lumen_runtime_config`.
  *   2. parseRuntimeConfig validates schema + URL shape.
  *   3. If parse succeeds → use parsed; else fall back to build-time URL.
  *   4. If SecureStore throws (rare: Android Keystore locked) → fall back
@@ -29,14 +29,14 @@ import {
 } from "./runtime-config";
 import type { RuntimeConfig } from "./runtime-config";
 
-const SECURE_STORE_KEY = "multica_runtime_config";
+const SECURE_STORE_KEY = "lumen_runtime_config";
 
 type Status = "idle" | "hydrating" | "hydrated";
 
 interface State {
   status: Status;
   config: RuntimeConfig;
-  /** True after the user (or Welcome's "Use Multica Cloud" button) explicitly
+  /** True after the user (or Welcome's "Use Lumen Cloud" button) explicitly
    *  chose a backend. False while the runtime config came from build-time env
    *  and the user has not visited Welcome. */
   hasUserChosenBackend: boolean;
@@ -117,7 +117,7 @@ export const useRuntimeConfigStore = create<State>((set, get) => ({
 
   resetToDefault: async () => {
     // Write DEFAULT to SecureStore (don't delete) so the next launch can
-    // distinguish "user explicitly chose Multica Cloud" from "first run,
+    // distinguish "user explicitly chose Lumen Cloud" from "first run,
     // no choice yet". An empty SecureStore is the only signal hydrate()
     // has to show the Welcome gate — if resetToDefault() deleted the
     // record, the gate would reappear on every relaunch after a reset.

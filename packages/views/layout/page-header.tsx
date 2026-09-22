@@ -1,7 +1,7 @@
 "use client";
 
-import { cn } from "@multica/ui/lib/utils";
-import { SidebarTrigger, useSidebarSafe } from "@multica/ui/components/ui/sidebar";
+import { cn } from "@lumen/ui/lib/utils";
+import { SidebarTrigger, useSidebarSafe } from "@lumen/ui/components/ui/sidebar";
 
 /**
  * The left edge every page shares: the header, the toolbar under it, and any

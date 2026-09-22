@@ -1,14 +1,14 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Bug, Copy, Trash2 } from "lucide-react";
-import { clientDiagnostics, type ClientDiagnosticEvent } from "@multica/core/diagnostics";
-import { defaultStorage } from "@multica/core/platform";
-import { Button } from "@multica/ui/components/ui/button";
-import { Switch } from "@multica/ui/components/ui/switch";
-import { SettingsCard, SettingsRow, SettingsSection, SettingsTab } from "@multica/views/settings";
-import { useT } from "@multica/views/i18n";
+import { clientDiagnostics, type ClientDiagnosticEvent } from "@lumen/core/diagnostics";
+import { defaultStorage } from "@lumen/core/platform";
+import { Button } from "@lumen/ui/components/ui/button";
+import { Switch } from "@lumen/ui/components/ui/switch";
+import { SettingsCard, SettingsRow, SettingsSection, SettingsTab } from "@lumen/views/settings";
+import { useT } from "@lumen/views/i18n";
 import { toast } from "sonner";
 
-const DEBUG_STORAGE_KEY = "multica:desktop-debug:v1";
+const DEBUG_STORAGE_KEY = "lumen:desktop-debug:v1";
 const MAX_RENDERED_EVENTS = 200;
 
 type DebugPreference = { version: 1; debugEnabled: boolean };

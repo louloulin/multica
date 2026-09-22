@@ -17,15 +17,15 @@ import {
   issueKeys,
   issueTableGroupsOptions,
   issueTableRowPageOptions,
-} from "@multica/core/issues/queries";
-import { issueStatusCategory } from "@multica/core/issues";
+} from "@lumen/core/issues/queries";
+import { issueStatusCategory } from "@lumen/core/issues";
 import type {
   Issue,
   IssueTableGroupDescriptor,
   IssueTableGroupsRequest,
   IssueTableQuerySpec,
   IssueTableRowsResponse,
-} from "@multica/core/types";
+} from "@lumen/core/types";
 
 export interface IssueGroupPageState {
   total: number;

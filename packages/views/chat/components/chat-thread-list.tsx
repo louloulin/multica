@@ -14,19 +14,19 @@ import {
   Square,
   Trash2,
 } from "lucide-react";
-import { cn } from "@multica/ui/lib/utils";
-import { useWorkspaceId } from "@multica/core/hooks";
-import { paths, useWorkspaceSlug } from "@multica/core/paths";
-import { useWorkspacePresenceMap } from "@multica/core/agents";
-import { api } from "@multica/core/api";
-import { pendingChatTasksOptions, chatKeys, sortChatSessions } from "@multica/core/chat/queries";
+import { cn } from "@lumen/ui/lib/utils";
+import { useWorkspaceId } from "@lumen/core/hooks";
+import { paths, useWorkspaceSlug } from "@lumen/core/paths";
+import { useWorkspacePresenceMap } from "@lumen/core/agents";
+import { api } from "@lumen/core/api";
+import { pendingChatTasksOptions, chatKeys, sortChatSessions } from "@lumen/core/chat/queries";
 import {
   useDeleteChatSession,
   useSetChatSessionArchived,
   useSetChatSessionPinned,
-} from "@multica/core/chat/mutations";
-import { useChatStore } from "@multica/core/chat";
-import type { Agent, ChatSession, PendingChatTasksResponse } from "@multica/core/types";
+} from "@lumen/core/chat/mutations";
+import { useChatStore } from "@lumen/core/chat";
+import type { Agent, ChatSession, PendingChatTasksResponse } from "@lumen/core/types";
 import { ActorAvatar } from "../../common/actor-avatar";
 import {
   RowActionsMenu,
@@ -34,8 +34,8 @@ import {
   type RowActionItem,
 } from "../../common/row-actions-menu";
 import { resolveClickIntent, useOptionalNavigation } from "../../navigation";
-import { createLogger } from "@multica/core/logger";
-import { removeChatMessageFromCaches } from "@multica/core/realtime";
+import { createLogger } from "@lumen/core/logger";
+import { removeChatMessageFromCaches } from "@lumen/core/realtime";
 import { useLocale, useT } from "../../i18n";
 
 const apiLogger = createLogger("chat.api");

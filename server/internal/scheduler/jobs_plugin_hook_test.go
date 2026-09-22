@@ -5,10 +5,10 @@ import (
 	"testing"
 	"time"
 
-	"github.com/multica-ai/multica/server/internal/featureflags"
-	"github.com/multica-ai/multica/server/internal/service"
-	"github.com/multica-ai/multica/server/internal/util"
-	"github.com/multica-ai/multica/server/pkg/featureflag"
+	"github.com/lumen-ai/lumen/server/internal/featureflags"
+	"github.com/lumen-ai/lumen/server/internal/service"
+	"github.com/lumen-ai/lumen/server/internal/util"
+	"github.com/lumen-ai/lumen/server/pkg/featureflag"
 )
 
 func TestPluginHookSchedulePlansCollapseToLatestAndStaySerial(t *testing.T) {

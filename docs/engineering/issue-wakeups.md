@@ -45,17 +45,17 @@ Clients do not resend instructions, filters or thread references. The new UI
 requires this endpoint for restore; deploy the server first. Old clients and the
 existing full-config CLI update continue to work without a migration.
 
-Agents manage configurations with `multica issue wakeup`:
+Agents manage configurations with `lumen issue wakeup`:
 
 ```sh
-multica issue wakeup events
-multica issue wakeup create ISSUE --kind at --after 10m --instruction-file ./instruction.md
-multica issue wakeup create ISSUE --kind every --every 1h --instruction-file ./instruction.md
-multica issue wakeup create ISSUE --kind cron --cron '0 * * * *' --timezone Asia/Shanghai --instruction-file ./instruction.md
-multica issue wakeup create ISSUE --kind event --event task.completed,task.failed,task.cancelled --task-id RUN --instruction-file ./instruction.md
-multica issue wakeup list ISSUE
-multica issue wakeup get ISSUE WAKEUP
-multica issue wakeup disable ISSUE WAKEUP
+lumen issue wakeup events
+lumen issue wakeup create ISSUE --kind at --after 10m --instruction-file ./instruction.md
+lumen issue wakeup create ISSUE --kind every --every 1h --instruction-file ./instruction.md
+lumen issue wakeup create ISSUE --kind cron --cron '0 * * * *' --timezone Asia/Shanghai --instruction-file ./instruction.md
+lumen issue wakeup create ISSUE --kind event --event task.completed,task.failed,task.cancelled --task-id RUN --instruction-file ./instruction.md
+lumen issue wakeup list ISSUE
+lumen issue wakeup get ISSUE WAKEUP
+lumen issue wakeup disable ISSUE WAKEUP
 ```
 
 Specify `--agent-id` for human callers; authenticated agents default to themselves.
@@ -85,7 +85,7 @@ as supported by this version.
 
 ## Event catalog
 
-`multica issue wakeup events` lists the 25 supported issue-scoped subscriptions:
+`lumen issue wakeup events` lists the 25 supported issue-scoped subscriptions:
 
 | Area | Events |
 | --- | --- |
@@ -127,7 +127,7 @@ Use `--filter-actor-type member --filter-actor-id USER_ID` to wait for a
 specific workspace member, or type `agent` for a source agent. For example:
 
 ```sh
-multica issue wakeup create ISSUE --kind event --event comment.created \
+lumen issue wakeup create ISSUE --kind event --event comment.created \
   --filter-actor-type member --filter-actor-id USER_ID \
   --instruction-file ./instruction.md
 ```

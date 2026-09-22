@@ -1,4 +1,4 @@
-import type { AgentTask, TimelineEntry } from "@multica/core/types";
+import type { AgentTask, TimelineEntry } from "@lumen/core/types";
 
 export interface CommentRun {
   task: AgentTask;

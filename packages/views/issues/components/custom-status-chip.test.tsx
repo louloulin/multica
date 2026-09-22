@@ -1,16 +1,16 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
-import { buildIssueStatusCatalog } from "@multica/core/issue-statuses";
-import type { IssueStatusEntry } from "@multica/core/types";
+import { buildIssueStatusCatalog } from "@lumen/core/issue-statuses";
+import type { IssueStatusEntry } from "@lumen/core/types";
 import { CustomStatusChip } from "./custom-status-chip";
 
 let catalogEntries: IssueStatusEntry[] | undefined;
 
-vi.mock("@multica/core/hooks", () => ({
+vi.mock("@lumen/core/hooks", () => ({
   useWorkspaceId: () => "workspace-1",
 }));
 
-vi.mock("@multica/core/issue-statuses/hooks", () => ({
+vi.mock("@lumen/core/issue-statuses/hooks", () => ({
   useIssueStatuses: () => buildIssueStatusCatalog(catalogEntries),
 }));
 

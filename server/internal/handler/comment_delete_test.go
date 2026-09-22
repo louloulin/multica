@@ -14,11 +14,11 @@ import (
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgtype"
 
-	"github.com/multica-ai/multica/server/internal/events"
-	"github.com/multica-ai/multica/server/internal/service"
-	"github.com/multica-ai/multica/server/internal/testutil"
-	db "github.com/multica-ai/multica/server/pkg/db/generated"
-	"github.com/multica-ai/multica/server/pkg/protocol"
+	"github.com/lumen-ai/lumen/server/internal/events"
+	"github.com/lumen-ai/lumen/server/internal/service"
+	"github.com/lumen-ai/lumen/server/internal/testutil"
+	db "github.com/lumen-ai/lumen/server/pkg/db/generated"
+	"github.com/lumen-ai/lumen/server/pkg/protocol"
 )
 
 // Deleting a comment removes only that comment (#8296). These tests pin the

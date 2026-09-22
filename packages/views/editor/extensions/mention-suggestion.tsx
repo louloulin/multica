@@ -11,42 +11,42 @@ import {
   type ReactNode,
 } from "react";
 import type { QueryClient } from "@tanstack/react-query";
-import { getCurrentWsId } from "@multica/core/platform";
-import { flattenIssueBuckets, issueKeys } from "@multica/core/issues/queries";
-import { issueStatusCategory } from "@multica/core/issues";
-import { useIssueStatuses } from "@multica/core/issue-statuses/hooks";
-import { workspaceKeys } from "@multica/core/workspace/queries";
-import { useAuthStore } from "@multica/core/auth";
-import { canAssignAgentToIssue } from "@multica/core/permissions";
-import { isAgentRuntimeBound } from "@multica/core/agents";
-import { api } from "@multica/core/api";
+import { getCurrentWsId } from "@lumen/core/platform";
+import { flattenIssueBuckets, issueKeys } from "@lumen/core/issues/queries";
+import { issueStatusCategory } from "@lumen/core/issues";
+import { useIssueStatuses } from "@lumen/core/issue-statuses/hooks";
+import { workspaceKeys } from "@lumen/core/workspace/queries";
+import { useAuthStore } from "@lumen/core/auth";
+import { canAssignAgentToIssue } from "@lumen/core/permissions";
+import { isAgentRuntimeBound } from "@lumen/core/agents";
+import { api } from "@lumen/core/api";
 import {
   isIssueDirectHit,
   isProjectDirectHit,
-} from "@multica/core/search/cancelled-rank";
-import { isImeComposing } from "@multica/core/utils";
-import { isMentionBoundaryAfter } from "@multica/core/markdown";
+} from "@lumen/core/search/cancelled-rank";
+import { isImeComposing } from "@lumen/core/utils";
+import { isMentionBoundaryAfter } from "@lumen/core/markdown";
 import type {
   Issue,
   ListIssuesCache,
   MemberWithUser,
   Agent,
   Squad,
-} from "@multica/core/types";
+} from "@lumen/core/types";
 import { ListTodo } from "lucide-react";
 import { ActorAvatar } from "../../common/actor-avatar";
 import { StatusIcon } from "../../issues/components/status-icon";
 import { ProjectIcon } from "../../projects/components/project-icon";
 import { useT } from "../../i18n";
-import { Badge } from "@multica/ui/components/ui/badge";
+import { Badge } from "@lumen/ui/components/ui/badge";
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from "@multica/ui/components/ui/tooltip";
-import { cn } from "@multica/ui/lib/utils";
-import type { IssueStatus, IssueStatusCategory, ProjectStatus } from "@multica/core/types";
-import { PROJECT_STATUS_CONFIG } from "@multica/core/projects/config";
+} from "@lumen/ui/components/ui/tooltip";
+import { cn } from "@lumen/ui/lib/utils";
+import type { IssueStatus, IssueStatusCategory, ProjectStatus } from "@lumen/core/types";
+import { PROJECT_STATUS_CONFIG } from "@lumen/core/projects/config";
 import type { SuggestionOptions } from "@tiptap/suggestion";
 import type { Node as ProseMirrorNode } from "@tiptap/pm/model";
 import { PluginKey } from "@tiptap/pm/state";
@@ -706,7 +706,7 @@ function projectToMention(p: { id: string; title: string; description?: string |
  * True when the `@` at `pos` starts a token instead of continuing one.
  *
  * The rule itself — which characters make an `@` part of the word it follows,
- * and why CJK needs the exception — lives in @multica/core/markdown, shared
+ * and why CJK needs the exception — lives in @lumen/core/markdown, shared
  * with the mobile composer so the two clients cannot drift apart.
  */
 function isMentionBoundary(doc: ProseMirrorNode, pos: number): boolean {

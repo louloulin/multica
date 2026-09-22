@@ -8,30 +8,30 @@ import {
   useState,
 } from "react";
 import { Globe2, Loader2, Plus, SquareTerminal, Trash2 } from "lucide-react";
-import { Button } from "@multica/ui/components/ui/button";
-import { cn } from "@multica/ui/lib/utils";
+import { Button } from "@lumen/ui/components/ui/button";
+import { cn } from "@lumen/ui/lib/utils";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from "@multica/ui/components/ui/dialog";
+} from "@lumen/ui/components/ui/dialog";
 import {
   Field,
   FieldDescription,
   FieldError,
   FieldGroup,
   FieldLabel,
-} from "@multica/ui/components/ui/field";
-import { Input } from "@multica/ui/components/ui/input";
+} from "@lumen/ui/components/ui/field";
+import { Input } from "@lumen/ui/components/ui/input";
 import {
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
-} from "@multica/ui/components/ui/tabs";
-import { Textarea } from "@multica/ui/components/ui/textarea";
+} from "@lumen/ui/components/ui/tabs";
+import { Textarea } from "@lumen/ui/components/ui/textarea";
 import { useT } from "../../../i18n";
 import type { ManagedMcpServer } from "./mcp-config-model";
 import { isRecord, mcpTransport } from "./mcp-config-model";

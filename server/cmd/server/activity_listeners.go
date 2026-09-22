@@ -5,12 +5,12 @@ import (
 	"encoding/json"
 	"log/slog"
 
-	"github.com/multica-ai/multica/server/internal/events"
-	"github.com/multica-ai/multica/server/internal/handler"
-	"github.com/multica-ai/multica/server/internal/util"
-	db "github.com/multica-ai/multica/server/pkg/db/generated"
-	"github.com/multica-ai/multica/server/pkg/dbid"
-	"github.com/multica-ai/multica/server/pkg/protocol"
+	"github.com/lumen-ai/lumen/server/internal/events"
+	"github.com/lumen-ai/lumen/server/internal/handler"
+	"github.com/lumen-ai/lumen/server/internal/util"
+	db "github.com/lumen-ai/lumen/server/pkg/db/generated"
+	"github.com/lumen-ai/lumen/server/pkg/dbid"
+	"github.com/lumen-ai/lumen/server/pkg/protocol"
 )
 
 // registerActivityListeners wires up event bus listeners that record activity

@@ -1,8 +1,8 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { fireEvent, screen } from "@testing-library/react";
-import { ApiError } from "@multica/core/api";
-import { configStore } from "@multica/core/config";
-import { COMPOSIO_MCP_APPS_FLAG } from "@multica/core/feature-flags";
+import { ApiError } from "@lumen/core/api";
+import { configStore } from "@lumen/core/config";
+import { COMPOSIO_MCP_APPS_FLAG } from "@lumen/core/feature-flags";
 import { renderWithI18n } from "../../test/i18n";
 
 const state = vi.hoisted(() => ({
@@ -24,8 +24,8 @@ vi.mock("../../navigation/context", async (importOriginal) => ({
     push: state.push,
   }),
 }));
-vi.mock("@multica/core/hooks", () => ({ useWorkspaceId: () => "ws-1" }));
-vi.mock("@multica/core/permissions", () => ({
+vi.mock("@lumen/core/hooks", () => ({ useWorkspaceId: () => "ws-1" }));
+vi.mock("@lumen/core/permissions", () => ({
   useCurrentMember: () => ({ member: { role: "admin" } }),
 }));
 vi.mock("@tanstack/react-query", () => ({

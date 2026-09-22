@@ -3,32 +3,32 @@
 import { Suspense, useEffect, useRef, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useQueryClient, type QueryClient } from "@tanstack/react-query";
-import { sanitizeNextUrl, useAuthStore } from "@multica/core/auth";
-import { useConfigStore } from "@multica/core/config";
+import { sanitizeNextUrl, useAuthStore } from "@lumen/core/auth";
+import { useConfigStore } from "@lumen/core/config";
 import {
   workspaceKeys,
   workspaceListOptions,
-} from "@multica/core/workspace/queries";
+} from "@lumen/core/workspace/queries";
 import {
   paths,
   resolvePostAuthDestination,
   useHasOnboarded,
-} from "@multica/core/paths";
-import { api } from "@multica/core/api";
-import type { Workspace } from "@multica/core/types";
+} from "@lumen/core/paths";
+import { api } from "@lumen/core/api";
+import type { Workspace } from "@lumen/core/types";
 import {
   Card,
   CardHeader,
   CardTitle,
   CardDescription,
   CardContent,
-} from "@multica/ui/components/ui/card";
-import { Button } from "@multica/ui/components/ui/button";
+} from "@lumen/ui/components/ui/card";
+import { Button } from "@lumen/ui/components/ui/button";
 import { Loader2 } from "lucide-react";
 import { setLoggedInCookie } from "@/features/auth/auth-cookie";
 import Link from "next/link";
-import { LoginPage, validateCliCallback } from "@multica/views/auth";
-import { useT } from "@multica/views/i18n";
+import { LoginPage, validateCliCallback } from "@lumen/views/auth";
+import { useT } from "@lumen/views/i18n";
 
 /**
  * Pick where a logged-in user with no explicit `?next=` should land.
@@ -103,7 +103,7 @@ function LoginPageContent() {
         .issueCliToken()
         .then(({ token }) => {
           setDesktopToken(token);
-          window.location.href = `multica://auth/callback?token=${encodeURIComponent(token)}`;
+          window.location.href = `lumen://auth/callback?token=${encodeURIComponent(token)}`;
         })
         .catch((err) => {
           setDesktopError(
@@ -201,7 +201,7 @@ function LoginPageContent() {
               <Button
                 variant="outline"
                 onClick={() => {
-                  window.location.href = `multica://auth/callback?token=${encodeURIComponent(desktopToken)}`;
+                  window.location.href = `lumen://auth/callback?token=${encodeURIComponent(desktopToken)}`;
                 }}
               >
                 {t(($) => $.web.desktop_handoff.open_button)}

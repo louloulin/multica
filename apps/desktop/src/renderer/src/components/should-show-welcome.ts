@@ -6,7 +6,7 @@ interface ShouldShowWelcomeInput {
 }
 
 // Single source of truth for whether the first-launch Welcome gate should
-// render. Returns true exactly when no `~/.multica/desktop.json` exists
+// render. Returns true exactly when no `~/.lumen/desktop.json` exists
 // AND the active runtime config is the cloud default — i.e. the user
 // opened the app for the first time and we haven't yet recorded a choice.
 //

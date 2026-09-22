@@ -44,13 +44,13 @@ import type {
   Agent,
   ChatMessage,
   ChatPendingTask,
-} from "@multica/core/types";
+} from "@lumen/core/types";
 import {
   enqueuePendingChatTask,
   hideQueuedChatMessages,
   removePendingChatTask,
-} from "@multica/core/chat/pending";
-import { canAssignAgentToIssue } from "@multica/core/permissions";
+} from "@lumen/core/chat/pending";
+import { canAssignAgentToIssue } from "@lumen/core/permissions";
 import { api } from "@/data/api";
 import { useAuthStore } from "@/data/auth-store";
 import { useWorkspaceStore } from "@/data/workspace-store";

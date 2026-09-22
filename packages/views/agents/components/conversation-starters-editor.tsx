@@ -6,11 +6,11 @@ import {
   AGENT_CONVERSATION_STARTER_MAX_LENGTH,
   AGENT_CONVERSATION_STARTERS_MAX,
   selectConversationStarters,
-} from "@multica/core/agents";
-import type { AgentConversationStarter } from "@multica/core/types";
-import { Button } from "@multica/ui/components/ui/button";
-import { Input } from "@multica/ui/components/ui/input";
-import { Textarea } from "@multica/ui/components/ui/textarea";
+} from "@lumen/core/agents";
+import type { AgentConversationStarter } from "@lumen/core/types";
+import { Button } from "@lumen/ui/components/ui/button";
+import { Input } from "@lumen/ui/components/ui/input";
+import { Textarea } from "@lumen/ui/components/ui/textarea";
 import {
   ConversationStarterList,
   useFallbackConversationStarters,

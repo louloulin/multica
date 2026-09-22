@@ -52,9 +52,9 @@ import {
   X,
 } from "lucide-react";
 import { toast } from "sonner";
-import { DataTable } from "@multica/ui/components/ui/data-table";
-import { Button } from "@multica/ui/components/ui/button";
-import { Input } from "@multica/ui/components/ui/input";
+import { DataTable } from "@lumen/ui/components/ui/data-table";
+import { Button } from "@lumen/ui/components/ui/button";
+import { Input } from "@lumen/ui/components/ui/input";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -64,39 +64,39 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@multica/ui/components/ui/dropdown-menu";
+} from "@lumen/ui/components/ui/dropdown-menu";
 import {
   TableCell,
   TableRow,
-} from "@multica/ui/components/ui/table";
-import { Skeleton } from "@multica/ui/components/ui/skeleton";
-import { cn } from "@multica/ui/lib/utils";
-import { ApiError } from "@multica/core/api";
-import { useWorkspaceId } from "@multica/core/hooks";
-import { useIssueStatuses } from "@multica/core/issue-statuses/hooks";
-import { useModalStore } from "@multica/core/modals";
+} from "@lumen/ui/components/ui/table";
+import { Skeleton } from "@lumen/ui/components/ui/skeleton";
+import { cn } from "@lumen/ui/lib/utils";
+import { ApiError } from "@lumen/core/api";
+import { useWorkspaceId } from "@lumen/core/hooks";
+import { useIssueStatuses } from "@lumen/core/issue-statuses/hooks";
+import { useModalStore } from "@lumen/core/modals";
 import {
   issueKeys,
   issueTableGroupsOptions,
   issueTableRowPageOptions,
-} from "@multica/core/issues/queries";
+} from "@lumen/core/issues/queries";
 import {
   TABLE_SYSTEM_COLUMNS,
   propertyIdFromViewKey,
   type SortField,
   type TableColumnKey,
   type TableSystemColumnKey,
-} from "@multica/core/issues/stores/view-store";
-import { useViewStore } from "@multica/core/issues/stores/view-store-context";
-import { propertyListOptions } from "@multica/core/properties";
-import { projectListOptions } from "@multica/core/projects/queries";
-import { useWorkspacePaths } from "@multica/core/paths";
-import { buildActorNameResolver, useActorName } from "@multica/core/workspace/hooks";
+} from "@lumen/core/issues/stores/view-store";
+import { useViewStore } from "@lumen/core/issues/stores/view-store-context";
+import { propertyListOptions } from "@lumen/core/properties";
+import { projectListOptions } from "@lumen/core/projects/queries";
+import { useWorkspacePaths } from "@lumen/core/paths";
+import { buildActorNameResolver, useActorName } from "@lumen/core/workspace/hooks";
 import {
   agentListOptions,
   memberListOptions,
   squadListOptions,
-} from "@multica/core/workspace/queries";
+} from "@lumen/core/workspace/queries";
 import type {
   Issue,
   IssueProperty,
@@ -107,12 +107,12 @@ import type {
   IssueTableRowsResponse,
   Project,
   UpdateIssueRequest,
-} from "@multica/core/types";
+} from "@lumen/core/types";
 import {
   actorRefsFromValue,
   formatActorRef,
   isActorPropertyType,
-} from "@multica/core/types";
+} from "@lumen/core/types";
 import {
   useInfiniteQuery,
   useQueries,

@@ -2,14 +2,14 @@ import { useState } from "react";
 import { expect, it, vi } from "vitest";
 import { fireEvent, screen } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { api } from "@multica/core/api";
+import { api } from "@lumen/core/api";
 import { NavigationProvider } from "../../navigation";
 import { renderWithI18n } from "../../test/i18n";
 import { AutopilotsPage } from "./autopilots-page";
 
-vi.mock("@multica/core/api", () => ({ api: { listAutopilots: vi.fn() } }));
-vi.mock("@multica/core/hooks", () => ({ useWorkspaceId: () => "ws" }));
-vi.mock("@multica/core/paths", () => ({
+vi.mock("@lumen/core/api", () => ({ api: { listAutopilots: vi.fn() } }));
+vi.mock("@lumen/core/hooks", () => ({ useWorkspaceId: () => "ws" }));
+vi.mock("@lumen/core/paths", () => ({
   useWorkspacePaths: () => ({ autopilots: () => "/ws/autopilots" }),
 }));
 vi.mock("./workspace-wakeups", () => ({

@@ -2,8 +2,8 @@
 
 import type { ReactNode } from "react";
 import { Check } from "lucide-react";
-import { Button } from "@multica/ui/components/ui/button";
-import { cn } from "@multica/ui/lib/utils";
+import { Button } from "@lumen/ui/components/ui/button";
+import { cn } from "@lumen/ui/lib/utils";
 
 const OTHER_INPUT_MAX_LENGTH = 80;
 

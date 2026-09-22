@@ -2,7 +2,7 @@
  * First-launch Welcome gate.
  *
  * Mirrors the desktop `welcome-gate.tsx`: a single full-screen route
- * that asks the user to choose between Multica Cloud and a self-hosted
+ * that asks the user to choose between Lumen Cloud and a self-hosted
  * instance before any auth/network call lands.
  *
  * This file lives under `app/(auth)/` for namespace hygiene but is
@@ -30,7 +30,7 @@ import { Text } from "@/components/ui/text";
 import { TextField } from "@/components/ui/text-field";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { MulticaLogo } from "@/components/brand/multica-logo";
+import { LumenLogo } from "@/components/brand/lumen-logo";
 import {
   DEFAULT_RUNTIME_CONFIG,
   normalizeHttpUrl,
@@ -88,7 +88,7 @@ export default function WelcomeScreen() {
           keyboardShouldPersistTaps="handled"
         >
           <View className="items-center gap-3">
-            <MulticaLogo size={40} />
+            <LumenLogo size={40} />
             <Text className="text-2xl font-semibold text-foreground text-center">
               {RUNTIME_CONFIG_STRINGS.welcome.title}
             </Text>

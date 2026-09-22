@@ -12,10 +12,10 @@ import (
 
 	"github.com/go-chi/chi/v5"
 	"github.com/jackc/pgx/v5/pgtype"
-	"github.com/multica-ai/multica/server/internal/integrations/vcs"
-	"github.com/multica-ai/multica/server/internal/middleware"
-	db "github.com/multica-ai/multica/server/pkg/db/generated"
-	"github.com/multica-ai/multica/server/pkg/protocol"
+	"github.com/lumen-ai/lumen/server/internal/integrations/vcs"
+	"github.com/lumen-ai/lumen/server/internal/middleware"
+	db "github.com/lumen-ai/lumen/server/pkg/db/generated"
+	"github.com/lumen-ai/lumen/server/pkg/protocol"
 )
 
 // ── Response shapes ─────────────────────────────────────────────────────────
@@ -165,7 +165,7 @@ func (h *Handler) ConnectVCS(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if !h.isVCSConfigured() {
-		writeFeatureDisabled(w, "vcs_not_configured", "vcs integration not configured (MULTICA_VCS_SECRET_KEY unset)")
+		writeFeatureDisabled(w, "vcs_not_configured", "vcs integration not configured (LUMEN_VCS_SECRET_KEY unset)")
 		return
 	}
 
@@ -287,7 +287,7 @@ func (h *Handler) RotateVCSConnectionWebhook(w http.ResponseWriter, r *http.Requ
 		return
 	}
 	if !h.isVCSConfigured() {
-		writeFeatureDisabled(w, "vcs_not_configured", "vcs integration not configured (MULTICA_VCS_SECRET_KEY unset)")
+		writeFeatureDisabled(w, "vcs_not_configured", "vcs integration not configured (LUMEN_VCS_SECRET_KEY unset)")
 		return
 	}
 

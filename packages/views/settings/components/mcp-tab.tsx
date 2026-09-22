@@ -13,18 +13,18 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@multica/ui/components/ui/alert-dialog";
-import { Badge } from "@multica/ui/components/ui/badge";
-import { Button } from "@multica/ui/components/ui/button";
-import { useCurrentWorkspace } from "@multica/core/paths";
-import { useCurrentMember } from "@multica/core/permissions";
-import { workspaceMcpServersOptions } from "@multica/core/workspace/queries";
+} from "@lumen/ui/components/ui/alert-dialog";
+import { Badge } from "@lumen/ui/components/ui/badge";
+import { Button } from "@lumen/ui/components/ui/button";
+import { useCurrentWorkspace } from "@lumen/core/paths";
+import { useCurrentMember } from "@lumen/core/permissions";
+import { workspaceMcpServersOptions } from "@lumen/core/workspace/queries";
 import {
   useCreateWorkspaceMcpServer,
   useDeleteWorkspaceMcpServer,
   useUpdateWorkspaceMcpServer,
-} from "@multica/core/workspace/mutations";
-import type { WorkspaceMcpServer } from "@multica/core/types";
+} from "@lumen/core/workspace/mutations";
+import type { WorkspaceMcpServer } from "@lumen/core/types";
 import { McpServerDialog } from "../../agents/components/tabs/mcp-server-dialog";
 import type { ManagedMcpServer } from "../../agents/components/tabs/mcp-config-model";
 import { McpServerRow } from "../../common/mcp-server-row";

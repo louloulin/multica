@@ -9,13 +9,13 @@ import {
   Plus,
   Send,
 } from "lucide-react";
-import { Button } from "@multica/ui/components/ui/button";
-import { Input } from "@multica/ui/components/ui/input";
+import { Button } from "@lumen/ui/components/ui/button";
+import { Input } from "@lumen/ui/components/ui/input";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@multica/ui/components/ui/popover";
+} from "@lumen/ui/components/ui/popover";
 import {
   Dialog,
   DialogContent,
@@ -23,7 +23,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@multica/ui/components/ui/dialog";
+} from "@lumen/ui/components/ui/dialog";
 import {
   buttonScales,
   sizeValue,

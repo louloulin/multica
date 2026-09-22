@@ -1,5 +1,5 @@
 {
-  "name": "@multica/core",
+  "name": "@lumen/core",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -178,8 +178,8 @@
     "react": "catalog:"
   },
   "devDependencies": {
-    "@multica/eslint-config": "workspace:*",
-    "@multica/tsconfig": "workspace:*",
+    "@lumen/eslint-config": "workspace:*",
+    "@lumen/tsconfig": "workspace:*",
     "@testing-library/react": "catalog:",
     "@types/react": "catalog:",
     "jsdom": "catalog:",

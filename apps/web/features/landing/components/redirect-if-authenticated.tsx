@@ -2,9 +2,9 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useAuthStore } from "@multica/core/auth";
-import { useWorkspaceList } from "@multica/core/workspace";
-import { resolvePostAuthDestination, useHasOnboarded } from "@multica/core/paths";
+import { useAuthStore } from "@lumen/core/auth";
+import { useWorkspaceList } from "@lumen/core/workspace";
+import { resolvePostAuthDestination, useHasOnboarded } from "@lumen/core/paths";
 import { isOfficialMarketingHost } from "@/lib/public-host";
 
 /**

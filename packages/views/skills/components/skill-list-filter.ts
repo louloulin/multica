@@ -1,5 +1,5 @@
-import type { Agent, AgentRuntime, MemberWithUser, SkillSummary } from "@multica/core/types";
-import type { SkillListFilters } from "@multica/core/skills/stores";
+import type { Agent, AgentRuntime, MemberWithUser, SkillSummary } from "@lumen/core/types";
+import type { SkillListFilters } from "@lumen/core/skills/stores";
 import type { OriginInfo } from "../lib/origin";
 
 export interface SkillRow {

@@ -9,10 +9,10 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/multica-ai/multica/server/internal/cloudruntime"
-	"github.com/multica-ai/multica/server/internal/featureflags"
-	"github.com/multica-ai/multica/server/internal/middleware"
-	db "github.com/multica-ai/multica/server/pkg/db/generated"
+	"github.com/lumen-ai/lumen/server/internal/cloudruntime"
+	"github.com/lumen-ai/lumen/server/internal/featureflags"
+	"github.com/lumen-ai/lumen/server/internal/middleware"
+	db "github.com/lumen-ai/lumen/server/pkg/db/generated"
 )
 
 // proxyExpectation captures the assertions every standard

@@ -3,8 +3,8 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import type { Agent, AgentActivityBucket } from "@multica/core/types";
-import { I18nProvider } from "@multica/core/i18n/react";
+import type { Agent, AgentActivityBucket } from "@lumen/core/types";
+import { I18nProvider } from "@lumen/core/i18n/react";
 import enCommon from "../../../locales/en/common.json";
 import enAgents from "../../../locales/en/agents.json";
 import {
@@ -14,20 +14,20 @@ import {
 
 const TEST_RESOURCES = { en: { common: enCommon, agents: enAgents } };
 
-vi.mock("@multica/core/hooks", () => ({
+vi.mock("@lumen/core/hooks", () => ({
   useWorkspaceId: () => "ws-1",
 }));
 
 // TaskRow never mounts in these aggregate/loading/empty-state tests.
-vi.mock("@multica/core/api", () => ({ api: {} }));
+vi.mock("@lumen/core/api", () => ({ api: {} }));
 
 // Keep "Now" empty while varying activity outcomes and task-list loading.
 const agentTasksRef = vi.hoisted(() => ({
   current: () => new Promise<unknown>(() => {}),
 }));
 const activityRef = vi.hoisted(() => ({ current: [] as AgentActivityBucket[] }));
-vi.mock("@multica/core/agents", async (importOriginal) => {
-  const actual = await importOriginal<typeof import("@multica/core/agents")>();
+vi.mock("@lumen/core/agents", async (importOriginal) => {
+  const actual = await importOriginal<typeof import("@lumen/core/agents")>();
   return {
     ...actual,
     agentTaskSnapshotOptions: () => ({

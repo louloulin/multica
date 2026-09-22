@@ -10,11 +10,11 @@ import (
 	"testing"
 	"time"
 
-	"github.com/multica-ai/multica/server/pkg/taskfailure"
+	"github.com/lumen-ai/lumen/server/pkg/taskfailure"
 )
 
 // fakeGrokACPScript impersonates `grok agent --always-approve stdio` for unit
-// tests. Wire format mirrors other Multica ACP fakes (traecli/kimi): method
+// tests. Wire format mirrors other Lumen ACP fakes (traecli/kimi): method
 // "session/update" with update.sessionUpdate discriminators, session/new
 // returning sessionId + models, session/prompt returning stopReason=end_turn.
 func fakeGrokACPScript() string {
@@ -698,7 +698,7 @@ func TestGrokAttributesUsageOnResumeWithoutConfiguredModel(t *testing.T) {
 		t.Fatalf("new grok backend: %v", err)
 	}
 	// No Model: the daemon leaves it empty whenever neither the agent nor
-	// MULTICA_GROK_MODEL pins one (see daemon.go resolveModel).
+	// LUMEN_GROK_MODEL pins one (see daemon.go resolveModel).
 	session, err := backend.Execute(context.Background(), "continue", ExecOptions{
 		ResumeSessionID: "ses_existing",
 		Timeout:         5 * time.Second,

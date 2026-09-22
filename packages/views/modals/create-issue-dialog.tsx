@@ -2,17 +2,17 @@
 
 import { useLayoutEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { cn } from "@multica/ui/lib/utils";
-import { Dialog, DialogContent } from "@multica/ui/components/ui/dialog";
+import { cn } from "@lumen/ui/lib/utils";
+import { Dialog, DialogContent } from "@lumen/ui/components/ui/dialog";
 import {
   useCreateModeStore,
   type CreateMode,
-} from "@multica/core/issues/stores/create-mode-store";
+} from "@lumen/core/issues/stores/create-mode-store";
 import { AgentCreatePanel } from "./quick-create-issue";
 import { ManualCreatePanel, manualDialogContentClass } from "./create-issue";
-import { sourceContextPreviewOptions } from "@multica/core/issues/queries";
-import { useIssueDraftStore } from "@multica/core/issues/stores/draft-store";
-import { useWorkspaceId } from "@multica/core/hooks";
+import { sourceContextPreviewOptions } from "@lumen/core/issues/queries";
+import { useIssueDraftStore } from "@lumen/core/issues/stores/draft-store";
+import { useWorkspaceId } from "@lumen/core/hooks";
 
 /**
  * Shell that owns the single `<Dialog>` AND `<DialogContent>` for the

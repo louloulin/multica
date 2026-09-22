@@ -4,9 +4,9 @@ import { useCallback } from "react";
 import {
   isBuiltInIssueStatus,
   isIssueStatusCategory,
-} from "@multica/core/issue-statuses";
-import { useIssueStatuses } from "@multica/core/issue-statuses/hooks";
-import type { BuiltInIssueStatus, IssueStatusCategory } from "@multica/core/types";
+} from "@lumen/core/issue-statuses";
+import { useIssueStatuses } from "@lumen/core/issue-statuses/hooks";
+import type { BuiltInIssueStatus, IssueStatusCategory } from "@lumen/core/types";
 import { useT } from "../../i18n";
 
 /**

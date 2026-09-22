@@ -1,5 +1,5 @@
 tell application "System Events"
-  tell process "Multica"
+  tell process "Lumen"
     set winList to every window
     set out to ""
     repeat with w in winList

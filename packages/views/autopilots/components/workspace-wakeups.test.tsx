@@ -2,15 +2,15 @@ import { beforeEach, expect, it, vi } from "vitest";
 import { fireEvent, screen, waitFor, within } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import type { ReactNode } from "react";
-import { api } from "@multica/core/api";
+import { api } from "@lumen/core/api";
 import type {
   WorkspaceWakeup,
   WorkspaceWakeupFilters,
-} from "@multica/core/types";
+} from "@lumen/core/types";
 import { renderWithI18n } from "../../test/i18n";
 import { WorkspaceWakeups } from "./workspace-wakeups";
 
-vi.mock("@multica/core/api", () => ({
+vi.mock("@lumen/core/api", () => ({
   api: {
     listWorkspaceWakeups: vi.fn(),
     disableIssueWakeup: vi.fn(),
@@ -20,8 +20,8 @@ vi.mock("@multica/core/api", () => ({
   },
 }));
 
-vi.mock("@multica/core/hooks", () => ({ useWorkspaceId: () => "ws" }));
-vi.mock("@multica/core/paths", () => ({
+vi.mock("@lumen/core/hooks", () => ({ useWorkspaceId: () => "ws" }));
+vi.mock("@lumen/core/paths", () => ({
   useWorkspacePaths: () => ({
     issueDetail: (id: string) => `/ws/issues/${id}`,
   }),

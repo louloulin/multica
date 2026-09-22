@@ -1,3 +1,3 @@
-import reactConfig from "@multica/eslint-config/react";
+import reactConfig from "@lumen/eslint-config/react";
 
 export default [...reactConfig];

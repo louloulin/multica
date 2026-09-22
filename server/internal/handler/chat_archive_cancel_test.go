@@ -35,11 +35,11 @@ import (
 	"github.com/go-chi/chi/v5"
 	"github.com/jackc/pgx/v5/pgtype"
 
-	"github.com/multica-ai/multica/server/internal/events"
-	"github.com/multica-ai/multica/server/internal/integrations/channel"
-	"github.com/multica-ai/multica/server/internal/integrations/slack"
-	"github.com/multica-ai/multica/server/internal/service"
-	"github.com/multica-ai/multica/server/pkg/protocol"
+	"github.com/lumen-ai/lumen/server/internal/events"
+	"github.com/lumen-ai/lumen/server/internal/integrations/channel"
+	"github.com/lumen-ai/lumen/server/internal/integrations/slack"
+	"github.com/lumen-ai/lumen/server/internal/service"
+	"github.com/lumen-ai/lumen/server/pkg/protocol"
 )
 
 func TestArchivingAChannelBoundChatSessionCancelsItsQueuedTasks(t *testing.T) {

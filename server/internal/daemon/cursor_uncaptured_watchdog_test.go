@@ -11,7 +11,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/multica-ai/multica/server/pkg/agent"
+	"github.com/lumen-ai/lumen/server/pkg/agent"
 )
 
 func TestCursorBackgroundUncapturedDisabledToolWatchdog(t *testing.T) {

@@ -3,7 +3,7 @@
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/assets/logo-dark.svg">
   <source media="(prefers-color-scheme: light)" srcset="docs/assets/logo-light.svg">
-  <img alt="Multica" src="docs/assets/logo-light.svg" width="50">
+  <img alt="Lumen" src="docs/assets/logo-light.svg" width="50">
 </picture>
 
 # Vision
@@ -16,27 +16,31 @@
 
 ---
 
-## Why "Multica"
+## Why "Lumen"
 
-Multica — **Mult**iplexed **I**nformation and **C**omputing **A**gent.
+**Lumen** — Latin for *light*, the SI unit of luminous flux. The name is what the platform does
+for a team of people and agents: it makes the work visible. An agent's run is no longer a black
+box in a terminal; it shows up on the board next to its peers, with its plan, its decisions, and
+its diff all connected to the same issue.
 
-The name is a nod to Multics, the pioneering operating system of the 1960s that introduced
+It is also a quiet nod to Multics, the pioneering 1960s operating system that introduced
 time-sharing — letting multiple users share a single machine as if each had it to themselves.
 Unix was born as a deliberate simplification of Multics: one user, one task, one elegant
 philosophy.
 
 We think the same inflection is happening again. For decades, software teams have been
 single-threaded — one engineer, one task, one context switch at a time. AI agents change that
-equation. Multica brings time-sharing back, but for an era where the "users" multiplexing the
-system are both humans and autonomous agents.
+equation. Lumen brings time-sharing back, but for an era where the "users" multiplexing the
+system are both humans and autonomous agents. The platform lights the work; the team decides
+where to aim it.
 
-In Multica, agents are first-class teammates. They get assigned issues, report progress, raise
+In Lumen, agents are first-class teammates. They get assigned issues, report progress, raise
 blockers, and ship code — just like their human colleagues. The assignee picker, the activity
 timeline, the task lifecycle, and the runtime infrastructure are all built around this idea from
 day one.
 
-Like Multics before it, the bet is on multiplexing: a small team shouldn't feel small. With the
-right system, two engineers and a fleet of agents can move like twenty.
+Like Multics before it, the bet is on coordination made visible: a small team shouldn't feel
+small. With the right system, two engineers and a fleet of agents can move like twenty.
 
 ---
 
@@ -50,7 +54,7 @@ explain it all again.
 
 The promise of AI is not a larger collection of tools. It is a more capable team.
 
-In the future Multica is building, work can begin wherever people already are: a customer
+In the future Lumen is building, work can begin wherever people already are: a customer
 conversation, a Slack thread, or a few rough sentences describing what should change. An agent
 turns that intent into visible, structured work, gathers the relevant context, and makes
 uncertainty explicit.
@@ -59,7 +63,7 @@ If the task is clear, agents can move it forward. If it changes product behaviou
 risk, or depends on a trade-off, the right person is brought in before the work continues. People
 set direction, define what good looks like, and remain accountable for the outcome.
 
-Imagine a product request that would once have disappeared inside a conversation. In Multica, it
+Imagine a product request that would once have disappeared inside a conversation. In Lumen, it
 becomes a shared plan. Agents investigate the problem, connect related evidence, and separate what
 is known from what still needs a decision. Once the team aligns on the approach, well-scoped work
 can move across several agents in parallel.
@@ -80,10 +84,10 @@ coordinate client deliverables. Humans spend less time carrying information betw
 chasing handoffs. They spend more time on taste, relationships, hard decisions, and the work only
 they can own.
 
-Multica is not an autonomous company running beyond human control. It is the shared operating
+Lumen is not an autonomous company running beyond human control. It is the shared operating
 system for people and agents doing consequential work together.
 
-People set direction and remain accountable. Agents keep the work moving. Multica preserves the
+People set direction and remain accountable. Agents keep the work moving. Lumen preserves the
 team's shared understanding and turns it into coordinated action.
 
 **That is what it means to make humans and AI agents work as one team — and to become the system
@@ -93,6 +97,6 @@ of record and action for human-agent work.**
 
 ## Where we are on that path
 
-This document describes the future Multica is building, not a feature list. For what actually
+This document describes the future Lumen is building, not a feature list. For what actually
 works today, see the [README](README.md) — everything listed there is live, and each feature
 links to its docs.

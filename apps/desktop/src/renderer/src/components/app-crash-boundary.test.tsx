@@ -2,11 +2,11 @@ import { describe, expect, it, vi, beforeEach, afterEach } from "vitest";
 import { render, screen } from "@testing-library/react";
 
 const captureException = vi.hoisted(() => vi.fn());
-vi.mock("@multica/core/analytics", () => ({ captureException }));
+vi.mock("@lumen/core/analytics", () => ({ captureException }));
 
 // Marker stand-in so the structural assertion below tests the contract ("the
 // drag strip is the first flex child") rather than DragStrip's own markup.
-vi.mock("@multica/views/platform", () => ({
+vi.mock("@lumen/views/platform", () => ({
   DragStrip: () => <div data-testid="drag-strip" />,
 }));
 

@@ -1770,7 +1770,7 @@ func (q *Queries) SetIssueMetadataKey(ctx context.Context, arg SetIssueMetadataK
 }
 
 const updateIssue = `-- name: UpdateIssue :one
-WITH wakeup_source AS MATERIALIZED (SELECT set_config('multica.source_task_id', COALESCE($3::uuid::text, ''), true)), candidate AS (
+WITH wakeup_source AS MATERIALIZED (SELECT set_config('lumen.source_task_id', COALESCE($3::uuid::text, ''), true)), candidate AS (
     SELECT
         i.id, i.workspace_id, i.title, i.description, i.status, i.priority, i.assignee_type, i.assignee_id, i.creator_type, i.creator_id, i.parent_issue_id, i.acceptance_criteria, i.context_refs, i.position, i.due_date, i.created_at, i.updated_at, i.number, i.project_id, i.origin_type, i.origin_id, i.first_executed_at, i.start_date, i.metadata, i.stage, i.properties, i.revision, i.last_activity_at, i.triage_state,
         COALESCE($4::text, i.title) AS next_title,
@@ -1937,7 +1937,7 @@ func (q *Queries) UpdateIssue(ctx context.Context, arg UpdateIssueParams) (Issue
 }
 
 const updateIssueStatus = `-- name: UpdateIssueStatus :one
-WITH wakeup_source AS MATERIALIZED (SELECT set_config('multica.source_task_id', COALESCE($4::uuid::text, ''), true))
+WITH wakeup_source AS MATERIALIZED (SELECT set_config('lumen.source_task_id', COALESCE($4::uuid::text, ''), true))
 UPDATE issue AS i SET
     status = $2,
     position = CASE WHEN i.status IS DISTINCT FROM $2 THEN (

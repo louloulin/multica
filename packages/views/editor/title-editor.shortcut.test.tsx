@@ -4,7 +4,7 @@ import {
   configureShortcutPlatform,
   createShortcutChord,
   useShortcutStore,
-} from "@multica/core/shortcuts";
+} from "@lumen/core/shortcuts";
 import { TitleEditor } from "./title-editor";
 
 // Every other editor test mocks `@tiptap/react`, which means nothing verifies

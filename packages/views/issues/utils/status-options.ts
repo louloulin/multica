@@ -5,13 +5,13 @@ import {
   ALL_STATUSES,
   BUILT_IN_STATUS_CATEGORY,
   BUILT_IN_STATUS_ORDER,
-} from "@multica/core/issues/config";
-import { useIssueStatuses } from "@multica/core/issue-statuses/hooks";
+} from "@lumen/core/issues/config";
+import { useIssueStatuses } from "@lumen/core/issue-statuses/hooks";
 import {
   issueStatusColor,
   normalizeIssueStatusCategory,
-} from "@multica/core/issue-statuses/queries";
-import type { IssueStatus, IssueStatusCategory } from "@multica/core/types";
+} from "@lumen/core/issue-statuses/queries";
+import type { IssueStatus, IssueStatusCategory } from "@lumen/core/types";
 import { useStatusLabel } from "./status-label";
 
 export interface StatusOption {

@@ -1,8 +1,8 @@
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { SkillDetailPage as SharedSkillDetailPage } from "@multica/views/skills";
-import { useWorkspaceId } from "@multica/core/hooks";
-import { skillDetailOptions } from "@multica/core/workspace/queries";
+import { SkillDetailPage as SharedSkillDetailPage } from "@lumen/views/skills";
+import { useWorkspaceId } from "@lumen/core/hooks";
+import { skillDetailOptions } from "@lumen/core/workspace/queries";
 import { useDocumentTitle } from "@/hooks/use-document-title";
 
 export function SkillDetailPage() {

@@ -4,19 +4,19 @@ import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { toast } from "sonner";
 import { useQuery } from "@tanstack/react-query";
 import { Virtuoso, type Components, type VirtuosoHandle } from "react-virtuoso";
-import { cn } from "@multica/ui/lib/utils";
-import { Skeleton } from "@multica/ui/components/ui/skeleton";
-import { Button } from "@multica/ui/components/ui/button";
+import { cn } from "@lumen/ui/lib/utils";
+import { Skeleton } from "@lumen/ui/components/ui/skeleton";
+import { Button } from "@lumen/ui/components/ui/button";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "@multica/ui/components/ui/collapsible";
+} from "@lumen/ui/components/ui/collapsible";
 import {
   Tooltip,
   TooltipTrigger,
   TooltipContent,
-} from "@multica/ui/components/ui/tooltip";
+} from "@lumen/ui/components/ui/tooltip";
 import {
   ChevronRight,
   ChevronDown,
@@ -27,23 +27,23 @@ import {
   Copy,
   RotateCw,
 } from "lucide-react";
-import { useScrollFade } from "@multica/ui/hooks/use-scroll-fade";
-import { isTaskMessageTaskId, taskMessagesOptions } from "@multica/core/chat/queries";
+import { useScrollFade } from "@lumen/ui/hooks/use-scroll-fade";
+import { isTaskMessageTaskId, taskMessagesOptions } from "@lumen/core/chat/queries";
 import { RichContent } from "../../rich-content";
 import { RichContentScrollRootProvider } from "../../rich-content/scroll-root";
-import { copyText } from "@multica/ui/lib/clipboard";
+import { copyText } from "@lumen/ui/lib/clipboard";
 import { AttachmentList } from "../../issues/components/comment-card";
 import { ImageSequenceProvider } from "../../editor";
-import { collectImageSequence } from "@multica/core/attachments/image-sequence";
-import type { AgentAvailability } from "@multica/core/agents";
-import { resolveFailureReasonKey } from "@multica/core/agents";
+import { collectImageSequence } from "@lumen/core/attachments/image-sequence";
+import type { AgentAvailability } from "@lumen/core/agents";
+import { resolveFailureReasonKey } from "@lumen/core/agents";
 import type {
   ChatMessage,
   ChatPendingTask,
   ChatQuickAction,
   TaskMessagePayload,
-} from "@multica/core/types";
-import type { ChatTimelineItem } from "@multica/core/chat";
+} from "@lumen/core/types";
+import type { ChatTimelineItem } from "@lumen/core/chat";
 import { buildTimeline } from "../../common/task-transcript";
 import { OnboardingStarterCards } from "./onboarding-starter-cards";
 import { TaskStatusPill } from "./task-status-pill";
@@ -1081,7 +1081,7 @@ function TimelineView({
 }: {
   items: ChatTimelineItem[];
   isStreaming?: boolean;
-  attachments?: import("@multica/core/types").Attachment[];
+  attachments?: import("@lumen/core/types").Attachment[];
   phase?: "streaming" | "settled";
   settledContent?: string;
 }) {
@@ -1158,7 +1158,7 @@ function OuterProcessFold({
 }: {
   items: ChatTimelineItem[];
   isStreaming?: boolean;
-  attachments?: import("@multica/core/types").Attachment[];
+  attachments?: import("@lumen/core/types").Attachment[];
   phase?: "streaming" | "settled";
   stepCount?: number;
 }) {
@@ -1212,7 +1212,7 @@ function MiddleTextRow({
   phase = "settled",
 }: {
   item: ChatTimelineItem;
-  attachments?: import("@multica/core/types").Attachment[];
+  attachments?: import("@lumen/core/types").Attachment[];
   phase?: "streaming" | "settled";
 }) {
   return (

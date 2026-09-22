@@ -18,25 +18,25 @@ import {
   autopilotDeliveriesOptions,
   autopilotDeliveryOptions,
   useReplayAutopilotDelivery,
-} from "@multica/core/autopilots";
-import { useWorkspaceId } from "@multica/core/hooks";
-import { Skeleton } from "@multica/ui/components/ui/skeleton";
-import { Button } from "@multica/ui/components/ui/button";
-import { Badge } from "@multica/ui/components/ui/badge";
+} from "@lumen/core/autopilots";
+import { useWorkspaceId } from "@lumen/core/hooks";
+import { Skeleton } from "@lumen/ui/components/ui/skeleton";
+import { Button } from "@lumen/ui/components/ui/button";
+import { Badge } from "@lumen/ui/components/ui/badge";
 import {
   Dialog,
   DialogContent,
   DialogTitle,
-} from "@multica/ui/components/ui/dialog";
-import { cn } from "@multica/ui/lib/utils";
-import { copyText } from "@multica/ui/lib/clipboard";
+} from "@lumen/ui/components/ui/dialog";
+import { cn } from "@lumen/ui/lib/utils";
+import { copyText } from "@lumen/ui/lib/clipboard";
 import { toast } from "sonner";
 import { useLocale, useT } from "../../i18n";
 import type {
   WebhookDelivery,
   WebhookDeliveryStatus,
   WebhookSignatureStatus,
-} from "@multica/core/types";
+} from "@lumen/core/types";
 
 // --- Status visuals -------------------------------------------------------
 

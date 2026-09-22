@@ -17,9 +17,9 @@ export type RuntimeConfigResult =
 
 export const DEFAULT_RUNTIME_CONFIG: RuntimeConfig = Object.freeze({
   schemaVersion: RUNTIME_CONFIG_SCHEMA_VERSION,
-  apiUrl: "https://api.multica.ai",
-  wsUrl: "wss://api.multica.ai/ws",
-  appUrl: "https://multica.ai",
+  apiUrl: "https://api.lumen.ai",
+  wsUrl: "wss://api.lumen.ai/ws",
+  appUrl: "https://lumen.ai",
 });
 
 const LOCAL_DEV_RUNTIME_CONFIG: RuntimeConfig = Object.freeze({
@@ -89,7 +89,7 @@ export function parseRuntimeConfig(raw: string): RuntimeConfig {
 /**
  * Render a RuntimeConfig as the canonical JSON string the loader writes.
  * Round-trips with `parseRuntimeConfig` — the loader's write path always
- * produces this exact shape, so a hand-edited `~/.multica/desktop.json`
+ * produces this exact shape, so a hand-edited `~/.lumen/desktop.json`
  * survives the user re-saving from the UI without silently rewriting
  * fields.
  */
@@ -117,8 +117,8 @@ export function deriveWsUrl(apiUrl: string): string {
   return trimTrailingSlash(url.toString());
 }
 
-// Convention: api hosts are exposed at `api.<web-host>` (api.multica.ai →
-// multica.ai, api.test.multica.ai → test.multica.ai). Strip the leading
+// Convention: api hosts are exposed at `api.<web-host>` (api.lumen.ai →
+// lumen.ai, api.test.lumen.ai → test.lumen.ai). Strip the leading
 // `api.` label so a single `apiUrl` configuration produces the right
 // shareable web URL. Hosts that don't match the convention (no leading
 // `api.` label, or short two-label hosts like `api.local`) fall through

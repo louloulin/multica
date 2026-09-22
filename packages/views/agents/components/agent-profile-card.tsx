@@ -1,20 +1,20 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import type { Agent, AgentRuntime } from "@multica/core/types";
-import { useAgentPresenceDetail } from "@multica/core/agents";
-import { useWorkspaceId } from "@multica/core/hooks";
+import type { Agent, AgentRuntime } from "@lumen/core/types";
+import { useAgentPresenceDetail } from "@lumen/core/agents";
+import { useWorkspaceId } from "@lumen/core/hooks";
 import {
   deriveRuntimeHealth,
   runtimeDisplayLabel,
   type RuntimeHealth,
-} from "@multica/core/runtimes";
-import { agentListOptions, memberListOptions } from "@multica/core/workspace/queries";
-import { resolvePublicFileUrl } from "@multica/core/workspace/avatar-url";
-import { runtimeListOptions } from "@multica/core/runtimes/queries";
-import { useWorkspacePaths } from "@multica/core/paths";
-import { ActorAvatar as ActorAvatarBase } from "@multica/ui/components/common/actor-avatar";
-import { Skeleton } from "@multica/ui/components/ui/skeleton";
+} from "@lumen/core/runtimes";
+import { agentListOptions, memberListOptions } from "@lumen/core/workspace/queries";
+import { resolvePublicFileUrl } from "@lumen/core/workspace/avatar-url";
+import { runtimeListOptions } from "@lumen/core/runtimes/queries";
+import { useWorkspacePaths } from "@lumen/core/paths";
+import { ActorAvatar as ActorAvatarBase } from "@lumen/ui/components/common/actor-avatar";
+import { Skeleton } from "@lumen/ui/components/ui/skeleton";
 import { AppLink } from "../../navigation";
 import { HealthIcon } from "../../runtimes/components/shared";
 import { availabilityConfig } from "../presence";

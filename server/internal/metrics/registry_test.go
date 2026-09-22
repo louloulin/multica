@@ -10,20 +10,20 @@ func TestRegistryExcludesDatabaseSampledMetrics(t *testing.T) {
 	}
 
 	retired := map[string]struct{}{
-		"multica_agent_task_queued":                               {},
-		"multica_agent_task_running":                              {},
-		"multica_agent_task_stuck_total":                          {},
-		"multica_business_sampler_query_errors_total":             {},
-		"multica_business_sampler_query_seconds":                  {},
-		"multica_workspace_total":                                 {},
-		"multica_seat_capacity_outbox_pending":                    {},
-		"multica_seat_capacity_outbox_dead_lettered":              {},
-		"multica_seat_capacity_outbox_oldest_pending_age_seconds": {},
-		"multica_channel_media_pending_objects":                   {},
-		"multica_channel_media_tombstoned_objects":                {},
-		"multica_runtime_gc_blocked_observation_failed_total":     {},
-		"multica_runtime_gc_blocked_runtimes":                     {},
-		"multica_runtime_gc_backlog_runtimes":                     {},
+		"lumen_agent_task_queued":                               {},
+		"lumen_agent_task_running":                              {},
+		"lumen_agent_task_stuck_total":                          {},
+		"lumen_business_sampler_query_errors_total":             {},
+		"lumen_business_sampler_query_seconds":                  {},
+		"lumen_workspace_total":                                 {},
+		"lumen_seat_capacity_outbox_pending":                    {},
+		"lumen_seat_capacity_outbox_dead_lettered":              {},
+		"lumen_seat_capacity_outbox_oldest_pending_age_seconds": {},
+		"lumen_channel_media_pending_objects":                   {},
+		"lumen_channel_media_tombstoned_objects":                {},
+		"lumen_runtime_gc_blocked_observation_failed_total":     {},
+		"lumen_runtime_gc_blocked_runtimes":                     {},
+		"lumen_runtime_gc_backlog_runtimes":                     {},
 	}
 	for _, family := range families {
 		if _, found := retired[family.GetName()]; found {

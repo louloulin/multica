@@ -13,11 +13,11 @@ import {
   X,
 } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
-import { useWorkspaceId } from "@multica/core/hooks";
-import { labelListOptions } from "@multica/core/labels/queries";
-import type { Agent, Label, MemberWithUser } from "@multica/core/types";
-import { resolvePublicFileUrl } from "@multica/core/workspace/avatar-url";
-import { Button } from "@multica/ui/components/ui/button";
+import { useWorkspaceId } from "@lumen/core/hooks";
+import { labelListOptions } from "@lumen/core/labels/queries";
+import type { Agent, Label, MemberWithUser } from "@lumen/core/types";
+import { resolvePublicFileUrl } from "@lumen/core/workspace/avatar-url";
+import { Button } from "@lumen/ui/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -28,20 +28,20 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
-} from "@multica/ui/components/ui/dropdown-menu";
-import { Input } from "@multica/ui/components/ui/input";
+} from "@lumen/ui/components/ui/dropdown-menu";
+import { Input } from "@lumen/ui/components/ui/input";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@multica/ui/components/ui/popover";
-import { Switch } from "@multica/ui/components/ui/switch";
+} from "@lumen/ui/components/ui/popover";
+import { Switch } from "@lumen/ui/components/ui/switch";
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from "@multica/ui/components/ui/tooltip";
-import { ActorAvatar } from "@multica/ui/components/common/actor-avatar";
+} from "@lumen/ui/components/ui/tooltip";
+import { ActorAvatar } from "@lumen/ui/components/common/actor-avatar";
 import { FILTER_ITEM_CLASS, HoverCheck } from "../../common/hover-check";
 import {
   type SkillColumnKey,
@@ -49,7 +49,7 @@ import {
   type SkillOriginType,
   type SkillSortDirection,
   type SkillSortField,
-} from "@multica/core/skills/stores";
+} from "@lumen/core/skills/stores";
 import { LabelChip } from "../../labels/label-chip";
 import { useT } from "../../i18n";
 import type { SkillRow } from "./skill-list-filter";

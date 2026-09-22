@@ -7,8 +7,8 @@ import (
 	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5/pgxpool"
 
-	"github.com/multica-ai/multica/server/internal/util"
-	db "github.com/multica-ai/multica/server/pkg/db/generated"
+	"github.com/lumen-ai/lumen/server/internal/util"
+	db "github.com/lumen-ai/lumen/server/pkg/db/generated"
 )
 
 type dingtalkContextCleanupOwner struct {
@@ -46,9 +46,9 @@ func seedDingTalkContextCleanupOwner(
 			t.Fatalf("seed DingTalk context cleanup fixture: %v", err)
 		}
 	}
-	exec(`INSERT INTO "user" (id, name, email) VALUES ($1, 'DingTalk context cleanup creator', $2)`, owner.creatorID, slug+"@multica.test")
+	exec(`INSERT INTO "user" (id, name, email) VALUES ($1, 'DingTalk context cleanup creator', $2)`, owner.creatorID, slug+"@lumen.test")
 	exec(`INSERT INTO workspace (id, name, slug, description) VALUES ($1, 'DingTalk context cleanup', $2, '')`, owner.workspaceID, slug)
-	exec(`INSERT INTO agent_runtime (id, workspace_id, name, runtime_mode, provider) VALUES ($1, $2, 'DingTalk cleanup runtime', 'local', 'multica_daemon')`, owner.runtimeID, owner.workspaceID)
+	exec(`INSERT INTO agent_runtime (id, workspace_id, name, runtime_mode, provider) VALUES ($1, $2, 'DingTalk cleanup runtime', 'local', 'lumen_daemon')`, owner.runtimeID, owner.workspaceID)
 	exec(`
 		INSERT INTO agent (id, workspace_id, name, runtime_mode, runtime_id, kind, system_key)
 		VALUES ($1, $2, 'DingTalk cleanup agent', 'local', $3, $4, NULLIF($5, ''))

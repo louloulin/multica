@@ -9,13 +9,13 @@ import (
 
 	"github.com/jackc/pgx/v5/pgtype"
 	"github.com/jackc/pgx/v5/pgxpool"
-	"github.com/multica-ai/multica/server/internal/attribution"
-	"github.com/multica-ai/multica/server/internal/events"
-	"github.com/multica-ai/multica/server/internal/featureflags"
-	"github.com/multica-ai/multica/server/internal/runtimeapps"
-	"github.com/multica-ai/multica/server/internal/util"
-	db "github.com/multica-ai/multica/server/pkg/db/generated"
-	"github.com/multica-ai/multica/server/pkg/featureflag"
+	"github.com/lumen-ai/lumen/server/internal/attribution"
+	"github.com/lumen-ai/lumen/server/internal/events"
+	"github.com/lumen-ai/lumen/server/internal/featureflags"
+	"github.com/lumen-ai/lumen/server/internal/runtimeapps"
+	"github.com/lumen-ai/lumen/server/internal/util"
+	db "github.com/lumen-ai/lumen/server/pkg/db/generated"
+	"github.com/lumen-ai/lumen/server/pkg/featureflag"
 )
 
 // newResolveOriginatorPool returns the package's shared test pool; see
@@ -103,14 +103,14 @@ func seedOriginatorFanout(t *testing.T, pool *pgxpool.Pool) (memberCommentID, ag
 
 	if err := pool.QueryRow(ctx, `
 		INSERT INTO "user" (name, email)
-		VALUES ('Resolve Originator User', 'resolve-originator-fanout@multica.test')
+		VALUES ('Resolve Originator User', 'resolve-originator-fanout@lumen.test')
 		RETURNING id
 	`).Scan(&userIDStr); err != nil {
 		t.Fatalf("seed user: %v", err)
 	}
 	t.Cleanup(func() {
 		pool.Exec(context.Background(),
-			`DELETE FROM "user" WHERE email = 'resolve-originator-fanout@multica.test'`)
+			`DELETE FROM "user" WHERE email = 'resolve-originator-fanout@lumen.test'`)
 	})
 
 	if err := pool.QueryRow(ctx, `
@@ -391,7 +391,7 @@ func TestEnqueueTaskForIssueStoresRuntimeMCPOverlayInQueuedRow(t *testing.T) {
 	ctx := context.Background()
 	q := db.New(pool)
 	suffix := time.Now().UnixNano()
-	email := fmt.Sprintf("runtime-overlay-insert-%d@multica.test", suffix)
+	email := fmt.Sprintf("runtime-overlay-insert-%d@lumen.test", suffix)
 	workspaceSlug := fmt.Sprintf("runtime-overlay-insert-%d", suffix)
 
 	var userIDStr, workspaceIDStr, runtimeIDStr, agentIDStr, issueIDStr string

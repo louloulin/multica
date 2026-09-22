@@ -1,6 +1,6 @@
 # Dialog
 
-Import from `@multica/ui/components/ui/dialog`.
+Import from `@lumen/ui/components/ui/dialog`.
 
 ## Usage
 

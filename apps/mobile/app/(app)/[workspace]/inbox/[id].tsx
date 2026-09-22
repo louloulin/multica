@@ -4,8 +4,8 @@ import { useQuery } from "@tanstack/react-query";
 import {
   resolveBillingRecovery,
   type BillingRecoveryKind,
-} from "@multica/core/billing/recovery";
-import { BILLING_WORKSPACE_SUBSCRIPTIONS_FLAG } from "@multica/core/feature-flags";
+} from "@lumen/core/billing/recovery";
+import { BILLING_WORKSPACE_SUBSCRIPTIONS_FLAG } from "@lumen/core/feature-flags";
 import { Text } from "@/components/ui/text";
 import { Button } from "@/components/ui/button";
 import { IconButton } from "@/components/ui/icon-button";
@@ -56,7 +56,7 @@ function BillingRecovery({
         </Button>
       ) : (
         <Text className="text-sm leading-5 text-muted-foreground">
-          Open Multica on the web to review billing options.
+          Open Lumen on the web to review billing options.
         </Text>
       );
   }

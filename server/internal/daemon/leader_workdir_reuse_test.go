@@ -16,7 +16,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/multica-ai/multica/server/internal/daemon/execenv"
+	"github.com/lumen-ai/lumen/server/internal/daemon/execenv"
 )
 
 // TestRunTaskSquadLeaderReusesWorkdirBeforeGCMetaWritten drives two real

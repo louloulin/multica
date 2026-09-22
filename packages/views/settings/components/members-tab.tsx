@@ -25,11 +25,11 @@ import type {
   PurchaseWorkspaceSeatsRequest,
   ShareLink,
   WorkspaceSeatPurchasePreview,
-} from "@multica/core/types";
-import { Input } from "@multica/ui/components/ui/input";
-import { Button } from "@multica/ui/components/ui/button";
-import { Card, CardContent } from "@multica/ui/components/ui/card";
-import { Badge } from "@multica/ui/components/ui/badge";
+} from "@lumen/core/types";
+import { Input } from "@lumen/ui/components/ui/input";
+import { Button } from "@lumen/ui/components/ui/button";
+import { Card, CardContent } from "@lumen/ui/components/ui/card";
+import { Badge } from "@lumen/ui/components/ui/badge";
 import {
   AlertDialog,
   AlertDialogContent,
@@ -39,14 +39,14 @@ import {
   AlertDialogFooter,
   AlertDialogCancel,
   AlertDialogAction,
-} from "@multica/ui/components/ui/alert-dialog";
+} from "@lumen/ui/components/ui/alert-dialog";
 import {
   Select,
   SelectTrigger,
   SelectValue,
   SelectContent,
   SelectItem,
-} from "@multica/ui/components/ui/select";
+} from "@lumen/ui/components/ui/select";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -56,24 +56,24 @@ import {
   DropdownMenuSub,
   DropdownMenuSubTrigger,
   DropdownMenuSubContent,
-} from "@multica/ui/components/ui/dropdown-menu";
+} from "@lumen/ui/components/ui/dropdown-menu";
 import { toast } from "sonner";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useAuthStore } from "@multica/core/auth";
+import { useAuthStore } from "@lumen/core/auth";
 import {
   usePreviewWorkspaceSeatPurchase,
   usePurchaseWorkspaceSeats,
   workspaceSubscriptionSummaryOptions,
-} from "@multica/core/billing";
-import { useWorkspaceId } from "@multica/core/hooks";
-import { useCurrentWorkspace } from "@multica/core/paths";
+} from "@lumen/core/billing";
+import { useWorkspaceId } from "@lumen/core/hooks";
+import { useCurrentWorkspace } from "@lumen/core/paths";
 import {
   invitationListOptions,
   memberListOptions,
   shareLinkListOptions,
   workspaceKeys,
-} from "@multica/core/workspace/queries";
-import { api, errorCode } from "@multica/core/api";
+} from "@lumen/core/workspace/queries";
+import { api, errorCode } from "@lumen/core/api";
 import { useLocale, useT } from "../../i18n";
 import { SettingsCard, SettingsSection, SettingsTab } from "./settings-layout";
 import { formatStripeMinorAmount } from "./billing-format";

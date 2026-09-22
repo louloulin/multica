@@ -3,7 +3,7 @@ package main
 import (
 	"testing"
 
-	"github.com/multica-ai/multica/server/internal/seatcapacity"
+	"github.com/lumen-ai/lumen/server/internal/seatcapacity"
 )
 
 func TestSeatCapacityAssemblyUsesCloudURLAlone(t *testing.T) {

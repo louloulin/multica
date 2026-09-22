@@ -8,25 +8,25 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@multica/ui/components/ui/select";
-import { Switch } from "@multica/ui/components/ui/switch";
-import { useTheme } from "@multica/ui/components/common/theme-provider";
+} from "@lumen/ui/components/ui/select";
+import { Switch } from "@lumen/ui/components/ui/switch";
+import { useTheme } from "@lumen/ui/components/common/theme-provider";
 import {
   DEFAULT_LOCALE,
   SUPPORTED_LOCALES,
   type SupportedLocale,
-} from "@multica/core/i18n";
-import { useLocaleAdapter } from "@multica/core/i18n/react";
-import { useAuthStore } from "@multica/core/auth";
-import { useCommentComposerStore } from "@multica/core/issues/stores";
-import { api } from "@multica/core/api";
+} from "@lumen/core/i18n";
+import { useLocaleAdapter } from "@lumen/core/i18n/react";
+import { useAuthStore } from "@lumen/core/auth";
+import { useCommentComposerStore } from "@lumen/core/issues/stores";
+import { api } from "@lumen/core/api";
 import { browserTimezone, timezoneOptions } from "../../common/timezone-select";
 import {
   Tabs,
   TabsList,
   TabsTrigger,
   TabsContent,
-} from "@multica/ui/components/ui/tabs";
+} from "@lumen/ui/components/ui/tabs";
 import { useNavigation } from "../../navigation";
 import { resolveSettingsLocation, settingsHref } from "./settings-navigation";
 import { IssueTab } from "./issue-tab";

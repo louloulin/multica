@@ -1,17 +1,17 @@
 "use client";
 
-import { composeAnnotatedReply, EMPTY_REPLY_ANNOTATIONS, hasReplyIntent } from "@multica/core/drafts/reply-annotation";
+import { composeAnnotatedReply, EMPTY_REPLY_ANNOTATIONS, hasReplyIntent } from "@lumen/core/drafts/reply-annotation";
 import { ReplyAnnotations } from "./reply-annotations";
 import { useRef, useState, useCallback, useEffect, useMemo } from "react";
 import { ContentEditor, type ContentEditorRef, useFileDropZone, FileDropOverlay, useLazyEditor, useUploadGate, useComposerSubmit } from "../../editor";
-import { FileUploadButton } from "@multica/ui/components/common/file-upload-button";
-import { SubmitButton } from "@multica/ui/components/common/submit-button";
+import { FileUploadButton } from "@lumen/ui/components/common/file-upload-button";
+import { SubmitButton } from "@lumen/ui/components/common/submit-button";
 import { ActorAvatar } from "../../common/actor-avatar";
-import { contentReferencesAttachment } from "@multica/core/types";
-import { formatShortcut, useShortcut } from "@multica/core/shortcuts";
-import { useCommentDraftStore, type CommentDraftKey } from "@multica/core/issues/stores";
-import { cn } from "@multica/ui/lib/utils";
-import type { AvatarSize } from "@multica/ui/lib/avatar-size";
+import { contentReferencesAttachment } from "@lumen/core/types";
+import { formatShortcut, useShortcut } from "@lumen/core/shortcuts";
+import { useCommentDraftStore, type CommentDraftKey } from "@lumen/core/issues/stores";
+import { cn } from "@lumen/ui/lib/utils";
+import type { AvatarSize } from "@lumen/ui/lib/avatar-size";
 import { useT } from "../../i18n";
 import { CommentTriggerChips } from "./comment-trigger-chips";
 import { useCommentTriggerPreview } from "../hooks/use-comment-trigger-preview";

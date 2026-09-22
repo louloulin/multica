@@ -5,11 +5,11 @@ import { ArrowLeft, Check } from "lucide-react";
 import {
   ONBOARDING_STEP_ORDER,
   type OnboardingStep,
-} from "@multica/core/onboarding";
-import { cn } from "@multica/ui/lib/utils";
-import { Button } from "@multica/ui/components/ui/button";
-import { MulticaIcon } from "@multica/ui/components/common/multica-icon";
-import { DotSphere } from "@multica/ui/components/ui/dot-sphere";
+} from "@lumen/core/onboarding";
+import { cn } from "@lumen/ui/lib/utils";
+import { Button } from "@lumen/ui/components/ui/button";
+import { LumenIcon } from "@lumen/ui/components/common/lumen-icon";
+import { DotSphere } from "@lumen/ui/components/ui/dot-sphere";
 import {
   Stepper,
   StepperIndicator,
@@ -17,7 +17,7 @@ import {
   StepperNav,
   StepperSeparator,
   StepperTitle,
-} from "@multica/ui/components/ui/stepper";
+} from "@lumen/ui/components/ui/stepper";
 import { useT } from "../../i18n";
 
 /**
@@ -164,7 +164,7 @@ export function StepSidebar({
         <div className="relative flex min-h-0 flex-1 flex-col pt-5">
           <header className="flex min-h-9 shrink-0 items-center justify-between gap-3">
             <span className="flex min-w-0 items-center gap-2">
-              <MulticaIcon className="size-5 shrink-0 text-foreground" noSpin />
+              <LumenIcon className="size-5 shrink-0 text-foreground" noSpin />
               <span className="truncate text-label font-medium text-foreground">
                 {t(($) => $.step_nav.wordmark)}
               </span>

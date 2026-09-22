@@ -9,11 +9,11 @@ import (
 	"strings"
 
 	"github.com/jackc/pgx/v5/pgtype"
-	"github.com/multica-ai/multica/server/internal/issuestatus"
-	"github.com/multica-ai/multica/server/internal/service"
-	db "github.com/multica-ai/multica/server/pkg/db/generated"
-	"github.com/multica-ai/multica/server/pkg/dbid"
-	"github.com/multica-ai/multica/server/pkg/protocol"
+	"github.com/lumen-ai/lumen/server/internal/issuestatus"
+	"github.com/lumen-ai/lumen/server/internal/service"
+	db "github.com/lumen-ai/lumen/server/pkg/db/generated"
+	"github.com/lumen-ai/lumen/server/pkg/dbid"
+	"github.com/lumen-ai/lumen/server/pkg/protocol"
 )
 
 // notifyParentOfChildDone posts a top-level system comment on the parent
@@ -393,12 +393,12 @@ func (h *Handler) postChildDoneComment(ctx context.Context, parent, completed db
 			// Keep the historical no-cancellation wording byte-identical.
 			if batch {
 				content = fmt.Sprintf(
-					"%sAll sub-issues are complete — they just finished together in a batch update, most recently [%s](mention://issue/%s) — \"%s\". Continue the parent: synthesize the children's results and move it forward, or — if nothing remains — run `multica issue status %s in_review` to mark the parent ready for review.",
+					"%sAll sub-issues are complete — they just finished together in a batch update, most recently [%s](mention://issue/%s) — \"%s\". Continue the parent: synthesize the children's results and move it forward, or — if nothing remains — run `lumen issue status %s in_review` to mark the parent ready for review.",
 					mentionPrefix, identifier, childID, title, parentID,
 				)
 			} else {
 				content = fmt.Sprintf(
-					"%sAll sub-issues are complete — the last one, [%s](mention://issue/%s) — \"%s\", just finished. Continue the parent: synthesize the children's results and move it forward, or — if nothing remains — run `multica issue status %s in_review` to mark the parent ready for review.",
+					"%sAll sub-issues are complete — the last one, [%s](mention://issue/%s) — \"%s\", just finished. Continue the parent: synthesize the children's results and move it forward, or — if nothing remains — run `lumen issue status %s in_review` to mark the parent ready for review.",
 					mentionPrefix, identifier, childID, title, parentID,
 				)
 			}
@@ -414,12 +414,12 @@ func (h *Handler) postChildDoneComment(ctx context.Context, parent, completed db
 					lastAction = "was just cancelled"
 				}
 				content = fmt.Sprintf(
-					"%sAll sub-issues are closed — the last one, [%s](mention://issue/%s) — \"%s\", %s.%s Continue the parent: synthesize the children's results and move it forward, or — if nothing remains — run `multica issue status %s in_review` to mark the parent ready for review.",
+					"%sAll sub-issues are closed — the last one, [%s](mention://issue/%s) — \"%s\", %s.%s Continue the parent: synthesize the children's results and move it forward, or — if nothing remains — run `lumen issue status %s in_review` to mark the parent ready for review.",
 					mentionPrefix, identifier, childID, title, lastAction, warning, parentID,
 				)
 			} else {
 				content = fmt.Sprintf(
-					"%sAll sub-issues are closed — they reached terminal states together in a batch update; most recently, [%s](mention://issue/%s) — \"%s\" — %s.%s Continue the parent: synthesize the children's results and move it forward, or — if nothing remains — run `multica issue status %s in_review` to mark the parent ready for review.",
+					"%sAll sub-issues are closed — they reached terminal states together in a batch update; most recently, [%s](mention://issue/%s) — \"%s\" — %s.%s Continue the parent: synthesize the children's results and move it forward, or — if nothing remains — run `lumen issue status %s in_review` to mark the parent ready for review.",
 					mentionPrefix, identifier, childID, title, lastAction, warning, parentID,
 				)
 			}
@@ -723,7 +723,7 @@ func stageAdvanceInstruction(nextStage int32, parentID string, stageCancelled in
 	var instruction string
 	if nextStage > 0 {
 		instruction = fmt.Sprintf(
-			" Stage %d is next. Review the full layout with `multica issue children %s`, and if Stage %d's dependencies are satisfied promote its `backlog` sub-issues to `todo` to continue. Read each sub-issue's description first and only promote items whose stated dependencies are already met — do not rely on this parent's higher-level breakdown alone. If a description conflicts with that breakdown, leave it `backlog` and post a comment to confirm first.",
+			" Stage %d is next. Review the full layout with `lumen issue children %s`, and if Stage %d's dependencies are satisfied promote its `backlog` sub-issues to `todo` to continue. Read each sub-issue's description first and only promote items whose stated dependencies are already met — do not rely on this parent's higher-level breakdown alone. If a description conflicts with that breakdown, leave it `backlog` and post a comment to confirm first.",
 			nextStage, parentID, nextStage,
 		)
 	} else {
@@ -731,7 +731,7 @@ func stageAdvanceInstruction(nextStage int32, parentID string, stageCancelled in
 		if stageCancelled > 0 {
 			verb = "Closing"
 		}
-		instruction = fmt.Sprintf(" %s this stage does not mean the whole issue is done. Decide whether the issue is actually complete — if so, synthesize the results and run `multica issue status %s in_review` to mark the parent ready for review — or whether the next stage still needs to be created, in which case create that stage and its sub-issues now.", verb, parentID)
+		instruction = fmt.Sprintf(" %s this stage does not mean the whole issue is done. Decide whether the issue is actually complete — if so, synthesize the results and run `lumen issue status %s in_review` to mark the parent ready for review — or whether the next stage still needs to be created, in which case create that stage and its sub-issues now.", verb, parentID)
 	}
 	if !scopeCancelled {
 		return instruction

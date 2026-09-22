@@ -1,6 +1,6 @@
 # GitHub Pusher
 
-A Multica plugin that pushes files to a GitHub repository **through the REST
+A Lumen plugin that pushes files to a GitHub repository **through the REST
 API**, not over `git://github.com`. It exists for one reason: in some
 networks, the host that reaches `api.github.com` cannot reach `github.com`.
 Direct `git push` then fails before it can speak the protocol, and the only
@@ -22,7 +22,7 @@ and cannot read it.
 
 ## Security shape
 
-The plugin author's handler verifies Multica's signature, refuses replays,
+The plugin author's handler verifies Lumen's signature, refuses replays,
 holds the GitHub PAT, and refuses to log it. The iframe holds nothing — the
 panel posts the outcome to the issue using the host's bridge call, so a
 captured iframe state cannot reuse it.
@@ -39,15 +39,15 @@ openssl req -x509 -newkey rsa:2048 -nodes -days 365 \
   -keyout dev-key.pem -out dev-cert.pem \
   -subj "/CN=127.0.0.1" -addext "subjectAltName=IP:127.0.0.1"
 
-MULTICA_SIGNING_SECRET=whsec_... node server/handler.mjs      # :8790
+LUMEN_SIGNING_SECRET=whsec_... node server/handler.mjs      # :8790
 ```
 
-Then point Multica at it the same way `deploy-sentinel` does:
+Then point Lumen at it the same way `deploy-sentinel` does:
 
 ```bash
-export MULTICA_PLUGIN_DIR=examples/plugins
-export MULTICA_PLUGIN_DEV_ORIGINS=https://127.0.0.1:8790
-export MULTICA_PLUGIN_DEV_CA=/path/to/dev-cert.pem
+export LUMEN_PLUGIN_DIR=examples/plugins
+export LUMEN_PLUGIN_DEV_ORIGINS=https://127.0.0.1:8790
+export LUMEN_PLUGIN_DEV_CA=/path/to/dev-cert.pem
 ```
 
 Fill in the plugin config (token, repo owner/name, default branch, committer

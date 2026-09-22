@@ -2,7 +2,7 @@
 set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-CHART_DIR="$ROOT_DIR/deploy/helm/multica"
+CHART_DIR="$ROOT_DIR/deploy/helm/lumen"
 
 require_rendered_value() {
   local rendered=$1
@@ -29,23 +29,23 @@ reject_rendered_value() {
 helm lint "$CHART_DIR"
 
 default_config="$(
-  helm template multica "$CHART_DIR" \
+  helm template lumen "$CHART_DIR" \
     --show-only templates/configmap.yaml
 )"
-require_rendered_value "$default_config" 'MULTICA_VCS_INTEGRATION_ENABLED: "true"'
-require_rendered_value "$default_config" 'MULTICA_CLOUD_URL: ""'
-require_rendered_value "$default_config" 'MULTICA_DATABASE_STARTUP_TIMEOUT: "3m"'
-require_rendered_value "$default_config" 'MULTICA_DATABASE_CONNECT_TIMEOUT: "5s"'
+require_rendered_value "$default_config" 'LUMEN_VCS_INTEGRATION_ENABLED: "true"'
+require_rendered_value "$default_config" 'LUMEN_CLOUD_URL: ""'
+require_rendered_value "$default_config" 'LUMEN_DATABASE_STARTUP_TIMEOUT: "3m"'
+require_rendered_value "$default_config" 'LUMEN_DATABASE_CONNECT_TIMEOUT: "5s"'
 
 require_rendered_value "$default_config" 'MAINTENANCE_PORT: ""'
-maintenance_config="$(helm template multica "$CHART_DIR" --show-only templates/configmap.yaml --set-string backend.config.maintenancePort=6061)"
+maintenance_config="$(helm template lumen "$CHART_DIR" --show-only templates/configmap.yaml --set-string backend.config.maintenancePort=6061)"
 require_rendered_value "$maintenance_config" 'MAINTENANCE_PORT: "6061"'
-maintenance_backend="$(helm template multica "$CHART_DIR" --show-only templates/backend.yaml --set-string backend.config.maintenancePort=6061)"
+maintenance_backend="$(helm template lumen "$CHART_DIR" --show-only templates/backend.yaml --set-string backend.config.maintenancePort=6061)"
 reject_rendered_value "$maintenance_backend" 'containerPort: 6061'
 reject_rendered_value "$maintenance_backend" 'port: 6061'
 
 default_backend="$(
-  helm template multica "$CHART_DIR" \
+  helm template lumen "$CHART_DIR" \
     --show-only templates/backend.yaml
 )"
 require_rendered_value "$default_backend" 'failureThreshold: 60'
@@ -54,17 +54,17 @@ require_rendered_value "$liveness_block" 'path: /health'
 reject_rendered_value "$liveness_block" 'path: /healthz'
 
 disabled_config="$(
-  helm template multica "$CHART_DIR" \
+  helm template lumen "$CHART_DIR" \
     --show-only templates/configmap.yaml \
     --set backend.config.vcsIntegrationEnabled=false
 )"
-require_rendered_value "$disabled_config" 'MULTICA_VCS_INTEGRATION_ENABLED: "false"'
+require_rendered_value "$disabled_config" 'LUMEN_VCS_INTEGRATION_ENABLED: "false"'
 
 capacity_config="$(
-  helm template multica "$CHART_DIR" \
+  helm template lumen "$CHART_DIR" \
     --show-only templates/configmap.yaml \
-    --set-string backend.config.cloud.url=https://multica-cloud.internal
+    --set-string backend.config.cloud.url=https://lumen-cloud.internal
 )"
-require_rendered_value "$capacity_config" 'MULTICA_CLOUD_URL: "https://multica-cloud.internal"'
+require_rendered_value "$capacity_config" 'LUMEN_CLOUD_URL: "https://lumen-cloud.internal"'
 
 echo "helm config rendering ok"

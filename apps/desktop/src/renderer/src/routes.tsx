@@ -13,24 +13,24 @@ import {
   RuntimeSettingsPage,
 } from "./pages/runtime-detail-page";
 import { AttachmentPreviewRoute } from "./pages/attachment-preview-page";
-import { IssuesPage } from "@multica/views/issues/components";
-import { ProjectsPage } from "@multica/views/projects/components";
-import { DashboardPage } from "@multica/views/dashboard";
-import { AutopilotsPage } from "@multica/views/autopilots/components";
-import { MyIssuesPage } from "@multica/views/my-issues";
-import { SkillsPage } from "@multica/views/skills";
+import { IssuesPage } from "@lumen/views/issues/components";
+import { ProjectsPage } from "@lumen/views/projects/components";
+import { DashboardPage } from "@lumen/views/dashboard";
+import { AutopilotsPage } from "@lumen/views/autopilots/components";
+import { MyIssuesPage } from "@lumen/views/my-issues";
+import { SkillsPage } from "@lumen/views/skills";
 import { DesktopRuntimesPage } from "./components/desktop-runtimes-page";
 import { DesktopAgentsPage } from "./components/desktop-agents-page";
 import {
   AiCreateAgentPage,
   ChooseCreateMethodPage,
   ManualCreateAgentPage,
-} from "@multica/views/agents";
-import { SquadsPage, SquadDetailPage as SquadDetailPageView } from "@multica/views/squads/components";
-import { InboxPage } from "@multica/views/inbox";
-import { ChatPage } from "@multica/views/chat";
-import { SettingsPage } from "@multica/views/settings";
-import { useT } from "@multica/views/i18n";
+} from "@lumen/views/agents";
+import { SquadsPage, SquadDetailPage as SquadDetailPageView } from "@lumen/views/squads/components";
+import { InboxPage } from "@lumen/views/inbox";
+import { ChatPage } from "@lumen/views/chat";
+import { SettingsPage } from "@lumen/views/settings";
+import { useT } from "@lumen/views/i18n";
 import { Download, Server, Bug } from "lucide-react";
 import { DaemonSettingsTab } from "./components/daemon-settings-tab";
 import { DesktopDiagnosticsTab } from "./components/desktop-diagnostics-tab";

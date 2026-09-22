@@ -6,16 +6,16 @@ import {
   Loader2,
   RotateCcw,
 } from "lucide-react";
-import { Button } from "@multica/ui/components/ui/button";
-import { Input } from "@multica/ui/components/ui/input";
-import { useT } from "@multica/views/i18n";
+import { Button } from "@lumen/ui/components/ui/button";
+import { Input } from "@lumen/ui/components/ui/input";
+import { useT } from "@lumen/views/i18n";
 import {
   SettingsCard,
   SettingsRow,
   SettingsSaveState,
   SettingsSection,
   SettingsTab,
-} from "@multica/views/settings";
+} from "@lumen/views/settings";
 import {
   DEFAULT_RUNTIME_CONFIG,
   RUNTIME_CONFIG_SCHEMA_VERSION,
@@ -24,7 +24,7 @@ import {
   type RuntimeConfig,
 } from "../../../shared/runtime-config";
 import { toast } from "sonner";
-import { useAutoSave } from "@multica/views/settings";
+import { useAutoSave } from "@lumen/views/settings";
 
 // What the user is editing. Both overrides are normally empty — the form
 // pre-fills them with the derived URL so the field shows the value that
@@ -149,7 +149,7 @@ export function BackendSettingsTab() {
       try {
         // The /api/config endpoint is the same one SELF_HOSTING.md exposes as
         // a public reachability probe. A 2xx is enough — we don't need the
-        // payload, only confirmation that the URL serves Multica.
+        // payload, only confirmation that the URL serves Lumen.
         response = await fetch(`${target.replace(/\/+$/, "")}/api/config`, {
           method: "GET",
           headers: { Accept: "application/json" },
@@ -205,7 +205,7 @@ export function BackendSettingsTab() {
   }, [t]);
 
   const showAdvanced = draft.webOverride.trim().length > 0 || draft.wsOverride.trim().length > 0;
-  const resetConfirmed = resetConfirmText.trim() === "multica.ai";
+  const resetConfirmed = resetConfirmText.trim() === "lumen.ai";
 
   return (
     <SettingsTab
@@ -337,7 +337,7 @@ export function BackendSettingsTab() {
 
       <SettingsSection
         title="Diagnostics"
-        description="URLs Multica Desktop is currently using. The derived values come from the API URL — set the override fields above to change them."
+        description="URLs Lumen Desktop is currently using. The derived values come from the API URL — set the override fields above to change them."
       >
         <SettingsCard>
           <div className="px-4 py-3 space-y-1.5">

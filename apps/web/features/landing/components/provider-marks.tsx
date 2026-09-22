@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { cn } from "@multica/ui/lib/utils";
+import { cn } from "@lumen/ui/lib/utils";
 
 import { GitHubMark } from "./shared";
 

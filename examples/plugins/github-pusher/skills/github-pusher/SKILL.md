@@ -1,6 +1,6 @@
 # GitHub Pusher
 
-Push files to a GitHub repository when `github.com` is unreachable but `api.github.com` works. The plugin author runs an HTTPS handler that holds the workspace-scoped token; calls route through Multica's hook bridge.
+Push files to a GitHub repository when `github.com` is unreachable but `api.github.com` works. The plugin author runs an HTTPS handler that holds the workspace-scoped token; calls route through Lumen's hook bridge.
 
 ## When to use it
 

@@ -21,7 +21,7 @@ import {
   looksLikeCommitSha,
   splitGithubUrlRef,
   validateGitRef,
-} from "@multica/core/github";
+} from "@lumen/core/github";
 import { Text } from "@/components/ui/text";
 import { TextField } from "@/components/ui/text-field";
 import { useCreateProjectResource } from "@/data/mutations/projects";
@@ -154,7 +154,7 @@ export default function AddResourceRoute() {
  */
 function refErrorMessage(value: string): string | null {
   if (looksLikeCommitSha(value)) {
-    return "That's a commit, not a branch. Tasks deliver back to the branch they start from — for a one-off revision, pass --ref to multica repo checkout.";
+    return "That's a commit, not a branch. Tasks deliver back to the branch they start from — for a one-off revision, pass --ref to lumen repo checkout.";
   }
   const validation = validateGitRef(value);
   if (validation.ok) return null;

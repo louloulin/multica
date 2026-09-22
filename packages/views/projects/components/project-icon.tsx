@@ -1,5 +1,5 @@
-import type { Project } from "@multica/core/types";
-import { cn } from "@multica/ui/lib/utils";
+import type { Project } from "@lumen/core/types";
+import { cn } from "@lumen/ui/lib/utils";
 
 export type ProjectIconSize = "sm" | "md" | "lg";
 

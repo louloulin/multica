@@ -4,7 +4,7 @@ import type {
   AgentTask,
   IssueWakeup,
   WakeupPreview,
-} from "@multica/core/types";
+} from "@lumen/core/types";
 import { useLocale, useT } from "../../i18n";
 import { parseCron } from "../../autopilots/components/schedule-editor/cron-mapping";
 import { useDescribeSchedule } from "../../autopilots/components/schedule-editor/describe";

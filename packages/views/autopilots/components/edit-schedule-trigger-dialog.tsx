@@ -1,13 +1,13 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { useUpdateAutopilotTrigger } from "@multica/core/autopilots/mutations";
-import { useWorkspaceId } from "@multica/core/hooks";
-import { Button } from "@multica/ui/components/ui/button";
-import { Switch } from "@multica/ui/components/ui/switch";
-import { Dialog, DialogContent, DialogTitle } from "@multica/ui/components/ui/dialog";
+import { useUpdateAutopilotTrigger } from "@lumen/core/autopilots/mutations";
+import { useWorkspaceId } from "@lumen/core/hooks";
+import { Button } from "@lumen/ui/components/ui/button";
+import { Switch } from "@lumen/ui/components/ui/switch";
+import { Dialog, DialogContent, DialogTitle } from "@lumen/ui/components/ui/dialog";
 import { toast } from "sonner";
-import type { AutopilotTrigger } from "@multica/core/types";
+import type { AutopilotTrigger } from "@lumen/core/types";
 import { ScheduleEditor } from "./schedule-editor/schedule-editor";
 import { parseCron, toCron } from "./schedule-editor/cron-mapping";
 import { useScheduleSubmitGate } from "./schedule-editor/validate";

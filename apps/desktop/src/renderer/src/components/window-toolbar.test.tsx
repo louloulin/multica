@@ -27,11 +27,11 @@ vi.mock("@/hooks/use-tab-history", () => ({
   useTabHistory: () => historyState,
 }));
 
-vi.mock("@multica/views/navigation", () => ({
+vi.mock("@lumen/views/navigation", () => ({
   useNavigation: () => navigationState,
 }));
 
-vi.mock("@multica/views/layout", () => ({
+vi.mock("@lumen/views/layout", () => ({
   useTabPresentation: (url: string, fallbackTitle?: string) => ({
     visual: { kind: "icon", icon: "Inbox" },
     title: fallbackTitle ?? `Title ${url}`,
@@ -39,7 +39,7 @@ vi.mock("@multica/views/layout", () => ({
   ResourceLeadingVisual: () => <span aria-hidden />,
 }));
 
-vi.mock("@multica/ui/components/ui/sidebar", () => ({
+vi.mock("@lumen/ui/components/ui/sidebar", () => ({
   useSidebar: () => sidebarState,
   SidebarTrigger: (props: ComponentProps<"button">) => (
     <button type="button" aria-label="Toggle sidebar" {...props} />

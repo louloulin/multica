@@ -1,6 +1,6 @@
 "use client";
 
-import { useIssueStatuses } from "@multica/core/issue-statuses/hooks";
+import { useIssueStatuses } from "@lumen/core/issue-statuses/hooks";
 import { useStatusLabel } from "../utils/status-label";
 import { NO_PROPERTY_VALUE } from "../utils/filter";
 import { useMemo, type ReactNode } from "react";
@@ -16,25 +16,25 @@ import {
   X,
 } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
-import { Button } from "@multica/ui/components/ui/button";
-import { useWorkspaceId } from "@multica/core/hooks";
-import { memberListOptions, agentListOptions, squadListOptions } from "@multica/core/workspace/queries";
-import { projectListOptions } from "@multica/core/projects/queries";
-import { PROJECT_STATUS_CONFIG } from "@multica/core/projects/config";
-import { labelListOptions } from "@multica/core/labels/queries";
-import { propertyListOptions } from "@multica/core/properties";
-import { isActorPropertyType, isScalarPropertyType, parseActorRef, propertyFilterValueKey, PROPERTY_FILTER_OP_SYMBOLS, type PropertyFilterValue } from "@multica/core/types";
+import { Button } from "@lumen/ui/components/ui/button";
+import { useWorkspaceId } from "@lumen/core/hooks";
+import { memberListOptions, agentListOptions, squadListOptions } from "@lumen/core/workspace/queries";
+import { projectListOptions } from "@lumen/core/projects/queries";
+import { PROJECT_STATUS_CONFIG } from "@lumen/core/projects/config";
+import { labelListOptions } from "@lumen/core/labels/queries";
+import { propertyListOptions } from "@lumen/core/properties";
+import { isActorPropertyType, isScalarPropertyType, parseActorRef, propertyFilterValueKey, PROPERTY_FILTER_OP_SYMBOLS, type PropertyFilterValue } from "@lumen/core/types";
 import {
   type ActorFilterValue,
   type FilterDimension,
   type FilterSnapshot,
   type IssueDateFilter,
-} from "@multica/core/issues/stores/view-store";
+} from "@lumen/core/issues/stores/view-store";
 import {
   actorFilterKey,
   type IssueViewBaseline,
-} from "@multica/core/issue-views/baseline";
-import { useViewStore, useViewStoreApi } from "@multica/core/issues/stores/view-store-context";
+} from "@lumen/core/issue-views/baseline";
+import { useViewStore, useViewStoreApi } from "@lumen/core/issues/stores/view-store-context";
 import { StatusIcon } from "./status-icon";
 import { PriorityIcon } from "./priority-icon";
 import { ActorAvatar } from "../../common/actor-avatar";

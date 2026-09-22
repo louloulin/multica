@@ -16,10 +16,10 @@ import (
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgtype"
 
-	"github.com/multica-ai/multica/server/internal/events"
-	"github.com/multica-ai/multica/server/internal/integrations/channel"
-	"github.com/multica-ai/multica/server/internal/integrations/channel/engine"
-	"github.com/multica-ai/multica/server/pkg/protocol"
+	"github.com/lumen-ai/lumen/server/internal/events"
+	"github.com/lumen-ai/lumen/server/internal/integrations/channel"
+	"github.com/lumen-ai/lumen/server/internal/integrations/channel/engine"
+	"github.com/lumen-ai/lumen/server/pkg/protocol"
 )
 
 // fakeSessionBinder records the engine.*Input it was handed so the wecom

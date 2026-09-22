@@ -8,10 +8,10 @@ import (
 	"testing"
 
 	"github.com/google/uuid"
-	"github.com/multica-ai/multica/server/internal/entitlement"
-	"github.com/multica-ai/multica/server/internal/entitlement/entitlementtest"
-	"github.com/multica-ai/multica/server/internal/service"
-	"github.com/multica-ai/multica/server/pkg/agent"
+	"github.com/lumen-ai/lumen/server/internal/entitlement"
+	"github.com/lumen-ai/lumen/server/internal/entitlement/entitlementtest"
+	"github.com/lumen-ai/lumen/server/internal/service"
+	"github.com/lumen-ai/lumen/server/pkg/agent"
 )
 
 // TestQuickCreateIssueParentTrustBoundary locks the server-side trust boundary
@@ -86,7 +86,7 @@ func TestQuickCreateIssueParentTrustBoundary(t *testing.T) {
 	var foreignWorkspaceID, foreignUserID, foreignParentID string
 	if err := testPool.QueryRow(ctx, `
 		INSERT INTO "user" (name, email) VALUES ($1, $2) RETURNING id
-	`, "QuickCreate Foreign", "quickcreate-foreign@multica.ai").Scan(&foreignUserID); err != nil {
+	`, "QuickCreate Foreign", "quickcreate-foreign@lumen.ai").Scan(&foreignUserID); err != nil {
 		t.Fatalf("create foreign user: %v", err)
 	}
 	t.Cleanup(func() {

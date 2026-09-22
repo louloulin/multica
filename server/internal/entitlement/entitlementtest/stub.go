@@ -1,5 +1,5 @@
 // Package entitlementtest provides a deterministic Provider for tests of
-// future entitlement consumers. It never contacts Multica Cloud.
+// future entitlement consumers. It never contacts Lumen Cloud.
 package entitlementtest
 
 import (
@@ -7,7 +7,7 @@ import (
 	"sync"
 
 	"github.com/google/uuid"
-	"github.com/multica-ai/multica/server/internal/entitlement"
+	"github.com/lumen-ai/lumen/server/internal/entitlement"
 )
 
 type Call struct {

@@ -1,7 +1,7 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { I18nProvider } from "@multica/core/i18n/react";
-import { RESOURCES } from "@multica/views/locales";
+import { I18nProvider } from "@lumen/core/i18n/react";
+import { RESOURCES } from "@lumen/views/locales";
 import { BackendSettingsTab } from "./backend-settings-tab";
 import { DEFAULT_RUNTIME_CONFIG } from "../../../shared/runtime-config";
 
@@ -109,8 +109,8 @@ describe("BackendSettingsTab", () => {
     const resetButton = await screen.findByRole("button", { name: /reset to cloud/i });
     expect(resetButton).toBeDisabled();
 
-    const confirmInput = screen.getByPlaceholderText("multica.ai");
-    fireEvent.change(confirmInput, { target: { value: "multica.ai" } });
+    const confirmInput = screen.getByPlaceholderText("lumen.ai");
+    fireEvent.change(confirmInput, { target: { value: "lumen.ai" } });
 
     expect(resetButton).not.toBeDisabled();
 

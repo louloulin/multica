@@ -8,17 +8,17 @@ import {
   decodeBuilderInput,
   pickBuilderRestore,
   type BuilderRestore,
-} from "@multica/core/agents";
-import { api, ApiError } from "@multica/core/api";
+} from "@lumen/core/agents";
+import { api, ApiError } from "@lumen/core/api";
 import {
   chatKeys,
   chatMessagesOptions,
   pendingChatTaskOptions,
-} from "@multica/core/chat/queries";
-import { upsertChatMessageToCaches } from "@multica/core/chat/message-cache";
-import { removeChatMessageFromCaches } from "@multica/core/realtime";
-import { useWorkspaceId } from "@multica/core/hooks";
-import type { ChatMessage } from "@multica/core/types";
+} from "@lumen/core/chat/queries";
+import { upsertChatMessageToCaches } from "@lumen/core/chat/message-cache";
+import { removeChatMessageFromCaches } from "@lumen/core/realtime";
+import { useWorkspaceId } from "@lumen/core/hooks";
+import type { ChatMessage } from "@lumen/core/types";
 import { useAppForeground } from "../../common/use-app-foreground";
 import { useChatDraftRestore } from "../../chat/components/use-chat-draft-restore";
 import { useT } from "../../i18n";

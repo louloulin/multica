@@ -4,28 +4,28 @@ import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Bell, Clock3, AlertCircle } from "lucide-react";
 import { toast } from "sonner";
-import { useWorkspaceId } from "@multica/core/hooks";
-import { useWorkspacePaths } from "@multica/core/paths";
+import { useWorkspaceId } from "@lumen/core/hooks";
+import { useWorkspacePaths } from "@lumen/core/paths";
 import {
   workspaceWakeupsOptions,
   useDisableWorkspaceWakeups,
   useDisableIssueWakeup,
   useEnableIssueWakeup,
-} from "@multica/core/issues/wakeups";
+} from "@lumen/core/issues/wakeups";
 import type {
   WorkspaceWakeup,
   WorkspaceWakeupFilters,
-} from "@multica/core/types";
-import { Button } from "@multica/ui/components/ui/button";
-import { Checkbox } from "@multica/ui/components/ui/checkbox";
-import { Input } from "@multica/ui/components/ui/input";
+} from "@lumen/core/types";
+import { Button } from "@lumen/ui/components/ui/button";
+import { Checkbox } from "@lumen/ui/components/ui/checkbox";
+import { Input } from "@lumen/ui/components/ui/input";
 import {
   Select,
   SelectTrigger,
   SelectValue,
   SelectContent,
   SelectItem,
-} from "@multica/ui/components/ui/select";
+} from "@lumen/ui/components/ui/select";
 import {
   Table,
   TableHeader,
@@ -33,7 +33,7 @@ import {
   TableBody,
   TableRow,
   TableCell,
-} from "@multica/ui/components/ui/table";
+} from "@lumen/ui/components/ui/table";
 import {
   Dialog,
   DialogContent,
@@ -41,7 +41,7 @@ import {
   DialogTitle,
   DialogDescription,
   DialogFooter,
-} from "@multica/ui/components/ui/dialog";
+} from "@lumen/ui/components/ui/dialog";
 import { AppLink } from "../../navigation";
 import { useLocale, useT, useTimeAgo } from "../../i18n";
 import { CollectionPageState } from "../../layout/collection-page";

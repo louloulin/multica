@@ -2,9 +2,9 @@
 
 import { useCallback } from "react";
 import { useQueryClient } from "@tanstack/react-query";
-import { useAuthStore } from "@multica/core/auth";
-import { clearClientSessionData } from "@multica/core/platform";
-import { paths } from "@multica/core/paths";
+import { useAuthStore } from "@lumen/core/auth";
+import { clearClientSessionData } from "@lumen/core/platform";
+import { paths } from "@lumen/core/paths";
 import { useNavigation } from "../navigation";
 
 /**

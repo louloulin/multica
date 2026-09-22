@@ -8,9 +8,9 @@ import (
 	"testing"
 
 	"github.com/google/uuid"
-	"github.com/multica-ai/multica/server/internal/issuestatus"
-	"github.com/multica-ai/multica/server/internal/testutil"
-	db "github.com/multica-ai/multica/server/pkg/db/generated"
+	"github.com/lumen-ai/lumen/server/internal/issuestatus"
+	"github.com/lumen-ai/lumen/server/internal/testutil"
+	db "github.com/lumen-ai/lumen/server/pkg/db/generated"
 )
 
 // These are the installed Web/Desktop consumer's literal accepted buckets,

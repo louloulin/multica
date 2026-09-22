@@ -1,6 +1,6 @@
-import type { TimelineEntry } from "@multica/core/types";
-import { isDeletedComment } from "@multica/core/issues/comment-deletion";
-import { sortTimelineEntriesAsc } from "@multica/core/issues/timeline-sort";
+import type { TimelineEntry } from "@lumen/core/types";
+import { isDeletedComment } from "@lumen/core/issues/comment-deletion";
+import { sortTimelineEntriesAsc } from "@lumen/core/issues/timeline-sort";
 
 /**
  * Walks the parent_id graph rooted at `rootId` and returns every descendant in

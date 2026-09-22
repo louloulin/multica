@@ -1,10 +1,10 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { issueIdentifierOptions } from "@multica/core/issues/queries";
-import { useCurrentWorkspace } from "@multica/core/paths";
-import { isIssueIdentifier } from "@multica/ui/markdown";
-import type { Issue } from "@multica/core/types";
+import { issueIdentifierOptions } from "@lumen/core/issues/queries";
+import { useCurrentWorkspace } from "@lumen/core/paths";
+import { isIssueIdentifier } from "@lumen/ui/markdown";
+import type { Issue } from "@lumen/core/types";
 
 /**
  * Resolve a bare issue identifier ("MUL-123") to a real issue in the current

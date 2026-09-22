@@ -19,13 +19,13 @@ import {
   CreditCard,
   Server,
 } from "lucide-react";
-import { useCurrentWorkspace } from "@multica/core/paths";
-import { useFeatureEnabled } from "@multica/core/config";
+import { useCurrentWorkspace } from "@lumen/core/paths";
+import { useFeatureEnabled } from "@lumen/core/config";
 import {
   BILLING_WORKSPACE_SUBSCRIPTIONS_FLAG,
   PLUGINS_V1_FLAG,
-} from "@multica/core/feature-flags";
-import { cn } from "@multica/ui/lib/utils";
+} from "@lumen/core/feature-flags";
+import { cn } from "@lumen/ui/lib/utils";
 import { resolveSettingsLocation, settingsHref } from "./settings-navigation";
 import { AppLink, useNavigation } from "../../navigation";
 import { AccountTab } from "./account-tab";

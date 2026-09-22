@@ -15,7 +15,7 @@ import (
 	"testing"
 	"time"
 
-	db "github.com/multica-ai/multica/server/pkg/db/generated"
+	db "github.com/lumen-ai/lumen/server/pkg/db/generated"
 )
 
 type observedDoneContext struct {

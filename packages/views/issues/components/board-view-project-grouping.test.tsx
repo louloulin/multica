@@ -10,18 +10,18 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { cleanup, screen } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ViewStoreProvider } from "@multica/core/issues/stores/view-store-context";
-import { getIssueSurfaceViewStore } from "@multica/core/issues/stores/surface-view-store";
-import type { Issue, Project } from "@multica/core/types";
+import { ViewStoreProvider } from "@lumen/core/issues/stores/view-store-context";
+import { getIssueSurfaceViewStore } from "@lumen/core/issues/stores/surface-view-store";
+import type { Issue, Project } from "@lumen/core/types";
 import { renderWithI18n } from "../../test/i18n";
 import { IssueContextMenuProvider } from "../actions/issue-actions-context-menu";
 import type { IssueGroupBranches } from "../surface/use-issue-group-branches";
 import { BoardView } from "./board-view";
 
-vi.mock("@multica/core/hooks", () => ({ useWorkspaceId: () => "ws-1" }));
+vi.mock("@lumen/core/hooks", () => ({ useWorkspaceId: () => "ws-1" }));
 
-vi.mock("@multica/core/properties", async (importOriginal) => ({
-  ...(await importOriginal<typeof import("@multica/core/properties")>()),
+vi.mock("@lumen/core/properties", async (importOriginal) => ({
+  ...(await importOriginal<typeof import("@lumen/core/properties")>()),
   propertyListOptions: () => ({
     queryKey: ["properties"],
     queryFn: async () => [],
@@ -30,26 +30,26 @@ vi.mock("@multica/core/properties", async (importOriginal) => ({
   useUnsetIssueProperty: () => ({ mutate: () => {} }),
 }));
 
-vi.mock("@multica/core/workspace/hooks", async (importOriginal) => ({
-  ...(await importOriginal<typeof import("@multica/core/workspace/hooks")>()),
+vi.mock("@lumen/core/workspace/hooks", async (importOriginal) => ({
+  ...(await importOriginal<typeof import("@lumen/core/workspace/hooks")>()),
   useActorName: () => ({ getActorName: () => "Someone" }),
 }));
 
-vi.mock("@multica/core/auth", async (importOriginal) => ({
-  ...(await importOriginal<typeof import("@multica/core/auth")>()),
+vi.mock("@lumen/core/auth", async (importOriginal) => ({
+  ...(await importOriginal<typeof import("@lumen/core/auth")>()),
   useAuthStore: (selector: (state: { user: { id: string } }) => unknown) =>
     selector({ user: { id: "viewer-1" } }),
 }));
 
-vi.mock("@multica/core/agents", async (importOriginal) => ({
-  ...(await importOriginal<typeof import("@multica/core/agents")>()),
+vi.mock("@lumen/core/agents", async (importOriginal) => ({
+  ...(await importOriginal<typeof import("@lumen/core/agents")>()),
   isAgentRuntimeBound: () => true,
   useAgentPresenceDetail: () => ({ availability: "offline", workload: null }),
 }));
 
-vi.mock("@multica/core/paths", async (importOriginal) => {
+vi.mock("@lumen/core/paths", async (importOriginal) => {
   const actual =
-    await importOriginal<typeof import("@multica/core/paths")>();
+    await importOriginal<typeof import("@lumen/core/paths")>();
   return {
     ...actual,
     useCurrentWorkspace: () => ({ id: "ws-1", slug: "acme" }),

@@ -1,4 +1,4 @@
-import type { TimelineEntry } from "@multica/core/types";
+import type { TimelineEntry } from "@lumen/core/types";
 
 export function commentContentFromTimeline(
   timeline: TimelineEntry[] | undefined,

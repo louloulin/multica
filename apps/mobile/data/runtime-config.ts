@@ -23,7 +23,7 @@ export interface RuntimeConfig {
 
 export const DEFAULT_RUNTIME_CONFIG: RuntimeConfig = Object.freeze({
   schemaVersion: RUNTIME_CONFIG_SCHEMA_VERSION,
-  apiUrl: "https://api.multica.ai",
+  apiUrl: "https://api.lumen.ai",
 });
 
 export function getBuildTimeApiUrl(): string {
@@ -87,7 +87,7 @@ export function deriveWsUrl(apiUrl: string): string {
 
 /** Mirror desktop's `deriveAppUrl` (apps/desktop/src/shared/runtime-config.ts:126-135).
  *  Strips a leading `api.` from the hostname when there are ≥3 labels
- *  (`api.multica.ai` → `multica.ai`). Short hosts / no leading label fall through
+ *  (`api.lumen.ai` → `lumen.ai`). Short hosts / no leading label fall through
  *  untouched. */
 export function deriveAppUrl(apiUrl: string): string {
   const url = new URL(apiUrl);

@@ -1,7 +1,7 @@
 - generic [ref=e1]:
   - generic [ref=e3]:
     - generic [ref=e4]:
-      - generic [ref=e5]: 登录 Multica
+      - generic [ref=e5]: 登录 Lumen
       - generic [ref=e6]: 输入邮箱以获取登录验证码
     - generic [ref=e9]:
       - generic [ref=e10]: 邮箱

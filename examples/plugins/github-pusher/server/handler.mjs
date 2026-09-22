@@ -2,15 +2,15 @@
 /**
  * GitHub Pusher — the plugin author's side of the wire.
  *
- * Multica only ever sends this a signed POST. Everything security-relevant is
+ * Lumen only ever sends this a signed POST. Everything security-relevant is
  * on this side: signature verification, replay rejection, and the GitHub
  * token. The token never crosses the host boundary into an iframe.
  *
  * Run:
- *   MULTICA_SIGNING_SECRET=whsec_... node handler.mjs
+ *   LUMEN_SIGNING_SECRET=whsec_... node handler.mjs
  *
  * Env:
- *   MULTICA_SIGNING_SECRET  — whsec_… shown once when an admin rotates the
+ *   LUMEN_SIGNING_SECRET  — whsec_… shown once when an admin rotates the
  *                             plugin token in workspace settings. Required.
  *   PORT                    — port to listen on (default 8790).
  *   TLS_CERT / TLS_KEY      — paths to PEM files. Hook transport URLs must be
@@ -27,7 +27,7 @@ import { readFileSync } from "node:fs";
 import { createHmac, timingSafeEqual } from "node:crypto";
 
 const PORT = Number(process.env.PORT ?? 8790);
-const SIGNING_SECRET = process.env.MULTICA_SIGNING_SECRET ?? "";
+const SIGNING_SECRET = process.env.LUMEN_SIGNING_SECRET ?? "";
 const REPLAY_WINDOW_SECONDS = 5 * 60;
 const GITHUB_API = "https://api.github.com";
 
@@ -43,8 +43,8 @@ function pruneSeen(now) {
 
 function verifySignature(rawBody, headers) {
   if (!SIGNING_SECRET) return { ok: false, reason: "server has no signing secret configured" };
-  const timestamp = headers["x-multica-timestamp"];
-  const presented = String(headers["x-multica-signature"] ?? "").replace(/^v1=/, "");
+  const timestamp = headers["x-lumen-timestamp"];
+  const presented = String(headers["x-lumen-signature"] ?? "").replace(/^v1=/, "");
   if (!timestamp || !presented) return { ok: false, reason: "missing signature headers" };
 
   const drift = Math.abs(Math.floor(Date.now() / 1000) - Number(timestamp));
@@ -350,6 +350,6 @@ const server = createServer(async (req, res) => {
 server.listen(PORT, () => {
   console.log(`GitHub Pusher listening on ${process.env.TLS_CERT ? "https" : "http"}://0.0.0.0:${PORT}`);
   if (!SIGNING_SECRET) {
-    console.warn("MULTICA_SIGNING_SECRET is not set — every request will be refused.");
+    console.warn("LUMEN_SIGNING_SECRET is not set — every request will be refused.");
   }
 });

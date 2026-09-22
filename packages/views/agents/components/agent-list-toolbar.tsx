@@ -12,10 +12,10 @@ import {
   ALL_ACCESS_SCOPES,
   effectiveAccessScope,
   type AgentAvailability,
-} from "@multica/core/agents";
-import type { MemberWithUser } from "@multica/core/types";
-import { runtimeDisplayLabel } from "@multica/core/runtimes";
-import { resolvePublicFileUrl } from "@multica/core/workspace/avatar-url";
+} from "@lumen/core/agents";
+import type { MemberWithUser } from "@lumen/core/types";
+import { runtimeDisplayLabel } from "@lumen/core/runtimes";
+import { resolvePublicFileUrl } from "@lumen/core/workspace/avatar-url";
 import {
   AGENT_SCOPES,
   type AgentColumnKey,
@@ -23,9 +23,9 @@ import {
   type AgentsScope,
   type AgentSortDirection,
   type AgentSortField,
-} from "@multica/core/agents/stores";
-import { Button } from "@multica/ui/components/ui/button";
-import { Input } from "@multica/ui/components/ui/input";
+} from "@lumen/core/agents/stores";
+import { Button } from "@lumen/ui/components/ui/button";
+import { Input } from "@lumen/ui/components/ui/input";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -36,25 +36,25 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
-} from "@multica/ui/components/ui/dropdown-menu";
+} from "@lumen/ui/components/ui/dropdown-menu";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@multica/ui/components/ui/popover";
-import { Switch } from "@multica/ui/components/ui/switch";
+} from "@lumen/ui/components/ui/popover";
+import { Switch } from "@lumen/ui/components/ui/switch";
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from "@multica/ui/components/ui/tooltip";
-import { ActorAvatar } from "@multica/ui/components/common/actor-avatar";
+} from "@lumen/ui/components/ui/tooltip";
+import { ActorAvatar } from "@lumen/ui/components/common/actor-avatar";
 import { FILTER_ITEM_CLASS, HoverCheck } from "../../common/hover-check";
 import { availabilityConfig } from "../presence";
 import { useT } from "../../i18n";
 import type { AgentListRow } from "./agents-page";
 import { PAGE_GUTTER } from "../../layout/page-header";
-import { cn } from "@multica/ui/lib/utils";
+import { cn } from "@lumen/ui/lib/utils";
 
 const COLUMN_KEYS: AgentColumnKey[] = [
   "status",

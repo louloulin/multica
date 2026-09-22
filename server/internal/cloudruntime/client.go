@@ -18,8 +18,8 @@ const (
 )
 
 var (
-	ErrDisabled       = errors.New("multica-cloud URL is not configured")
-	ErrInvalidBaseURL = errors.New("multica-cloud URL is invalid")
+	ErrDisabled       = errors.New("lumen-cloud URL is not configured")
+	ErrInvalidBaseURL = errors.New("lumen-cloud URL is invalid")
 )
 
 // RequestRecorder is the small interface the client uses to instrument every

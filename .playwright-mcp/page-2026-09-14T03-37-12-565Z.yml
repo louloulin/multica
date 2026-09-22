@@ -182,6 +182,6 @@
             - generic: 暂无智能体
             - generic:
               - button "发送" [disabled]
-      - button "问 Multica" [ref=f4e353]
+      - button "问 Lumen" [ref=f4e353]
   - region "Notifications alt+T"
   - alert [ref=f4e356]

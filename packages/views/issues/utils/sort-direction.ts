@@ -1,7 +1,7 @@
 import type {
   SortDirection,
   SortField,
-} from "@multica/core/issues/stores/view-store";
+} from "@lumen/core/issues/stores/view-store";
 
 export type SortDirectionLabelKey =
   | "ascending_title"

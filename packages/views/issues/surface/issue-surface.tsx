@@ -2,34 +2,34 @@
 
 import { useCallback, useEffect, useMemo, useState, type ReactNode } from "react";
 import type { StoreApi } from "zustand/vanilla";
-import type { IssueViewState } from "@multica/core/issues/stores/view-store";
-import type { IssueViewBaseline } from "@multica/core/issue-views/baseline";
+import type { IssueViewState } from "@lumen/core/issues/stores/view-store";
+import type { IssueViewBaseline } from "@lumen/core/issue-views/baseline";
 import { AlertTriangle, FilterX, ListTodo, Plus } from "lucide-react";
-import { Button } from "@multica/ui/components/ui/button";
-import { Skeleton } from "@multica/ui/components/ui/skeleton";
-import { cn } from "@multica/ui/lib/utils";
-import { useWorkspaceId } from "@multica/core/hooks";
+import { Button } from "@lumen/ui/components/ui/button";
+import { Skeleton } from "@lumen/ui/components/ui/skeleton";
+import { cn } from "@lumen/ui/lib/utils";
+import { useWorkspaceId } from "@lumen/core/hooks";
 import { useQuery } from "@tanstack/react-query";
-import { workspaceWakeupSummariesOptions } from "@multica/core/issues/wakeups";
+import { workspaceWakeupSummariesOptions } from "@lumen/core/issues/wakeups";
 import {
   useViewStore,
   ViewStoreProvider,
-} from "@multica/core/issues/stores/view-store-context";
+} from "@lumen/core/issues/stores/view-store-context";
 import {
   getIssueSurfaceViewStore,
   seedIssueSurfaceViewState,
-} from "@multica/core/issues/stores/surface-view-store";
-import { useActiveIssueView } from "@multica/core/issue-views/use-active-view";
-import { baselineFromQuery } from "@multica/core/issue-views/baseline";
+} from "@lumen/core/issues/stores/surface-view-store";
+import { useActiveIssueView } from "@lumen/core/issue-views/use-active-view";
+import { baselineFromQuery } from "@lumen/core/issue-views/baseline";
 import { ViewBaselineProvider, useViewBaseline } from "./view-baseline-context";
-import type { IssueViewScope } from "@multica/core/issue-views/queries";
+import type { IssueViewScope } from "@lumen/core/issue-views/queries";
 import {
   actorKindForViewVariant,
   issueScopeKey,
   myRelationForViewVariant,
   type IssueScope,
-} from "@multica/core/issues/surface/scope";
-import type { Issue } from "@multica/core/types";
+} from "@lumen/core/issues/surface/scope";
+import type { Issue } from "@lumen/core/types";
 import { BoardView } from "../components/board-view";
 import { BatchActionToolbar } from "../components/batch-action-toolbar";
 import { GanttView } from "../components/gantt-view";

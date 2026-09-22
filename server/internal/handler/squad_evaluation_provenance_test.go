@@ -6,7 +6,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/multica-ai/multica/server/internal/testutil"
+	"github.com/lumen-ai/lumen/server/internal/testutil"
 )
 
 // These tests pin the authorization contract of RecordSquadLeaderEvaluation

@@ -1,6 +1,6 @@
 // @vitest-environment node
 import { describe, expect, it } from "vitest";
-import type { AgentTask, TimelineEntry } from "@multica/core/types";
+import type { AgentTask, TimelineEntry } from "@lumen/core/types";
 import { commentRunOutput, buildCommentRunView, orderTimelineWithRuns, type CommentRun } from "./comment-runs";
 
 const groupCommentRuns = (...args: Parameters<typeof buildCommentRunView>) => buildCommentRunView(...args).runs;

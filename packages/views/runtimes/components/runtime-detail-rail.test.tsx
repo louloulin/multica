@@ -2,7 +2,7 @@
 
 import { describe, it, expect, vi } from "vitest";
 import { render } from "@testing-library/react";
-import { I18nProvider } from "@multica/core/i18n/react";
+import { I18nProvider } from "@lumen/core/i18n/react";
 import enCommon from "../../locales/en/common.json";
 import enRuntimes from "../../locales/en/runtimes.json";
 import { RuntimeDetailPage } from "./runtime-detail-page";
@@ -31,19 +31,19 @@ vi.mock("@tanstack/react-query", async () => {
     useQueryClient: () => ({ invalidateQueries: vi.fn() }),
   };
 });
-vi.mock("@multica/core/hooks", () => ({ useWorkspaceId: () => "ws-1" }));
-vi.mock("@multica/core/auth", () => ({
+vi.mock("@lumen/core/hooks", () => ({ useWorkspaceId: () => "ws-1" }));
+vi.mock("@lumen/core/auth", () => ({
   useAuthStore: (sel: (s: { user: { id: string } }) => unknown) =>
     sel({ user: { id: "user-1" } }),
 }));
-vi.mock("@multica/core/paths", () => ({
+vi.mock("@lumen/core/paths", () => ({
   useWorkspacePaths: () => ({ runtimes: () => "/runtimes", agentDetail: () => "/agents" }),
 }));
-vi.mock("@multica/core/realtime", () => ({ useWSEvent: () => {} }));
-vi.mock("@multica/core/agents", () => ({
+vi.mock("@lumen/core/realtime", () => ({ useWSEvent: () => {} }));
+vi.mock("@lumen/core/agents", () => ({
   agentTaskSnapshotOptions: () => ({ queryKey: ["tasks"] }),
 }));
-vi.mock("@multica/core/runtimes", () => ({
+vi.mock("@lumen/core/runtimes", () => ({
   runtimeProfileListOptions: () => ({ queryKey: ["profiles"] }),
   deriveRuntimeHealth: () => "online",
   runtimeDisplayName: () => "machine",
@@ -51,11 +51,11 @@ vi.mock("@multica/core/runtimes", () => ({
   parseRuntimeProfileBoundConflict: () => null,
   useDeleteRuntimeProfile: () => ({ mutateAsync: vi.fn(), isPending: false }),
 }));
-vi.mock("@multica/core/runtimes/queries", () => ({
+vi.mock("@lumen/core/runtimes/queries", () => ({
   runtimeListOptions: () => ({ queryKey: ["runtimes"] }),
   runtimeKeys: { list: () => ["runtimes"] },
 }));
-vi.mock("@multica/core/workspace/queries", () => ({
+vi.mock("@lumen/core/workspace/queries", () => ({
   agentListOptions: () => ({ queryKey: ["agents"] }),
   memberListOptions: () => ({ queryKey: ["members"] }),
 }));

@@ -17,8 +17,8 @@ import {
   Settings2,
   User,
 } from "lucide-react";
-import { Button } from "@multica/ui/components/ui/button";
-import type { QuestionnaireAnswers, Role, UseCase } from "@multica/core/onboarding";
+import { Button } from "@lumen/ui/components/ui/button";
+import type { QuestionnaireAnswers, Role, UseCase } from "@lumen/core/onboarding";
 import {
   StepFooter,
   StepHeading,

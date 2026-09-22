@@ -17,22 +17,22 @@ import type {
   MemberWithUser,
   Skill,
   SkillSummary,
-} from "@multica/core/types";
+} from "@lumen/core/types";
 import { useQuery } from "@tanstack/react-query";
 import { useVirtualizer } from "@tanstack/react-virtual";
-import { useAuthStore } from "@multica/core/auth";
-import { useWorkspaceId } from "@multica/core/hooks";
-import { useWorkspacePaths } from "@multica/core/paths";
+import { useAuthStore } from "@lumen/core/auth";
+import { useWorkspaceId } from "@lumen/core/hooks";
+import { useWorkspacePaths } from "@lumen/core/paths";
 import {
   agentListOptions,
   memberListOptions,
   selectSkillAssignments,
   skillListOptions,
-} from "@multica/core/workspace/queries";
-import { runtimeDisplayLabel, runtimeListOptions } from "@multica/core/runtimes";
-import { resolvePublicFileUrl } from "@multica/core/workspace/avatar-url";
-import { Button } from "@multica/ui/components/ui/button";
-import { Checkbox } from "@multica/ui/components/ui/checkbox";
+} from "@lumen/core/workspace/queries";
+import { runtimeDisplayLabel, runtimeListOptions } from "@lumen/core/runtimes";
+import { resolvePublicFileUrl } from "@lumen/core/workspace/avatar-url";
+import { Button } from "@lumen/ui/components/ui/button";
+import { Checkbox } from "@lumen/ui/components/ui/checkbox";
 import {
   LIST_GRID_BOTTOM_CLEARANCE,
   ListGrid,
@@ -42,14 +42,14 @@ import {
   ListGridHeaderCell,
   ListGridRow,
   type ListGridSortDirection,
-} from "@multica/ui/components/ui/list-grid";
-import { Skeleton } from "@multica/ui/components/ui/skeleton";
+} from "@lumen/ui/components/ui/list-grid";
+import { Skeleton } from "@lumen/ui/components/ui/skeleton";
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from "@multica/ui/components/ui/tooltip";
-import { ActorAvatar } from "@multica/ui/components/common/actor-avatar";
+} from "@lumen/ui/components/ui/tooltip";
+import { ActorAvatar } from "@lumen/ui/components/common/actor-avatar";
 import {
   rowLinkInteractiveProps,
   useNavigation,
@@ -69,7 +69,7 @@ import {
   DEFAULT_HIDDEN_COLUMNS,
   type SkillColumnKey,
   type SkillSortField,
-} from "@multica/core/skills/stores";
+} from "@lumen/core/skills/stores";
 import { SkillListToolbar } from "./skill-list-toolbar";
 import {
   SkillBatchToolbar,
@@ -150,7 +150,7 @@ function columnTrackVars(
 }
 
 // Sort/filter/column types and defaults live in the core view store
-// (@multica/core/skills/stores/view-store) so the persisted state and the
+// (@lumen/core/skills/stores/view-store) so the persisted state and the
 // UI share one definition. Re-exported here for the toolbar's convenience.
 export type SortField = SkillSortField;
 export { rowMatchesFilters, type SkillRow } from "./skill-list-filter";
@@ -175,7 +175,7 @@ function PageHeaderBar({
       count={totalCount}
       description={t(($) => $.page.tagline)}
       learnMore={{
-        href: "https://multica.ai/docs/skills",
+        href: "https://lumen.ai/docs/skills",
         label: t(($) => $.page.learn_more),
       }}
       actions={

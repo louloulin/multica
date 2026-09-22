@@ -16,7 +16,7 @@
  * key-by-key swap.
  */
 import { View } from "react-native";
-import type { Agent, AgentConversationStarter } from "@multica/core/types";
+import type { Agent, AgentConversationStarter } from "@lumen/core/types";
 import { Text } from "@/components/ui/text";
 import { Button } from "@/components/ui/button";
 

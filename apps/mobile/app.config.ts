@@ -58,10 +58,10 @@ export default ({ config }: ConfigContext): ExpoConfig => {
 
   const androidConfig: AndroidConfig = {
     package: isProd
-      ? (process.env.EXPO_ANDROID_PACKAGE_PROD ?? "ai.multica.mobile")
+      ? (process.env.EXPO_ANDROID_PACKAGE_PROD ?? "ai.lumen.mobile")
       : isStaging
-        ? (process.env.EXPO_ANDROID_PACKAGE_STAGING ?? "ai.multica.mobile.staging")
-        : (process.env.EXPO_ANDROID_PACKAGE_DEV ?? "ai.multica.mobile.dev"),
+        ? (process.env.EXPO_ANDROID_PACKAGE_STAGING ?? "ai.lumen.mobile.staging")
+        : (process.env.EXPO_ANDROID_PACKAGE_DEV ?? "ai.lumen.mobile.dev"),
     adaptiveIcon: {
       foregroundImage: "./assets/icon.png",
       backgroundColor: ANDROID_ADAPTIVE_ICON_BACKGROUND,
@@ -71,12 +71,12 @@ export default ({ config }: ConfigContext): ExpoConfig => {
 
   const expoConfig: ExpoConfig = {
     ...config,
-    name: isProd ? "Multica" : isStaging ? "Multica (Staging)" : "Multica (Dev)",
-    slug: "multica-mobile",
+    name: isProd ? "Lumen" : isStaging ? "Lumen (Staging)" : "Lumen (Dev)",
+    slug: "lumen-mobile",
     version: "0.1.0",
     orientation: "portrait",
     userInterfaceStyle: "automatic",
-    scheme: "multica",
+    scheme: "lumen",
     // 1024x1024 source shared with the desktop client
     // (apps/desktop/build/icon.png). Expo prebuild generates every required
     // iOS icon size from this single PNG.
@@ -98,7 +98,7 @@ export default ({ config }: ConfigContext): ExpoConfig => {
       appleTeamId: process.env.EXPO_APPLE_TEAM_ID,
       // Per-variant bundle id overrides exist for one reason: an Apple ID
       // can only sign bundle prefixes it owns, so contributors not on the
-      // Multica Apple Developer team (and external users self-building a
+      // Lumen Apple Developer team (and external users self-building a
       // personal copy against production) need to swap to a reverse-domain
       // they control. Each variant has its own `_<VARIANT>` suffix and is
       // only read inside that variant's branch — a generic
@@ -106,10 +106,10 @@ export default ({ config }: ConfigContext): ExpoConfig => {
       // auto-loads `.env.<mode>.local` regardless of APP_ENV) and collapse
       // dev / staging / prod onto a single id.
       bundleIdentifier: isProd
-        ? (process.env.EXPO_BUNDLE_IDENTIFIER_PROD ?? "ai.multica.mobile")
+        ? (process.env.EXPO_BUNDLE_IDENTIFIER_PROD ?? "ai.lumen.mobile")
         : isStaging
-          ? "ai.multica.mobile.staging"
-          : (process.env.EXPO_BUNDLE_IDENTIFIER_DEV ?? "ai.multica.mobile.dev"),
+          ? "ai.lumen.mobile.staging"
+          : (process.env.EXPO_BUNDLE_IDENTIFIER_DEV ?? "ai.lumen.mobile.dev"),
     },
     android: androidConfig,
     plugins: [
@@ -124,7 +124,7 @@ export default ({ config }: ConfigContext): ExpoConfig => {
           // platform picker / permission UI, while `microphonePermission: false`
           // still suppresses RECORD_AUDIO there.
           photosPermission:
-            "Allow Multica to access your photos to attach images to issues and comments.",
+            "Allow Lumen to access your photos to attach images to issues and comments.",
           cameraPermission: false,
           microphonePermission: false,
         },
@@ -133,12 +133,12 @@ export default ({ config }: ConfigContext): ExpoConfig => {
         "expo-build-properties",
         {
           android: {
-            // Self-hosted Multica deployments frequently live behind a
+            // Self-hosted Lumen deployments frequently live behind a
             // private LAN / VPN reverse proxy on plain HTTP. The user
             // typed the URL in Welcome → Backend explicitly, so the trust
             // boundary is their decision; Android's default
             // cleartextTrafficPermitted=false would refuse every
-            // http:// request, surfacing a generic "Can't reach Multica"
+            // http:// request, surfacing a generic "Can't reach Lumen"
             // error and blocking the whole feature.
             usesCleartextTraffic: true,
           },

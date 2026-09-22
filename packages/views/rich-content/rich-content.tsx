@@ -39,16 +39,16 @@ import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
 import rehypeRaw from "rehype-raw";
 import rehypeSanitize from "rehype-sanitize";
-import { cn } from "@multica/ui/lib/utils";
-import { useWorkspaceSlug } from "@multica/core/paths";
-import { useConfigStore } from "@multica/core/config";
-import type { Attachment } from "@multica/core/types";
+import { cn } from "@lumen/ui/lib/utils";
+import { useWorkspaceSlug } from "@lumen/core/paths";
+import { useConfigStore } from "@lumen/core/config";
+import type { Attachment } from "@lumen/core/types";
 import {
   isAllowedFileCardHref,
   isIssueIdentifier,
   markdownSanitizeSchema,
   markdownUrlTransform,
-} from "@multica/ui/markdown";
+} from "@lumen/ui/markdown";
 import {
   resolveClickIntent,
   useAppOrigin,

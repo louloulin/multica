@@ -1,8 +1,8 @@
 import { useEffect, useRef, useSyncExternalStore } from "react";
 import { motion } from "motion/react";
 import { useQuery } from "@tanstack/react-query";
-import { cn } from "@multica/ui/lib/utils";
-import { MulticaIcon } from "@multica/ui/components/common/multica-icon";
+import { cn } from "@lumen/ui/lib/utils";
+import { LumenIcon } from "@lumen/ui/components/common/lumen-icon";
 import {
   useNavigationInputBindings,
   useTabHistory,
@@ -10,24 +10,24 @@ import {
 import {
   SidebarProvider,
   useSidebar,
-} from "@multica/ui/components/ui/sidebar";
-import { ModalRegistry } from "@multica/views/modals/registry";
+} from "@lumen/ui/components/ui/sidebar";
+import { ModalRegistry } from "@lumen/views/modals/registry";
 import {
   AppSidebar,
   GlobalShortcuts,
   NavigationProgress,
-} from "@multica/views/layout";
-import { SearchCommand, SearchTrigger } from "@multica/views/search";
-import { FloatingChat } from "@multica/views/chat";
-import { WorkspaceSlugProvider, paths, useCurrentWorkspace } from "@multica/core/paths";
-import { workspaceListOptions } from "@multica/core/workspace";
+} from "@lumen/views/layout";
+import { SearchCommand, SearchTrigger } from "@lumen/views/search";
+import { FloatingChat } from "@lumen/views/chat";
+import { WorkspaceSlugProvider, paths, useCurrentWorkspace } from "@lumen/core/paths";
+import { workspaceListOptions } from "@lumen/core/workspace";
 import {
   useNavigation,
   type LinkClickIntent,
-} from "@multica/views/navigation";
-import { getCurrentSlug, subscribeToCurrentSlug } from "@multica/core/platform";
-import { useDesktopUnreadBadge } from "@multica/views/platform";
-import { useT } from "@multica/views/i18n";
+} from "@lumen/views/navigation";
+import { getCurrentSlug, subscribeToCurrentSlug } from "@lumen/core/platform";
+import { useDesktopUnreadBadge } from "@lumen/views/platform";
+import { useT } from "@lumen/views/i18n";
 import {
   DesktopNavigationProvider,
   routeContentLinkPath,
@@ -137,7 +137,7 @@ function MainCanvas({
           role="status"
         >
           <div className="flex flex-col items-center gap-4">
-            <MulticaIcon className="size-8 animate-pulse" />
+            <LumenIcon className="size-8 animate-pulse" />
             <p className="text-body text-muted-foreground">{loadingLabel}</p>
           </div>
         </div>
@@ -155,8 +155,8 @@ function useInternalLinkHandler() {
       if (!detail?.path) return;
       routeContentLinkPath(detail.path, detail.disposition);
     };
-    window.addEventListener("multica:navigate", handler);
-    return () => window.removeEventListener("multica:navigate", handler);
+    window.addEventListener("lumen:navigate", handler);
+    return () => window.removeEventListener("lumen:navigate", handler);
   }, []);
 }
 
@@ -176,7 +176,7 @@ function useInternalLinkHandler() {
  *      covers both click-to-select and URL-param-select paths.
  *
  * The click routes through `useNavigation().push` — NOT the
- * `multica:navigate` event, whose handler `openTab`s into the ACTIVE
+ * `lumen:navigate` event, whose handler `openTab`s into the ACTIVE
  * workspace's tab group. The navigation adapter detects a cross-workspace
  * path and translates it into `switchWorkspace(slug, path)`, so clicking a
  * workspace-A notification while B is active performs a real workspace

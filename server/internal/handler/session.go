@@ -7,8 +7,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/multica-ai/multica/server/internal/auth"
-	"github.com/multica-ai/multica/server/internal/logger"
+	"github.com/lumen-ai/lumen/server/internal/auth"
+	"github.com/lumen-ai/lumen/server/internal/logger"
 )
 
 // RefreshSessionResponse is the body returned by RefreshSession.

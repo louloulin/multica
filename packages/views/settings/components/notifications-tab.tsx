@@ -1,11 +1,11 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { useWorkspaceId } from "@multica/core/hooks";
-import { notificationPreferenceOptions } from "@multica/core/notification-preferences/queries";
-import { useUpdateNotificationPreferences } from "@multica/core/notification-preferences/mutations";
-import type { NotificationGroupKey, NotificationPreferences } from "@multica/core/types";
-import { Switch } from "@multica/ui/components/ui/switch";
+import { useWorkspaceId } from "@lumen/core/hooks";
+import { notificationPreferenceOptions } from "@lumen/core/notification-preferences/queries";
+import { useUpdateNotificationPreferences } from "@lumen/core/notification-preferences/mutations";
+import type { NotificationGroupKey, NotificationPreferences } from "@lumen/core/types";
+import { Switch } from "@lumen/ui/components/ui/switch";
 import { toast } from "sonner";
 import { useT } from "../../i18n";
 import { BrowserNotificationSetting } from "./browser-notification-setting";

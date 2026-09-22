@@ -8,9 +8,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/multica-ai/multica/server/internal/testutil"
-	"github.com/multica-ai/multica/server/internal/util"
-	"github.com/multica-ai/multica/server/pkg/protocol"
+	"github.com/lumen-ai/lumen/server/internal/testutil"
+	"github.com/lumen-ai/lumen/server/internal/util"
+	"github.com/lumen-ai/lumen/server/pkg/protocol"
 )
 
 // CancelTaskByUser (POST /api/tasks/{taskId}/cancel) used to key cancellation
@@ -645,7 +645,7 @@ func TestCancelTaskByUser_ChatTask_NonCreator_Returns403(t *testing.T) {
 
 	agentID := createHandlerTestAgent(t, "CancelChatAgent", []byte("[]"))
 	sessionID := createHandlerTestChatSession(t, agentID) // creator = testUserID
-	otherUserID := createWorkspaceMemberUser(t, "Chat Bystander", "cancel-chat-bystander@multica.test")
+	otherUserID := createWorkspaceMemberUser(t, "Chat Bystander", "cancel-chat-bystander@lumen.test")
 
 	var taskID string
 	dbfx.QueryRow(t, `

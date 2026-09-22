@@ -10,19 +10,19 @@ import { ChevronLeft, ChevronRight, History } from "lucide-react";
 import {
   SidebarTrigger,
   useSidebar,
-} from "@multica/ui/components/ui/sidebar";
+} from "@lumen/ui/components/ui/sidebar";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
-} from "@multica/ui/components/ui/dropdown-menu";
+} from "@lumen/ui/components/ui/dropdown-menu";
 import {
   ResourceLeadingVisual,
   useTabPresentation,
-} from "@multica/views/layout";
-import { useNavigation } from "@multica/views/navigation";
+} from "@lumen/views/layout";
+import { useNavigation } from "@lumen/views/navigation";
 import {
   useTabHistory,
   type BrowsingHistoryEntry,

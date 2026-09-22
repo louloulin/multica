@@ -7,7 +7,7 @@ import (
 	"time"
 
 	"github.com/golang-jwt/jwt/v5"
-	"github.com/multica-ai/multica/server/internal/auth"
+	"github.com/lumen-ai/lumen/server/internal/auth"
 )
 
 // sessionToken signs a cookie-mode session expiring `remaining` from now.
@@ -22,7 +22,7 @@ func sessionToken(t *testing.T, remaining time.Duration, sid string) string {
 	t.Helper()
 	claims := jwt.MapClaims{
 		"sub":   "test-user-id",
-		"email": "test@multica.ai",
+		"email": "test@lumen.ai",
 		"exp":   time.Now().Add(remaining).Unix(),
 		"iat":   time.Now().Add(-time.Hour).Unix(),
 	}

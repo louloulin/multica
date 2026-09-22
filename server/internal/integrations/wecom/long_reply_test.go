@@ -28,9 +28,9 @@ import (
 	"unicode"
 	"unicode/utf8"
 
-	"github.com/multica-ai/multica/server/internal/events"
-	db "github.com/multica-ai/multica/server/pkg/db/generated"
-	"github.com/multica-ai/multica/server/pkg/protocol"
+	"github.com/lumen-ai/lumen/server/internal/events"
+	db "github.com/lumen-ai/lumen/server/pkg/db/generated"
+	"github.com/lumen-ai/lumen/server/pkg/protocol"
 )
 
 // capEnforcingConn is the server's own rule: a markdown body past the cap is

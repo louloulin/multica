@@ -10,18 +10,18 @@ import {
 } from "react";
 import { useDefaultLayout } from "react-resizable-panels";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
-import { useWorkspaceId } from "@multica/core/hooks";
-import { ApiError, errorCode } from "@multica/core/api";
-import { useWorkspacePaths } from "@multica/core/paths";
-import { useModalStore } from "@multica/core/modals";
+import { useWorkspaceId } from "@lumen/core/hooks";
+import { ApiError, errorCode } from "@lumen/core/api";
+import { useWorkspacePaths } from "@lumen/core/paths";
+import { useModalStore } from "@lumen/core/modals";
 import {
   getShortcut,
   isEditableShortcutTarget,
   isPortalLayerShortcutTarget,
   shortcutMatchesEvent,
-} from "@multica/core/shortcuts";
-import { isImeComposing } from "@multica/core/utils";
-import { useIssueDraftStore } from "@multica/core/issues/stores/draft-store";
+} from "@lumen/core/shortcuts";
+import { isImeComposing } from "@lumen/core/utils";
+import { useIssueDraftStore } from "@lumen/core/issues/stores/draft-store";
 import {
   inboxListOptions,
   archivedInboxPagesOptions,
@@ -29,7 +29,7 @@ import {
   deduplicateInboxItems,
   deduplicateArchivedInboxItems,
   useInboxUnreadCount,
-} from "@multica/core/inbox/queries";
+} from "@lumen/core/inbox/queries";
 import {
   useMarkInboxRead,
   useMarkInboxUnread,
@@ -40,7 +40,7 @@ import {
   useArchiveAllReadInbox,
   useArchiveCompletedInbox,
   useRetrySourceContextQuickCreate,
-} from "@multica/core/inbox/mutations";
+} from "@lumen/core/inbox/mutations";
 import {
   filterInboxItems,
   inboxFiltersForPrioritySupport,
@@ -48,11 +48,11 @@ import {
   inboxPriorityFilterSupport,
   useInboxFilters,
   useInboxFilterStore,
-} from "@multica/core/inbox/filter-store";
+} from "@lumen/core/inbox/filter-store";
 
 import { IssueDetail, issueHighlightMementoKey } from "../../issues/components/issue-detail";
 import { useViewStateWriter } from "../../platform";
-import { ErrorBoundary } from "@multica/ui/components/common/error-boundary";
+import { ErrorBoundary } from "@lumen/ui/components/common/error-boundary";
 import { useNavigation, useReportNavigating } from "../../navigation";
 import { toast } from "sonner";
 import {
@@ -66,24 +66,24 @@ import {
   ListChecks,
   ArrowLeft,
 } from "lucide-react";
-import type { InboxItem } from "@multica/core/types";
-import { Button } from "@multica/ui/components/ui/button";
+import type { InboxItem } from "@lumen/core/types";
+import { Button } from "@lumen/ui/components/ui/button";
 import {
   ResizablePanelGroup,
   ResizablePanel,
   ResizableHandle,
-} from "@multica/ui/components/ui/resizable";
-import { Skeleton } from "@multica/ui/components/ui/skeleton";
-import { NumberFlow } from "@multica/ui/components/ui/number-flow";
+} from "@lumen/ui/components/ui/resizable";
+import { Skeleton } from "@lumen/ui/components/ui/skeleton";
+import { NumberFlow } from "@lumen/ui/components/ui/number-flow";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
-} from "@multica/ui/components/ui/dropdown-menu";
-import { useIsCompact } from "@multica/ui/hooks/use-mobile";
-import { cn } from "@multica/ui/lib/utils";
+} from "@lumen/ui/components/ui/dropdown-menu";
+import { useIsCompact } from "@lumen/ui/hooks/use-mobile";
+import { cn } from "@lumen/ui/lib/utils";
 import { PAGE_GUTTER, PageHeader } from "../../layout/page-header";
 import { useTimeAgo } from "./inbox-list-item";
 import { InboxList } from "./inbox-list";
@@ -273,7 +273,7 @@ export function InboxPage() {
   ]);
 
   const { defaultLayout, onLayoutChanged } = useDefaultLayout({
-    id: "multica_inbox_layout",
+    id: "lumen_inbox_layout",
   });
 
   const isCompact = useIsCompact();
@@ -692,7 +692,7 @@ export function InboxPage() {
         key={detailItem.issue_id}
         issueId={detailItem.issue_id}
         defaultSidebarOpen={false}
-        layoutId="multica_inbox_issue_detail_layout"
+        layoutId="lumen_inbox_issue_detail_layout"
         highlightCommentId={detailItem.details?.comment_id ?? undefined}
         highlightRequestToken={highlightRequestToken}
         // The split layout already has a nav trigger in the list header.

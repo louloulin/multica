@@ -6,13 +6,13 @@ import {
   Popover,
   PopoverTrigger,
   PopoverContent,
-} from "@multica/ui/components/ui/popover";
+} from "@lumen/ui/components/ui/popover";
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from "@multica/ui/components/ui/tooltip";
-import { isImeComposing } from "@multica/core/utils";
+} from "@lumen/ui/components/ui/tooltip";
+import { isImeComposing } from "@lumen/core/utils";
 import { useT } from "../../../i18n";
 
 const HIGHLIGHT_CLASS = "bg-accent";

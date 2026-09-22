@@ -2,9 +2,9 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { FolderOpen, GitBranch } from "lucide-react";
-import { projectResourcesOptions } from "@multica/core/projects";
-import type { LocalDirectoryResourceRef, ProjectResource } from "@multica/core/types";
-import { useWorkspaceId } from "@multica/core/hooks";
+import { projectResourcesOptions } from "@lumen/core/projects";
+import type { LocalDirectoryResourceRef, ProjectResource } from "@lumen/core/types";
+import { useWorkspaceId } from "@lumen/core/hooks";
 import { useLocalDaemonStatus } from "../../platform";
 import { useT } from "../../i18n";
 import { localDirectoryLabel } from "./local-directory-label";

@@ -1,6 +1,6 @@
 # Button
 
-Import from `@multica/ui/components/ui/button`.
+Import from `@lumen/ui/components/ui/button`.
 
 ## Usage
 

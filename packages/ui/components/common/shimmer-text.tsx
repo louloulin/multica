@@ -1,5 +1,5 @@
 import type { ComponentProps } from "react";
-import { cn } from "@multica/ui/lib/utils";
+import { cn } from "@lumen/ui/lib/utils";
 
 interface ShimmerTextProps extends Omit<ComponentProps<"span">, "children"> {
   children: string;

@@ -3,21 +3,21 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { AlertCircle, Cloud, Monitor, Pencil, Plus, Server } from "lucide-react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useAuthStore } from "@multica/core/auth";
-import { useWorkspaceId } from "@multica/core/hooks";
-import { useWorkspacePaths } from "@multica/core/paths";
-import { agentTaskSnapshotOptions } from "@multica/core/agents";
-import { runtimeProfileListOptions } from "@multica/core/runtimes";
-import { runtimeKeys, runtimeListOptions } from "@multica/core/runtimes/queries";
-import { useWSEvent } from "@multica/core/realtime";
+import { useAuthStore } from "@lumen/core/auth";
+import { useWorkspaceId } from "@lumen/core/hooks";
+import { useWorkspacePaths } from "@lumen/core/paths";
+import { agentTaskSnapshotOptions } from "@lumen/core/agents";
+import { runtimeProfileListOptions } from "@lumen/core/runtimes";
+import { runtimeKeys, runtimeListOptions } from "@lumen/core/runtimes/queries";
+import { useWSEvent } from "@lumen/core/realtime";
 import {
   agentListOptions,
   memberListOptions,
-} from "@multica/core/workspace/queries";
-import { Button } from "@multica/ui/components/ui/button";
-import { Skeleton } from "@multica/ui/components/ui/skeleton";
+} from "@lumen/core/workspace/queries";
+import { Button } from "@lumen/ui/components/ui/button";
+import { Skeleton } from "@lumen/ui/components/ui/skeleton";
 import { PAGE_GUTTER, PAGE_RAIL } from "../../layout/page-header";
-import { cn } from "@multica/ui/lib/utils";
+import { cn } from "@lumen/ui/lib/utils";
 import { AppLink } from "../../navigation";
 import { buildWorkloadIndex, RuntimeList } from "./runtime-list";
 import {

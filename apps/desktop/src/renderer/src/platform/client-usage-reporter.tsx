@@ -1,11 +1,11 @@
 import { useCallback, useEffect, useRef } from "react";
-import { api } from "@multica/core/api";
-import { useAuthStore } from "@multica/core/auth";
-import { getOrCreateInstallId, utcDay } from "@multica/core/client-usage";
-import { defaultStorage } from "@multica/core/platform";
+import { api } from "@lumen/core/api";
+import { useAuthStore } from "@lumen/core/auth";
+import { getOrCreateInstallId, utcDay } from "@lumen/core/client-usage";
+import { defaultStorage } from "@lumen/core/platform";
 import type { LocalRuntimeProbe } from "../../../shared/daemon-types";
 
-const LAST_RUNTIME_PREFIX = "multica_runtime_probe_last_reported";
+const LAST_RUNTIME_PREFIX = "lumen_runtime_probe_last_reported";
 
 export function runtimeProbeSignature(probe: LocalRuntimeProbe): string {
   if (probe.probeResult === "error") return "error";

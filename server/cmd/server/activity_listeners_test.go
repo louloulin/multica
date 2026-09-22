@@ -5,13 +5,13 @@ import (
 	"encoding/json"
 	"testing"
 
-	"github.com/multica-ai/multica/server/internal/events"
-	"github.com/multica-ai/multica/server/internal/handler"
-	"github.com/multica-ai/multica/server/internal/service"
-	"github.com/multica-ai/multica/server/internal/testutil"
-	"github.com/multica-ai/multica/server/internal/util"
-	db "github.com/multica-ai/multica/server/pkg/db/generated"
-	"github.com/multica-ai/multica/server/pkg/protocol"
+	"github.com/lumen-ai/lumen/server/internal/events"
+	"github.com/lumen-ai/lumen/server/internal/handler"
+	"github.com/lumen-ai/lumen/server/internal/service"
+	"github.com/lumen-ai/lumen/server/internal/testutil"
+	"github.com/lumen-ai/lumen/server/internal/util"
+	db "github.com/lumen-ai/lumen/server/pkg/db/generated"
+	"github.com/lumen-ai/lumen/server/pkg/protocol"
 )
 
 // listActivitiesForIssue is a test helper that fetches up to 100 activity_log
@@ -188,7 +188,7 @@ func TestActivityIssueUpdated_AssigneeChanged(t *testing.T) {
 	bus := events.New()
 	registerActivityListeners(bus, queries)
 
-	assigneeEmail := "activity-assignee-test@multica.ai"
+	assigneeEmail := "activity-assignee-test@lumen.ai"
 	assigneeID := createTestUser(t, assigneeEmail)
 	t.Cleanup(func() { cleanupTestUser(t, assigneeEmail) })
 

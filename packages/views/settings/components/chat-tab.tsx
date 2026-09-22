@@ -1,7 +1,7 @@
 "use client";
 
-import { Switch } from "@multica/ui/components/ui/switch";
-import { useChatStore } from "@multica/core/chat";
+import { Switch } from "@lumen/ui/components/ui/switch";
+import { useChatStore } from "@lumen/core/chat";
 import { toast } from "sonner";
 import { useT } from "../../i18n";
 import { SettingsCard, SettingsRow, SettingsSection } from "./settings-layout";

@@ -1,16 +1,16 @@
 "use client";
 
 import { useEffect } from "react";
-import { useNavigationStore } from "@multica/core/navigation";
-import { useAuthStore } from "@multica/core/auth";
+import { useNavigationStore } from "@lumen/core/navigation";
+import { useAuthStore } from "@lumen/core/auth";
 import {
   paths,
   resolvePostAuthDestination,
   useCurrentWorkspace,
   useHasOnboarded,
-} from "@multica/core/paths";
-import { useWorkspaceList } from "@multica/core/workspace";
-import { useRecentIssuesStore } from "@multica/core/issues/stores";
+} from "@lumen/core/paths";
+import { useWorkspaceList } from "@lumen/core/workspace";
+import { useRecentIssuesStore } from "@lumen/core/issues/stores";
 import { useNavigation } from "../navigation";
 
 /**

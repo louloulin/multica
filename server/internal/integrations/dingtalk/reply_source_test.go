@@ -6,8 +6,8 @@ import (
 	"sync"
 	"testing"
 
-	"github.com/multica-ai/multica/server/internal/integrations/channel/engine"
-	"github.com/multica-ai/multica/server/pkg/dbid"
+	"github.com/lumen-ai/lumen/server/internal/integrations/channel/engine"
+	"github.com/lumen-ai/lumen/server/pkg/dbid"
 )
 
 func TestReplySourceRequiresLocalAcceptedInput(t *testing.T) {

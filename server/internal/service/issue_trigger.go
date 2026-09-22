@@ -4,8 +4,8 @@ import (
 	"context"
 
 	"github.com/jackc/pgx/v5/pgtype"
-	"github.com/multica-ai/multica/server/internal/issuestatus"
-	db "github.com/multica-ai/multica/server/pkg/db/generated"
+	"github.com/lumen-ai/lumen/server/internal/issuestatus"
+	db "github.com/lumen-ai/lumen/server/pkg/db/generated"
 )
 
 // RunEnqueueSource identifies which kind of issue write would start an agent

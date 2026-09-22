@@ -3,7 +3,7 @@
 import React from "react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { fireEvent, screen } from "@testing-library/react";
-import type { SkillSummary } from "@multica/core/types";
+import type { SkillSummary } from "@lumen/core/types";
 import { renderWithI18n } from "../../test/i18n";
 import { NavigationProvider, type NavigationAdapter } from "../../navigation";
 
@@ -64,40 +64,40 @@ vi.mock("@tanstack/react-virtual", () => ({
   }),
 }));
 
-vi.mock("@multica/core/auth", () => ({
+vi.mock("@lumen/core/auth", () => ({
   useAuthStore: (selector: (state: unknown) => unknown) =>
     selector({ user: { id: "user-1" } }),
 }));
 
-vi.mock("@multica/core/hooks", () => ({
+vi.mock("@lumen/core/hooks", () => ({
   useWorkspaceId: () => "ws-1",
 }));
 
 // Partial mock: SkillIcon resolves its icon from the real WORKSPACE_PAGES.
-vi.mock("@multica/core/paths", async (importOriginal) => ({
-  ...(await importOriginal<typeof import("@multica/core/paths")>()),
+vi.mock("@lumen/core/paths", async (importOriginal) => ({
+  ...(await importOriginal<typeof import("@lumen/core/paths")>()),
   useWorkspacePaths: () => ({
     skillDetail: (id: string) => `/acme/skills/${id}`,
   }),
 }));
 
-vi.mock("@multica/core/workspace/queries", () => ({
+vi.mock("@lumen/core/workspace/queries", () => ({
   skillListOptions: () => ({ queryKey: ["skills"] }),
   agentListOptions: () => ({ queryKey: ["agents"] }),
   memberListOptions: () => ({ queryKey: ["members"] }),
   selectSkillAssignments: () => new Map(),
 }));
 
-vi.mock("@multica/core/runtimes", () => ({
+vi.mock("@lumen/core/runtimes", () => ({
   runtimeListOptions: () => ({ queryKey: ["runtimes"] }),
   runtimeDisplayLabel: () => "runtime",
 }));
 
-vi.mock("@multica/core/workspace/avatar-url", () => ({
+vi.mock("@lumen/core/workspace/avatar-url", () => ({
   resolvePublicFileUrl: (u: string | null) => u,
 }));
 
-vi.mock("@multica/core/skills/stores", () => ({
+vi.mock("@lumen/core/skills/stores", () => ({
   useSkillsViewStore: (selector: (state: unknown) => unknown) =>
     selector(mocks.viewState),
   DEFAULT_HIDDEN_COLUMNS: [],
@@ -105,10 +105,10 @@ vi.mock("@multica/core/skills/stores", () => ({
 
 // View-layer children with heavy / portal deps — stubbed to keep the test on
 // the row/anchor event wiring.
-vi.mock("@multica/ui/components/common/actor-avatar", () => ({
+vi.mock("@lumen/ui/components/common/actor-avatar", () => ({
   ActorAvatar: () => null,
 }));
-vi.mock("@multica/ui/components/ui/tooltip", () => ({
+vi.mock("@lumen/ui/components/ui/tooltip", () => ({
   Tooltip: ({ children }: { children: React.ReactNode }) => <>{children}</>,
   TooltipTrigger: ({ render }: { render: React.ReactNode }) => <>{render}</>,
   TooltipContent: () => null,

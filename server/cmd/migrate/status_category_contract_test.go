@@ -7,7 +7,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/multica-ai/multica/server/internal/issuestatus"
+	"github.com/lumen-ai/lumen/server/internal/issuestatus"
 )
 
 var categoryContractVersions = []string{

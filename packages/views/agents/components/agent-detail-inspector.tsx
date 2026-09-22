@@ -6,19 +6,19 @@ import type {
   Agent,
   AgentRuntime,
   MemberWithUser,
-} from "@multica/core/types";
+} from "@lumen/core/types";
 import {
   AGENT_DESCRIPTION_MAX_LENGTH,
   AGENT_MAX_CONCURRENT_TASKS_MAX,
   AGENT_MAX_CONCURRENT_TASKS_MIN,
-} from "@multica/core/agents";
+} from "@lumen/core/agents";
 import {
   isRuntimeUsableForUser,
   runtimeModelsOptions,
-} from "@multica/core/runtimes";
-import { isImeComposing } from "@multica/core/utils";
-import { Input } from "@multica/ui/components/ui/input";
-import { Textarea } from "@multica/ui/components/ui/textarea";
+} from "@lumen/core/runtimes";
+import { isImeComposing } from "@lumen/core/utils";
+import { Input } from "@lumen/ui/components/ui/input";
+import { Textarea } from "@lumen/ui/components/ui/textarea";
 import { AvatarUploadControl } from "../../common/avatar-upload-control";
 import {
   SettingsCard,

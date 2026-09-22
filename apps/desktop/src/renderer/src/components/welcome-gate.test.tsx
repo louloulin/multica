@@ -1,7 +1,7 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { I18nProvider } from "@multica/core/i18n/react";
-import { RESOURCES } from "@multica/views/locales";
+import { I18nProvider } from "@lumen/core/i18n/react";
+import { RESOURCES } from "@lumen/views/locales";
 import { WelcomeGate } from "./welcome-gate";
 import { DEFAULT_RUNTIME_CONFIG } from "../../../shared/runtime-config";
 
@@ -67,7 +67,7 @@ describe("WelcomeGate", () => {
     expect(screen.getByTestId("welcome-selfhost-save")).toBeInTheDocument();
   });
 
-  it("saves DEFAULT_RUNTIME_CONFIG when Use Multica Cloud is clicked", async () => {
+  it("saves DEFAULT_RUNTIME_CONFIG when Use Lumen Cloud is clicked", async () => {
     setupDesktopApi();
     renderWithI18n(<WelcomeGate />);
 

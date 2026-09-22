@@ -14,9 +14,9 @@ import (
 
 	"github.com/jackc/pgx/v5/pgtype"
 
-	"github.com/multica-ai/multica/server/internal/integrations/channel"
-	"github.com/multica-ai/multica/server/internal/integrations/channel/engine"
-	db "github.com/multica-ai/multica/server/pkg/db/generated"
+	"github.com/lumen-ai/lumen/server/internal/integrations/channel"
+	"github.com/lumen-ai/lumen/server/internal/integrations/channel/engine"
+	db "github.com/lumen-ai/lumen/server/pkg/db/generated"
 )
 
 type fakeMediaStorage struct {

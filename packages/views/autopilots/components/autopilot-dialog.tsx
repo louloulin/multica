@@ -20,13 +20,13 @@ import {
   X as XIcon,
   Zap,
 } from "lucide-react";
-import { cn } from "@multica/ui/lib/utils";
+import { cn } from "@lumen/ui/lib/utils";
 import {
   Dialog,
   DialogContent,
   DialogTitle,
-} from "@multica/ui/components/ui/dialog";
-import { Tooltip, TooltipTrigger, TooltipContent } from "@multica/ui/components/ui/tooltip";
+} from "@lumen/ui/components/ui/dialog";
+import { Tooltip, TooltipTrigger, TooltipContent } from "@lumen/ui/components/ui/tooltip";
 import {
   Popover,
   PopoverTrigger,
@@ -34,26 +34,26 @@ import {
   PopoverHeader,
   PopoverTitle,
   PopoverDescription,
-} from "@multica/ui/components/ui/popover";
-import { Button } from "@multica/ui/components/ui/button";
-import { useCurrentWorkspace } from "@multica/core/paths";
-import { useWorkspaceId } from "@multica/core/hooks";
-import { agentListOptions, squadListOptions } from "@multica/core/workspace/queries";
-import { projectListOptions } from "@multica/core/projects/queries";
+} from "@lumen/ui/components/ui/popover";
+import { Button } from "@lumen/ui/components/ui/button";
+import { useCurrentWorkspace } from "@lumen/core/paths";
+import { useWorkspaceId } from "@lumen/core/hooks";
+import { agentListOptions, squadListOptions } from "@lumen/core/workspace/queries";
+import { projectListOptions } from "@lumen/core/projects/queries";
 import {
   useCreateAutopilot,
   useCreateAutopilotTrigger,
   useUpdateAutopilot,
   useUpdateAutopilotTrigger,
-} from "@multica/core/autopilots/mutations";
-import { buildAutopilotWebhookUrl } from "@multica/core/autopilots";
-import { api } from "@multica/core/api";
+} from "@lumen/core/autopilots/mutations";
+import { buildAutopilotWebhookUrl } from "@lumen/core/autopilots";
+import { api } from "@lumen/core/api";
 import type {
   AutopilotAssigneeType,
   AutopilotCollaborator,
   AutopilotExecutionMode,
   AutopilotTrigger,
-} from "@multica/core/types";
+} from "@lumen/core/types";
 import { TitleEditor, ContentEditor, type TitleEditorRef } from "../../editor";
 import { ActorAvatar } from "../../common/actor-avatar";
 import { SegmentedToggle } from "../../common/segmented-toggle";
@@ -71,7 +71,7 @@ import { WebhookEventFilterSection } from "./webhook-event-filter-section";
 import { WebhookUrlField } from "./webhook-url-field";
 import { useT } from "../../i18n";
 import { formatSchedulePartialFailureToast } from "./autopilot-dialog-toast";
-import type { WebhookEventFilter } from "@multica/core/types";
+import type { WebhookEventFilter } from "@lumen/core/types";
 
 // ---------------------------------------------------------------------------
 // Types

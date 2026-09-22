@@ -9,16 +9,16 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@multica/ui/components/ui/dialog";
-import { Button } from "@multica/ui/components/ui/button";
-import { Spinner } from "@multica/ui/components/ui/spinner";
-import type { IssueAssigneeType, IssueStatus, UpdateIssueRequest } from "@multica/core/types";
-import { useUpdateIssue, useBatchUpdateIssues } from "@multica/core/issues/mutations";
-import { errorCode } from "@multica/core/api";
-import { useActorName } from "@multica/core/workspace/hooks";
-import { useWorkspaceId } from "@multica/core/hooks";
-import { useShortcut, shortcutMatchesEvent, isPlainShortcut } from "@multica/core/shortcuts";
-import { isImeComposing } from "@multica/core/utils";
+} from "@lumen/ui/components/ui/dialog";
+import { Button } from "@lumen/ui/components/ui/button";
+import { Spinner } from "@lumen/ui/components/ui/spinner";
+import type { IssueAssigneeType, IssueStatus, UpdateIssueRequest } from "@lumen/core/types";
+import { useUpdateIssue, useBatchUpdateIssues } from "@lumen/core/issues/mutations";
+import { errorCode } from "@lumen/core/api";
+import { useActorName } from "@lumen/core/workspace/hooks";
+import { useWorkspaceId } from "@lumen/core/hooks";
+import { useShortcut, shortcutMatchesEvent, isPlainShortcut } from "@lumen/core/shortcuts";
+import { isImeComposing } from "@lumen/core/utils";
 import { ShortcutKeycaps } from "../common/shortcut-keycaps";
 import { useStatusLabel } from "../issues/utils/status-label";
 import { useT } from "../i18n";

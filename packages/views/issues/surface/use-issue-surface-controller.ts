@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { hashKey, keepPreviousData, useQuery } from "@tanstack/react-query";
-import { api } from "@multica/core/api";
+import { api } from "@lumen/core/api";
 import type {
   Issue,
   IssueStatus,
@@ -12,26 +12,26 @@ import type {
   IssueTableQuerySpec,
   Project,
   WorkingAgentSummary,
-} from "@multica/core/types";
-import { workspaceWorkingAgentsOptions } from "@multica/core/agents";
-import { useWorkspaceId } from "@multica/core/hooks";
-import { useIssueStatuses } from "@multica/core/issue-statuses/hooks";
-import { statusFilterColumns, visibleStatusKeys } from "@multica/core/issues";
-import { dateOnlyToLocalDate } from "@multica/core/issues/date";
-import type { IssueSortParam } from "@multica/core/issues/queries";
-import { issueTableFacetsOptions } from "@multica/core/issues/queries";
+} from "@lumen/core/types";
+import { workspaceWorkingAgentsOptions } from "@lumen/core/agents";
+import { useWorkspaceId } from "@lumen/core/hooks";
+import { useIssueStatuses } from "@lumen/core/issue-statuses/hooks";
+import { statusFilterColumns, visibleStatusKeys } from "@lumen/core/issues";
+import { dateOnlyToLocalDate } from "@lumen/core/issues/date";
+import type { IssueSortParam } from "@lumen/core/issues/queries";
+import { issueTableFacetsOptions } from "@lumen/core/issues/queries";
 import {
   buildIssueSurfaceQueryPlan,
   type IssueSurfaceQueryPlan,
-} from "@multica/core/issues/surface/query-plan";
+} from "@lumen/core/issues/surface/query-plan";
 import {
   assigneeTypesForActorKind,
   type IssueScope,
-} from "@multica/core/issues/surface/scope";
-import type { IssueDateFilter, SortField } from "@multica/core/issues/stores/view-store";
-import { propertyListOptions } from "@multica/core/properties";
-import { propertyIdFromViewKey } from "@multica/core/issues/stores/view-store";
-import { useViewStore } from "@multica/core/issues/stores/view-store-context";
+} from "@lumen/core/issues/surface/scope";
+import type { IssueDateFilter, SortField } from "@lumen/core/issues/stores/view-store";
+import { propertyListOptions } from "@lumen/core/properties";
+import { propertyIdFromViewKey } from "@lumen/core/issues/stores/view-store";
+import { useViewStore } from "@lumen/core/issues/stores/view-store-context";
 import type { IssueFilters } from "../utils/filter";
 import type { ChildProgress } from "../components/list-row";
 import { IssueTableExportIntegrityError } from "../components/table-view-model";

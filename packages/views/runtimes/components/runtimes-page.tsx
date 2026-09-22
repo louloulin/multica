@@ -11,38 +11,38 @@ import {
 } from "lucide-react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { useAuthStore } from "@multica/core/auth";
-import { useWorkspaceId } from "@multica/core/hooks";
-import { memberNeedsMikaSetup, useBootstrapMika } from "@multica/core/onboarding";
+import { useAuthStore } from "@lumen/core/auth";
+import { useWorkspaceId } from "@lumen/core/hooks";
+import { memberNeedsMikaSetup, useBootstrapMika } from "@lumen/core/onboarding";
 import { MIKA_PLACEHOLDER_EMOJI } from "../../onboarding/components/mika-intro";
-import { useRequiredWorkspaceSlug, useWorkspacePaths } from "@multica/core/paths";
-import { agentTaskSnapshotOptions } from "@multica/core/agents";
-import { chatSessionsOptions } from "@multica/core/chat/queries";
-import { runtimeProfileListOptions } from "@multica/core/runtimes";
-import { runtimeListOptions, runtimeKeys } from "@multica/core/runtimes/queries";
-import { useWSEvent } from "@multica/core/realtime";
-import { agentListOptions } from "@multica/core/workspace/queries";
-import type { AgentRuntime } from "@multica/core/types";
-import { Button } from "@multica/ui/components/ui/button";
+import { useRequiredWorkspaceSlug, useWorkspacePaths } from "@lumen/core/paths";
+import { agentTaskSnapshotOptions } from "@lumen/core/agents";
+import { chatSessionsOptions } from "@lumen/core/chat/queries";
+import { runtimeProfileListOptions } from "@lumen/core/runtimes";
+import { runtimeListOptions, runtimeKeys } from "@lumen/core/runtimes/queries";
+import { useWSEvent } from "@lumen/core/realtime";
+import { agentListOptions } from "@lumen/core/workspace/queries";
+import type { AgentRuntime } from "@lumen/core/types";
+import { Button } from "@lumen/ui/components/ui/button";
 import {
   Dialog,
   DialogContent,
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@multica/ui/components/ui/dialog";
+} from "@lumen/ui/components/ui/dialog";
 import {
   MikaRuntimeChoice,
   type MikaRuntimeSelection,
 } from "./mika-runtime-choice";
-import { Skeleton } from "@multica/ui/components/ui/skeleton";
+import { Skeleton } from "@lumen/ui/components/ui/skeleton";
 import {
   CollectionPageHeader,
   CollectionPageHeaderAction,
   CollectionPageState,
 } from "../../layout/collection-page";
 import { PAGE_GUTTER, PAGE_RAIL, PageHeader } from "../../layout/page-header";
-import { cn } from "@multica/ui/lib/utils";
+import { cn } from "@lumen/ui/lib/utils";
 import { AppLink, useNavigation } from "../../navigation";
 import {
   getMikaOnboarding,

@@ -9,7 +9,7 @@ name: Mobile Verify
 # - apps/mobile/**                — the app itself
 # - packages/core/**              — mobile imports types AND pure functions
 #                                   (agents, markdown, permissions, api/schemas, …),
-#                                   not only @multica/core/types
+#                                   not only @lumen/core/types
 # - package.json / pnpm-lock.yaml — install graph
 # - pnpm-workspace.yaml           — catalog versions
 # - turbo.json                    — turbo task pipeline
@@ -76,10 +76,10 @@ jobs:
         run: pnpm install
 
       - name: Type check, lint, and test
-        run: pnpm exec turbo typecheck lint test --filter=@multica/mobile
+        run: pnpm exec turbo typecheck lint test --filter=@lumen/mobile
 
       - name: Prebuild Android project
-        run: pnpm --filter @multica/mobile exec expo prebuild --platform android --non-interactive
+        run: pnpm --filter @lumen/mobile exec expo prebuild --platform android --non-interactive
 
       - name: Assemble Android debug build
         run: ./gradlew assembleDebug

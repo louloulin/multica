@@ -725,8 +725,8 @@ const CSRF_REJECTED_ERROR = "CSRF validation failed";
 
 // One header, two possible values — see ApiClient.readCsrfValue.
 const CSRF_HEADER = "X-CSRF-Token";
-const CSRF_COOKIE = "multica_csrf";
-const SESSION_CSRF_COOKIE = "multica_csrf_session";
+const CSRF_COOKIE = "lumen_csrf";
+const SESSION_CSRF_COOKIE = "lumen_csrf_session";
 
 /**
  * Whether a request body can be sent a second time. Strings and multipart
@@ -2029,8 +2029,8 @@ export class ApiClient {
   }
 
   // ---------------------------------------------------------------------
-  // Cloud Billing — proxies to multica-cloud /api/v1/billing/*. The
-  // multica-api server stamps X-User-ID and forwards bytes; everything
+  // Cloud Billing — proxies to lumen-cloud /api/v1/billing/*. The
+  // lumen-api server stamps X-User-ID and forwards bytes; everything
   // here is upstream-shaped. See packages/core/types/billing.ts for the
   // response field documentation.
   // ---------------------------------------------------------------------
@@ -3135,7 +3135,7 @@ export class ApiClient {
   }
 
   /**
-   * Publishes from a directory the operator hosts (MULTICA_PLUGIN_DIR) — the
+   * Publishes from a directory the operator hosts (LUMEN_PLUGIN_DIR) — the
    * development channel, so iterating on a surface does not mean zipping and
    * uploading after every edit. It still produces an immutable version.
    */
@@ -3224,7 +3224,7 @@ export class ApiClient {
       : "";
     return this.fetch<unknown>(`/api/plugin-bridge/v1${request.path}${query}`, {
       method: request.method,
-      headers: { "X-Multica-Plugin-Installation": installationId },
+      headers: { "X-Lumen-Plugin-Installation": installationId },
       body: request.body === undefined ? undefined : JSON.stringify(request.body),
     });
   }
@@ -3245,7 +3245,7 @@ export class ApiClient {
   ): Promise<PluginHookResult> {
     const raw = await this.fetch<unknown>(`/api/plugin-bridge/v1/hooks/${encodeURIComponent(hookKey)}`, {
       method: "POST",
-      headers: { "X-Multica-Plugin-Installation": installationId },
+      headers: { "X-Lumen-Plugin-Installation": installationId },
       body: JSON.stringify({ trigger: request.trigger, issue_id: request.issueId, input: request.input }),
     });
     return parseWithFallback(raw, PluginHookResultSchema, {
@@ -5070,7 +5070,7 @@ export class ApiClient {
 
   // registerWecomBYO performs a bring-your-own-app install: the admin pastes
   // the bot id and long-connection secret from the WeCom admin console,
-  // and the backend seals the secret with MULTICA_WECOM_SECRET_KEY before
+  // and the backend seals the secret with LUMEN_WECOM_SECRET_KEY before
   // persisting, returning the new installation.
   async registerWecomBYO(
     workspaceId: string,
@@ -5097,8 +5097,8 @@ export class ApiClient {
   }
 
   // redeemWecomBindingToken binds the WeCom aibot userid carried by the
-  // token to the logged-in Multica user. Called by the /wecom/bind redeem
-  // page after the user clicks through the "link your Multica account"
+  // token to the logged-in Lumen user. Called by the /wecom/bind redeem
+  // page after the user clicks through the "link your Lumen account"
   // prompt the bot sent in WeCom. Status codes:
   //   410 Gone      → invalid / expired / already consumed
   //   409 Conflict  → the WeCom user is already bound to a different user

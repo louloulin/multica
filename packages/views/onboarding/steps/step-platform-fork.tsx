@@ -2,17 +2,17 @@
 
 import { useEffect, useState, type ReactNode } from "react";
 import { ArrowRight, Download, Loader2 } from "lucide-react";
-import { Button } from "@multica/ui/components/ui/button";
+import { Button } from "@lumen/ui/components/ui/button";
 import {
   Dialog,
   DialogContent,
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@multica/ui/components/ui/dialog";
-import { cn } from "@multica/ui/lib/utils";
-import type { AgentRuntime } from "@multica/core/types";
-import { runtimeDisplayLabel } from "@multica/core/runtimes";
+} from "@lumen/ui/components/ui/dialog";
+import { cn } from "@lumen/ui/lib/utils";
+import type { AgentRuntime } from "@lumen/core/types";
+import { runtimeDisplayLabel } from "@lumen/core/runtimes";
 import {
   StepFooter,
   StepHeading,
@@ -400,7 +400,7 @@ function CliWaitingStatus({ dialogOpen }: { dialogOpen: boolean }) {
     return () => window.clearInterval(id);
   }, [dialogOpen]);
 
-  // Stage thresholds are rough — `multica setup` typical flow is
+  // Stage thresholds are rough — `lumen setup` typical flow is
   //   ~1s save config → browser-tab auth (user-driven, 5–30s) →
   //   ~2s daemon boot → immediate WS register. So under 15s means
   //   "still normal", 15–45s means "probably stuck on browser auth",
@@ -442,21 +442,21 @@ function CliWaitingStatus({ dialogOpen }: { dialogOpen: boolean }) {
         {stage === "normal" && (
           <>
             {t(($) => $.step_platform.stage_normal_prefix)}
-            <span className="font-mono">{"multica setup"}</span>
+            <span className="font-mono">{"lumen setup"}</span>
             {t(($) => $.step_platform.stage_normal_suffix)}
           </>
         )}
         {stage === "midway" && (
           <>
             {t(($) => $.step_platform.stage_midway_prefix)}
-            <span className="font-mono">{"multica setup"}</span>
+            <span className="font-mono">{"lumen setup"}</span>
             {t(($) => $.step_platform.stage_midway_suffix)}
           </>
         )}
         {stage === "slow" && (
           <>
             {t(($) => $.step_platform.stage_slow_prefix)}
-            <span className="font-mono">{"multica setup"}</span>
+            <span className="font-mono">{"lumen setup"}</span>
             {t(($) => $.step_platform.stage_slow_suffix)}
           </>
         )}

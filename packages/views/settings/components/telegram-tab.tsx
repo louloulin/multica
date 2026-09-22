@@ -5,18 +5,18 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { ChevronRight, ExternalLink, Trash2 } from "lucide-react";
 import { TelegramMark } from "./telegram-mark";
-import { cn } from "@multica/ui/lib/utils";
-import { Button } from "@multica/ui/components/ui/button";
-import { Card, CardContent } from "@multica/ui/components/ui/card";
+import { cn } from "@lumen/ui/lib/utils";
+import { Button } from "@lumen/ui/components/ui/button";
+import { Card, CardContent } from "@lumen/ui/components/ui/card";
 import {
   Dialog,
   DialogContent,
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@multica/ui/components/ui/dialog";
-import { Input } from "@multica/ui/components/ui/input";
-import { Label } from "@multica/ui/components/ui/label";
+} from "@lumen/ui/components/ui/dialog";
+import { Input } from "@lumen/ui/components/ui/input";
+import { Label } from "@lumen/ui/components/ui/label";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -26,14 +26,14 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@multica/ui/components/ui/alert-dialog";
-import { useAuthStore } from "@multica/core/auth";
-import { useWorkspaceId } from "@multica/core/hooks";
-import { memberListOptions } from "@multica/core/workspace/queries";
-import { useActorName } from "@multica/core/workspace/hooks";
-import { telegramInstallationsOptions, telegramKeys } from "@multica/core/telegram";
-import { api } from "@multica/core/api";
-import type { TelegramInstallation } from "@multica/core/types";
+} from "@lumen/ui/components/ui/alert-dialog";
+import { useAuthStore } from "@lumen/core/auth";
+import { useWorkspaceId } from "@lumen/core/hooks";
+import { memberListOptions } from "@lumen/core/workspace/queries";
+import { useActorName } from "@lumen/core/workspace/hooks";
+import { telegramInstallationsOptions, telegramKeys } from "@lumen/core/telegram";
+import { api } from "@lumen/core/api";
+import type { TelegramInstallation } from "@lumen/core/types";
 import { ActorAvatar } from "../../common/actor-avatar";
 import { openExternal } from "../../platform";
 import { useLocale, useT } from "../../i18n";
@@ -107,7 +107,7 @@ export function TelegramTab() {
             <p className="text-caption text-muted-foreground">
               {t(($) => $.telegram.not_enabled_description_prefix)}{" "}
               <code className="rounded-xs bg-muted px-1 py-0.5 text-micro">
-                MULTICA_TELEGRAM_SECRET_KEY
+                LUMEN_TELEGRAM_SECRET_KEY
               </code>{" "}
               {t(($) => $.telegram.not_enabled_description_suffix)}{" "}
               {t(($) => $.telegram.not_enabled_self_host_hint)}
@@ -241,7 +241,7 @@ function telegramDocsUrl(lang: string | undefined): string {
       : lang?.startsWith("ko")
         ? "/ko"
         : "";
-  return `https://multica.ai/docs${prefix}/telegram-bot-integration`;
+  return `https://lumen.ai/docs${prefix}/telegram-bot-integration`;
 }
 
 // TelegramAgentBindButton is the per-agent CTA on the agent detail page.

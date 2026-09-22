@@ -107,12 +107,12 @@ describe("deriveVersion (real git describe)", () => {
   const repos = [];
 
   function initRepo() {
-    const dir = mkdtempSync(join(tmpdir(), "multica-desktop-ver-"));
+    const dir = mkdtempSync(join(tmpdir(), "lumen-desktop-ver-"));
     repos.push(dir);
     const run = (...args) =>
       execFileSync("git", args, { cwd: dir, encoding: "utf-8" });
     run("init", "-q");
-    run("config", "user.email", "test@multica.ai");
+    run("config", "user.email", "test@lumen.ai");
     run("config", "user.name", "test");
     run("config", "commit.gpgsign", "false");
     run("commit", "-q", "--allow-empty", "-m", "root");
@@ -454,7 +454,7 @@ describe("electron packaging config", () => {
     ].find((candidate) => existsSync(candidate));
     expect(configPath, "electron.vite.config.ts not found").toBeTruthy();
     expect(readFileSync(configPath, "utf-8")).toMatch(
-      /externalizeDepsPlugin\(\{\s*exclude:\s*\["@multica\/core"\]/,
+      /externalizeDepsPlugin\(\{\s*exclude:\s*\["@lumen\/core"\]/,
     );
   });
 
@@ -469,7 +469,7 @@ describe("electron packaging config", () => {
     expect(raw).toContain("!dist/**");
   });
 
-  // Regression guard for github.com/multica-ai/multica/issues/5595. The
+  // Regression guard for github.com/lumen-ai/lumen/issues/5595. The
   // multi-arch release build writes each target's output to
   // dist/<platform>-<arch> in the same apps/desktop dir; electron-builder
   // only auto-excludes the *current* target's output dir, so without an

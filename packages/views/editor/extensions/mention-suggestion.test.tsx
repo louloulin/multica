@@ -1,11 +1,11 @@
 import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { createRef, type ReactNode } from "react";
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { workspaceKeys } from "@multica/core/workspace/queries";
-import { issueKeys, PAGINATED_CATEGORIES } from "@multica/core/issues/queries";
-import { statusCategoryOfKey } from "@multica/core/issues";
-import { I18nProvider } from "@multica/core/i18n/react";
-import type { IssueStatusCategory, ListIssuesCache } from "@multica/core/types";
+import { workspaceKeys } from "@lumen/core/workspace/queries";
+import { issueKeys, PAGINATED_CATEGORIES } from "@lumen/core/issues/queries";
+import { statusCategoryOfKey } from "@lumen/core/issues";
+import { I18nProvider } from "@lumen/core/i18n/react";
+import type { IssueStatusCategory, ListIssuesCache } from "@lumen/core/types";
 import type { QueryClient } from "@tanstack/react-query";
 import enCommon from "../../locales/en/common.json";
 import enAuth from "../../locales/en/auth.json";
@@ -52,11 +52,11 @@ function ZhI18nWrapper({ children }: { children: ReactNode }) {
 }
 
 // Mock the workspace id singleton — items() reads it imperatively.
-vi.mock("@multica/core/platform", () => ({
+vi.mock("@lumen/core/platform", () => ({
   getCurrentWsId: () => "ws-1",
 }));
 
-vi.mock("@multica/core/issue-statuses/hooks", () => ({
+vi.mock("@lumen/core/issue-statuses/hooks", () => ({
   useIssueStatuses: () => ({
     iconOf: () => null,
     colorOf: (status: string) =>
@@ -67,7 +67,7 @@ vi.mock("@multica/core/issue-statuses/hooks", () => ({
 // Mock the API so we control search responses + observe calls.
 const searchIssuesMock = vi.fn();
 const searchProjectsMock = vi.fn();
-vi.mock("@multica/core/api", () => ({
+vi.mock("@lumen/core/api", () => ({
   api: {
     get searchIssues() {
       return searchIssuesMock;
@@ -81,7 +81,7 @@ vi.mock("@multica/core/api", () => ({
 // Mock the auth store: items() reads `useAuthStore.getState()` imperatively
 // to identify the current user when filtering personal agents.
 const authState = { user: { id: "u1" } as { id: string } | null };
-vi.mock("@multica/core/auth", () => ({
+vi.mock("@lumen/core/auth", () => ({
   useAuthStore: { getState: () => authState },
 }));
 

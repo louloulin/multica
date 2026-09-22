@@ -1,11 +1,11 @@
 import { useCallback, useState } from "react";
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
-import { Button } from "@multica/ui/components/ui/button";
-import { Input } from "@multica/ui/components/ui/input";
-import { MulticaIcon } from "@multica/ui/components/common/multica-icon";
-import { DragStrip } from "@multica/views/platform";
-import { useT } from "@multica/views/i18n";
+import { Button } from "@lumen/ui/components/ui/button";
+import { Input } from "@lumen/ui/components/ui/input";
+import { LumenIcon } from "@lumen/ui/components/common/lumen-icon";
+import { DragStrip } from "@lumen/views/platform";
+import { useT } from "@lumen/views/i18n";
 import {
   DEFAULT_RUNTIME_CONFIG,
   RUNTIME_CONFIG_SCHEMA_VERSION,
@@ -104,7 +104,7 @@ export function WelcomeGate({ onSaved }: WelcomeGateProps) {
       <div className="flex min-h-0 flex-1 items-center justify-center px-6 py-10">
         <div className="w-full max-w-md rounded-lg border bg-card p-8 shadow-sm">
           <div className="flex flex-col items-center gap-3 text-center">
-            <MulticaIcon bordered size="lg" />
+            <LumenIcon bordered size="lg" />
             <h1 className="text-title font-semibold">
               {t(($) => $.desktop.welcome.title)}
             </h1>

@@ -1,7 +1,7 @@
 "use client";
 
-import type { InboxItem } from "@multica/core/types";
-import { Button } from "@multica/ui/components/ui/button";
+import type { InboxItem } from "@lumen/core/types";
+import { Button } from "@lumen/ui/components/ui/button";
 import { useT } from "../../i18n";
 
 function formatResetAt(value: string | undefined): string {

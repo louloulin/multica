@@ -98,9 +98,9 @@ Mobile ships iOS + Android from one codebase; iOS remains the visual reference c
 From the repository root:
 
 ```bash
-pnpm --filter @multica/mobile typecheck
-pnpm --filter @multica/mobile lint
-pnpm --filter @multica/mobile test
+pnpm --filter @lumen/mobile typecheck
+pnpm --filter @lumen/mobile lint
+pnpm --filter @lumen/mobile test
 ```
 
 - Root frontend checks exclude mobile. `.github/workflows/mobile-verify.yml` defines the current mobile CI scope; it compiles Android (`assembleDebug`) and builds no iOS archive, but verifies no native rendering.

@@ -7,11 +7,11 @@ import (
 	"testing"
 	"time"
 
-	"github.com/multica-ai/multica/server/internal/events"
-	"github.com/multica-ai/multica/server/internal/integrations/channel"
-	"github.com/multica-ai/multica/server/internal/integrations/channel/engine"
-	"github.com/multica-ai/multica/server/internal/util"
-	"github.com/multica-ai/multica/server/pkg/protocol"
+	"github.com/lumen-ai/lumen/server/internal/events"
+	"github.com/lumen-ai/lumen/server/internal/integrations/channel"
+	"github.com/lumen-ai/lumen/server/internal/integrations/channel/engine"
+	"github.com/lumen-ai/lumen/server/internal/util"
+	"github.com/lumen-ai/lumen/server/pkg/protocol"
 )
 
 func TestOutboundArchiveClearsPendingReceiptsOnlyForItsAgent(t *testing.T) {

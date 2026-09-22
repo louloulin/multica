@@ -2,27 +2,27 @@ import { productLocale, type LabLocale } from "./locale";
 import { useTranslation } from "react-i18next";
 import { useEffect, useMemo, useState } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { createAuthStore, registerAuthStore } from "@multica/core/auth";
-import { createChatStore, registerChatStore } from "@multica/core/chat";
-import { setApiInstance } from "@multica/core/api";
-import { WSProvider } from "@multica/core/realtime";
-import { I18nProvider } from "@multica/core/i18n/react";
-import { WorkspaceSlugProvider } from "@multica/core/paths";
-import { workspaceKeys } from "@multica/core/workspace/queries";
-import { setCurrentWorkspace } from "@multica/core/platform";
-import { getIssueSurfaceViewStore } from "@multica/core/issues/stores/surface-view-store";
-import { AppSidebar } from "@multica/views/layout";
-import { IssueDetail, IssuesPage } from "@multica/views/issues/components";
+import { createAuthStore, registerAuthStore } from "@lumen/core/auth";
+import { createChatStore, registerChatStore } from "@lumen/core/chat";
+import { setApiInstance } from "@lumen/core/api";
+import { WSProvider } from "@lumen/core/realtime";
+import { I18nProvider } from "@lumen/core/i18n/react";
+import { WorkspaceSlugProvider } from "@lumen/core/paths";
+import { workspaceKeys } from "@lumen/core/workspace/queries";
+import { setCurrentWorkspace } from "@lumen/core/platform";
+import { getIssueSurfaceViewStore } from "@lumen/core/issues/stores/surface-view-store";
+import { AppSidebar } from "@lumen/views/layout";
+import { IssueDetail, IssuesPage } from "@lumen/views/issues/components";
 import {
   NavigationProvider,
   type NavigationAdapter,
-} from "@multica/views/navigation";
-import { RESOURCES } from "@multica/views/locales";
+} from "@lumen/views/navigation";
+import { RESOURCES } from "@lumen/views/locales";
 import {
   SidebarInset,
   SidebarProvider,
-} from "@multica/ui/components/ui/sidebar";
-import { TooltipProvider } from "@multica/ui/components/ui/tooltip";
+} from "@lumen/ui/components/ui/sidebar";
+import { TooltipProvider } from "@lumen/ui/components/ui/tooltip";
 import { Toaster, toast } from "sonner";
 import {
   createFixtureApi,

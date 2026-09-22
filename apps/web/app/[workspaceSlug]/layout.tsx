@@ -3,14 +3,14 @@
 import { use, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter, usePathname } from "next/navigation";
-import { WorkspaceSlugProvider, paths } from "@multica/core/paths";
-import { workspaceBySlugOptions } from "@multica/core/workspace";
-import { setCurrentWorkspace } from "@multica/core/platform";
-import { useAuthStore } from "@multica/core/auth";
-import { NoAccessPage } from "@multica/views/workspace/no-access-page";
-import { WelcomeAfterOnboarding } from "@multica/views/workspace/welcome-after-onboarding";
-import { MulticaIcon } from "@multica/ui/components/common/multica-icon";
-import { useWorkspaceSeen } from "@multica/views/workspace/use-workspace-seen";
+import { WorkspaceSlugProvider, paths } from "@lumen/core/paths";
+import { workspaceBySlugOptions } from "@lumen/core/workspace";
+import { setCurrentWorkspace } from "@lumen/core/platform";
+import { useAuthStore } from "@lumen/core/auth";
+import { NoAccessPage } from "@lumen/views/workspace/no-access-page";
+import { WelcomeAfterOnboarding } from "@lumen/views/workspace/welcome-after-onboarding";
+import { LumenIcon } from "@lumen/ui/components/common/lumen-icon";
+import { useWorkspaceSeen } from "@lumen/views/workspace/use-workspace-seen";
 import { workspaceSlugFromPathname } from "@/lib/workspace-slug-from-pathname";
 
 export default function WorkspaceLayout({
@@ -97,7 +97,7 @@ export default function WorkspaceLayout({
 
   const loadingIndicator = (
     <div className="flex h-svh items-center justify-center">
-      <MulticaIcon className="size-6 animate-pulse" />
+      <LumenIcon className="size-6 animate-pulse" />
     </div>
   );
 

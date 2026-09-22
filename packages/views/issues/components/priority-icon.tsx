@@ -1,5 +1,5 @@
-import type { IssuePriority } from "@multica/core/types";
-import { PRIORITY_CONFIG } from "@multica/core/issues/config";
+import type { IssuePriority } from "@lumen/core/types";
+import { PRIORITY_CONFIG } from "@lumen/core/issues/config";
 
 /**
  * Priority glyphs, two families on purpose:

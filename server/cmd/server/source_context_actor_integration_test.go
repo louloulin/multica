@@ -7,7 +7,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/multica-ai/multica/server/internal/auth"
+	"github.com/lumen-ai/lumen/server/internal/auth"
 )
 
 func TestSourceContextRoutesRejectAuthoritativeTaskToken(t *testing.T) {

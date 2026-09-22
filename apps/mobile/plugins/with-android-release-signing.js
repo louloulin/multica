@@ -8,7 +8,7 @@
  *
  * 凭据来源:四个 Gradle 属性,只从构建机的 ~/.gradle/gradle.properties 或环境变量
  * (ORG_GRADLE_PROJECT_* / -P) 读取,永远不进仓库:
- *   MULTICA_RELEASE_STORE_FILE / _KEY_ALIAS / _STORE_PASSWORD / _KEY_PASSWORD
+ *   LUMEN_RELEASE_STORE_FILE / _KEY_ALIAS / _STORE_PASSWORD / _KEY_PASSWORD
  *
  * 属性缺失时不报错,显式回退到上游默认的 debug 签名 —— 贡献者跑 `android:prod` 只是
  * 想装个能跑的包,不该被"你没有发布 keystore"卡住;真正的发布构建由 CI/发布人负责
@@ -26,11 +26,11 @@ const RELEASE_SIGNING_CONFIG = `
         release {
             // 由 with-android-release-signing.js 注入。属性缺失时走 else,
             // 逐字段复制 debug 签名(见插件头部注释)。
-            if (project.hasProperty('MULTICA_RELEASE_STORE_FILE')) {
-                storeFile file(MULTICA_RELEASE_STORE_FILE)
-                storePassword MULTICA_RELEASE_STORE_PASSWORD
-                keyAlias MULTICA_RELEASE_KEY_ALIAS
-                keyPassword MULTICA_RELEASE_KEY_PASSWORD
+            if (project.hasProperty('LUMEN_RELEASE_STORE_FILE')) {
+                storeFile file(LUMEN_RELEASE_STORE_FILE)
+                storePassword LUMEN_RELEASE_STORE_PASSWORD
+                keyAlias LUMEN_RELEASE_KEY_ALIAS
+                keyPassword LUMEN_RELEASE_KEY_PASSWORD
                 // AGP 默认只开 v1+v2。显式要 v3:密钥轮换(APK Signature Scheme
                 // v3 的 proof-of-rotation)只在 v3 块里存在,等到需要换 key 时
                 // 才发现当初没签 v3 就来不及了 —— 已发布的包无法追签。
@@ -48,7 +48,7 @@ const RELEASE_SIGNING_CONFIG = `
         }`;
 
 /** 幂等标记 —— prebuild 可能在已改写过的 build.gradle 上重跑。 */
-const MARKER = "MULTICA_RELEASE_STORE_FILE";
+const MARKER = "LUMEN_RELEASE_STORE_FILE";
 
 function addReleaseSigning(contents) {
   if (contents.includes(MARKER)) return contents;

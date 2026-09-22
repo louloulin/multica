@@ -11,7 +11,7 @@
 #   ./scripts/verify-signing-config.sh
 #
 # 前置:已跑过 expo prebuild(android/ 存在),且构建机 ~/.gradle/gradle.properties
-# 里配好了 MULTICA_RELEASE_* 四个属性 —— 「有凭据」分支需要它们才有意义。
+# 里配好了 LUMEN_RELEASE_* 四个属性 —— 「有凭据」分支需要它们才有意义。
 set -euo pipefail
 
 cd "$(dirname "$0")/.."
@@ -20,10 +20,10 @@ cd "$(dirname "$0")/.."
   exit 1
 }
 
-probe=$(mktemp -t multica-signing-probe.XXXXXX.gradle)
+probe=$(mktemp -t lumen-signing-probe.XXXXXX.gradle)
 # 无凭据分支靠一个干净的 GRADLE_USER_HOME 实现:软链 caches/wrapper 复用下载,
-# 但不含 gradle.properties,于是 MULTICA_RELEASE_* 属性天然缺失。
-clean_home=$(mktemp -d -t multica-gradle-home.XXXXXX)
+# 但不含 gradle.properties,于是 LUMEN_RELEASE_* 属性天然缺失。
+clean_home=$(mktemp -d -t lumen-gradle-home.XXXXXX)
 trap 'rm -rf "$probe" "$clean_home"' EXIT
 
 ln -sfn "$HOME/.gradle/caches" "$clean_home/caches"

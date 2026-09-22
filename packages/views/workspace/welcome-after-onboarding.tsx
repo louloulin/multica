@@ -3,20 +3,20 @@
 import { useEffect, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { Loader2 } from "lucide-react";
-import { api } from "@multica/core/api";
-import { useAuthStore } from "@multica/core/auth";
-import { issueKeys } from "@multica/core/issues/queries";
-import { useWelcomeStore } from "@multica/core/onboarding";
-import { paths, useCurrentWorkspace } from "@multica/core/paths";
-import type { CreateIssueRequest, Issue } from "@multica/core/types";
-import { workspaceKeys } from "@multica/core/workspace/queries";
-import { Button } from "@multica/ui/components/ui/button";
+import { api } from "@lumen/core/api";
+import { useAuthStore } from "@lumen/core/auth";
+import { issueKeys } from "@lumen/core/issues/queries";
+import { useWelcomeStore } from "@lumen/core/onboarding";
+import { paths, useCurrentWorkspace } from "@lumen/core/paths";
+import type { CreateIssueRequest, Issue } from "@lumen/core/types";
+import { workspaceKeys } from "@lumen/core/workspace/queries";
+import { Button } from "@lumen/ui/components/ui/button";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogTitle,
-} from "@multica/ui/components/ui/dialog";
+} from "@lumen/ui/components/ui/dialog";
 import { useT } from "../i18n";
 import { useNavigation } from "../navigation";
 import {

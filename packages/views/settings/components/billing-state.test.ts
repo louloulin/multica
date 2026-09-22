@@ -5,7 +5,7 @@ import type {
   AutopilotQuotaUsage,
   WorkspaceSubscriptionEntitlements,
   WorkspaceSubscriptionSummary,
-} from "@multica/core/types";
+} from "@lumen/core/types";
 import {
   hasActiveWorkspaceSeatCapacity,
   resolveAutopilotUsage,

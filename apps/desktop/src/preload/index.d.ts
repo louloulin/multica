@@ -17,7 +17,7 @@ import type {
   LocalRuntimeProbe,
 } from "../shared/daemon-types";
 import type { TabSelectionShortcutKey } from "../shared/main-renderer-messages";
-import type { ClientDiagnosticEvent } from "@multica/core/diagnostics";
+import type { ClientDiagnosticEvent } from "@lumen/core/diagnostics";
 
 interface DesktopAPI {
   /** App version + normalized OS, captured synchronously at preload time. */
@@ -45,10 +45,10 @@ interface DesktopAPI {
   updateRuntimeConfig: (config: RuntimeConfig) => Promise<
     { ok: true } | { ok: false; error: string }
   >;
-  /** Whether `~/.multica/desktop.json` exists on disk — drives the first-run
+  /** Whether `~/.lumen/desktop.json` exists on disk — drives the first-run
    *  onboarding banner. */
   isRuntimeConfigPresent: () => Promise<boolean>;
-  /** Delete `~/.multica/desktop.json`. Used by the "Reset to cloud" path. */
+  /** Delete `~/.lumen/desktop.json`. Used by the "Reset to cloud" path. */
   clearRuntimeConfig: () => Promise<
     { ok: true } | { ok: false; error: string }
   >;

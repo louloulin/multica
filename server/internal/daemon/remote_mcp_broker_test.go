@@ -13,8 +13,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/multica-ai/multica/server/pkg/remotemcp"
-	"github.com/multica-ai/multica/server/pkg/remotemcp/remotemcptest"
+	"github.com/lumen-ai/lumen/server/pkg/remotemcp"
+	"github.com/lumen-ai/lumen/server/pkg/remotemcp/remotemcptest"
 )
 
 func TestRemoteMCPProxyFiltersToolsAndInjectsCredential(t *testing.T) {

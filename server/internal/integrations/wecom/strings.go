@@ -10,7 +10,7 @@ package wecom
 // move first.
 //
 // Which pack a given bubble uses is decided by the DESTINATION, not by the
-// installation (language.go): a 1:1 gets that person's Multica profile
+// installation (language.go): a 1:1 gets that person's Lumen profile
 // language, and a room — where there is no shared profile and no member list —
 // gets the deployment's own language.
 //
@@ -21,7 +21,7 @@ package wecom
 // that is the moment to reach for a framework — not now.
 //
 // The zh-Hans pack is the text a Chinese tenant reads; the English pack is for
-// a reader whose Multica profile says anything else.
+// a reader whose Lumen profile says anything else.
 
 import (
 	"strings"
@@ -45,7 +45,7 @@ const (
 
 // deploymentLocaleValue is the language this server answers in when the reader
 // is a room, or a person whose profile says nothing. Set once at boot from
-// MULTICA_WECOM_DEFAULT_LOCALE (cmd/server/router.go) and read on every
+// LUMEN_WECOM_DEFAULT_LOCALE (cmd/server/router.go) and read on every
 // message, so it is an atomic rather than a plain var: -race would otherwise
 // flag the boot write against the first inbound frame.
 //
@@ -67,7 +67,7 @@ var deploymentLocaleValue atomic.Value
 // the API has already validated to en / zh-Hans / ko / ja, so it can treat
 // "anything that isn't Chinese" as a deliberate choice of the English pack. An
 // env var has been validated by nobody: under that rule
-// MULTICA_WECOM_DEFAULT_LOCALE=zh_Hant, or a stray quote, would quietly put a
+// LUMEN_WECOM_DEFAULT_LOCALE=zh_Hant, or a stray quote, would quietly put a
 // Chinese tenant's rooms into English. So this one matches exactly, and an
 // operator who mistypes gets the old language and a log line, not a surprise.
 func SetDeploymentLocale(raw string) Locale {

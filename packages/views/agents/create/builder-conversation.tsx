@@ -8,15 +8,15 @@ import {
   stripBuilderDraft,
   type AgentDraft,
   type BuilderRestore,
-} from "@multica/core/agents";
-import { isRuntimeUsableForUser } from "@multica/core/runtimes";
+} from "@lumen/core/agents";
+import { isRuntimeUsableForUser } from "@lumen/core/runtimes";
 import type {
   ChatMessage,
   MemberWithUser,
   RuntimeDevice,
-} from "@multica/core/types";
-import { Button } from "@multica/ui/components/ui/button";
-import { cn } from "@multica/ui/lib/utils";
+} from "@lumen/core/types";
+import { Button } from "@lumen/ui/components/ui/button";
+import { cn } from "@lumen/ui/lib/utils";
 import { ChatInput } from "../../chat/components/chat-input";
 import {
   ChatMessageList,

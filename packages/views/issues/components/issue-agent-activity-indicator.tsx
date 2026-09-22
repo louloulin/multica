@@ -3,18 +3,18 @@
 import { memo, useCallback, useMemo, useState } from "react";
 import { Bell, Clock3 } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
-import { ShimmerText } from "@multica/ui/components/common/shimmer-text";
+import { ShimmerText } from "@lumen/ui/components/common/shimmer-text";
 import {
   HoverCard,
   HoverCardTrigger,
   HoverCardContent,
-} from "@multica/ui/components/ui/hover-card";
-import { useWorkspaceId } from "@multica/core/hooks";
-import { agentTaskSnapshotOptions } from "@multica/core/agents";
-import type { AgentTask, IssueWakeupSummaryRow } from "@multica/core/types";
-import { workspaceWakeupSummariesOptions } from "@multica/core/issues/wakeups";
-import { cn } from "@multica/ui/lib/utils";
-import type { AvatarSize } from "@multica/ui/lib/avatar-size";
+} from "@lumen/ui/components/ui/hover-card";
+import { useWorkspaceId } from "@lumen/core/hooks";
+import { agentTaskSnapshotOptions } from "@lumen/core/agents";
+import type { AgentTask, IssueWakeupSummaryRow } from "@lumen/core/types";
+import { workspaceWakeupSummariesOptions } from "@lumen/core/issues/wakeups";
+import { cn } from "@lumen/ui/lib/utils";
+import type { AvatarSize } from "@lumen/ui/lib/avatar-size";
 import { AgentAvatarStack } from "../../agents/components/agent-avatar-stack";
 import { AgentActivityHoverContent } from "../../agents/components/agent-activity-hover-content";
 import { selectIssueTasks, type IssueTaskGroups } from "../surface/activity";

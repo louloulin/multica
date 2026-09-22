@@ -193,7 +193,7 @@ SELECT * FROM issue
 WHERE workspace_id = $1 AND number = $2;
 
 -- name: UpdateIssue :one
-WITH wakeup_source AS MATERIALIZED (SELECT set_config('multica.source_task_id', COALESCE(sqlc.narg('source_task_id')::uuid::text, ''), true)), candidate AS (
+WITH wakeup_source AS MATERIALIZED (SELECT set_config('lumen.source_task_id', COALESCE(sqlc.narg('source_task_id')::uuid::text, ''), true)), candidate AS (
     SELECT
         i.*,
         COALESCE(sqlc.narg('title')::text, i.title) AS next_title,
@@ -293,7 +293,7 @@ RETURNING i.*;
 -- completion) so a status write cannot land without one: an issue carrying its
 -- old column's rank into a new column is the bug this guards against. See the
 -- next_position CASE in UpdateIssue for the policy.
-WITH wakeup_source AS MATERIALIZED (SELECT set_config('multica.source_task_id', COALESCE(sqlc.narg('source_task_id')::uuid::text, ''), true))
+WITH wakeup_source AS MATERIALIZED (SELECT set_config('lumen.source_task_id', COALESCE(sqlc.narg('source_task_id')::uuid::text, ''), true))
 UPDATE issue AS i SET
     status = $2,
     position = CASE WHEN i.status IS DISTINCT FROM $2 THEN (

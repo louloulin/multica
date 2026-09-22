@@ -1,12 +1,12 @@
 import { fireEvent, screen, within } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-import { SidebarProvider, useSidebar } from "@multica/ui/components/ui/sidebar";
-import { configStore } from "@multica/core/config";
+import { SidebarProvider, useSidebar } from "@lumen/ui/components/ui/sidebar";
+import { configStore } from "@lumen/core/config";
 import {
   BILLING_WORKSPACE_SUBSCRIPTIONS_FLAG,
   PLUGINS_V1_FLAG,
-} from "@multica/core/feature-flags";
+} from "@lumen/core/feature-flags";
 import { renderWithI18n } from "../../test/i18n";
 
 // This file tests the settings SHELL — the chrome around the tabs — so every
@@ -32,7 +32,7 @@ vi.mock("./keyboard-shortcuts-tab", stub("KeyboardShortcutsTab"));
 vi.mock("./plugins-tab", stub("PluginsTab"));
 vi.mock("./billing-tab", stub("BillingTab"));
 
-vi.mock("@multica/core/paths", () => ({
+vi.mock("@lumen/core/paths", () => ({
   useCurrentWorkspace: () => ({ name: "Acme" }),
 }));
 
@@ -53,7 +53,7 @@ vi.mock("../../navigation/context", async (importOriginal) => ({
 // Compact by default: that is the width where the nav is a sheet and this
 // trigger is the only way to reach it.
 const layout = { compact: true };
-vi.mock("@multica/ui/hooks/use-mobile", () => ({
+vi.mock("@lumen/ui/hooks/use-mobile", () => ({
   useIsMobile: () => layout.compact,
   useIsCompact: () => layout.compact,
 }));

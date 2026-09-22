@@ -11,7 +11,7 @@ import {
 } from "vitest";
 import { render, screen, act, cleanup, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { I18nProvider } from "@multica/core/i18n/react";
+import { I18nProvider } from "@lumen/core/i18n/react";
 import enCommon from "../../locales/en/common.json";
 import enAuth from "../../locales/en/auth.json";
 import enSettings from "../../locales/en/settings.json";
@@ -36,14 +36,14 @@ const userRef = vi.hoisted(() => ({
   current: null as { id: string; timezone?: string | null } | null,
 }));
 
-vi.mock("@multica/ui/components/common/theme-provider", () => ({
+vi.mock("@lumen/ui/components/common/theme-provider", () => ({
   useTheme: () => ({ theme: "light", setTheme: mockSetTheme }),
 }));
 
-vi.mock("@multica/core/i18n/react", async () => {
+vi.mock("@lumen/core/i18n/react", async () => {
   const actual = await vi.importActual<
-    typeof import("@multica/core/i18n/react")
-  >("@multica/core/i18n/react");
+    typeof import("@lumen/core/i18n/react")
+  >("@lumen/core/i18n/react");
   return {
     ...actual,
     useLocaleAdapter: () => ({
@@ -54,7 +54,7 @@ vi.mock("@multica/core/i18n/react", async () => {
   };
 });
 
-vi.mock("@multica/core/api", () => ({
+vi.mock("@lumen/core/api", () => ({
   api: { updateMe: mockUpdateMe },
 }));
 
@@ -66,10 +66,10 @@ vi.mock("sonner", () => ({
   },
 }));
 
-vi.mock("@multica/core/auth", async () => {
+vi.mock("@lumen/core/auth", async () => {
   const actual =
-    await vi.importActual<typeof import("@multica/core/auth")>(
-      "@multica/core/auth",
+    await vi.importActual<typeof import("@lumen/core/auth")>(
+      "@lumen/core/auth",
     );
   type AuthState = {
     user: typeof userRef.current;
@@ -87,7 +87,7 @@ vi.mock("@multica/core/auth", async () => {
 });
 
 import { PreferencesTab } from "./preferences-tab";
-import { useCommentComposerStore } from "@multica/core/issues/stores";
+import { useCommentComposerStore } from "@lumen/core/issues/stores";
 
 const TEST_RESOURCES = {
   en: { common: enCommon, auth: enAuth, settings: enSettings },

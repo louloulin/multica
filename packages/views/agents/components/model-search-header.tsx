@@ -1,8 +1,8 @@
 "use client";
 
 import { RefreshCw } from "lucide-react";
-import { Button } from "@multica/ui/components/ui/button";
-import { Input } from "@multica/ui/components/ui/input";
+import { Button } from "@lumen/ui/components/ui/button";
+import { Input } from "@lumen/ui/components/ui/input";
 import { useT } from "../../i18n";
 
 export function ModelSearchHeader({

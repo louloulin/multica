@@ -76,21 +76,21 @@ if ! health_ok; then
 fi
 
 echo ""
-echo "✓ Multica is running!"
+echo "✓ Lumen is running!"
 echo "  Frontend: ${frontend_url}"
 echo "  Backend:  ${backend_url}"
 echo ""
 if [ "$mode" = "build" ]; then
   echo "Built images locally via docker-compose.selfhost.build.yml."
-  echo "Local tags: multica-backend:dev and multica-web:dev."
+  echo "Local tags: lumen-backend:dev and lumen-web:dev."
 else
-  echo "Images: ${MULTICA_BACKEND_IMAGE:-ghcr.io/multica-ai/multica-backend}:${MULTICA_IMAGE_TAG:-latest}"
-  echo "        ${MULTICA_WEB_IMAGE:-ghcr.io/multica-ai/multica-web}:${MULTICA_IMAGE_TAG:-latest}"
+  echo "Images: ${LUMEN_BACKEND_IMAGE:-ghcr.io/lumen-ai/lumen-backend}:${LUMEN_IMAGE_TAG:-latest}"
+  echo "        ${LUMEN_WEB_IMAGE:-ghcr.io/lumen-ai/lumen-web}:${LUMEN_IMAGE_TAG:-latest}"
 fi
 echo ""
 echo "Log in: configure RESEND_API_KEY in .env for email codes,"
 echo "        or read the generated code from backend logs when Resend is unset."
 echo ""
 echo "Next — install the CLI and connect your machine:"
-echo "  brew install multica-ai/tap/multica"
-echo "  multica setup self-host"
+echo "  brew install lumen-ai/tap/lumen"
+echo "  lumen setup self-host"

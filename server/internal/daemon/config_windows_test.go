@@ -15,12 +15,12 @@ import (
 	"testing"
 	"time"
 
-	"github.com/multica-ai/multica/server/pkg/agent"
+	"github.com/lumen-ai/lumen/server/pkg/agent"
 )
 
 const (
-	longPathExecutableHelperEnv = "MULTICA_LONG_PATH_EXECUTABLE_HELPER"
-	longPathExecutableMarkerEnv = "MULTICA_LONG_PATH_EXECUTABLE_MARKER"
+	longPathExecutableHelperEnv = "LUMEN_LONG_PATH_EXECUTABLE_HELPER"
+	longPathExecutableMarkerEnv = "LUMEN_LONG_PATH_EXECUTABLE_MARKER"
 )
 
 func TestLongPathExecutableHelper(t *testing.T) {

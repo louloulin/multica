@@ -2,22 +2,22 @@
 
 import { useEffect, useMemo, useRef } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { useWorkspaceId } from "@multica/core/hooks";
-import { useIssueStatuses } from "@multica/core/issue-statuses/hooks";
-import { useWorkspacePaths } from "@multica/core/paths";
-import { useViewStore, useViewStoreApi } from "@multica/core/issues/stores/view-store-context";
-import type { GanttZoom } from "@multica/core/issues/stores/view-store";
-import { projectListOptions } from "@multica/core/projects/queries";
-import type { Issue, IssueStatusCategory } from "@multica/core/types";
-import { issueStatusCategory, statusColumnKeys } from "@multica/core/issues";
-import { dateOnlyToUTCDate } from "@multica/core/issues/date";
-import { cn } from "@multica/ui/lib/utils";
+import { useWorkspaceId } from "@lumen/core/hooks";
+import { useIssueStatuses } from "@lumen/core/issue-statuses/hooks";
+import { useWorkspacePaths } from "@lumen/core/paths";
+import { useViewStore, useViewStoreApi } from "@lumen/core/issues/stores/view-store-context";
+import type { GanttZoom } from "@lumen/core/issues/stores/view-store";
+import { projectListOptions } from "@lumen/core/projects/queries";
+import type { Issue, IssueStatusCategory } from "@lumen/core/types";
+import { issueStatusCategory, statusColumnKeys } from "@lumen/core/issues";
+import { dateOnlyToUTCDate } from "@lumen/core/issues/date";
+import { cn } from "@lumen/ui/lib/utils";
 import {
   Tooltip,
   TooltipTrigger,
   TooltipContent,
-} from "@multica/ui/components/ui/tooltip";
-import { Button } from "@multica/ui/components/ui/button";
+} from "@lumen/ui/components/ui/tooltip";
+import { Button } from "@lumen/ui/components/ui/button";
 import { AppLink } from "../../navigation";
 import { ActorAvatar } from "../../common/actor-avatar";
 import { ProjectIcon } from "../../projects/components/project-icon";
@@ -48,7 +48,7 @@ function daysBetween(a: Date, b: Date): number {
 
 // Issue dates arrive as date-only "YYYY-MM-DD" strings (calendar days). Anchor
 // each to UTC midnight so the bar lands on exactly that day, independent of the
-// viewer's timezone. See @multica/core/issues/date.
+// viewer's timezone. See @lumen/core/issues/date.
 function parseDay(iso: string | null): Date | null {
   return dateOnlyToUTCDate(iso);
 }

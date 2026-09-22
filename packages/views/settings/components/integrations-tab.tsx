@@ -3,23 +3,23 @@
 import type { ReactNode } from "react";
 import { ArrowLeft, ChevronRight, FolderGit2, Blocks } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
-import { ApiError, errorCode } from "@multica/core/api";
-import { useWorkspaceId } from "@multica/core/hooks";
-import { useCurrentMember } from "@multica/core/permissions";
+import { ApiError, errorCode } from "@lumen/core/api";
+import { useWorkspaceId } from "@lumen/core/hooks";
+import { useCurrentMember } from "@lumen/core/permissions";
 import {
   composioToolkitsOptions,
   composioConnectionsOptions,
-} from "@multica/core/composio";
-import { githubInstallationsOptions } from "@multica/core/github";
-import { larkInstallationsOptions } from "@multica/core/lark";
-import { slackInstallationsOptions } from "@multica/core/slack";
-import { dingtalkInstallationsOptions } from "@multica/core/dingtalk";
-import { wecomInstallationsOptions } from "@multica/core/wecom";
-import { telegramInstallationsOptions } from "@multica/core/telegram";
-import { vcsConnectionsOptions } from "@multica/core/vcs";
-import { useConfigStore, useFeatureEnabled } from "@multica/core/config";
-import { COMPOSIO_MCP_APPS_FLAG } from "@multica/core/feature-flags";
-import { cn } from "@multica/ui/lib/utils";
+} from "@lumen/core/composio";
+import { githubInstallationsOptions } from "@lumen/core/github";
+import { larkInstallationsOptions } from "@lumen/core/lark";
+import { slackInstallationsOptions } from "@lumen/core/slack";
+import { dingtalkInstallationsOptions } from "@lumen/core/dingtalk";
+import { wecomInstallationsOptions } from "@lumen/core/wecom";
+import { telegramInstallationsOptions } from "@lumen/core/telegram";
+import { vcsConnectionsOptions } from "@lumen/core/vcs";
+import { useConfigStore, useFeatureEnabled } from "@lumen/core/config";
+import { COMPOSIO_MCP_APPS_FLAG } from "@lumen/core/feature-flags";
+import { cn } from "@lumen/ui/lib/utils";
 import { AppLink, useNavigation } from "../../navigation";
 import { useT } from "../../i18n";
 import { LarkTab } from "./lark-tab";

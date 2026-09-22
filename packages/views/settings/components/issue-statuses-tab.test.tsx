@@ -4,18 +4,18 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { act, cleanup, fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import type { IssueStatusEntry } from "@multica/core/types";
-import { ISSUE_STATUS_ICONS } from "@multica/core/types/issue-status";
+import type { IssueStatusEntry } from "@lumen/core/types";
+import { ISSUE_STATUS_ICONS } from "@lumen/core/types/issue-status";
 import en from "../../locales/en/settings.json";
 import { IssueStatusesTab } from "./issue-statuses-tab";
-import { ApiError } from "@multica/core/api/client";
+import { ApiError } from "@lumen/core/api/client";
 
 const reorderMutate = vi.hoisted(() => vi.fn());
 const createMutate = vi.hoisted(() => vi.fn());
 const updateMutate = vi.hoisted(() => vi.fn());
 const archiveMutate = vi.hoisted(() => vi.fn());
 const navigatePush = vi.hoisted(() => vi.fn());
-vi.mock("@multica/core/paths", () => ({ useWorkspacePaths: () => ({ issues: () => "/dev/issues" }) }));
+vi.mock("@lumen/core/paths", () => ({ useWorkspacePaths: () => ({ issues: () => "/dev/issues" }) }));
 vi.mock("../../navigation", () => ({ useNavigation: () => ({ push: navigatePush }) }));
 vi.mock("../../issues/surface/issue-surface", () => ({
   IssueSurfaceWithStore: ({ store, scope }: { store: { getState: () => { statusFilters: string[] } }; scope: { actorKind: string } }) =>
@@ -30,20 +30,20 @@ vi.mock("@tanstack/react-query", () => ({
     isLoading: false,
   }),
 }));
-vi.mock("@multica/core/hooks", () => ({ useWorkspaceId: () => "ws-1" }));
-vi.mock("@multica/core/auth", () => ({
+vi.mock("@lumen/core/hooks", () => ({ useWorkspaceId: () => "ws-1" }));
+vi.mock("@lumen/core/auth", () => ({
   useAuthStore: (selector: (s: unknown) => unknown) => selector({ user: { id: "u-1" } }),
 }));
-vi.mock("@multica/core/workspace/queries", () => ({
+vi.mock("@lumen/core/workspace/queries", () => ({
   memberListOptions: () => ({ queryKey: ["members", "ws-1"] }),
 }));
 // Only the fetch is stubbed. The module's pure helpers (`issueStatusColor`)
 // are what the rows render with, and a stub of those would test the stub.
-vi.mock("@multica/core/issue-statuses/queries", async (importOriginal) => ({
-  ...(await importOriginal<typeof import("@multica/core/issue-statuses/queries")>()),
+vi.mock("@lumen/core/issue-statuses/queries", async (importOriginal) => ({
+  ...(await importOriginal<typeof import("@lumen/core/issue-statuses/queries")>()),
   issueStatusListOptions: () => ({ queryKey: ["issue-statuses", "ws-1"] }),
 }));
-vi.mock("@multica/core/issue-statuses/mutations", () => ({
+vi.mock("@lumen/core/issue-statuses/mutations", () => ({
   useCreateIssueStatus: () => ({ mutate: createMutate, isPending: false }),
   useUpdateIssueStatus: () => ({ mutate: updateMutate, isPending: false }),
   useArchiveIssueStatus: () => ({ mutate: archiveMutate, isPending: false }),

@@ -10,14 +10,14 @@ import (
 
 	"github.com/go-chi/chi/v5"
 	"github.com/jackc/pgx/v5/pgtype"
-	"github.com/multica-ai/multica/server/internal/middleware"
-	"github.com/multica-ai/multica/server/internal/service"
-	"github.com/multica-ai/multica/server/internal/util"
-	db "github.com/multica-ai/multica/server/pkg/db/generated"
-	"github.com/multica-ai/multica/server/pkg/dbid"
-	"github.com/multica-ai/multica/server/pkg/plugincontract"
-	"github.com/multica-ai/multica/server/pkg/protocol"
-	publicapiv1 "github.com/multica-ai/multica/server/pkg/publicapi/v1"
+	"github.com/lumen-ai/lumen/server/internal/middleware"
+	"github.com/lumen-ai/lumen/server/internal/service"
+	"github.com/lumen-ai/lumen/server/internal/util"
+	db "github.com/lumen-ai/lumen/server/pkg/db/generated"
+	"github.com/lumen-ai/lumen/server/pkg/dbid"
+	"github.com/lumen-ai/lumen/server/pkg/plugincontract"
+	"github.com/lumen-ai/lumen/server/pkg/protocol"
+	publicapiv1 "github.com/lumen-ai/lumen/server/pkg/publicapi/v1"
 )
 
 // The Action API is what a plugin surface reaches through the host bridge.
@@ -41,7 +41,7 @@ import (
 // session and never will. It presents a bearer token instead, and that changes
 // only WHO the call acts as — the three checks above are the same either way.
 // See pluginActor for how identity is decided.
-const pluginInstallationHeader = "X-Multica-Plugin-Installation"
+const pluginInstallationHeader = "X-Lumen-Plugin-Installation"
 
 // pluginActor is who a call acts as, and it is decided by how the caller
 // authenticated rather than by anything the caller asks for.

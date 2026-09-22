@@ -3,8 +3,8 @@ package handler
 import (
 	"strings"
 
-	"github.com/multica-ai/multica/server/internal/service"
-	"github.com/multica-ai/multica/server/internal/util"
+	"github.com/lumen-ai/lumen/server/internal/service"
+	"github.com/lumen-ai/lumen/server/internal/util"
 )
 
 type sourceContextDescriptionAttachmentReference struct {

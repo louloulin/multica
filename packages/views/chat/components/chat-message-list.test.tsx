@@ -1,9 +1,9 @@
 import { describe, expect, it, vi } from "vitest";
 import { act, fireEvent, render, screen } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { I18nProvider } from "@multica/core/i18n/react";
-import { chatKeys } from "@multica/core/chat/queries";
-import type { Attachment, TaskMessagePayload } from "@multica/core/types";
+import { I18nProvider } from "@lumen/core/i18n/react";
+import { chatKeys } from "@lumen/core/chat/queries";
+import type { Attachment, TaskMessagePayload } from "@lumen/core/types";
 import type { ReactElement } from "react";
 import enChat from "../../locales/en/chat.json";
 

@@ -1,19 +1,19 @@
 "use client";
 
-import { issueStatusCategory } from "@multica/core/issues";
-import { useIssueStatuses } from "@multica/core/issue-statuses/hooks";
+import { issueStatusCategory } from "@lumen/core/issues";
+import { useIssueStatuses } from "@lumen/core/issue-statuses/hooks";
 import { useStatusLabel } from "./../utils/status-label";
 import type { ReactNode } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { childIssueProgressOptions, issueDetailOptions } from "@multica/core/issues/queries";
-import { useWorkspaceId } from "@multica/core/hooks";
-import { useActorName } from "@multica/core/workspace/hooks";
+import { childIssueProgressOptions, issueDetailOptions } from "@lumen/core/issues/queries";
+import { useWorkspaceId } from "@lumen/core/hooks";
+import { useActorName } from "@lumen/core/workspace/hooks";
 import {
   HoverCard,
   HoverCardTrigger,
   HoverCardContent,
-} from "@multica/ui/components/ui/hover-card";
-import { Skeleton } from "@multica/ui/components/ui/skeleton";
+} from "@lumen/ui/components/ui/hover-card";
+import { Skeleton } from "@lumen/ui/components/ui/skeleton";
 import { useT } from "../../i18n";
 import { ActorAvatar } from "../../common/actor-avatar";
 import { descriptionPreview } from "./description-preview";

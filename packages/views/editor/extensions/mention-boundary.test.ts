@@ -5,7 +5,7 @@ import { Markdown } from "@tiptap/markdown";
 import { Suggestion } from "@tiptap/suggestion";
 import { EditorView } from "@tiptap/pm/view";
 import type { QueryClient } from "@tanstack/react-query";
-import { workspaceKeys } from "@multica/core/workspace/queries";
+import { workspaceKeys } from "@lumen/core/workspace/queries";
 import { createMarkdownPasteExtension } from "./markdown-paste";
 import { SuggestionTriggerArmingExtension } from "./suggestion-trigger-arming";
 
@@ -16,22 +16,22 @@ import { SuggestionTriggerArmingExtension } from "./suggestion-trigger-arming";
 // whether the picker opens lives inside Tiptap's `findSuggestionMatch` and
 // @tiptap/suggestion's `shouldShow` call, not in anything this package owns.
 
-vi.mock("@multica/core/platform", () => ({
+vi.mock("@lumen/core/platform", () => ({
   getCurrentWsId: () => "ws-1",
 }));
 
-vi.mock("@multica/core/issue-statuses/hooks", () => ({
+vi.mock("@lumen/core/issue-statuses/hooks", () => ({
   useIssueStatuses: () => ({ iconOf: () => null, colorOf: () => null }),
 }));
 
-vi.mock("@multica/core/api", () => ({
+vi.mock("@lumen/core/api", () => ({
   api: {
     searchIssues: vi.fn().mockResolvedValue({ issues: [] }),
     searchProjects: vi.fn().mockResolvedValue({ projects: [] }),
   },
 }));
 
-vi.mock("@multica/core/auth", () => ({
+vi.mock("@lumen/core/auth", () => ({
   useAuthStore: { getState: () => ({ user: { id: "u1" } }) },
 }));
 

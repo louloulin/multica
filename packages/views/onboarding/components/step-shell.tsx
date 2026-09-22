@@ -1,10 +1,10 @@
 "use client";
 
 import { useRef, type ReactNode } from "react";
-import { cn } from "@multica/ui/lib/utils";
-import { useScrollFade } from "@multica/ui/hooks/use-scroll-fade";
-import { DragStrip } from "@multica/views/platform";
-import type { OnboardingStep } from "@multica/core/onboarding";
+import { cn } from "@lumen/ui/lib/utils";
+import { useScrollFade } from "@lumen/ui/hooks/use-scroll-fade";
+import { DragStrip } from "@lumen/views/platform";
+import type { OnboardingStep } from "@lumen/core/onboarding";
 import { StepProgressBar, StepSidebar } from "./step-sidebar";
 
 /**

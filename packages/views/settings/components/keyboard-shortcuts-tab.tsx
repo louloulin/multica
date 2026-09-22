@@ -2,8 +2,8 @@
 
 import { useMemo, useState } from "react";
 import { Keyboard, RotateCcw, Search, X } from "lucide-react";
-import { Button } from "@multica/ui/components/ui/button";
-import { Input } from "@multica/ui/components/ui/input";
+import { Button } from "@lumen/ui/components/ui/button";
+import { Input } from "@lumen/ui/components/ui/input";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -13,8 +13,8 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@multica/ui/components/ui/alert-dialog";
-import { cn } from "@multica/ui/lib/utils";
+} from "@lumen/ui/components/ui/alert-dialog";
+import { cn } from "@lumen/ui/lib/utils";
 import {
   findShortcutConflict,
   createShortcutChord,
@@ -29,8 +29,8 @@ import {
   type ShortcutActionId,
   type ShortcutCategory,
   type ShortcutChord,
-} from "@multica/core/shortcuts";
-import { isImeComposing } from "@multica/core/utils";
+} from "@lumen/core/shortcuts";
+import { isImeComposing } from "@lumen/core/utils";
 import { useT } from "../../i18n";
 import { ShortcutKeycaps } from "../../common/shortcut-keycaps";
 import {

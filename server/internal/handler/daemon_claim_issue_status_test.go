@@ -7,7 +7,7 @@ import (
 	"slices"
 	"testing"
 
-	"github.com/multica-ai/multica/server/internal/testutil"
+	"github.com/lumen-ai/lumen/server/internal/testutil"
 )
 
 // TestClaimTaskByRuntime_PopulatesIssueStatusCatalog verifies the claim

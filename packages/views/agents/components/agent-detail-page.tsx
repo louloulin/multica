@@ -19,28 +19,28 @@ import type {
   Agent,
   AgentRuntime,
   UpdateAgentRequest,
-} from "@multica/core/types";
+} from "@lumen/core/types";
 import {
   type AgentPresenceDetail,
   isAgentRuntimeBound,
   useWorkspacePresenceMap,
-} from "@multica/core/agents";
-import { api, ApiError } from "@multica/core/api";
-import { useAuthStore } from "@multica/core/auth";
-import { useWorkspaceId } from "@multica/core/hooks";
-import { useModalStore } from "@multica/core/modals";
-import { useWorkspacePaths } from "@multica/core/paths";
+} from "@lumen/core/agents";
+import { api, ApiError } from "@lumen/core/api";
+import { useAuthStore } from "@lumen/core/auth";
+import { useWorkspaceId } from "@lumen/core/hooks";
+import { useModalStore } from "@lumen/core/modals";
+import { useWorkspacePaths } from "@lumen/core/paths";
 import {
   agentDetailOptions,
   agentListOptions,
   cacheAgentResponse,
   memberListOptions,
   workspaceKeys,
-} from "@multica/core/workspace/queries";
-import { runtimeDisplayLabel, runtimeListOptions } from "@multica/core/runtimes";
-import { useAgentPermissions } from "@multica/core/permissions";
-import { Button } from "@multica/ui/components/ui/button";
-import { CapabilityBanner } from "@multica/ui/components/common/capability-banner";
+} from "@lumen/core/workspace/queries";
+import { runtimeDisplayLabel, runtimeListOptions } from "@lumen/core/runtimes";
+import { useAgentPermissions } from "@lumen/core/permissions";
+import { Button } from "@lumen/ui/components/ui/button";
+import { CapabilityBanner } from "@lumen/ui/components/common/capability-banner";
 import {
   Dialog,
   DialogContent,
@@ -48,15 +48,15 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@multica/ui/components/ui/dialog";
+} from "@lumen/ui/components/ui/dialog";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@multica/ui/components/ui/dropdown-menu";
-import { Skeleton } from "@multica/ui/components/ui/skeleton";
-import { cn } from "@multica/ui/lib/utils";
+} from "@lumen/ui/components/ui/dropdown-menu";
+import { Skeleton } from "@lumen/ui/components/ui/skeleton";
+import { cn } from "@lumen/ui/lib/utils";
 import { AppLink, useNavigation } from "../../navigation";
 import { PAGE_GUTTER, PAGE_RAIL, PageHeader } from "../../layout/page-header";
 import { ActorAvatar } from "../../common/actor-avatar";
@@ -495,7 +495,7 @@ function DetailHeader({
    *  the chat, which is what stops AppLink from pushing. */
   onDm: (e: React.MouseEvent<HTMLAnchorElement>) => void;
   onAssign: () => void;
-  /** Absent for Multica's built-in agents, which the server refuses to
+  /** Absent for Lumen's built-in agents, which the server refuses to
    *  archive — the menu hides the action rather than offering a failure. */
   onArchive?: () => void;
 }) {

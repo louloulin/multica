@@ -2,18 +2,18 @@ import { act, cleanup, fireEvent, screen, waitFor } from "@testing-library/react
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import type { ReactNode } from "react";
-import { api } from "@multica/core/api";
-import { chatKeys } from "@multica/core/chat/queries";
-import type { AgentTask } from "@multica/core/types";
-import type { TaskMessagePayload } from "@multica/core/types/events";
+import { api } from "@lumen/core/api";
+import { chatKeys } from "@lumen/core/chat/queries";
+import type { AgentTask } from "@lumen/core/types";
+import type { TaskMessagePayload } from "@lumen/core/types/events";
 import { renderWithI18n } from "../../test/i18n";
 import { InlineCommentRun } from "./inline-comment-run";
 
-vi.mock("@multica/core/api", () => ({ api: {
+vi.mock("@lumen/core/api", () => ({ api: {
   getIssue: vi.fn(), listTaskMessages: vi.fn(), cancelTask: vi.fn(), rerunIssue: vi.fn(),
 }, dispatchReasonCode: () => undefined }));
-vi.mock("@multica/core/hooks", () => ({ useWorkspaceId: () => "workspace" }));
-vi.mock("@multica/core/workspace/hooks", () => ({ useActorName: () => ({ getActorName: () => "Reviewer" }) }));
+vi.mock("@lumen/core/hooks", () => ({ useWorkspaceId: () => "workspace" }));
+vi.mock("@lumen/core/workspace/hooks", () => ({ useActorName: () => ({ getActorName: () => "Reviewer" }) }));
 vi.mock("../../common/actor-avatar", () => ({ ActorAvatar: () => <span /> }));
 vi.mock("../../editor", () => ({ ReadonlyContent: ({ content }: { content: string }) => <div>{content}</div> }));
 vi.mock("../../common/task-transcript/agent-transcript-dialog", () => ({
@@ -68,7 +68,7 @@ describe("InlineCommentRun", () => {
     vi.mocked(api.listTaskMessages).mockResolvedValue(
       ["queries.sql", "models.go", "schema.sql", "migrations.go"].flatMap((file, index) => [
         { task_id: id, issue_id: "issue", seq: index * 2 + 1, type: "tool_use" as const,
-          tool: "read_file", input: { path: `/workdir/multica/server/db/${file}` } },
+          tool: "read_file", input: { path: `/workdir/lumen/server/db/${file}` } },
         { task_id: id, issue_id: "issue", seq: index * 2 + 2, type: "tool_result" as const,
           tool: "read_file", output: `Contents of ${file}` },
       ]),
@@ -203,12 +203,12 @@ describe("InlineCommentRun", () => {
     const issueId = "01a07eca-8e82-775e-be06-e4a97ccfa299";
     vi.mocked(api.getIssue).mockResolvedValue({ id: issueId, identifier: "DEV-17" } as Awaited<ReturnType<typeof api.getIssue>>);
     vi.mocked(api.listTaskMessages).mockResolvedValue([
-      { task_id: id, issue_id: issueId, seq: 1, type: "tool_use", tool: "exec_command", input: { command: `multica issue get ${issueId} --output json` } },
+      { task_id: id, issue_id: issueId, seq: 1, type: "tool_use", tool: "exec_command", input: { command: `lumen issue get ${issueId} --output json` } },
     ]);
     setup(task({ issue_id: issueId }));
-    await screen.findByText("multica issue get DEV-17 --output json");
+    await screen.findByText("lumen issue get DEV-17 --output json");
     fireEvent.click(screen.getByRole("button", { name: /View activity/ }));
-    expect(screen.getAllByText("multica issue get DEV-17 --output json")).toHaveLength(2);
+    expect(screen.getAllByText("lumen issue get DEV-17 --output json")).toHaveLength(2);
     expect(api.getIssue).toHaveBeenCalledTimes(1);
   });
 

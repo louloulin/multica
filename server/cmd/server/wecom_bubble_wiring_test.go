@@ -5,11 +5,11 @@ import (
 	"encoding/base64"
 	"testing"
 
-	"github.com/multica-ai/multica/server/internal/analytics"
-	"github.com/multica-ai/multica/server/internal/events"
-	"github.com/multica-ai/multica/server/internal/realtime"
-	"github.com/multica-ai/multica/server/internal/util/secretbox"
-	"github.com/multica-ai/multica/server/pkg/protocol"
+	"github.com/lumen-ai/lumen/server/internal/analytics"
+	"github.com/lumen-ai/lumen/server/internal/events"
+	"github.com/lumen-ai/lumen/server/internal/realtime"
+	"github.com/lumen-ai/lumen/server/internal/util/secretbox"
+	"github.com/lumen-ai/lumen/server/pkg/protocol"
 )
 
 // What closes the WeCom streaming bubble is a bus subscription, and it is
@@ -35,7 +35,7 @@ func TestWecomBubbleClosersAreWiredOnTheRealBootPath(t *testing.T) {
 	withoutWecom := events.New()
 	NewRouter(nil, realtime.NewHub(), withoutWecom, analytics.NoopClient{}, nil)
 
-	t.Setenv("MULTICA_WECOM_SECRET_KEY", base64.StdEncoding.EncodeToString(key))
+	t.Setenv("LUMEN_WECOM_SECRET_KEY", base64.StdEncoding.EncodeToString(key))
 	withWecom := events.New()
 	NewRouter(nil, realtime.NewHub(), withWecom, analytics.NoopClient{}, nil)
 

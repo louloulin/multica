@@ -4,7 +4,7 @@ const Module = require('module');
 const path = require('path');
 const asar = require('@electron/asar');
 
-const asarPath = '/Users/louloulin/multica/apps/desktop/dist/mac-arm64/Multica.app/Contents/Resources/app.asar';
+const asarPath = '/Users/louloulin/lumen/apps/desktop/dist/mac-arm64/Lumen.app/Contents/Resources/app.asar';
 
 // Patch require to read from asar
 const origResolve = Module._resolveFilename;
@@ -24,14 +24,14 @@ const electronStub = {
     setName: () => {},
     setAppUserModelId: () => {},
     setAsDefaultProtocolClient: () => {},
-    getPath: () => '/tmp/multica-stub',
-    getAppPath: () => '/tmp/multica-stub',
+    getPath: () => '/tmp/lumen-stub',
+    getAppPath: () => '/tmp/lumen-stub',
     on: () => {},
     whenReady: () => Promise.resolve(),
     quit: () => {},
     requestSingleInstanceLock: () => true,
     getVersion: () => '0.0.0-test',
-    name: 'Multica',
+    name: 'Lumen',
     dock: null,
     isReady: () => true,
   },
@@ -61,7 +61,7 @@ require.cache[require.resolve('electron')] = { exports: electronStub, loaded: tr
 
 console.log('Starting main module load...');
 try {
-  require('/Users/louloulin/multica/apps/desktop/out/main/index.js');
+  require('/Users/louloulin/lumen/apps/desktop/out/main/index.js');
   console.log('Main loaded without throw');
 } catch (err) {
   console.error('THROW at:', err.stack);

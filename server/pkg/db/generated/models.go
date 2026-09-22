@@ -477,7 +477,7 @@ type ChannelTaskDelivery struct {
 type ChannelUserBinding struct {
 	ID             pgtype.UUID        `json:"id"`
 	WorkspaceID    pgtype.UUID        `json:"workspace_id"`
-	MulticaUserID  pgtype.UUID        `json:"multica_user_id"`
+	LumenUserID  pgtype.UUID        `json:"lumen_user_id"`
 	InstallationID pgtype.UUID        `json:"installation_id"`
 	ChannelType    string             `json:"channel_type"`
 	ChannelUserID  string             `json:"channel_user_id"`
@@ -1087,7 +1087,7 @@ type LarkOutboundCardMessage struct {
 type LarkUserBinding struct {
 	ID             pgtype.UUID        `json:"id"`
 	WorkspaceID    pgtype.UUID        `json:"workspace_id"`
-	MulticaUserID  pgtype.UUID        `json:"multica_user_id"`
+	LumenUserID  pgtype.UUID        `json:"lumen_user_id"`
 	InstallationID pgtype.UUID        `json:"installation_id"`
 	LarkOpenID     string             `json:"lark_open_id"`
 	UnionID        pgtype.Text        `json:"union_id"`

@@ -11,7 +11,7 @@ import type {
   Comment,
   TimelineEntry,
   Reaction,
-} from "@multica/core/types";
+} from "@lumen/core/types";
 import type {
   CommentCreatedPayload,
   CommentUpdatedPayload,
@@ -21,11 +21,11 @@ import type {
   ActivityCreatedPayload,
   ReactionAddedPayload,
   ReactionRemovedPayload,
-} from "@multica/core/types";
+} from "@lumen/core/types";
 import {
   issueTimelineOptions,
   issueKeys,
-} from "@multica/core/issues/queries";
+} from "@lumen/core/issues/queries";
 import {
   useCreateComment,
   useUpdateComment,
@@ -33,14 +33,14 @@ import {
   useResolveComment,
   useToggleCommentReaction,
   type ToggleCommentReactionVars,
-} from "@multica/core/issues/mutations";
-import { sortTimelineEntriesAsc } from "@multica/core/issues/timeline-sort";
+} from "@lumen/core/issues/mutations";
+import { sortTimelineEntriesAsc } from "@lumen/core/issues/timeline-sort";
 import {
   unhandledCommentTriggerOutcomes,
   mentionLabelsByTarget,
-} from "@multica/core/issues/comment-trigger-outcomes";
-import { useWSEvent, useWSReconnect } from "@multica/core/realtime";
-import { removeCommentSubtree } from "@multica/core/issues/comment-deletion";
+} from "@lumen/core/issues/comment-trigger-outcomes";
+import { useWSEvent, useWSReconnect } from "@lumen/core/realtime";
+import { removeCommentSubtree } from "@lumen/core/issues/comment-deletion";
 import { toast } from "sonner";
 import { useT } from "../../i18n";
 import { blockedShortReasonLabel } from "../blocked-trigger-copy";

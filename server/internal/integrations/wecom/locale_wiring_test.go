@@ -22,16 +22,16 @@ import (
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgtype"
 
-	db "github.com/multica-ai/multica/server/pkg/db/generated"
+	db "github.com/lumen-ai/lumen/server/pkg/db/generated"
 )
 
-// localeTestUserID is the Multica user every bound sender in this file
+// localeTestUserID is the Lumen user every bound sender in this file
 // resolves to. Deliberately not mustTestUUID's installation id: a lookup that
 // confuses the two must not pass.
 var localeTestUserID = pgtype.UUID{Bytes: [16]byte{77}, Valid: true}
 
 // fakeLanguages is a languageLookup holding one bound person: their WeCom
-// userid, the Multica user it resolves to, and that profile's language.
+// userid, the Lumen user it resolves to, and that profile's language.
 // Anyone else is unbound, which is what a real first-time sender is.
 type fakeLanguages struct {
 	senderID string
@@ -41,7 +41,7 @@ type fakeLanguages struct {
 
 func (f fakeLanguages) GetChannelUserBindingByUserID(_ context.Context, arg db.GetChannelUserBindingByUserIDParams) (db.ChannelUserBinding, error) {
 	if arg.ChannelUserID == f.senderID {
-		return db.ChannelUserBinding{MulticaUserID: f.userID}, nil
+		return db.ChannelUserBinding{LumenUserID: f.userID}, nil
 	}
 	return db.ChannelUserBinding{}, pgx.ErrNoRows
 }

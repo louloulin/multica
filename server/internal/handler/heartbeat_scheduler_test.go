@@ -7,8 +7,8 @@ import (
 	"time"
 
 	"github.com/jackc/pgx/v5/pgtype"
-	"github.com/multica-ai/multica/server/internal/service"
-	db "github.com/multica-ai/multica/server/pkg/db/generated"
+	"github.com/lumen-ai/lumen/server/internal/service"
+	db "github.com/lumen-ai/lumen/server/pkg/db/generated"
 )
 
 // TestBatchedHeartbeatScheduler_CoalescesAndFlushes confirms the batching win:

@@ -1,6 +1,6 @@
 "use client";
 
-import { useIssueStatuses } from "@multica/core/issue-statuses/hooks";
+import { useIssueStatuses } from "@lumen/core/issue-statuses/hooks";
 
 import { useState, useCallback, useMemo, useEffect, useRef, memo } from "react";
 import { useQuery } from "@tanstack/react-query";
@@ -22,13 +22,13 @@ import type {
   IssueStatus,
   Project,
   IssueProperty,
-} from "@multica/core/types";
-import { useViewStore } from "@multica/core/issues/stores/view-store-context";
-import { propertyIdFromViewKey } from "@multica/core/issues/stores/view-store";
-import { propertyListOptions, useSetIssueProperty, useUnsetIssueProperty } from "@multica/core/properties";
-import { useWorkspaceId } from "@multica/core/hooks";
-import type { IssueGrouping } from "@multica/core/issues/stores/view-store";
-import { useActorName } from "@multica/core/workspace/hooks";
+} from "@lumen/core/types";
+import { useViewStore } from "@lumen/core/issues/stores/view-store-context";
+import { propertyIdFromViewKey } from "@lumen/core/issues/stores/view-store";
+import { propertyListOptions, useSetIssueProperty, useUnsetIssueProperty } from "@lumen/core/properties";
+import { useWorkspaceId } from "@lumen/core/hooks";
+import type { IssueGrouping } from "@lumen/core/issues/stores/view-store";
+import { useActorName } from "@lumen/core/workspace/hooks";
 import { BoardColumn, BOARD_CARD_WIDTH, type BoardColumnGroup } from "./board-column";
 import { BoardCardContent } from "./board-card";
 import { HiddenColumnsPanel, HiddenColumnRow } from "./hidden-columns-panel";

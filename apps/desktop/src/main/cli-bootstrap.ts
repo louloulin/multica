@@ -7,19 +7,19 @@ import { join, dirname } from "path";
 import { pipeline } from "stream/promises";
 import { tmpdir } from "os";
 import { Readable } from "stream";
-import { withTimeout } from "@multica/core/async/deadline";
+import { withTimeout } from "@lumen/core/async/deadline";
 
 import { selectPlatformReleaseAssetName } from "./cli-release-asset";
 
-// Desktop prefers the bundled `multica` CLI shipped inside the app for
+// Desktop prefers the bundled `lumen` CLI shipped inside the app for
 // same-repo builds, but it can also repair or bootstrap a managed copy in
 // userData on first launch when the bundled binary is missing or unusable.
 
 const GITHUB_LATEST_BASE =
-  "https://github.com/multica-ai/multica/releases/latest/download";
+  "https://github.com/lumen-ai/lumen/releases/latest/download";
 
 function binaryName(): string {
-  return process.platform === "win32" ? "multica.exe" : "multica";
+  return process.platform === "win32" ? "lumen.exe" : "lumen";
 }
 
 export function managedCliPath(): string {
@@ -127,7 +127,7 @@ async function installFresh(signal: AbortSignal): Promise<string> {
   }
   const url = `${GITHUB_LATEST_BASE}/${assetName}`;
 
-  const workDir = join(tmpdir(), `multica-cli-${Date.now()}`);
+  const workDir = join(tmpdir(), `lumen-cli-${Date.now()}`);
   await mkdir(workDir, { recursive: true });
 
   try {
@@ -169,7 +169,7 @@ async function installFresh(signal: AbortSignal): Promise<string> {
 }
 
 /**
- * Returns the path to a usable `multica` binary. If one is already present at
+ * Returns the path to a usable `lumen` binary. If one is already present at
  * the managed userData location, returns it immediately. Otherwise downloads
  * the latest release asset for the current platform and installs it.
  */

@@ -5,9 +5,9 @@ import { createStore, type StoreApi } from "zustand/vanilla";
 import { useQuery } from "@tanstack/react-query";
 import { ChevronRight, Plus } from "lucide-react";
 import { sortDirectionLabelKey } from "../utils/sort-direction";
-import { Button } from "@multica/ui/components/ui/button";
-import { Input } from "@multica/ui/components/ui/input";
-import { Label } from "@multica/ui/components/ui/label";
+import { Button } from "@lumen/ui/components/ui/button";
+import { Input } from "@lumen/ui/components/ui/input";
+import { Label } from "@lumen/ui/components/ui/label";
 import {
   Dialog,
   DialogContent,
@@ -15,12 +15,12 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@multica/ui/components/ui/dialog";
+} from "@lumen/ui/components/ui/dialog";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "@multica/ui/components/ui/collapsible";
+} from "@lumen/ui/components/ui/collapsible";
 import {
   Select,
   SelectContent,
@@ -28,19 +28,19 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@multica/ui/components/ui/select";
-import { Toggle } from "@multica/ui/components/ui/toggle";
+} from "@lumen/ui/components/ui/select";
+import { Toggle } from "@lumen/ui/components/ui/toggle";
 import { toast } from "sonner";
-import { useWorkspaceId } from "@multica/core/hooks";
-import { useCreateIssueView, useUpdateIssueView } from "@multica/core/issue-views/mutations";
+import { useWorkspaceId } from "@lumen/core/hooks";
+import { useCreateIssueView, useUpdateIssueView } from "@lumen/core/issue-views/mutations";
 import {
   issueViewContainerKey,
   useActiveIssueViewStore,
-} from "@multica/core/issue-views/active-view-store";
-import { ApiError } from "@multica/core/api/client";
-import type { CreateIssueViewRequest, IssueView } from "@multica/core/api/schemas";
-import { projectListOptions } from "@multica/core/projects/queries";
-import { propertyListOptions } from "@multica/core/properties";
+} from "@lumen/core/issue-views/active-view-store";
+import { ApiError } from "@lumen/core/api/client";
+import type { CreateIssueViewRequest, IssueView } from "@lumen/core/api/schemas";
+import { projectListOptions } from "@lumen/core/projects/queries";
+import { propertyListOptions } from "@lumen/core/properties";
 import {
   viewStoreSlice,
   viewStorePersistOptions,
@@ -54,12 +54,12 @@ import {
   type SortField,
   type SwimlaneGrouping,
   type ViewMode,
-} from "@multica/core/issues/stores/view-store";
+} from "@lumen/core/issues/stores/view-store";
 import {
   ViewStoreProvider,
   useViewStore,
   useViewStoreApi,
-} from "@multica/core/issues/stores/view-store-context";
+} from "@lumen/core/issues/stores/view-store-context";
 import { IssueFilterMenu } from "./issues-header";
 import { FilterChipList } from "./filter-chips-bar";
 import { useT } from "../../i18n";

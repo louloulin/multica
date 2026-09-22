@@ -1,6 +1,6 @@
 /**
  * Settings → Backend subscreen — lets a signed-in user switch between
- * Multica Cloud and a self-hosted backend at runtime.
+ * Lumen Cloud and a self-hosted backend at runtime.
  *
  * Mirrors `apps/desktop/src/renderer/src/components/backend-settings-tab.tsx`
  * (desktop Settings tab). Differences are mobile-only:
@@ -12,7 +12,7 @@
  *     that's fine, a 404 still counts as "reachable" for the user's
  *     intent ("the URL answers"), so we treat anything not throwing
  *     within 5s as reachable. Mirrors the desktop semantics.
- *   - Reset-to-cloud requires typing the literal "multica.ai" so a
+ *   - Reset-to-cloud requires typing the literal "lumen.ai" so a
  *     accidental tap on a destructive button doesn't wipe a working
  *     self-host configuration. Same guard as desktop.
  *
@@ -45,7 +45,7 @@ import { RUNTIME_CONFIG_STRINGS } from "@/lib/runtime-config-strings";
 
 type TestResult = "idle" | "ok" | "fail";
 
-const RESET_CONFIRM_TOKEN = "multica.ai";
+const RESET_CONFIRM_TOKEN = "lumen.ai";
 const TEST_TIMEOUT_MS = 5_000;
 
 export default function ServerSettingsScreen() {

@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { fireEvent, screen, waitFor } from "@testing-library/react";
-import type { IssueWakeup } from "@multica/core/types";
+import type { IssueWakeup } from "@lumen/core/types";
 import { renderWithI18n } from "../../test/i18n";
 import { WakeupsSection } from "./wakeups-section";
 const mutate = vi.fn();
@@ -8,10 +8,10 @@ const enable = vi.fn();
 let pending = false;
 let wakeup: IssueWakeup;
 let status = "queued";
-vi.mock("@multica/core/paths", () => ({
+vi.mock("@lumen/core/paths", () => ({
   useCurrentWorkspace: () => ({ id: "ws" }),
 }));
-vi.mock("@multica/core/issues", () => ({
+vi.mock("@lumen/core/issues", () => ({
   issueWakeupsOptions: () => ({ queryKey: ["wakeups"] }),
   issueTasksOptions: () => ({ queryKey: ["tasks"] }),
   useDisableIssueWakeup: () => ({ mutate, isPending: false }),

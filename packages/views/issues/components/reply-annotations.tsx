@@ -2,10 +2,10 @@
 
 import { useRef, useState } from "react";
 import { MessageSquare, X } from "lucide-react";
-import { Button } from "@multica/ui/components/ui/button";
-import { Popover, PopoverContent, PopoverTrigger } from "@multica/ui/components/ui/popover";
-import { useCommentDraftStore, type CommentDraftKey } from "@multica/core/issues/stores";
-import type { ReplyAnnotation } from "@multica/core/drafts/reply-annotation";
+import { Button } from "@lumen/ui/components/ui/button";
+import { Popover, PopoverContent, PopoverTrigger } from "@lumen/ui/components/ui/popover";
+import { useCommentDraftStore, type CommentDraftKey } from "@lumen/core/issues/stores";
+import type { ReplyAnnotation } from "@lumen/core/drafts/reply-annotation";
 import { useT } from "../../i18n";
 
 export function ReplyAnnotations({ draftKey, annotations, disabled, onEditAnnotation }: {

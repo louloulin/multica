@@ -1,10 +1,10 @@
 "use client";
 
 import { Suspense } from "react";
-import { DashboardLayout } from "@multica/views/layout";
-import { MulticaIcon } from "@multica/ui/components/common/multica-icon";
-import { SearchCommand, SearchTrigger } from "@multica/views/search";
-import { FloatingChat } from "@multica/views/chat/floating-chat";
+import { DashboardLayout } from "@lumen/views/layout";
+import { LumenIcon } from "@lumen/ui/components/common/lumen-icon";
+import { SearchCommand, SearchTrigger } from "@lumen/views/search";
+import { FloatingChat } from "@lumen/views/chat/floating-chat";
 import { WebNotificationBridge } from "@/components/web-notification-bridge";
 import { WorkspaceDocumentTitle } from "@/platform/workspace-document-title";
 
@@ -18,7 +18,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <WorkspaceDocumentTitle />
       </Suspense>
       <DashboardLayout
-        loadingIndicator={<MulticaIcon className="size-6" />}
+        loadingIndicator={<LumenIcon className="size-6" />}
         searchSlot={<SearchTrigger />}
         extra={
           <>

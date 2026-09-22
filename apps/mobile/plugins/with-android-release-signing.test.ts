@@ -11,7 +11,7 @@ const { addReleaseSigning } = plugin as {
  * 改动导致锚点失配,这里会先红。
  */
 const UPSTREAM = `android {
-    namespace 'ai.multica.mobile.dev'
+    namespace 'ai.lumen.mobile.dev'
     signingConfigs {
         debug {
             storeFile file('debug.keystore')
@@ -57,10 +57,10 @@ describe("addReleaseSigning", () => {
   it("注入的 release signingConfig 从 Gradle 属性取凭据,不含任何字面量密码", () => {
     const out = addReleaseSigning(UPSTREAM);
 
-    expect(out).toContain("storeFile file(MULTICA_RELEASE_STORE_FILE)");
-    expect(out).toContain("storePassword MULTICA_RELEASE_STORE_PASSWORD");
-    expect(out).toContain("keyAlias MULTICA_RELEASE_KEY_ALIAS");
-    expect(out).toContain("keyPassword MULTICA_RELEASE_KEY_PASSWORD");
+    expect(out).toContain("storeFile file(LUMEN_RELEASE_STORE_FILE)");
+    expect(out).toContain("storePassword LUMEN_RELEASE_STORE_PASSWORD");
+    expect(out).toContain("keyAlias LUMEN_RELEASE_KEY_ALIAS");
+    expect(out).toContain("keyPassword LUMEN_RELEASE_KEY_PASSWORD");
     // 除了上游自带的 debug keystore 口令,不得引入新的硬编码密码。
     const quoted = out.match(/(storePassword|keyPassword) '[^']*'/g) ?? [];
     expect(quoted).toEqual(["storePassword 'android'", "keyPassword 'android'"]);
@@ -79,7 +79,7 @@ describe("addReleaseSigning", () => {
     const out = addReleaseSigning(UPSTREAM);
 
     expect(out).toContain(
-      "if (project.hasProperty('MULTICA_RELEASE_STORE_FILE'))",
+      "if (project.hasProperty('LUMEN_RELEASE_STORE_FILE'))",
     );
     // 这条 else 是评审实测出的 P0 修复:release buildType 已无条件指向
     // signingConfigs.release,只写 if 的话属性缺失时得到 storeFile=null 的
@@ -100,7 +100,7 @@ describe("addReleaseSigning", () => {
 
     expect(twice).toBe(once);
     // 注入块里 STORE_FILE 恰好出现两次:hasProperty 判据 + storeFile 取值。
-    expect(once.match(/MULTICA_RELEASE_STORE_FILE/g)?.length).toBe(2);
+    expect(once.match(/LUMEN_RELEASE_STORE_FILE/g)?.length).toBe(2);
   });
 
   it("上游模板结构变化导致锚点失配时抛错,而不是静默产出 debug 签名的 release 包", () => {

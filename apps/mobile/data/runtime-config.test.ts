@@ -137,12 +137,12 @@ describe("runtime-config", () => {
 
   describe("deriveAppUrl", () => {
     it("strips leading api. for ≥3-label hostnames", () => {
-      expect(deriveAppUrl("https://api.multica.ai")).toBe("https://multica.ai");
-      expect(deriveAppUrl("https://api.test.multica.ai")).toBe("https://test.multica.ai");
+      expect(deriveAppUrl("https://api.lumen.ai")).toBe("https://lumen.ai");
+      expect(deriveAppUrl("https://api.test.lumen.ai")).toBe("https://test.lumen.ai");
     });
 
     it("leaves hosts without leading api. untouched", () => {
-      expect(deriveAppUrl("https://multica.ai")).toBe("https://multica.ai");
+      expect(deriveAppUrl("https://lumen.ai")).toBe("https://lumen.ai");
     });
 
     it("leaves short two-label hosts untouched (api.local would be wrong)", () => {
@@ -158,7 +158,7 @@ describe("runtime-config", () => {
 
   describe("DEFAULT_RUNTIME_CONFIG", () => {
     it("points at cloud", () => {
-      expect(DEFAULT_RUNTIME_CONFIG.apiUrl).toBe("https://api.multica.ai");
+      expect(DEFAULT_RUNTIME_CONFIG.apiUrl).toBe("https://api.lumen.ai");
       expect(DEFAULT_RUNTIME_CONFIG.schemaVersion).toBe(RUNTIME_CONFIG_SCHEMA_VERSION);
     });
   });

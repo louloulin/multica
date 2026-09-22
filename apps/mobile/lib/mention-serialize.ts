@@ -18,7 +18,7 @@
  * lose user input, never claim a mention we can't prove.
  */
 
-import { isMentionBoundaryAfter } from "@multica/core/markdown";
+import { isMentionBoundaryAfter } from "@lumen/core/markdown";
 
 const SENTINEL = "⁣";
 

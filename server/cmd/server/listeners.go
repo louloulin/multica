@@ -6,10 +6,10 @@ import (
 	"log/slog"
 	"strings"
 
-	"github.com/multica-ai/multica/server/internal/events"
-	"github.com/multica-ai/multica/server/internal/handler"
-	"github.com/multica-ai/multica/server/internal/realtime"
-	"github.com/multica-ai/multica/server/pkg/protocol"
+	"github.com/lumen-ai/lumen/server/internal/events"
+	"github.com/lumen-ai/lumen/server/internal/handler"
+	"github.com/lumen-ai/lumen/server/internal/realtime"
+	"github.com/lumen-ai/lumen/server/pkg/protocol"
 )
 
 // internalOnlyPayloadKeys lists payload keys that exist purely for in-process

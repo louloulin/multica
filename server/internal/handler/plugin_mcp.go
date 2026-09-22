@@ -7,7 +7,7 @@ import (
 
 	"github.com/go-chi/chi/v5"
 
-	"github.com/multica-ai/multica/server/pkg/remotemcp"
+	"github.com/lumen-ai/lumen/server/pkg/remotemcp"
 )
 
 // Admin approval for an mcp-transport hook.

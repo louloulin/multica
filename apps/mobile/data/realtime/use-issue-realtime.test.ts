@@ -3,7 +3,7 @@ import type {
   CommentDeletedPayload,
   CommentUpdatedPayload,
   Issue,
-} from "@multica/core/types";
+} from "@lumen/core/types";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { issueKeys } from "@/data/queries/issue-keys";

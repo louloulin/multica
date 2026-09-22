@@ -4,9 +4,9 @@ import (
 	"encoding/json"
 
 	"github.com/jackc/pgx/v5/pgtype"
-	"github.com/multica-ai/multica/server/internal/events"
-	"github.com/multica-ai/multica/server/pkg/plugincontract"
-	"github.com/multica-ai/multica/server/pkg/protocol"
+	"github.com/lumen-ai/lumen/server/internal/events"
+	"github.com/lumen-ai/lumen/server/pkg/plugincontract"
+	"github.com/lumen-ai/lumen/server/pkg/protocol"
 )
 
 // Translating the internal event bus into the seven events a plugin may

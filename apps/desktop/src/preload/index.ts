@@ -2,7 +2,7 @@ import { contextBridge, ipcRenderer } from "electron";
 import { electronAPI } from "@electron-toolkit/preload";
 import type { RuntimeConfig, RuntimeConfigResult } from "../shared/runtime-config";
 import type { FreezeBreadcrumb } from "../shared/freeze-breadcrumb";
-import type { ClientDiagnosticEvent } from "@multica/core/diagnostics";
+import type { ClientDiagnosticEvent } from "@lumen/core/diagnostics";
 import type {
   ManualUpdateCheckResult,
   UpdaterPreferences,
@@ -75,7 +75,7 @@ const windowContext = readDesktopWindowContext(process.argv);
 // Read the OS-preferred locale that main injected via additionalArguments.
 // Zero IPC, zero blocking — process.argv is populated before preload runs.
 function fetchSystemLocale(): string {
-  const arg = process.argv.find((a) => a.startsWith("--multica-locale="));
+  const arg = process.argv.find((a) => a.startsWith("--lumen-locale="));
   return arg?.split("=")[1] ?? "en";
 }
 
@@ -138,7 +138,7 @@ const desktopAPI = {
   },
   /** Validated runtime endpoint config, or a blocking config error. */
   runtimeConfig,
-  /** Update the persisted runtime config (`~/.multica/desktop.json`).
+  /** Update the persisted runtime config (`~/.lumen/desktop.json`).
    *  Resolves once the file is written. The renderer's running ApiClient
    *  / WSClient are NOT rebound — a restart is required for the change to
    *  take effect; the Settings UI surfaces that as a Restart button. */
@@ -146,11 +146,11 @@ const desktopAPI = {
     ipcRenderer.invoke("desktop:set-runtime-config", config) as Promise<
       { ok: true } | { ok: false; error: string }
     >,
-  /** Whether `~/.multica/desktop.json` is present on disk, so the renderer
+  /** Whether `~/.lumen/desktop.json` is present on disk, so the renderer
    *  can decide whether to show a first-run onboarding banner. */
   isRuntimeConfigPresent: () =>
     ipcRenderer.invoke("desktop:is-runtime-config-present") as Promise<boolean>,
-  /** Delete `~/.multica/desktop.json`, falling back to the cloud default
+  /** Delete `~/.lumen/desktop.json`, falling back to the cloud default
    *  on next launch. Used by the Settings → Backend "Reset to cloud" path. */
   clearRuntimeConfig: () =>
     ipcRenderer.invoke("desktop:clear-runtime-config") as Promise<

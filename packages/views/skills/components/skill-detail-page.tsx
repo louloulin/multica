@@ -26,28 +26,28 @@ import type {
   Skill,
   SkillFile,
   UpdateSkillRequest,
-} from "@multica/core/types";
+} from "@lumen/core/types";
 import { toast } from "sonner";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { api } from "@multica/core/api";
-import { useAuthStore } from "@multica/core/auth";
+import { api } from "@lumen/core/api";
+import { useAuthStore } from "@lumen/core/auth";
 import { useTimeAgo } from "../../i18n";
-import { useWorkspaceId } from "@multica/core/hooks";
-import { useWorkspacePaths } from "@multica/core/paths";
+import { useWorkspaceId } from "@lumen/core/hooks";
+import { useWorkspacePaths } from "@lumen/core/paths";
 import {
   agentListOptions,
   memberListOptions,
   selectSkillAssignments,
   skillDetailOptions,
   workspaceKeys,
-} from "@multica/core/workspace/queries";
-import { resolvePublicFileUrl } from "@multica/core/workspace/avatar-url";
+} from "@lumen/core/workspace/queries";
+import { resolvePublicFileUrl } from "@lumen/core/workspace/avatar-url";
 import {
   runtimeDisplayLabel,
   runtimeListOptions,
-} from "@multica/core/runtimes";
-import { ActorAvatar } from "@multica/ui/components/common/actor-avatar";
-import { Button, buttonVariants } from "@multica/ui/components/ui/button";
+} from "@lumen/core/runtimes";
+import { ActorAvatar } from "@lumen/ui/components/common/actor-avatar";
+import { Button, buttonVariants } from "@lumen/ui/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -55,22 +55,22 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@multica/ui/components/ui/dialog";
-import { Input } from "@multica/ui/components/ui/input";
-import { Skeleton } from "@multica/ui/components/ui/skeleton";
-import { Textarea } from "@multica/ui/components/ui/textarea";
+} from "@lumen/ui/components/ui/dialog";
+import { Input } from "@lumen/ui/components/ui/input";
+import { Skeleton } from "@lumen/ui/components/ui/skeleton";
+import { Textarea } from "@lumen/ui/components/ui/textarea";
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from "@multica/ui/components/ui/tooltip";
-import { cn } from "@multica/ui/lib/utils";
+} from "@lumen/ui/components/ui/tooltip";
+import { cn } from "@lumen/ui/lib/utils";
 import { AppLink, useNavigation } from "../../navigation";
 import { BreadcrumbHeader } from "../../layout/breadcrumb-header";
 import { PAGE_GUTTER, PAGE_RAIL } from "../../layout/page-header";
 import { useCanEditSkill } from "../hooks/use-can-edit-skill";
-import { useSkillPermissions } from "@multica/core/permissions";
-import { CapabilityBanner } from "@multica/ui/components/common/capability-banner";
+import { useSkillPermissions } from "@lumen/core/permissions";
+import { CapabilityBanner } from "@lumen/ui/components/common/capability-banner";
 import {
   isRefreshableOrigin,
   originSourceUrl,

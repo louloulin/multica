@@ -7,8 +7,8 @@ export default defineConfig({
   main: {
     // Workspace packages expose TypeScript source files. Keep the core
     // diagnostics/deadline imports in the main bundle instead of leaving
-    // runtime `require("@multica/core/...")` calls in the packaged app.
-    plugins: [externalizeDepsPlugin({ exclude: ["@multica/core"] })],
+    // runtime `require("@lumen/core/...")` calls in the packaged app.
+    plugins: [externalizeDepsPlugin({ exclude: ["@lumen/core"] })],
   },
   preload: {
     // `@electron-toolkit/preload` must be bundled INTO the preload script:
@@ -22,7 +22,7 @@ export default defineConfig({
   renderer: {
     server: {
       // Allow parallel worktrees to run `pnpm dev:desktop` side-by-side
-      // (e.g. Multica Canary alongside a primary checkout) by overriding
+      // (e.g. Lumen Canary alongside a primary checkout) by overriding
       // the renderer port via env. Falls back to 5173 for the common case.
       port: Number(process.env.DESKTOP_RENDERER_PORT) || 5173,
       strictPort: true,

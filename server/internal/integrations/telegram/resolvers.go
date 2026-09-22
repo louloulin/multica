@@ -12,10 +12,10 @@ import (
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgtype"
 
-	"github.com/multica-ai/multica/server/internal/integrations/channel"
-	"github.com/multica-ai/multica/server/internal/integrations/channel/engine"
-	db "github.com/multica-ai/multica/server/pkg/db/generated"
-	"github.com/multica-ai/multica/server/pkg/dbid"
+	"github.com/lumen-ai/lumen/server/internal/integrations/channel"
+	"github.com/lumen-ai/lumen/server/internal/integrations/channel/engine"
+	db "github.com/lumen-ai/lumen/server/pkg/db/generated"
+	"github.com/lumen-ai/lumen/server/pkg/dbid"
 )
 
 // This file is the Telegram ResolverSet: the platform-specific seams the
@@ -143,7 +143,7 @@ func (r *identityResolver) ResolveSender(ctx context.Context, inst engine.Resolv
 	}
 	// Binding existence no longer proves membership (no FK); re-check.
 	if _, err := r.q.GetMemberByUserAndWorkspace(ctx, db.GetMemberByUserAndWorkspaceParams{
-		UserID:      binding.MulticaUserID,
+		UserID:      binding.LumenUserID,
 		WorkspaceID: inst.WorkspaceID,
 	}); err != nil {
 		if errors.Is(err, pgx.ErrNoRows) {
@@ -151,7 +151,7 @@ func (r *identityResolver) ResolveSender(ctx context.Context, inst engine.Resolv
 		}
 		return engine.ResolvedIdentity{}, err
 	}
-	return engine.ResolvedIdentity{UserID: binding.MulticaUserID}, nil
+	return engine.ResolvedIdentity{UserID: binding.LumenUserID}, nil
 }
 
 // ---- dedup ----

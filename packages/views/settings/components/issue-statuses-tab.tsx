@@ -30,44 +30,44 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { useWorkspaceId } from "@multica/core/hooks";
-import { useAuthStore } from "@multica/core/auth";
-import { issueStatusArchiveConflictCount, createIssueStatusListStore } from "@multica/core/issue-statuses";
-import { baselineFromQuery } from "@multica/core/issue-views/baseline";
+import { useWorkspaceId } from "@lumen/core/hooks";
+import { useAuthStore } from "@lumen/core/auth";
+import { issueStatusArchiveConflictCount, createIssueStatusListStore } from "@lumen/core/issue-statuses";
+import { baselineFromQuery } from "@lumen/core/issue-views/baseline";
 import { IssueSurfaceWithStore } from "../../issues/surface/issue-surface";
-import { memberListOptions } from "@multica/core/workspace/queries";
+import { memberListOptions } from "@lumen/core/workspace/queries";
 import {
   issueStatusColor,
   compareIssueStatusEntries,
   issueStatusListOptions,
   normalizeIssueStatusCategory,
-} from "@multica/core/issue-statuses/queries";
+} from "@lumen/core/issue-statuses/queries";
 import {
   useArchiveIssueStatus,
   useCreateIssueStatus,
   useReorderIssueStatuses,
   useUpdateIssueStatus,
-} from "@multica/core/issue-statuses/mutations";
-import { ALL_STATUSES } from "@multica/core/issues/config";
+} from "@lumen/core/issue-statuses/mutations";
+import { ALL_STATUSES } from "@lumen/core/issues/config";
 import type {
   BuiltInIssueStatus,
   IssueStatusCategory,
   IssueStatusEntry,
   IssueStatusIcon,
-} from "@multica/core/types";
-import { ISSUE_STATUS_ICONS } from "@multica/core/types/issue-status";
-import { Button } from "@multica/ui/components/ui/button";
-import { Input } from "@multica/ui/components/ui/input";
-import { Textarea } from "@multica/ui/components/ui/textarea";
-import { Label as FieldLabel } from "@multica/ui/components/ui/label";
-import { Switch } from "@multica/ui/components/ui/switch";
+} from "@lumen/core/types";
+import { ISSUE_STATUS_ICONS } from "@lumen/core/types/issue-status";
+import { Button } from "@lumen/ui/components/ui/button";
+import { Input } from "@lumen/ui/components/ui/input";
+import { Textarea } from "@lumen/ui/components/ui/textarea";
+import { Label as FieldLabel } from "@lumen/ui/components/ui/label";
+import { Switch } from "@lumen/ui/components/ui/switch";
 import {
   Dialog,
   DialogContent,
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@multica/ui/components/ui/dialog";
+} from "@lumen/ui/components/ui/dialog";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -77,26 +77,26 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@multica/ui/components/ui/alert-dialog";
+} from "@lumen/ui/components/ui/alert-dialog";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@multica/ui/components/ui/dropdown-menu";
+} from "@lumen/ui/components/ui/dropdown-menu";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@multica/ui/components/ui/select";
+} from "@lumen/ui/components/ui/select";
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from "@multica/ui/components/ui/tooltip";
+} from "@lumen/ui/components/ui/tooltip";
 import { ColorPicker, COLOR_PICKER_PRESETS } from "../../common/color-picker";
 import { StatusIcon } from "../../issues/components/status-icon";
 import { useStatusLabel } from "../../issues/utils/status-label";

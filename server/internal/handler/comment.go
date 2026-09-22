@@ -16,13 +16,13 @@ import (
 	"github.com/go-chi/chi/v5"
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgtype"
-	"github.com/multica-ai/multica/server/internal/logger"
-	obsmetrics "github.com/multica-ai/multica/server/internal/metrics"
-	"github.com/multica-ai/multica/server/internal/service"
-	"github.com/multica-ai/multica/server/internal/util"
-	db "github.com/multica-ai/multica/server/pkg/db/generated"
-	"github.com/multica-ai/multica/server/pkg/dbid"
-	"github.com/multica-ai/multica/server/pkg/protocol"
+	"github.com/lumen-ai/lumen/server/internal/logger"
+	obsmetrics "github.com/lumen-ai/lumen/server/internal/metrics"
+	"github.com/lumen-ai/lumen/server/internal/service"
+	"github.com/lumen-ai/lumen/server/internal/util"
+	db "github.com/lumen-ai/lumen/server/pkg/db/generated"
+	"github.com/lumen-ai/lumen/server/pkg/dbid"
+	"github.com/lumen-ai/lumen/server/pkg/protocol"
 )
 
 type CommentResponse struct {
@@ -377,7 +377,7 @@ var (
 //
 // Both values must be set together so the cursor can tie-break entries
 // landing in the same microsecond. The cursor for the next page is
-// emitted via the X-Multica-Next-Before / X-Multica-Next-Before-Id
+// emitted via the X-Lumen-Next-Before / X-Lumen-Next-Before-Id
 // response headers.
 //
 // Combination rules (kept narrow on purpose — Elon flagged the matrix risk):
@@ -683,8 +683,8 @@ func (h *Handler) ListComments(w http.ResponseWriter, r *http.Request) {
 	// body so the default flat-array response shape — which the desktop UI
 	// and existing callers depend on — is unchanged.
 	if result.NextBefore != "" && result.NextBeforeID != "" {
-		w.Header().Set("X-Multica-Next-Before", result.NextBefore)
-		w.Header().Set("X-Multica-Next-Before-Id", result.NextBeforeID)
+		w.Header().Set("X-Lumen-Next-Before", result.NextBefore)
+		w.Header().Set("X-Lumen-Next-Before-Id", result.NextBeforeID)
 	}
 	if result.CommentsTruncated {
 		w.Header().Set(HeaderCommentsTruncated, "true")
@@ -2802,7 +2802,7 @@ func (h *Handler) routeReplyToParentAuthor(ctx context.Context, issue db.Issue, 
 //
 // Without it, replying directly to a leader's comment demoted the next run to
 // a generic direct-agent task (MUL-4024's thread-parent gap): no squad
-// briefing at claim time, `multica squad activity` rejected, and — on a
+// briefing at claim time, `lumen squad activity` rejected, and — on a
 // project with a local_directory resource — the coordinator dragged into the
 // user's own directory, queued behind its path mutex and stripped of the
 // prior session it was still holding a workdir for (MUL-7006). Replying to a

@@ -1,6 +1,6 @@
-import type { Issue, IssueStatusCategory, UpdateIssueRequest } from "@multica/core/types";
-import { issueStatusCategory } from "@multica/core/issues";
-import { normalizeIssueStatusCategory, type IssueStatusCatalog } from "@multica/core/issue-statuses";
+import type { Issue, IssueStatusCategory, UpdateIssueRequest } from "@lumen/core/types";
+import { issueStatusCategory } from "@lumen/core/issues";
+import { normalizeIssueStatusCategory, type IssueStatusCatalog } from "@lumen/core/issue-statuses";
 
 /** The issue fields the gate reads. */
 export type GateIssue = Pick<

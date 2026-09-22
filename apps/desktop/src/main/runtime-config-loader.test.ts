@@ -5,7 +5,7 @@ import { tmpdir } from "os";
 import { describe, expect, it, vi } from "vitest";
 
 // The module under test imports `electron`'s `app` to derive the default
-// `~/.multica/desktop.json` path. In a unit-test environment Electron's
+// `~/.lumen/desktop.json` path. In a unit-test environment Electron's
 // binary isn't installed, so its CJS index throws at require-time. Stub
 // just enough of the surface area the loader actually uses.
 vi.mock("electron", () => ({
@@ -27,7 +27,7 @@ import { parseRuntimeConfig, serializeRuntimeConfig } from "../shared/runtime-co
 
 describe("loadRuntimeConfig", () => {
   it("uses dev env and ignores desktop.json during electron-vite dev", async () => {
-    const dir = await mkdtemp(join(tmpdir(), "multica-desktop-config-"));
+    const dir = await mkdtemp(join(tmpdir(), "lumen-desktop-config-"));
     const configPath = join(dir, "desktop.json");
     await writeFile(
       configPath,
@@ -56,7 +56,7 @@ describe("loadRuntimeConfig", () => {
   });
 
   it("uses cloud defaults when packaged config is absent", async () => {
-    const dir = await mkdtemp(join(tmpdir(), "multica-desktop-config-"));
+    const dir = await mkdtemp(join(tmpdir(), "lumen-desktop-config-"));
     await expect(
       loadRuntimeConfig({
         isDev: false,
@@ -67,15 +67,15 @@ describe("loadRuntimeConfig", () => {
       ok: true,
       config: {
         schemaVersion: 1,
-        apiUrl: "https://api.multica.ai",
-        wsUrl: "wss://api.multica.ai/ws",
-        appUrl: "https://multica.ai",
+        apiUrl: "https://api.lumen.ai",
+        wsUrl: "wss://api.lumen.ai/ws",
+        appUrl: "https://lumen.ai",
       },
     });
   });
 
   it("parses a valid packaged desktop.json", async () => {
-    const dir = await mkdtemp(join(tmpdir(), "multica-desktop-config-"));
+    const dir = await mkdtemp(join(tmpdir(), "lumen-desktop-config-"));
     const configPath = join(dir, "desktop.json");
     await writeFile(
       configPath,
@@ -96,7 +96,7 @@ describe("loadRuntimeConfig", () => {
   });
 
   it("fails closed when packaged desktop.json is invalid", async () => {
-    const dir = await mkdtemp(join(tmpdir(), "multica-desktop-config-"));
+    const dir = await mkdtemp(join(tmpdir(), "lumen-desktop-config-"));
     const configPath = join(dir, "desktop.json");
     await writeFile(configPath, "{");
 
@@ -112,7 +112,7 @@ describe("loadRuntimeConfig", () => {
 
 describe("saveRuntimeConfig + parse round-trip", () => {
   it("writes a file that parses back to the same shape", async () => {
-    const dir = await mkdtemp(join(tmpdir(), "multica-desktop-config-"));
+    const dir = await mkdtemp(join(tmpdir(), "lumen-desktop-config-"));
     const configPath = join(dir, "nested", "desktop.json");
     const config = {
       schemaVersion: 1 as const,
@@ -131,7 +131,7 @@ describe("saveRuntimeConfig + parse round-trip", () => {
   });
 
   it("creates the parent directory if missing", async () => {
-    const dir = await mkdtemp(join(tmpdir(), "multica-desktop-config-"));
+    const dir = await mkdtemp(join(tmpdir(), "lumen-desktop-config-"));
     const configPath = join(dir, "deep", "down", "desktop.json");
     await saveRuntimeConfig(
       {
@@ -147,7 +147,7 @@ describe("saveRuntimeConfig + parse round-trip", () => {
   });
 
   it("rejects an unsaveable shape before touching disk", async () => {
-    const dir = await mkdtemp(join(tmpdir(), "multica-desktop-config-"));
+    const dir = await mkdtemp(join(tmpdir(), "lumen-desktop-config-"));
     const configPath = join(dir, "desktop.json");
     await expect(
       saveRuntimeConfig(
@@ -167,12 +167,12 @@ describe("saveRuntimeConfig + parse round-trip", () => {
 
 describe("isRuntimeConfigPresent", () => {
   it("returns false when no file exists", async () => {
-    const dir = await mkdtemp(join(tmpdir(), "multica-desktop-config-"));
+    const dir = await mkdtemp(join(tmpdir(), "lumen-desktop-config-"));
     expect(isRuntimeConfigPresent({ configPath: join(dir, "missing.json") })).toBe(false);
   });
 
   it("returns true after saveRuntimeConfig", async () => {
-    const dir = await mkdtemp(join(tmpdir(), "multica-desktop-config-"));
+    const dir = await mkdtemp(join(tmpdir(), "lumen-desktop-config-"));
     const configPath = join(dir, "desktop.json");
     await saveRuntimeConfig(
       {
@@ -189,7 +189,7 @@ describe("isRuntimeConfigPresent", () => {
 
 describe("clearRuntimeConfig", () => {
   it("removes the file when present", async () => {
-    const dir = await mkdtemp(join(tmpdir(), "multica-desktop-config-"));
+    const dir = await mkdtemp(join(tmpdir(), "lumen-desktop-config-"));
     const configPath = join(dir, "desktop.json");
     await saveRuntimeConfig(
       {
@@ -205,7 +205,7 @@ describe("clearRuntimeConfig", () => {
   });
 
   it("is a no-op when the file is already absent", async () => {
-    const dir = await mkdtemp(join(tmpdir(), "multica-desktop-config-"));
+    const dir = await mkdtemp(join(tmpdir(), "lumen-desktop-config-"));
     await expect(
       clearRuntimeConfig({ configPath: join(dir, "missing.json") }),
     ).resolves.toBeUndefined();

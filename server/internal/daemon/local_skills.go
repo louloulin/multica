@@ -11,9 +11,9 @@ import (
 	"strings"
 	"unicode/utf8"
 
-	"github.com/multica-ai/multica/server/internal/daemon/execenv"
-	"github.com/multica-ai/multica/server/internal/skill"
-	"github.com/multica-ai/multica/server/pkg/agent"
+	"github.com/lumen-ai/lumen/server/internal/daemon/execenv"
+	"github.com/lumen-ai/lumen/server/internal/skill"
+	"github.com/lumen-ai/lumen/server/pkg/agent"
 )
 
 const (

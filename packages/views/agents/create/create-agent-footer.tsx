@@ -1,8 +1,8 @@
 "use client";
 
 import { Loader2 } from "lucide-react";
-import { Button } from "@multica/ui/components/ui/button";
-import { cn } from "@multica/ui/lib/utils";
+import { Button } from "@lumen/ui/components/ui/button";
+import { cn } from "@lumen/ui/lib/utils";
 import { useT } from "../../i18n";
 
 /**

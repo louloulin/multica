@@ -1,12 +1,12 @@
 import { beforeEach, expect, it, vi } from "vitest";
 import { fireEvent, screen, waitFor } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { api } from "@multica/core/api";
-import type { IssueWakeup } from "@multica/core/types";
+import { api } from "@lumen/core/api";
+import type { IssueWakeup } from "@lumen/core/types";
 import { renderWithI18n } from "../../test/i18n";
 import { WakeupInstructionEditor } from "./wakeup-instruction-editor";
 
-vi.mock("@multica/core/api", () => ({ api: { listIssueWakeups: vi.fn(), editIssueWakeupInstruction: vi.fn() } }));
+vi.mock("@lumen/core/api", () => ({ api: { listIssueWakeups: vi.fn(), editIssueWakeupInstruction: vi.fn() } }));
 const list = vi.mocked(api.listIssueWakeups);
 const edit = vi.mocked(api.editIssueWakeupInstruction);
 let rule: IssueWakeup;

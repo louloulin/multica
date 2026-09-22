@@ -13,11 +13,11 @@ import {
   Trash2,
   WrapText,
 } from "lucide-react";
-import { api } from "@multica/core/api";
-import type { Agent } from "@multica/core/types";
-import { Button } from "@multica/ui/components/ui/button";
-import { Input } from "@multica/ui/components/ui/input";
-import { Textarea } from "@multica/ui/components/ui/textarea";
+import { api } from "@lumen/core/api";
+import type { Agent } from "@lumen/core/types";
+import { Button } from "@lumen/ui/components/ui/button";
+import { Input } from "@lumen/ui/components/ui/input";
+import { Textarea } from "@lumen/ui/components/ui/textarea";
 import { toast } from "sonner";
 import { useT } from "../../../i18n";
 import type { EnvParseError } from "./env-file";

@@ -3,22 +3,22 @@
 import { type ReactNode, useRef, useEffect, useState } from "react";
 import { Dices, Plus } from "lucide-react";
 import { toast } from "sonner";
-import { Button } from "@multica/ui/components/ui/button";
-import { Input } from "@multica/ui/components/ui/input";
+import { Button } from "@lumen/ui/components/ui/button";
+import { Input } from "@lumen/ui/components/ui/input";
 import {
   Field,
   FieldDescription,
   FieldError,
   FieldGroup,
   FieldLabel,
-} from "@multica/ui/components/ui/field";
-import { cn } from "@multica/ui/lib/utils";
-import { useCreateWorkspace } from "@multica/core/workspace/mutations";
-import type { Workspace } from "@multica/core/types";
-import { isImeComposing } from "@multica/core/utils";
-import { matchLocale } from "@multica/core/i18n";
-import { useConfigStore } from "@multica/core/config";
-import { workspaceUrlHost } from "@multica/core/workspace/workspace-url";
+} from "@lumen/ui/components/ui/field";
+import { cn } from "@lumen/ui/lib/utils";
+import { useCreateWorkspace } from "@lumen/core/workspace/mutations";
+import type { Workspace } from "@lumen/core/types";
+import { isImeComposing } from "@lumen/core/utils";
+import { matchLocale } from "@lumen/core/i18n";
+import { useConfigStore } from "@lumen/core/config";
+import { workspaceUrlHost } from "@lumen/core/workspace/workspace-url";
 import { useLogout } from "../../auth";
 import {
   StepFooter,
@@ -33,7 +33,7 @@ import {
   nameToWorkspaceSlug,
   randomCelestialWorkspaceIdentity,
 } from "../../workspace/slug";
-import { isReservedSlug } from "@multica/core/paths";
+import { isReservedSlug } from "@lumen/core/paths";
 
 /**
  * Step 2 — create your first workspace, or continue with one set up in

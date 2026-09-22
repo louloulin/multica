@@ -2,14 +2,14 @@
 
 import { useCallback, useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
-import type { Issue, Project } from "@multica/core/types";
-import { projectListOptions } from "@multica/core/projects/queries";
-import { childIssueProgressOptions } from "@multica/core/issues/queries";
-import { issueSurfaceGanttOptions } from "@multica/core/issues/surface/repository";
-import type { IssueSurfaceQueryPlan } from "@multica/core/issues/surface/query-plan";
-import type { IssueStatus, ProjectStatus, PropertyFilterValue } from "@multica/core/types";
-import { useIssueStatuses } from "@multica/core/issue-statuses/hooks";
-import { issueBehavesAsAny, statusColumnKeys, visibleStatusKeys } from "@multica/core/issues";
+import type { Issue, Project } from "@lumen/core/types";
+import { projectListOptions } from "@lumen/core/projects/queries";
+import { childIssueProgressOptions } from "@lumen/core/issues/queries";
+import { issueSurfaceGanttOptions } from "@lumen/core/issues/surface/repository";
+import type { IssueSurfaceQueryPlan } from "@lumen/core/issues/surface/query-plan";
+import type { IssueStatus, ProjectStatus, PropertyFilterValue } from "@lumen/core/types";
+import { useIssueStatuses } from "@lumen/core/issue-statuses/hooks";
+import { issueBehavesAsAny, statusColumnKeys, visibleStatusKeys } from "@lumen/core/issues";
 import {
   applyIssueFilters,
   type IssueFilterState,

@@ -9,15 +9,15 @@ import {
   useDisableIssueWakeup,
   useEnableIssueWakeup,
   issueTasksOptions,
-} from "@multica/core/issues";
-import type { AgentTask, IssueWakeup } from "@multica/core/types";
-import { useCurrentWorkspace } from "@multica/core/paths";
+} from "@lumen/core/issues";
+import type { AgentTask, IssueWakeup } from "@lumen/core/types";
+import { useCurrentWorkspace } from "@lumen/core/paths";
 import {
   Popover,
   PopoverTrigger,
   PopoverContent,
   PopoverTitle,
-} from "@multica/ui/components/ui/popover";
+} from "@lumen/ui/components/ui/popover";
 import { WakeupInstructionEditor } from "./wakeup-instruction-editor";
 import { WakeupControl } from "./wakeup-control";
 import { TranscriptButton } from "../../common/task-transcript";

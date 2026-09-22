@@ -1,18 +1,18 @@
 import { useEffect, useState } from "react";
 import { Outlet, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { WorkspaceSlugProvider } from "@multica/core/paths";
+import { WorkspaceSlugProvider } from "@lumen/core/paths";
 import {
   workspaceBySlugOptions,
   workspaceListOptions,
-} from "@multica/core/workspace";
-import { getCurrentSlug, setCurrentWorkspace } from "@multica/core/platform";
-import { isWorkspaceDeletePending } from "@multica/core/workspace/pending-delete";
-import { useAuthStore } from "@multica/core/auth";
-import { useWorkspaceSeen } from "@multica/views/workspace/use-workspace-seen";
-import { WelcomeAfterOnboarding } from "@multica/views/workspace/welcome-after-onboarding";
-import { WorkspacePresencePrefetch } from "@multica/views/layout";
-import { SourceBackfillModal } from "@multica/views/onboarding";
+} from "@lumen/core/workspace";
+import { getCurrentSlug, setCurrentWorkspace } from "@lumen/core/platform";
+import { isWorkspaceDeletePending } from "@lumen/core/workspace/pending-delete";
+import { useAuthStore } from "@lumen/core/auth";
+import { useWorkspaceSeen } from "@lumen/views/workspace/use-workspace-seen";
+import { WelcomeAfterOnboarding } from "@lumen/views/workspace/welcome-after-onboarding";
+import { WorkspacePresencePrefetch } from "@lumen/views/layout";
+import { SourceBackfillModal } from "@lumen/views/onboarding";
 import { useTabStore } from "@/stores/tab-store";
 import { useWindowOverlayStore } from "@/stores/window-overlay-store";
 

@@ -20,13 +20,13 @@ import (
 
 	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5/pgtype"
-	"github.com/multica-ai/multica/server/internal/featureflags"
-	"github.com/multica-ai/multica/server/internal/scheduler"
-	"github.com/multica-ai/multica/server/internal/service"
-	"github.com/multica-ai/multica/server/internal/util"
-	db "github.com/multica-ai/multica/server/pkg/db/generated"
-	"github.com/multica-ai/multica/server/pkg/featureflag"
-	"github.com/multica-ai/multica/server/pkg/plugincontract"
+	"github.com/lumen-ai/lumen/server/internal/featureflags"
+	"github.com/lumen-ai/lumen/server/internal/scheduler"
+	"github.com/lumen-ai/lumen/server/internal/service"
+	"github.com/lumen-ai/lumen/server/internal/util"
+	db "github.com/lumen-ai/lumen/server/pkg/db/generated"
+	"github.com/lumen-ai/lumen/server/pkg/featureflag"
+	"github.com/lumen-ai/lumen/server/pkg/plugincontract"
 )
 
 type schedulePulseState struct {
@@ -149,9 +149,9 @@ func TestSchedulePulseExampleManifestDrivesDurableRetry(t *testing.T) {
 		mu.Unlock()
 		if err := service.VerifyHookSignature(
 			secret,
-			r.Header.Get("X-Multica-Timestamp"),
+			r.Header.Get("X-Lumen-Timestamp"),
 			raw,
-			r.Header.Get("X-Multica-Signature"),
+			r.Header.Get("X-Lumen-Signature"),
 			time.Now(),
 		); err != nil {
 			http.Error(w, "signature", http.StatusUnauthorized)

@@ -1,7 +1,7 @@
-import type { IssueStatus } from "@multica/core/types";
+import type { IssueStatus } from "@lumen/core/types";
 import { StatusIcon } from "./status-icon";
-import { useWorkspaceId } from "@multica/core/hooks";
-import { useIssueStatuses } from "@multica/core/issue-statuses/hooks";
+import { useWorkspaceId } from "@lumen/core/hooks";
+import { useIssueStatuses } from "@lumen/core/issue-statuses/hooks";
 import { useStatusLabel } from "../utils/status-label";
 
 export function StatusHeading({

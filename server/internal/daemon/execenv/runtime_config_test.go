@@ -8,7 +8,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/multica-ai/multica/server/internal/runtimeapps"
+	"github.com/lumen-ai/lumen/server/internal/runtimeapps"
 )
 
 // Sub-issue Creation section — after MUL-2538 the platform posts the
@@ -24,8 +24,8 @@ import (
 // built without it deliberately carries no pointer at all.
 func platformSkillFixture() SkillContextForEnv {
 	return SkillContextForEnv{
-		Name:    "multica-platform",
-		Content: "---\nname: multica-platform\n---\n\nbody",
+		Name:    "lumen-platform",
+		Content: "---\nname: lumen-platform\n---\n\nbody",
 	}
 }
 
@@ -62,14 +62,14 @@ func TestSubIssueCreationSectionPresentForIssueRuns(t *testing.T) {
 			}
 			for _, want := range []string{
 				// MUL-5442 demotes the full todo/backlog/stage playbook to the
-				// multica-platform skill. The brief keeps a one-line map (all
+				// lumen-platform skill. The brief keeps a one-line map (all
 				// three flags stay discoverable, MUL-3508 follow-up) plus the
 				// skill pointer; the skill side of the contract is asserted in
 				// internal/service (TestPlatformSkillCoversPlatformContracts).
 				"`--status todo` starts an agent-assigned child immediately",
 				"`--status backlog` parks it",
 				"`--stage <N>` groups children into ordered stages",
-				"read `references/issues.md` in the `multica-platform` skill",
+				"read `references/issues.md` in the `lumen-platform` skill",
 			} {
 				if !strings.Contains(out, want) {
 					t.Errorf("[%s] section missing %q", tc.name, want)
@@ -122,7 +122,7 @@ func TestBriefHasNoParentNotificationGuidance(t *testing.T) {
 			// Old "do it yourself" framing (PR #2918).
 			"## Parent / Sub-issue Protocol",
 			"**Tell the parent when you finish a child.**",
-			"multica issue comment add <parent-id>",
+			"lumen issue comment add <parent-id>",
 			"with NO `--parent`",
 			"link the child as `[MUL-",
 			"`@mention` the parent's assignee",
@@ -153,7 +153,7 @@ func TestBriefHasNoParentNotificationGuidance(t *testing.T) {
 			// The protocol must no longer emit a placeholder
 			// `<this-issue-id>` status flip — the workflow above owns
 			// that command with the real issue id substituted.
-			"`multica issue status <this-issue-id> in_review`",
+			"`lumen issue status <this-issue-id> in_review`",
 			// Non-existent CLI form Elon's earlier review flagged.
 			"issue list --parent",
 		} {
@@ -179,7 +179,7 @@ func TestBriefHasNoParentNotificationGuidance(t *testing.T) {
 //     value or nothing, so the board cannot flap.
 //
 // The brief must also still carry no unconditional placeholder flip: a bare
-// `multica issue status <this-issue-id> in_review` command would fire on every
+// `lumen issue status <this-issue-id> in_review` command would fire on every
 // turn regardless of whether the turn delivered anything.
 func TestStatusRuleIsFactJudgmentAtBothMoments(t *testing.T) {
 	t.Parallel()
@@ -189,7 +189,7 @@ func TestStatusRuleIsFactJudgmentAtBothMoments(t *testing.T) {
 	}
 	out := buildMetaSkillContent("claude", ctx)
 
-	if strings.Contains(out, "`multica issue status <this-issue-id> in_review`") {
+	if strings.Contains(out, "`lumen issue status <this-issue-id> in_review`") {
 		t.Errorf("brief must not contain a placeholder `<this-issue-id> in_review` flip — status is judged from what the turn delivered")
 	}
 
@@ -238,7 +238,7 @@ func TestStatusRuleIsFactJudgmentAtBothMoments(t *testing.T) {
 		"Reply mode",
 		"when this issue is assigned to you and this turn does substantive work on it",
 		"set `in_progress` when you start",
-		"Before step 3, run `multica issue status",
+		"Before step 3, run `lumen issue status",
 		"judge once, at the end of the turn",
 		"do not open with a status write",
 		// The example that misled the MUL-6460 run: research that IS the
@@ -332,7 +332,7 @@ func TestPerRunCommentContextStaysOutOfBrief(t *testing.T) {
 	for _, want := range []string{
 		"4 new comment(s) on this issue since your last run",
 		"across all threads",
-		"multica issue comment list " + issueID + " --since " + since + " --compact --output json",
+		"lumen issue comment list " + issueID + " --since " + since + " --compact --output json",
 		"--thread thread-abc --tail 30",
 	} {
 		if !strings.Contains(hint, want) {
@@ -402,7 +402,7 @@ func TestColdCommentsHintPointsAtTriggeringThread(t *testing.T) {
 	if strings.Contains(hint, "new comment(s) since your last run") {
 		t.Errorf("no since-delta hint should render on cold start, got:\n%s", hint)
 	}
-	if !strings.Contains(hint, "multica issue comment list "+issueID+" --thread thread-root-1 --tail 30 --compact --output json") {
+	if !strings.Contains(hint, "lumen issue comment list "+issueID+" --thread thread-root-1 --tail 30 --compact --output json") {
 		t.Errorf("cold start must point at the triggering thread read, got:\n%s", hint)
 	}
 	if strings.Contains(buildMetaSkillContent("claude", TaskContextForEnv{IssueID: issueID, TriggerCommentID: "trigger-1", TriggerThreadID: "thread-root-1"}), "thread-root-1") {
@@ -421,7 +421,7 @@ func TestResumedCommentsHintSkipsDefaultThreadRead(t *testing.T) {
 		"No other new comments on this issue since your last run",
 		"issue-wide delta is empty",
 		"if resumed memory is not enough",
-		"multica issue comment list " + issueID + " --thread thread-root-1 --tail 30 --compact --output json",
+		"lumen issue comment list " + issueID + " --thread thread-root-1 --tail 30 --compact --output json",
 	} {
 		if !strings.Contains(hint, want) {
 			t.Errorf("resumed/no-delta hint missing %q\n--- output ---\n%s", want, hint)
@@ -474,7 +474,7 @@ func TestSessionContinuityNoticeLivesOutsideBrief(t *testing.T) {
 	// The web-chat / Feishu transcript variant points at the read-back command
 	// and must NOT order an announcement — the conversation survives in
 	// chat_message, so "the previous context was lost" would be a false alarm.
-	if !strings.Contains(SessionContinuityNoticeChatTranscript, "multica chat history") {
+	if !strings.Contains(SessionContinuityNoticeChatTranscript, "lumen chat history") {
 		t.Error("transcript variant must point at the read-back command")
 	}
 	if strings.Contains(SessionContinuityNoticeChatTranscript, "tell the user") {
@@ -526,9 +526,9 @@ func TestIssueWorkflowHonorsAgentIdentity(t *testing.T) {
 	}
 
 	for _, banned := range []string{
-		"4. Run `multica issue status " + issueID + " in_progress`\n",
+		"4. Run `lumen issue status " + issueID + " in_progress`\n",
 		"5. Follow your Skills and Agent Identity to complete the task (write code, investigate, etc.)",
-		"8. When done, run `multica issue status " + issueID + " in_review`\n",
+		"8. When done, run `lumen issue status " + issueID + " in_review`\n",
 	} {
 		if strings.Contains(out, banned) {
 			t.Errorf("issue brief still contains unconditional legacy workflow text %q\n---\n%s", banned, out)
@@ -585,8 +585,8 @@ func TestProtocolHeadingInInstructionsGetsNoLeaderBrief(t *testing.T) {
 	}
 	for _, banned := range []string{
 		"### Squad maintenance",
-		"multica squad member set-role",
-		"multica squad activity",
+		"lumen squad member set-role",
+		"lumen squad activity",
 		"unless your outcome is `no_action`",
 		"dispatching members is not delivery",
 	} {
@@ -652,9 +652,9 @@ func TestChatOutputDoesNotRequireIssueComment(t *testing.T) {
 	}
 
 	for _, banned := range []string{
-		"Final results MUST be delivered via `multica issue comment add`",
+		"Final results MUST be delivered via `lumen issue comment add`",
 		"The user does NOT see your terminal output",
-		"do not call `multica issue comment add`",
+		"do not call `lumen issue comment add`",
 		"unless the user explicitly asks",
 	} {
 		if strings.Contains(out, banned) {
@@ -925,7 +925,7 @@ func TestWriteRuntimeConfigFileCreatesMissingFile(t *testing.T) {
 	t.Parallel()
 	dir := t.TempDir()
 	path := filepath.Join(dir, "CLAUDE.md")
-	const brief = "# Multica Agent Runtime\n\nbrief body line"
+	const brief = "# Lumen Agent Runtime\n\nbrief body line"
 
 	if err := writeRuntimeConfigFile(path, brief); err != nil {
 		t.Fatalf("writeRuntimeConfigFile returned error: %v", err)
@@ -955,7 +955,7 @@ func TestWriteRuntimeConfigFilePreservesUserContent(t *testing.T) {
 		t.Fatalf("seed user file: %v", err)
 	}
 
-	const brief = "## Multica brief\n\ninjected body"
+	const brief = "## Lumen brief\n\ninjected body"
 	if err := writeRuntimeConfigFile(path, brief); err != nil {
 		t.Fatalf("writeRuntimeConfigFile returned error: %v", err)
 	}
@@ -998,7 +998,7 @@ func TestWriteRuntimeConfigFileReplacesExistingBlock(t *testing.T) {
 		t.Fatalf("seed: %v", err)
 	}
 
-	const newBrief = "## New Multica brief\n\nfresh body"
+	const newBrief = "## New Lumen brief\n\nfresh body"
 	if err := writeRuntimeConfigFile(path, newBrief); err != nil {
 		t.Fatalf("writeRuntimeConfigFile returned error: %v", err)
 	}
@@ -1034,7 +1034,7 @@ func TestWriteRuntimeConfigFileIsIdempotent(t *testing.T) {
 		t.Fatalf("seed user file: %v", err)
 	}
 
-	const brief = "## Multica brief\n\nbody"
+	const brief = "## Lumen brief\n\nbody"
 	for i := 0; i < 5; i++ {
 		if err := writeRuntimeConfigFile(path, brief); err != nil {
 			t.Fatalf("iteration %d: %v", i, err)
@@ -1187,8 +1187,8 @@ func TestWriteRuntimeConfigFileIgnoresStrayEndMarkerBeforeBegin(t *testing.T) {
 
 	// Seed a file whose user-authored portion documents the marker format
 	// (so the *end* marker appears before any *begin* marker), then has a
-	// real block authored by an earlier Multica run below.
-	const userDoc = "# Repo CLAUDE.md\n\nExample of what Multica writes:\n" +
+	// real block authored by an earlier Lumen run below.
+	const userDoc = "# Repo CLAUDE.md\n\nExample of what Lumen writes:\n" +
 		runtimeMarkerEnd + "\n\n# Real config below\n"
 	original := userDoc +
 		runtimeMarkerBegin + "\nFIRST BRIEF\n" + runtimeMarkerEnd + "\n"
@@ -1281,7 +1281,7 @@ func TestWriteRuntimeConfigFileReplacesMalformedHalfBlock(t *testing.T) {
 
 // Cleanup excises the marker block, preserving every byte of surrounding
 // user content. This is the local_directory invariant: a `claude` /
-// `codex` run started by the user after a Multica task must see the same
+// `codex` run started by the user after a Lumen task must see the same
 // file the user wrote.
 func TestCleanupRuntimeConfigPreservesUserContent(t *testing.T) {
 	t.Parallel()
@@ -1781,7 +1781,7 @@ func TestMultiThreadReplyInstructionsFanOut(t *testing.T) {
 	for _, banned := range []string{
 		"For EACH thread above",                // old cookbook opener
 		"UTF-8 file with your file-write tool", // restated mechanism
-		"multica issue comment add",            // embedded example commands
+		"lumen issue comment add",            // embedded example commands
 		"--content-file",                       // restated posting flag (#6517 review)
 		"inline `--content`",                   // restated inline ban (#6517 review)
 		"--content-stdin",                      // restated HEREDOC ban
@@ -2162,7 +2162,7 @@ func TestBriefSkillsListIsNamesOnly(t *testing.T) {
 		AgentSkills: []SkillContextForEnv{
 			{
 				Name:        "PR Review",
-				Description: "Use when reviewing a pull request for the Multica project.",
+				Description: "Use when reviewing a pull request for the Lumen project.",
 				Content:     "---\nname: pr-review\n---\n\nbody",
 			},
 		},
@@ -2224,21 +2224,21 @@ func TestBriefIssuePointerFollowsTheInstalledSkill(t *testing.T) {
 	}{
 		{
 			name:   "current backend",
-			skills: []SkillContextForEnv{skill("multica-platform")},
-			want:   "`references/issues.md` in the `multica-platform` skill",
+			skills: []SkillContextForEnv{skill("lumen-platform")},
+			want:   "`references/issues.md` in the `lumen-platform` skill",
 		},
 		{
 			// New daemon against a backend that has not been deployed yet.
 			name:   "pre-merge backend",
-			skills: []SkillContextForEnv{skill("multica-working-on-issues")},
-			want:   "the `multica-working-on-issues` skill",
+			skills: []SkillContextForEnv{skill("lumen-working-on-issues")},
+			want:   "the `lumen-working-on-issues` skill",
 		},
 		{
 			// Mid-transition: the redirect stub rides along with the merged
 			// skill. The merged skill wins — the stub is only a signpost.
 			name:   "merged skill wins over the redirect stub",
-			skills: []SkillContextForEnv{skill("multica-working-on-issues"), skill("multica-platform")},
-			want:   "`references/issues.md` in the `multica-platform` skill",
+			skills: []SkillContextForEnv{skill("lumen-working-on-issues"), skill("lumen-platform")},
+			want:   "`references/issues.md` in the `lumen-platform` skill",
 		},
 		{
 			name:   "neither installed",
@@ -2304,13 +2304,13 @@ func TestBriefPointsAtThePlatformSkill(t *testing.T) {
 	}{
 		{
 			name:   "platform skill present",
-			skills: []SkillContextForEnv{skill("multica-platform")},
-			want:   "multica-platform",
+			skills: []SkillContextForEnv{skill("lumen-platform")},
+			want:   "lumen-platform",
 		},
 		{
 			name:   "alongside workspace skills",
-			skills: []SkillContextForEnv{skill("pr-review"), skill("multica-platform")},
-			want:   "multica-platform",
+			skills: []SkillContextForEnv{skill("pr-review"), skill("lumen-platform")},
+			want:   "lumen-platform",
 		},
 		{
 			name:   "platform skill absent",

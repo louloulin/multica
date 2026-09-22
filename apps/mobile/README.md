@@ -1,27 +1,27 @@
-# Multica Mobile (iOS + Android)
+# Lumen Mobile (iOS + Android)
 
-Expo + React Native mobile client for Multica. Independent from web/desktop — shares types and pure utilities from `@multica/core/`. See [`AGENTS.md`](./AGENTS.md) for mobile architecture and development rules; `package.json` records the current dependency versions.
+Expo + React Native mobile client for Lumen. Independent from web/desktop — shares types and pure utilities from `@lumen/core/`. See [`AGENTS.md`](./AGENTS.md) for mobile architecture and development rules; `package.json` records the current dependency versions.
 
 Both platforms build from the same JS/TS source and the same `app.config.ts`. iOS is documented first (it shipped first); the [Android](#android) section below covers everything Android-specific.
 
 ## Just want to use it on your phone? (no development)
 
-Multica isn't on the App Store yet — until that changes, anyone who wants it on their iPhone builds from source. One command:
+Lumen isn't on the App Store yet — until that changes, anyone who wants it on their iPhone builds from source. One command:
 
 ```bash
 pnpm ios:mobile:device:prod:release
 ```
 
-This connects to the same backend as `multica.ai`, so your existing account just works.
+This connects to the same backend as `lumen.ai`, so your existing account just works.
 
 **Prerequisites**: Mac with Xcode, a free Apple ID added under Xcode → Settings → Accounts, iPhone connected via USB with [Developer Mode enabled](https://docs.expo.dev/guides/ios-developer-mode/). Walk through Expo's [Set up your environment](https://docs.expo.dev/get-started/set-up-your-environment/) (pick **Development build → iOS Device**) if any of that is missing.
 
 Xcode signs the build with the "Personal Team" your Apple ID automatically owns — created silently the first time you signed into Xcode, no setup needed. The first build downloads CocoaPods + compiles React Native from source — expect 10–20 minutes. Subsequent builds reuse Xcode's cache.
 
-**If Xcode rejects signing with "No matching provisioning profiles found"** — rare, happens if someone has claimed the default bundle id `ai.multica.mobile` on Apple's developer portal. Pick any reverse-domain you own and re-run:
+**If Xcode rejects signing with "No matching provisioning profiles found"** — rare, happens if someone has claimed the default bundle id `ai.lumen.mobile` on Apple's developer portal. Pick any reverse-domain you own and re-run:
 
 ```bash
-export EXPO_BUNDLE_IDENTIFIER_PROD=com.yourname.multica
+export EXPO_BUNDLE_IDENTIFIER_PROD=com.yourname.lumen
 pnpm ios:mobile:device:prod:release
 ```
 
@@ -69,7 +69,7 @@ cp apps/mobile/.env.example apps/mobile/.env.development.local
 # then edit EXPO_PUBLIC_API_URL inside it to your Mac's LAN IP, e.g. http://192.168.1.42:8080
 ```
 
-If your Apple ID isn't on the Multica Apple Developer team yet, also uncomment and set `EXPO_BUNDLE_IDENTIFIER_DEV` to a reverse-domain you own (e.g. `com.yourname.multica.dev`). This **only** overrides the dev variant — staging / production bundle ids are intentionally not overridable so variants can coexist.
+If your Apple ID isn't on the Lumen Apple Developer team yet, also uncomment and set `EXPO_BUNDLE_IDENTIFIER_DEV` to a reverse-domain you own (e.g. `com.yourname.lumen.dev`). This **only** overrides the dev variant — staging / production bundle ids are intentionally not overridable so variants can coexist.
 
 If your Apple ID belongs to more than one Apple Developer team, also set `EXPO_APPLE_TEAM_ID` to the team that should sign your builds. Unlike the bundle id overrides it applies to every variant, and it is re-applied on each run — so it also fixes a checkout that has already latched onto the wrong team.
 
@@ -179,12 +179,12 @@ The plugin reads four Gradle properties and **nothing is stored in the repo**:
 
 | Property | Meaning |
 |---|---|
-| `MULTICA_RELEASE_STORE_FILE` | Absolute path to the keystore |
-| `MULTICA_RELEASE_KEY_ALIAS` | Key alias inside it |
-| `MULTICA_RELEASE_STORE_PASSWORD` | Keystore password |
-| `MULTICA_RELEASE_KEY_PASSWORD` | Key password |
+| `LUMEN_RELEASE_STORE_FILE` | Absolute path to the keystore |
+| `LUMEN_RELEASE_KEY_ALIAS` | Key alias inside it |
+| `LUMEN_RELEASE_STORE_PASSWORD` | Keystore password |
+| `LUMEN_RELEASE_KEY_PASSWORD` | Key password |
 
-If `MULTICA_RELEASE_STORE_FILE` is absent the config copies the debug keystore instead (`initWith signingConfigs.debug`), so a contributor who just wants a runnable APK isn't blocked on generating a keystore. That explicit fallback matters: `release` is unconditionally pointed at `signingConfigs.release`, so leaving the config empty would yield an *unsigned* release APK that `adb install` refuses — not a debug-signed one. Check which key an APK actually carries with `apksigner verify --print-certs`; the debug key's DN is `CN=Android Debug`, and a debug-signed release also comes out `v3 scheme: false` since the v2/v3 flags live in the credentialed branch.
+If `LUMEN_RELEASE_STORE_FILE` is absent the config copies the debug keystore instead (`initWith signingConfigs.debug`), so a contributor who just wants a runnable APK isn't blocked on generating a keystore. That explicit fallback matters: `release` is unconditionally pointed at `signingConfigs.release`, so leaving the config empty would yield an *unsigned* release APK that `adb install` refuses — not a debug-signed one. Check which key an APK actually carries with `apksigner verify --print-certs`; the debug key's DN is `CN=Android Debug`, and a debug-signed release also comes out `v3 scheme: false` since the v2/v3 flags live in the credentialed branch.
 
 #### Verify the signing config
 
@@ -200,10 +200,10 @@ This lives outside `vitest` on purpose. The unit tests can only assert on the `b
 
 ```bash
 keytool -genkeypair -v \
-  -keystore ~/.android/keystores/multica-release.keystore \
-  -alias multica-release \
+  -keystore ~/.android/keystores/lumen-release.keystore \
+  -alias lumen-release \
   -keyalg RSA -keysize 4096 -validity 10000 \
-  -dname "CN=Multica, OU=Mobile, O=Multica, L=<city>, ST=<state>, C=<country>"
+  -dname "CN=Lumen, OU=Mobile, O=Lumen, L=<city>, ST=<state>, C=<country>"
 ```
 
 `keytool` prompts for the password. Use a generated one, not a memorable one — it never needs typing again after the next step.
@@ -213,13 +213,13 @@ keytool -genkeypair -v \
 Put them in `~/.gradle/gradle.properties` (outside the repo, `chmod 600`):
 
 ```properties
-MULTICA_RELEASE_STORE_FILE=/home/you/.android/keystores/multica-release.keystore
-MULTICA_RELEASE_KEY_ALIAS=multica-release
-MULTICA_RELEASE_STORE_PASSWORD=…
-MULTICA_RELEASE_KEY_PASSWORD=…
+LUMEN_RELEASE_STORE_FILE=/home/you/.android/keystores/lumen-release.keystore
+LUMEN_RELEASE_KEY_ALIAS=lumen-release
+LUMEN_RELEASE_STORE_PASSWORD=…
+LUMEN_RELEASE_KEY_PASSWORD=…
 ```
 
-On CI, pass them as `ORG_GRADLE_PROJECT_MULTICA_RELEASE_*` environment variables from the secret store instead — same property names, no file on disk.
+On CI, pass them as `ORG_GRADLE_PROJECT_LUMEN_RELEASE_*` environment variables from the secret store instead — same property names, no file on disk.
 
 **Never commit the keystore or its passwords.** `apps/mobile/.gitignore` ignores `android/` wholesale, which covers a keystore placed there, but the safe habit is to keep it outside the repo entirely.
 
@@ -235,9 +235,9 @@ Same per-variant scheme as iOS, so dev / staging / production coexist on one dev
 
 | Variant | Package | Label |
 |---|---|---|
-| development | `ai.multica.mobile.dev` | Multica (Dev) |
-| staging | `ai.multica.mobile.staging` | Multica (Staging) |
-| production | `ai.multica.mobile` | Multica |
+| development | `ai.lumen.mobile.dev` | Lumen (Dev) |
+| staging | `ai.lumen.mobile.staging` | Lumen (Staging) |
+| production | `ai.lumen.mobile` | Lumen |
 
 Building a personal copy under a namespace you own? Override with `EXPO_ANDROID_PACKAGE_DEV` / `EXPO_ANDROID_PACKAGE_PROD`. Unlike iOS there's no provisioning profile forcing your hand — the override exists for parity and for anyone publishing their own fork.
 
@@ -263,15 +263,15 @@ For local backend testing, `localhost` won't reach your machine from the phone o
 
 Installations made through the App Store / Play Store (or sideloaded release APKs) can't easily change the build-time URL — every tweak would need a re-build. For that case the mobile app ships a runtime config layer that mirrors the desktop Welcome gate:
 
-- **First launch** (or any time the device has no saved config): the app opens to a full-screen **Welcome** page. Pick *Use Multica Cloud* for the public deployment, or paste a self-hosted backend URL (e.g. `http://192.168.1.42:8080`, `https://multica.internal.example`) and tap *Connect*.
-- **Settings → Backend** (More tab → Settings → Backend row on any signed-in screen) lets a signed-in user switch the active backend, run a *Test connection* probe against `/health`, see diagnostics (current backend, derived WebSocket URL, derived web URL, source = saved vs build-time fallback), and *Reset to Multica Cloud* (typed-confirmation required — type `multica.ai`).
+- **First launch** (or any time the device has no saved config): the app opens to a full-screen **Welcome** page. Pick *Use Lumen Cloud* for the public deployment, or paste a self-hosted backend URL (e.g. `http://192.168.1.42:8080`, `https://lumen.internal.example`) and tap *Connect*.
+- **Settings → Backend** (More tab → Settings → Backend row on any signed-in screen) lets a signed-in user switch the active backend, run a *Test connection* probe against `/health`, see diagnostics (current backend, derived WebSocket URL, derived web URL, source = saved vs build-time fallback), and *Reset to Lumen Cloud* (typed-confirmation required — type `lumen.ai`).
 
 Saving always signs the user out of the current session, clears the workspace store + TanStack Query cache, and routes to `/login`. The previous JWT was issued by the old backend; keeping it around produces 401-loops on every subsequent fetch, so clearing proactively is cleaner than waiting for the 401 hook.
 
 Implementation:
 
 - The pure schema lives in `apps/mobile/data/runtime-config.ts` (mirror of `apps/desktop/src/shared/runtime-config.ts`). Only `apiUrl` is persisted; `wsUrl` and `appUrl` are derived via `deriveWsUrl` / `deriveAppUrl` so saving a self-host URL never produces a stale-cached `wsUrl` mismatch.
-- The persisted record sits in `expo-secure-store` under the key `multica_runtime_config`. Schema version is `1`; a future upgrade that changes the shape must use the same `parseRuntimeConfig` reject path (bump `RUNTIME_CONFIG_SCHEMA_VERSION` and treat unknown payloads as "no saved config").
+- The persisted record sits in `expo-secure-store` under the key `lumen_runtime_config`. Schema version is `1`; a future upgrade that changes the shape must use the same `parseRuntimeConfig` reject path (bump `RUNTIME_CONFIG_SCHEMA_VERSION` and treat unknown payloads as "no saved config").
 - `api.setBaseUrl(url)` / `api.getBaseUrl()` on `ApiClient` carry the runtime URL — every method that built URLs from the module-level constant now reads `this.baseUrl`. The realtime-provider subscribes to `useRuntimeConfigStore((s) => s.config.apiUrl)` so changing the backend drops the existing WebSocket and reopens at the new `deriveWsUrl(apiUrl)`.
 - Hydration runs once at app start from `RuntimeConfigInitializer` in `app/_layout.tsx`, wrapping the existing `AuthInitializer` so the first `getMe()` after login lands on the right base URL.
 

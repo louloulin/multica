@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useCallback, useEffect, useLayoutEffect, useMemo, forwardRef } from "react";
-import { useWorkspaceId } from "@multica/core/hooks";
+import { useWorkspaceId } from "@lumen/core/hooks";
 import { useTraceIssueLabels } from "./use-trace-issue-labels";
 import { Virtuoso, type VirtuosoHandle, type Components } from "react-virtuoso";
 import {
@@ -29,11 +29,11 @@ import {
   Coins,
   GitBranch,
 } from "lucide-react";
-import { cn } from "@multica/ui/lib/utils";
-import { copyText } from "@multica/ui/lib/clipboard";
-import { Button } from "@multica/ui/components/ui/button";
-import { Dialog, DialogContent, DialogTitle } from "@multica/ui/components/ui/dialog";
-import { Popover, PopoverContent, PopoverTrigger } from "@multica/ui/components/ui/popover";
+import { cn } from "@lumen/ui/lib/utils";
+import { copyText } from "@lumen/ui/lib/clipboard";
+import { Button } from "@lumen/ui/components/ui/button";
+import { Dialog, DialogContent, DialogTitle } from "@lumen/ui/components/ui/dialog";
+import { Popover, PopoverContent, PopoverTrigger } from "@lumen/ui/components/ui/popover";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -41,21 +41,21 @@ import {
   DropdownMenuSeparator,
   DropdownMenuCheckboxItem,
   DropdownMenuItem,
-} from "@multica/ui/components/ui/dropdown-menu";
+} from "@lumen/ui/components/ui/dropdown-menu";
 import { ActorAvatar } from "../actor-avatar";
 import { AttributionBadge } from "../../issues/components/attribution-badge";
 import { cancellationActorLabel, cancelReasonLabel, failureReasonLabel } from "../../agents/components/tabs/task-failure";
 import { RichContent } from "../../rich-content";
-import { api } from "@multica/core/api";
+import { api } from "@lumen/core/api";
 import {
   useTranscriptViewStore,
   type TranscriptFilterKey,
   type TranscriptSortDirection,
-} from "@multica/core/agents/stores";
-import type { AgentTask, Agent, AgentRuntime } from "@multica/core/types/agent";
-import { resolveWorkdirCopyTarget } from "@multica/core/issues";
-import { runtimeDisplayName, providerDisplayName } from "@multica/core/runtimes";
-import { useCustomPricingStore } from "@multica/core/runtimes/custom-pricing-store";
+} from "@lumen/core/agents/stores";
+import type { AgentTask, Agent, AgentRuntime } from "@lumen/core/types/agent";
+import { resolveWorkdirCopyTarget } from "@lumen/core/issues";
+import { runtimeDisplayName, providerDisplayName } from "@lumen/core/runtimes";
+import { useCustomPricingStore } from "@lumen/core/runtimes/custom-pricing-store";
 import { redactSecrets } from "./redact";
 import {
   createLiveEndFollow,

@@ -11,8 +11,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/multica-ai/multica/server/internal/daemon/processtree"
-	"github.com/multica-ai/multica/server/pkg/agent"
+	"github.com/lumen-ai/lumen/server/internal/daemon/processtree"
+	"github.com/lumen-ai/lumen/server/pkg/agent"
 )
 
 // shellResolveTTL bounds how long one login-shell PATH resolution is reused
@@ -82,12 +82,12 @@ func cachedShellResolvedAgents() map[string]string {
 // This is pure discovery: no version detection and no minimum-version gate
 // (detectBuiltinRuntimes owns those, per registration round). The result is
 // therefore the machine's *availability* set, which is exactly what
-// /health.agents reports and what `multica daemon probe-runtimes` prints.
+// /health.agents reports and what `lumen daemon probe-runtimes` prints.
 //
 // It is called once from LoadConfig at startup and again from the periodic
 // workspace sync (refreshAgentAvailability), so a CLI the user installs while
 // the daemon is already running gets picked up without a restart (MUL-5439).
-// Everything it reads is process-external (PATH, MULTICA_*_PATH, MULTICA_*_MODEL),
+// Everything it reads is process-external (PATH, LUMEN_*_PATH, LUMEN_*_MODEL),
 // so re-running it is the only way to observe such an install.
 //
 // A var so tests can stub discovery without installing real CLIs.
@@ -103,7 +103,7 @@ var probeAgentCLIs = func() map[string]AgentEntry {
 	// resolveAgentsViaLoginShell for the details and constraints.
 	//
 	// Laziness matters: the happy path (every agent on the daemon's PATH or
-	// pinned to an explicit MULTICA_*_PATH) must not pay the cost of
+	// pinned to an explicit LUMEN_*_PATH) must not pay the cost of
 	// spawning the user's login shell — that touches their rc files and
 	// adds startup latency that scales with whatever they put in there. We
 	// only fork a shell when a bare command name actually missed LookPath.
@@ -125,7 +125,7 @@ var probeAgentCLIs = func() map[string]AgentEntry {
 			}, true
 		}
 		// The shell fallback only rescues bare command names. An operator
-		// who pinned MULTICA_*_PATH to an absolute or relative path that
+		// who pinned LUMEN_*_PATH to an absolute or relative path that
 		// doesn't exist should hard-miss, not silently get a different
 		// binary.
 		if strings.ContainsAny(cmd, "/\\") {
@@ -160,8 +160,8 @@ var probeAgentCLIs = func() map[string]AgentEntry {
 			// without the executable bit would be advertised as a healthy
 			// runtime and then fail on every spawn.
 			//
-			// The Multica runtime profile gate in the caller still applies:
-			// a bundled CLI without the `multica` profile is not a runtime.
+			// The Lumen runtime profile gate in the caller still applies:
+			// a bundled CLI without the `lumen` profile is not a runtime.
 			for _, p := range dshDesktopAppBundlePaths() {
 				if executableCandidate(p) {
 					return AgentEntry{
@@ -176,18 +176,18 @@ var probeAgentCLIs = func() map[string]AgentEntry {
 	}
 
 	agents := map[string]AgentEntry{}
-	if e, ok := probe("MULTICA_CLAUDE_PATH", "claude", "MULTICA_CLAUDE_MODEL"); ok {
+	if e, ok := probe("LUMEN_CLAUDE_PATH", "claude", "LUMEN_CLAUDE_MODEL"); ok {
 		agents["claude"] = e
 	}
-	if e, ok := probe("MULTICA_CODEX_PATH", "codex", "MULTICA_CODEX_MODEL"); ok {
+	if e, ok := probe("LUMEN_CODEX_PATH", "codex", "LUMEN_CODEX_MODEL"); ok {
 		agents["codex"] = e
 	}
-	if e, ok := probe("MULTICA_OPENCODE_PATH", "opencode", "MULTICA_OPENCODE_MODEL"); ok {
+	if e, ok := probe("LUMEN_OPENCODE_PATH", "opencode", "LUMEN_OPENCODE_MODEL"); ok {
 		agents["opencode"] = e
 	}
-	if e, ok := probe("MULTICA_CODEARTS_PATH", "codearts", "MULTICA_CODEARTS_MODEL"); ok {
+	if e, ok := probe("LUMEN_CODEARTS_PATH", "codearts", "LUMEN_CODEARTS_MODEL"); ok {
 		agents["codearts"] = e
-	} else if strings.TrimSpace(os.Getenv("MULTICA_CODEARTS_PATH")) == "" {
+	} else if strings.TrimSpace(os.Getenv("LUMEN_CODEARTS_PATH")) == "" {
 		// The native CodeArts installer may update PATH only for future
 		// terminals. A GUI-launched daemon can still discover its stable
 		// user-level launcher. An explicit but invalid override remains a hard
@@ -203,22 +203,22 @@ var probeAgentCLIs = func() map[string]AgentEntry {
 				agents["codearts"] = AgentEntry{
 					Path:    path,
 					Command: "codearts",
-					Model:   strings.TrimSpace(os.Getenv("MULTICA_CODEARTS_MODEL")),
+					Model:   strings.TrimSpace(os.Getenv("LUMEN_CODEARTS_MODEL")),
 				}
 				break
 			}
 		}
 	}
-	if e, ok := probe("MULTICA_DEVECO_PATH", "deveco", "MULTICA_DEVECO_MODEL"); ok {
+	if e, ok := probe("LUMEN_DEVECO_PATH", "deveco", "LUMEN_DEVECO_MODEL"); ok {
 		agents["deveco"] = e
 	}
-	if e, ok := probe("MULTICA_OPENCLAW_PATH", "openclaw", "MULTICA_OPENCLAW_MODEL"); ok {
+	if e, ok := probe("LUMEN_OPENCLAW_PATH", "openclaw", "LUMEN_OPENCLAW_MODEL"); ok {
 		agents["openclaw"] = e
 	}
-	if e, ok := probe("MULTICA_HERMES_PATH", "hermes", "MULTICA_HERMES_MODEL"); ok {
+	if e, ok := probe("LUMEN_HERMES_PATH", "hermes", "LUMEN_HERMES_MODEL"); ok {
 		agents["hermes"] = e
 	}
-	if e, ok := probe("MULTICA_PI_PATH", "pi", "MULTICA_PI_MODEL"); ok {
+	if e, ok := probe("LUMEN_PI_PATH", "pi", "LUMEN_PI_MODEL"); ok {
 		agents["pi"] = e
 	}
 	// Built-in runtime identities (e.g. omp) are derived from the descriptor
@@ -233,40 +233,40 @@ var probeAgentCLIs = func() map[string]AgentEntry {
 			agents[desc.ID] = e
 		}
 	}
-	if e, ok := probe("MULTICA_CURSOR_PATH", "cursor-agent", "MULTICA_CURSOR_MODEL"); ok {
+	if e, ok := probe("LUMEN_CURSOR_PATH", "cursor-agent", "LUMEN_CURSOR_MODEL"); ok {
 		agents["cursor"] = e
 	}
-	if e, ok := probe("MULTICA_COPILOT_PATH", "copilot", "MULTICA_COPILOT_MODEL"); ok {
+	if e, ok := probe("LUMEN_COPILOT_PATH", "copilot", "LUMEN_COPILOT_MODEL"); ok {
 		agents["copilot"] = e
 	}
-	if e, ok := probe("MULTICA_KIMI_PATH", "kimi", "MULTICA_KIMI_MODEL"); ok {
+	if e, ok := probe("LUMEN_KIMI_PATH", "kimi", "LUMEN_KIMI_MODEL"); ok {
 		agents["kimi"] = e
 	}
-	if e, ok := probe("MULTICA_REASONIX_PATH", "reasonix", "MULTICA_REASONIX_MODEL"); ok {
+	if e, ok := probe("LUMEN_REASONIX_PATH", "reasonix", "LUMEN_REASONIX_MODEL"); ok {
 		agents["reasonix"] = e
 	}
 	// DSH resolves here like any other CLI. Whether it is *usable* is decided
-	// one layer up: the Multica runtime profile is what gives it the --stdio
+	// one layer up: the Lumen runtime profile is what gives it the --stdio
 	// protocol, so a bare `dsh` prints a version and still cannot run a task.
 	// That check lives in probeBuiltinRuntime, where a failure produces a
 	// verdict the user can actually see — /health reports it as a skipped
 	// agent carrying the repair command, and the daemon logs it. Gating here
 	// instead made the drop invisible: the provider vanished from the
 	// availability set with nothing anywhere saying why.
-	if e, ok := probe("MULTICA_DSH_PATH", "dsh", "MULTICA_DSH_MODEL"); ok {
+	if e, ok := probe("LUMEN_DSH_PATH", "dsh", "LUMEN_DSH_MODEL"); ok {
 		agents["dsh"] = e
 	}
-	if e, ok := probe("MULTICA_KIRO_PATH", "kiro-cli", "MULTICA_KIRO_MODEL"); ok {
+	if e, ok := probe("LUMEN_KIRO_PATH", "kiro-cli", "LUMEN_KIRO_MODEL"); ok {
 		agents["kiro"] = e
 	}
-	if e, ok := probe("MULTICA_CODEBUDDY_PATH", "codebuddy", "MULTICA_CODEBUDDY_MODEL"); ok {
+	if e, ok := probe("LUMEN_CODEBUDDY_PATH", "codebuddy", "LUMEN_CODEBUDDY_MODEL"); ok {
 		agents["codebuddy"] = e
 	}
 	// agy 1.0.6 added a `--model` flag (MUL-3125), so Antigravity now takes a
-	// model env like every other backend. MULTICA_ANTIGRAVITY_MODEL seeds the
+	// model env like every other backend. LUMEN_ANTIGRAVITY_MODEL seeds the
 	// daemon-wide default; its value is the exact `agy models` display string
 	// (e.g. "Claude Opus 4.6 (Thinking)"), not a provider/model slug.
-	if e, ok := probe("MULTICA_ANTIGRAVITY_PATH", "agy", "MULTICA_ANTIGRAVITY_MODEL"); ok {
+	if e, ok := probe("LUMEN_ANTIGRAVITY_PATH", "agy", "LUMEN_ANTIGRAVITY_MODEL"); ok {
 		agents["antigravity"] = e
 	}
 	// Qoder CLI ships as the `qodercli` binary (Qoder Desktop does not put it
@@ -275,32 +275,32 @@ var probeAgentCLIs = func() map[string]AgentEntry {
 	// fallback applies: a GUI/Launchpad-started daemon does not inherit the
 	// interactive shell PATH, and without the fallback a perfectly good
 	// qodercli install stayed invisible across restarts (MUL-5524).
-	if e, ok := probe("MULTICA_QODER_PATH", "qodercli", "MULTICA_QODER_MODEL"); ok {
+	if e, ok := probe("LUMEN_QODER_PATH", "qodercli", "LUMEN_QODER_MODEL"); ok {
 		agents["qoder"] = e
 	}
 	// Qoder CN CLI exposes the same ACP transport as Qoder CLI under a
 	// separate `qoderclicn` binary and account/config root. Register it as an
 	// independent provider so hosts with either or both editions get the
 	// matching runtime without a custom profile.
-	if e, ok := probe("MULTICA_QODERCLICN_PATH", "qoderclicn", "MULTICA_QODERCLICN_MODEL"); ok {
+	if e, ok := probe("LUMEN_QODERCLICN_PATH", "qoderclicn", "LUMEN_QODERCLICN_MODEL"); ok {
 		agents["qoderclicn"] = e
 	}
 	// ByteDance official TRAE CLI (the `traecli` binary from https://docs.trae.cn/cli),
-	// driven over ACP via `traecli acp serve --yolo`. MULTICA_TRAECLI_MODEL seeds
+	// driven over ACP via `traecli acp serve --yolo`. LUMEN_TRAECLI_MODEL seeds
 	// the daemon-wide default model (a model id from the user's logged-in traecli
 	// catalog).
-	if e, ok := probe("MULTICA_TRAECLI_PATH", "traecli", "MULTICA_TRAECLI_MODEL"); ok {
+	if e, ok := probe("LUMEN_TRAECLI_PATH", "traecli", "LUMEN_TRAECLI_MODEL"); ok {
 		agents["traecli"] = e
 	}
 	// xAI Grok Build CLI (`grok`), driven over ACP via
-	// `grok agent --always-approve stdio`. MULTICA_GROK_MODEL seeds the
+	// `grok agent --always-approve stdio`. LUMEN_GROK_MODEL seeds the
 	// daemon-wide default (e.g. grok-4.5).
-	if e, ok := probe("MULTICA_GROK_PATH", "grok", "MULTICA_GROK_MODEL"); ok {
+	if e, ok := probe("LUMEN_GROK_PATH", "grok", "LUMEN_GROK_MODEL"); ok {
 		agents["grok"] = e
 	}
 	// Qwen Code (`qwen`) runs headlessly with -p and stream-json. Its native
 	// QWEN.md and .qwen/skills task context is prepared by execenv.
-	if e, ok := probe("MULTICA_QWEN_PATH", "qwen", "MULTICA_QWEN_MODEL"); ok {
+	if e, ok := probe("LUMEN_QWEN_PATH", "qwen", "LUMEN_QWEN_MODEL"); ok {
 		agents["qwen"] = e
 	}
 	// QwenPaw (`qwenpaw`) is the QwenPaw CLI agent, driven over ACP via
@@ -308,18 +308,18 @@ var probeAgentCLIs = func() map[string]AgentEntry {
 	// session/set_model (it would rewrite QwenPaw's shared agent config), so
 	// ExecOptions.Model is ignored — see ModelSelectionSupported. Reading one
 	// here would only advertise a knob that silently does nothing.
-	if e, ok := probe("MULTICA_QWENPAW_PATH", "qwenpaw", ""); ok {
+	if e, ok := probe("LUMEN_QWENPAW_PATH", "qwenpaw", ""); ok {
 		agents["qwenpaw"] = e
 	}
 	// Dim (`dim`) is the DimCode CLI agent, driven over ACP via `dim acp`.
-	// MULTICA_DIM_MODEL seeds the daemon-wide default (a model id from the
+	// LUMEN_DIM_MODEL seeds the daemon-wide default (a model id from the
 	// user's logged-in dim catalog).
-	if e, ok := probe("MULTICA_DIM_PATH", "dim", "MULTICA_DIM_MODEL"); ok {
+	if e, ok := probe("LUMEN_DIM_PATH", "dim", "LUMEN_DIM_MODEL"); ok {
 		agents["dim"] = e
 	}
 	// MiniMax Code (`mcode`) exposes an ACP v1 server through `mcode acp`.
 	// Model selection is owned by the MCode runtime, so there is no model env.
-	if e, ok := probe("MULTICA_MCODE_PATH", "mcode", ""); ok {
+	if e, ok := probe("LUMEN_MCODE_PATH", "mcode", ""); ok {
 		agents["mcode"] = e
 	}
 	// ZeroClaw (`zeroclaw`) is a Rust-based generic agent CLI, driven over
@@ -328,7 +328,7 @@ var probeAgentCLIs = func() map[string]AgentEntry {
 	// comes from ZeroClaw's own agent profile and ExecOptions.Model can never
 	// be applied — see ModelSelectionSupported. Reading one here would only
 	// advertise a knob that silently does nothing.
-	if e, ok := probe("MULTICA_ZEROCLAW_PATH", "zeroclaw", ""); ok {
+	if e, ok := probe("LUMEN_ZEROCLAW_PATH", "zeroclaw", ""); ok {
 		agents["zeroclaw"] = e
 	}
 	return agents
@@ -361,7 +361,7 @@ func executableCandidate(path string) bool {
 	return info.Mode().Perm()&0o111 != 0
 }
 
-// dshProbeFrame is the discovery frame a Multica-capable DSH profile prints for
+// dshProbeFrame is the discovery frame a Lumen-capable DSH profile prints for
 // `--probe`. Only these fields are read; the bundle owns everything else.
 type dshProbeFrame struct {
 	Version         int    `json:"v"`
@@ -370,7 +370,7 @@ type dshProbeFrame struct {
 	ProtocolVersion int    `json:"protocol_version"`
 }
 
-// dshProbeVerdict is what `dsh --profile multica --probe` actually said.
+// dshProbeVerdict is what `dsh --profile lumen --probe` actually said.
 //
 // The distinction is the point. "The profile is not installed" is a confirmed,
 // locally repairable fact that justifies installing it and taking a live
@@ -427,17 +427,17 @@ func parseDshProbeFrame(output string) (dshProbeFrame, bool) {
 	return dshProbeFrame{}, false
 }
 
-// probeDshMulticaProfile classifies one `--probe` attempt. See dshProbeVerdict
+// probeDshLumenProfile classifies one `--probe` attempt. See dshProbeVerdict
 // for why this is not a bool.
 //
 // Scoped to the caller's context as well as its own timeout: `--probe` boots a
 // whole DSH process, and a round abandoned by a shutting-down daemon should not
 // go on holding one for the rest of the timeout — once per retry, per provider.
-func probeDshMulticaProfile(ctx context.Context, executablePath string) dshProbeVerdict {
+func probeDshLumenProfile(ctx context.Context, executablePath string) dshProbeVerdict {
 	parent := ctx
 	ctx, cancel := context.WithTimeout(parent, dshProbeTimeout)
 	defer cancel()
-	cmd := exec.CommandContext(ctx, executablePath, "--profile", dshMulticaProfileName, "--probe")
+	cmd := exec.CommandContext(ctx, executablePath, "--profile", dshLumenProfileName, "--probe")
 	// processtree, not cmd.Output: `--probe` boots a whole DSH profile, so the
 	// process it starts is a tree. Killing only the direct child leaves
 	// grandchildren holding the stdout pipe open — which is both a leaked
@@ -482,7 +482,7 @@ func probeDshMulticaProfile(ctx context.Context, executablePath string) dshProbe
 	// refuses to boot, so a confirmed-absent one is evidence, not a guess —
 	// while a manifest that IS present keeps every failure transient, which is
 	// what protects a working install from being overwritten during an upgrade.
-	if !dshMulticaProfilePresent() {
+	if !dshLumenProfilePresent() {
 		return dshProbeMissingProfile
 	}
 	return dshProbeUnavailable

@@ -7,7 +7,7 @@ import (
 	"time"
 
 	"github.com/golang-jwt/jwt/v5"
-	"github.com/multica-ai/multica/server/internal/auth"
+	"github.com/lumen-ai/lumen/server/internal/auth"
 )
 
 type sessionRenewedCtxKey struct{}

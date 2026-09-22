@@ -13,7 +13,7 @@ import (
 	"log/slog"
 	"testing"
 
-	"github.com/multica-ai/multica/server/internal/integrations/channel"
+	"github.com/lumen-ai/lumen/server/internal/integrations/channel"
 )
 
 func testChannel(handler channel.InboundHandler) *wecomChannel {

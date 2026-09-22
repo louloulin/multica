@@ -3,7 +3,7 @@ import type {
   Issue,
   SearchIssueResult,
   SearchProjectResult,
-} from "@multica/core/types";
+} from "@lumen/core/types";
 import { buildSearchRows } from "./search-rows";
 
 function issue(
