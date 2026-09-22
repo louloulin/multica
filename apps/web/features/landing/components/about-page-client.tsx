@@ -22,21 +22,9 @@ export function AboutPageClient() {
             <p>
               {n.prefix}
               <strong className="font-semibold text-[#0a0d12]">
-                {n.mult}
+                {n.emphasis}
               </strong>
-              {n.iplexed}
-              <strong className="font-semibold text-[#0a0d12]">
-                {n.i}
-              </strong>
-              {n.nformationAnd}
-              <strong className="font-semibold text-[#0a0d12]">
-                {n.c}
-              </strong>
-              {n.omputing}
-              <strong className="font-semibold text-[#0a0d12]">
-                {n.a}
-              </strong>
-              {n.gent}
+              {n.rest}
             </p>
             {t.about.paragraphs.map((p, i) => (
               <p key={i}>{p}</p>

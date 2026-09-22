@@ -106,14 +106,8 @@ export type LandingDict = {
     title: string;
     nameLine: {
       prefix: string;
-      mult: string;
-      iplexed: string;
-      i: string;
-      nformationAnd: string;
-      c: string;
-      omputing: string;
-      a: string;
-      gent: string;
+      emphasis: string;
+      rest: string;
     };
     paragraphs: string[];
     cta: string;

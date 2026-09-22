@@ -4,7 +4,7 @@ import { AboutPageClient } from "@/features/landing/components/about-page-client
 export const metadata: Metadata = {
   title: "About",
   description:
-    "Learn about Lumen — multiplexed information and computing agent. An open-source project management platform for human + agent teams.",
+    "Lumen — Latin for light, the SI unit of luminous flux. An open-source project management platform for human + agent teams.",
   openGraph: {
     title: "About Lumen",
     description:
