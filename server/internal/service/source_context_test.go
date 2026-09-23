@@ -59,7 +59,7 @@ func (s *sourceContextObjectStoreFake) DeleteObject(_ context.Context, key strin
 func sourceContextTestSnapshot() SourceContextSnapshot {
 	return SourceContextSnapshot{
 		SourceIssue: SourceContextIssueSnapshot{
-			ID: "11111111-1111-4111-8111-111111111111", Identifier: "MUL-1", Number: 1,
+			ID: "11111111-1111-4111-8111-111111111111", Identifier: "LUM-1", Number: 1,
 			Title: "Source", CreatedAt: "2026-08-21T00:00:00Z", UpdatedAt: "2026-08-21T01:00:00Z", Revision: 4,
 		},
 		CommentThread: []SourceContextCommentSnapshot{{

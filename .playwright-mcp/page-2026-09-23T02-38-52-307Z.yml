@@ -1,0 +1,35 @@
+- generic [active] [ref=f7e1]:
+  - generic [ref=f7e114]:
+    - complementary [ref=f7e115]:
+      - generic [ref=f7e117]:
+        - generic [ref=f7e118]:
+          - generic [ref=f7e119]: Lumen
+          - button "返回" [ref=f7e123]
+        - group "引导步骤" [ref=f7e125]:
+          - navigation [ref=f7e126]:
+            - button [ref=f7e218]:
+              - heading "关于你" [level=3] [ref=f7e224]
+            - heading "工作区" [level=3] [ref=f7e140]
+            - generic [ref=f7e143]:
+              - generic [ref=f7e144]: "3"
+              - heading "认识 Mika" [level=3] [ref=f7e147]
+        - button "退出登录" [ref=f7e149]
+    - main [ref=f7e150]:
+      - generic [ref=f7e151]:
+        - generic [ref=f7e226]:
+          - generic [ref=f7e227]:
+            - heading "继续 Lumen Demo，或新建一个。" [level=1] [ref=f7e228]
+            - paragraph [ref=f7e229]: 用已有的工作区继续，或者另建一个新的——你可以同时属于多个工作区。
+          - generic [ref=f7e231]:
+            - radio "L Lumen Demo localhost:13949/lumen-demo" [ref=f7e232]:
+              - generic [ref=f7e233]: L
+              - generic [ref=f7e234]:
+                - generic [ref=f7e235]: Lumen Demo
+                - generic [ref=f7e236]: localhost:13949/lumen-demo
+            - radio "创建一个新工作区" [ref=f7e239]
+        - generic [ref=f7e245]:
+          - paragraph [ref=f7e246]: 选择你的工作区或开一个新的。
+          - button "继续" [disabled]
+  - region "Notifications alt+T"
+  - button "Open Next.js Dev Tools" [ref=f7e7] [cursor=pointer]
+  - alert [ref=f7e111]

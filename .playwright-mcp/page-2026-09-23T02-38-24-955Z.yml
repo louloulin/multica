@@ -1,0 +1,52 @@
+- generic [active] [ref=f7e1]:
+  - generic [ref=f7e114]:
+    - complementary [ref=f7e115]:
+      - generic [ref=f7e117]:
+        - generic [ref=f7e118]:
+          - generic [ref=f7e119]: Lumen
+          - button "返回" [ref=f7e123]
+        - group "引导步骤" [ref=f7e125]:
+          - navigation [ref=f7e126]:
+            - heading "关于你" [level=3] [ref=f7e133]
+            - generic [ref=f7e136]:
+              - generic [ref=f7e137]: "2"
+              - heading "工作区" [level=3] [ref=f7e140]
+            - generic [ref=f7e143]:
+              - generic [ref=f7e144]: "3"
+              - heading "认识 Mika" [level=3] [ref=f7e147]
+        - button "退出登录" [ref=f7e149]
+    - main [ref=f7e150]:
+      - generic [ref=f7e151]:
+        - generic [ref=f7e152]:
+          - heading "简单介绍一下你自己。" [level=1] [ref=f7e154]
+          - generic [ref=f7e155]:
+            - heading "哪一项最符合你？" [level=2] [ref=f7e156]
+            - radiogroup "哪一项最符合你？" [ref=f7e157]:
+              - radio "工程师 / 开发者" [ref=f7e158]
+              - radio "产品经理" [ref=f7e161]
+              - radio "设计师" [ref=f7e164]
+              - radio "创始人 / 高管" [ref=f7e167]
+              - radio "市场 / 增长" [ref=f7e170]
+              - radio "写作 / 内容" [ref=f7e173]
+              - radio "研究员 / 分析师" [ref=f7e176]
+              - radio "运营 / 项目管理" [ref=f7e179]
+              - radio "学生 / 个人使用" [ref=f7e182]
+              - radio "其他" [ref=f7e185]
+          - generic [ref=f7e188]:
+            - heading "你打算用 Lumen 做什么？" [level=2] [ref=f7e189]
+            - group "你打算用 Lumen 做什么？" [ref=f7e190]:
+              - checkbox "让 AI 智能体帮我写代码" [ref=f7e191]
+              - checkbox "给团队做任务管理" [ref=f7e194]
+              - checkbox "管理我自己的任务" [ref=f7e197]
+              - checkbox "计划、头脑风暴、调研" [ref=f7e200]
+              - checkbox "写作、编辑、发布" [ref=f7e203]
+              - checkbox "自动化日常运营" [ref=f7e206]
+              - checkbox "只是随便看看" [ref=f7e209]
+              - checkbox "其他" [ref=f7e212]
+        - generic [ref=f7e215]:
+          - paragraph [ref=f7e216]: 可跳过。
+          - button "继续" [disabled]
+          - button "跳过" [ref=f7e217]
+  - region "Notifications alt+T"
+  - button "Open Next.js Dev Tools" [ref=f7e7] [cursor=pointer]
+  - alert [ref=f7e111]

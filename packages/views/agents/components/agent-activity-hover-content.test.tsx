@@ -216,7 +216,7 @@ describe("WorkspaceAgentActivityHoverContent", () => {
     // perceived. The card only ever describes what IS counted.
     renderWithI18n(
       <WorkspaceAgentActivityHoverContent
-        issues={[makeIssue("i-1", "MUL-1", "One")]}
+        issues={[makeIssue("i-1", "LUM-1", "One")]}
         tasksByIssueId={
           new Map([["i-1", [makeTask({ id: "t1", issue_id: "i-1" })]]])
         }
@@ -244,7 +244,7 @@ describe("WorkspaceAgentActivityHoverContent", () => {
   it("renders the Chinese copy for the counted units", () => {
     renderWithI18n(
       <WorkspaceAgentActivityHoverContent
-        issues={[makeIssue("i-1", "MUL-1", "One")]}
+        issues={[makeIssue("i-1", "LUM-1", "One")]}
         tasksByIssueId={
           new Map([["i-1", [makeTask({ id: "t1", issue_id: "i-1" })]]])
         }

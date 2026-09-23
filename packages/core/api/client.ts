@@ -1324,7 +1324,7 @@ export class ApiClient {
   }
 
   /**
-   * Fetch one issue by UUID **or** by bare identifier ("MUL-123"): the server
+   * Fetch one issue by UUID **or** by bare identifier ("LUM-123"): the server
    * resolves `PREFIX-NUMBER` against the workspace's own prefix through the
    * unique `(workspace_id, number)` index, and 404s on a wrong prefix or a
    * missing number.

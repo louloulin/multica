@@ -515,13 +515,13 @@ describe("navigateActiveSession", () => {
     store.navigateActiveSession("/acme/issues/issue-1");
     const active = getActiveTab(useTabStore.getState())!;
 
-    store.updateTab(active.id, { title: "MUL-1: Fix history" });
+    store.updateTab(active.id, { title: "LUM-1: Fix history" });
 
     expect(
       useTabStore.getState().byWorkspace.acme.browsingHistoryTitles,
     ).toEqual({
       "/acme/issues": "Issues",
-      "/acme/issues/issue-1": "MUL-1: Fix history",
+      "/acme/issues/issue-1": "LUM-1: Fix history",
     });
   });
 
@@ -1527,7 +1527,7 @@ describe("mergePersistedTabs (rehydration, MUL-4370)", () => {
             activeTabId: "t1",
             tabs: [
               persistedTab("/acme/issues/issue-1", {
-                title: "MUL-1: Fix history",
+                title: "LUM-1: Fix history",
               }),
             ],
             browsingHistory: [
@@ -1535,7 +1535,7 @@ describe("mergePersistedTabs (rehydration, MUL-4370)", () => {
               "/acme/projects",
             ],
             browsingHistoryTitles: {
-              "/acme/issues/issue-1": "MUL-1: Fix history",
+              "/acme/issues/issue-1": "LUM-1: Fix history",
               "/acme/projects": "Projects",
               "/other/issues/issue-2": "Other workspace",
               "/acme/agents": 7,
@@ -1547,7 +1547,7 @@ describe("mergePersistedTabs (rehydration, MUL-4370)", () => {
     );
 
     expect(result.byWorkspace.acme.browsingHistoryTitles).toEqual({
-      "/acme/issues/issue-1": "MUL-1: Fix history",
+      "/acme/issues/issue-1": "LUM-1: Fix history",
       "/acme/projects": "Projects",
     });
   });
@@ -1561,7 +1561,7 @@ describe("mergePersistedTabs (rehydration, MUL-4370)", () => {
             activeTabId: "t1",
             tabs: [
               persistedTab("/acme/issues/issue-1", {
-                title: "MUL-1: Fix history",
+                title: "LUM-1: Fix history",
               }),
             ],
             browsingHistory: ["/acme/issues/issue-1"],
@@ -1572,7 +1572,7 @@ describe("mergePersistedTabs (rehydration, MUL-4370)", () => {
     );
 
     expect(result.byWorkspace.acme.browsingHistoryTitles).toEqual({
-      "/acme/issues/issue-1": "MUL-1: Fix history",
+      "/acme/issues/issue-1": "LUM-1: Fix history",
     });
   });
 });

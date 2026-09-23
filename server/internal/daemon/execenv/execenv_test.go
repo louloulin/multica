@@ -6540,7 +6540,7 @@ func TestPrepareRefusesEnvRootOwnedByAnotherTask(t *testing.T) {
 		WorkspaceID:     "ws-owned",
 		WorkspaceSlug:   "Owned Workspace",
 		TaskID:          taskID,
-		IssueIdentifier: "MUL-1",
+		IssueIdentifier: "LUM-1",
 	})
 	if err := os.MkdirAll(filepath.Join(envRoot, "workdir"), 0o755); err != nil {
 		t.Fatalf("seed env root: %v", err)
@@ -6558,7 +6558,7 @@ func TestPrepareRefusesEnvRootOwnedByAnotherTask(t *testing.T) {
 		WorkspaceID:     "ws-owned",
 		WorkspaceSlug:   "Owned Workspace",
 		TaskID:          taskID,
-		IssueIdentifier: "MUL-1",
+		IssueIdentifier: "LUM-1",
 		AgentName:       "Intruder",
 		Task:            TaskContextForEnv{IssueID: taskID},
 	}, testLogger())

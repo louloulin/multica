@@ -185,7 +185,7 @@ export function StepWelcome({
 
 /**
  * A day in a solo user's multi-agent workspace. Five activity cards
- * woven through 3 shared issues (MCA-42 appears 3×) so the reader can
+ * woven through 3 shared issues (LUM-42 appears 3×) so the reader can
  * *see* agents referencing each other's work — the product's
  * "one workspace, shared context" thesis rendered concretely.
  *
@@ -203,7 +203,7 @@ function WelcomeIllustration() {
           name: t(($) => $.welcome.illustration.card1_actor_name),
           initial: t(($) => $.welcome.illustration.card1_actor_initial),
         }}
-        issueId="MCA-42"
+        issueId="LUM-42"
         content={
           <>
             <Mention>{t(($) => $.welcome.illustration.card1_mention_content)}</Mention>
@@ -220,7 +220,7 @@ function WelcomeIllustration() {
           name: t(($) => $.welcome.illustration.card2_actor_name),
           provider: "codex",
         }}
-        issueId="MCA-42"
+        issueId="LUM-42"
         content={t(($) => $.welcome.illustration.card2_body)}
         status="in_progress"
       />
@@ -231,7 +231,7 @@ function WelcomeIllustration() {
           name: t(($) => $.welcome.illustration.card3_actor_name),
           provider: "hermes",
         }}
-        issueId="MCA-38"
+        issueId="LUM-38"
         content={t(($) => $.welcome.illustration.card3_body)}
         status="done"
         timestamp={t(($) => $.welcome.illustration.card3_timestamp)}
@@ -243,7 +243,7 @@ function WelcomeIllustration() {
           name: t(($) => $.welcome.illustration.card4_actor_name),
           provider: "openclaw",
         }}
-        issueId="MCA-42"
+        issueId="LUM-42"
         content={t(($) => $.welcome.illustration.card4_body)}
         status="in_review"
       />
@@ -254,7 +254,7 @@ function WelcomeIllustration() {
           name: t(($) => $.welcome.illustration.card5_actor_name),
           provider: "claude",
         }}
-        issueId="MCA-35"
+        issueId="LUM-35"
         content={
           <>
             {t(($) => $.welcome.illustration.card5_body_prefix)}

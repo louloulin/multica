@@ -127,7 +127,7 @@ export const issueKeys = {
     ] as const,
   detail: (wsId: string, id: string) =>
     [...issueKeys.all(wsId), "detail", id] as const,
-  /** Resolve a bare issue identifier (e.g. "MUL-123") to an issue. */
+  /** Resolve a bare issue identifier (e.g. "LUM-123") to an issue. */
   identifier: (wsId: string, identifier: string) =>
     [...issueKeys.all(wsId), "identifier", identifier] as const,
   /** Prefix for every per-parent children query in a workspace. */
@@ -438,7 +438,7 @@ export function issueDetailOptions(wsId: string, id: string) {
 }
 
 /**
- * Resolve a bare issue identifier ("MUL-123") to its issue, or `null`.
+ * Resolve a bare issue identifier ("LUM-123") to its issue, or `null`.
  *
  * Backs the Linear-style autolink. This is an EXACT lookup, so it goes to
  * `GET /api/issues/{identifier}` — the server parses `PREFIX-NUMBER`, checks

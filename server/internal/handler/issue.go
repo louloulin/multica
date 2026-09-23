@@ -659,14 +659,14 @@ func splitSearchTerms(q string) []string {
 	return terms
 }
 
-// identifierNumberRe matches patterns like "MUL-123" or "ABC-45".
+// identifierNumberRe matches patterns like "LUM-123" or "ABC-45".
 var identifierNumberRe = regexp.MustCompile(`(?i)^[a-z]+-(\d+)$`)
 
 // parseQueryNumber extracts an issue number from the query if it looks like
-// an identifier (e.g. "MUL-123") or a bare number (e.g. "123").
+// an identifier (e.g. "LUM-123") or a bare number (e.g. "123").
 func parseQueryNumber(q string) (int, bool) {
 	q = strings.TrimSpace(q)
-	// Check for identifier pattern like "MUL-123"
+	// Check for identifier pattern like "LUM-123"
 	if m := identifierNumberRe.FindStringSubmatch(q); m != nil {
 		if n, err := strconv.Atoi(m[1]); err == nil && n > 0 {
 			return n, true
@@ -3732,7 +3732,7 @@ func (h *Handler) UpdateIssue(w http.ResponseWriter, r *http.Request) {
 			}
 			// Cannot set self as parent. Compare against prevIssue.ID (the
 			// resolved entity), not the raw URL string — `id` may be an
-			// identifier like "MUL-7".
+			// identifier like "LUM-7".
 			if newParentID == prevIssue.ID {
 				writeError(w, http.StatusBadRequest, "an issue cannot be its own parent")
 				return
@@ -4180,7 +4180,7 @@ func (h *Handler) DeleteIssue(w http.ResponseWriter, r *http.Request) {
 	userID := requestUserID(r)
 	actorType, actorID := h.resolveActor(r, userID, uuidToString(issue.WorkspaceID))
 	// Always emit the resolved UUID — frontend caches key by UUID, so an
-	// identifier-style payload ("MUL-123") would leave stale entries on
+	// identifier-style payload ("LUM-123") would leave stale entries on
 	// other clients after an identifier-path delete.
 	resolvedID := uuidToString(issue.ID)
 	h.publish(protocol.EventIssueDeleted, uuidToString(issue.WorkspaceID), actorType, actorID, map[string]any{"issue_id": resolvedID})

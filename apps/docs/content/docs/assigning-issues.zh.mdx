@@ -71,10 +71,10 @@ Lumen 会为智能体创建一条[运行](/tasks)。在线运行时领取运行�
 ## 使用 CLI
 
 ```bash
-lumen issue assign MUL-42 --to "Agent name"
-lumen issue assign MUL-42 --to-id <agent-uuid> --no-start
-lumen issue status MUL-42 in_progress --no-start
-lumen issue assign MUL-42 --unassign
+lumen issue assign LUM-42 --to "Agent name"
+lumen issue assign LUM-42 --to-id <agent-uuid> --no-start
+lumen issue status LUM-42 in_progress --no-start
+lumen issue assign LUM-42 --unassign
 ```
 
 脚本中用 `--to-id <uuid>` 可避免同名对象匹配错误。UUID 通过 `lumen agent list --output json` 或 `lumen workspace member list --output json` 查看。

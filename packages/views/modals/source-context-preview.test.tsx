@@ -12,7 +12,7 @@ describe("SourceContextPreviewCard", () => {
       <I18nProvider locale="en" resources={{ en: { issues: enIssues } }}>
         <SourceContextPreviewCard preview={{
           source_issue: {
-            id: "issue-1", identifier: "MUL-1", number: 1, title: "Source",
+            id: "issue-1", identifier: "LUM-1", number: 1, title: "Source",
             description: null, created_at: "now", updated_at: "now", revision: 1,
             attachments: [],
           },
@@ -30,7 +30,7 @@ describe("SourceContextPreviewCard", () => {
     );
 
     expect(screen.getByText(
-      "Context from MUL-1 · issue description + 2 comments",
+      "Context from LUM-1 · issue description + 2 comments",
     )).toBeInTheDocument();
   });
 
@@ -39,7 +39,7 @@ describe("SourceContextPreviewCard", () => {
       <I18nProvider locale="en" resources={{ en: { issues: enIssues } }}>
         <SourceContextPreviewCard preview={{
           source_issue: {
-            id: "issue-1", identifier: "MUL-1", number: 1, title: "Source",
+            id: "issue-1", identifier: "LUM-1", number: 1, title: "Source",
             description: "Issue description", created_at: "now", updated_at: "now", revision: 1,
             attachments: [{
               id: "issue-attachment", owner_type: "issue", owner_id: "issue-1",
@@ -64,7 +64,7 @@ describe("SourceContextPreviewCard", () => {
       </I18nProvider>,
     );
 
-    fireEvent.click(screen.getByRole("button", { name: /Context from MUL-1/ }));
+    fireEvent.click(screen.getByRole("button", { name: /Context from LUM-1/ }));
     expect(screen.getByText("Issue description")).toBeInTheDocument();
     expect(screen.getByText("Quoted context")).toBeInTheDocument();
     expect(screen.queryByText("issue-attachment.txt")).not.toBeInTheDocument();

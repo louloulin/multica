@@ -9,7 +9,7 @@ import { Callout } from "fumadocs-ui/components/callout";
 **セルフホスト版 Lumen 専用です。** この連携は Lumen を**自分でデプロイしている**場合のみ利用でき、Lumen Cloud では提供されません。ここでの「セルフホスト」は **Lumen 自体**のセルフホストを意味します。通常は独自ネットワーク内の Git インスタンスへアクセスするために使用します。サーバー運用者が `LUMEN_VCS_INTEGRATION_ENABLED=true` を設定して機能を有効にし、`LUMEN_VCS_SECRET_KEY` も設定する必要があります。それまでは、設定 → 連携にこのセクションは表示されません。
 </Callout>
 
-Lumen はワークスペースごとにセルフホストの Git ホスティング、**Forgejo**、**Gitea**、**GitLab** のいずれかへ接続します。接続後、ブランチ名かタイトルにタスク番号（例: `MUL-123`）を含む Pull Request（GitLab では Merge Request）、または本文で終了キーワードの直後にタスク番号を置いた PR は、対応する[タスク](/issues)へ**自動的に紐づけられ**、タスクサイドバーの **Pull requests** に表示されます。終了キーワードを含む PR がマージされると、タスクは「完了」へ移動します。head commit の CI はカード上のチェックバーとして表示されます。
+Lumen はワークスペースごとにセルフホストの Git ホスティング、**Forgejo**、**Gitea**、**GitLab** のいずれかへ接続します。接続後、ブランチ名かタイトルにタスク番号（例: `LUM-123`）を含む Pull Request（GitLab では Merge Request）、または本文で終了キーワードの直後にタスク番号を置いた PR は、対応する[タスク](/issues)へ**自動的に紐づけられ**、タスクサイドバーの **Pull requests** に表示されます。終了キーワードを含む PR がマージされると、タスクは「完了」へ移動します。head commit の CI はカード上のチェックバーとして表示されます。
 
 これらの Git ホスティングは GitHub と並行して利用でき、1 つのワークスペースで任意に組み合わせられます。
 
@@ -76,7 +76,7 @@ Lumen は保存済みの secret で各 delivery を検証するため、一致�
 ## ミラーされる内容
 
 - **Pull / Merge Request** — open、closed、merged、draft の状態、作成者、ブランチ、および Git ホスティングが提供する場合は diff 統計。
-- **タスクの紐づけ** — タイトルまたはブランチの番号、および本文で終了キーワードの直後に置いた番号で PR をタスクへ紐づけます。本文中の通常の参照では紐づきません。マージ済み PR に終了キーワード（`Closes`/`Fixes`/`Resolves MUL-123`）があり、open の関連 PR が残っていなければ、タスクを「完了」へ移動します。
+- **タスクの紐づけ** — タイトルまたはブランチの番号、および本文で終了キーワードの直後に置いた番号で PR をタスクへ紐づけます。本文中の通常の参照では紐づきません。マージ済み PR に終了キーワード（`Closes`/`Fixes`/`Resolves LUM-123`）があり、open の関連 PR が残っていなければ、タスクを「完了」へ移動します。
 - **CI** — Forgejo/Gitea の commit status と GitLab pipeline を、head commit の成功/失敗/進行中チェックバーへ集約します。
 
 ## エージェントによる Pull Request の作成

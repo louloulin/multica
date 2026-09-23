@@ -14,7 +14,7 @@ function mk(id: string, status: Issue["status"], position: number): Issue {
     status_category: statusCategoryOfKey(status),
     workspace_id: WS_ID,
     number: 1,
-    identifier: `MUL-${id}`,
+    identifier: `LUM-${id}`,
     title: id,
     description: null,
     status,

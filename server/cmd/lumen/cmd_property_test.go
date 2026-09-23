@@ -72,14 +72,14 @@ func TestFormatIssuePropertyValueMultiValueNotArray(t *testing.T) {
 // An actor --value becomes an id through the member list, and the rows
 // printed afterwards turn that id back into a name; one command, one request.
 func TestRunIssuePropertySetSharesMembersRequest(t *testing.T) {
-	srv := newResolveTestServer(t, testIssue("issue-1", "MUL-1", nil))
+	srv := newResolveTestServer(t, testIssue("issue-1", "LUM-1", nil))
 	cmd := &cobra.Command{Use: "set"}
 	cmd.Flags().String("name", "", "")
 	cmd.Flags().String("value", "", "")
 	cmd.Flags().String("output", "json", "")
 	_ = cmd.Flags().Set("name", "Reviewer")
 	_ = cmd.Flags().Set("value", "Ada")
-	out, err := captureStdout(t, func() error { return runIssuePropertySet(cmd, []string{"MUL-1"}) })
+	out, err := captureStdout(t, func() error { return runIssuePropertySet(cmd, []string{"LUM-1"}) })
 	if err != nil {
 		t.Fatalf("runIssuePropertySet: %v", err)
 	}

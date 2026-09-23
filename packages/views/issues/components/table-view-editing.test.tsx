@@ -162,7 +162,7 @@ function makeIssue(id: string, title: string, status: Issue["status"]): Issue {
     id,
     workspace_id: "ws-1",
     number: 1,
-    identifier: `MUL-${id}`,
+    identifier: `LUM-${id}`,
     title,
     description: null,
     status,
@@ -259,8 +259,8 @@ describe("TableView cell editors under data refresh", () => {
       </QueryClientProvider>,
     );
 
-    await screen.findByText("MUL-c");
-    const row = screen.getByText("MUL-c").closest("tr")!;
+    await screen.findByText("LUM-c");
+    const row = screen.getByText("LUM-c").closest("tr")!;
     await user.click(within(row).getByRole("button", { name: /Backlog/ }));
     await user.click(screen.getByRole("button", { name: /^Todo$/ }));
 
@@ -347,11 +347,11 @@ describe("TableView cell editors under data refresh", () => {
 
     const identifiers = () =>
       screen.getAllByText(/^MUL-/).map((node) => node.textContent);
-    await screen.findByText("MUL-a");
-    expect(identifiers()).toEqual(["MUL-a", "MUL-b"]);
+    await screen.findByText("LUM-a");
+    expect(identifiers()).toEqual(["LUM-a", "LUM-b"]);
 
     // Open the status picker on row A: its cell trigger shows "Todo".
-    const rowA = screen.getByText("MUL-a").closest("tr")!;
+    const rowA = screen.getByText("LUM-a").closest("tr")!;
     await user.click(within(rowA).getByRole("button", { name: /Todo/ }));
     // Base UI portals the popup; "Backlog" only exists while it is open.
     expect(screen.getByRole("button", { name: /Backlog/ })).toBeTruthy();
@@ -389,7 +389,7 @@ describe("TableView cell editors under data refresh", () => {
 
     await waitFor(() => {
       expect(screen.getByRole("button", { name: /Backlog/ })).toBeTruthy();
-      expect(identifiers()).toEqual(["MUL-a", "MUL-b"]);
+      expect(identifiers()).toEqual(["LUM-a", "LUM-b"]);
       // …while the VALUES inside the frozen rows keep tracking live data.
       expect(screen.getByText("Alpha task (updated)")).toBeTruthy();
     });
@@ -397,7 +397,7 @@ describe("TableView cell editors under data refresh", () => {
     // Selecting a value closes the editor; the deferred live order applies.
     await user.click(screen.getByRole("button", { name: /Backlog/ }));
     expect(screen.queryByRole("button", { name: /Backlog/ })).toBeNull();
-    expect(identifiers()).toEqual(["MUL-b", "MUL-a"]);
+    expect(identifiers()).toEqual(["LUM-b", "LUM-a"]);
   }, 60_000);
 
   it("opens creation with the row as parent and inherits its project", async () => {
@@ -419,14 +419,14 @@ describe("TableView cell editors under data refresh", () => {
       </QueryClientProvider>,
     );
 
-    const row = (await screen.findByText("MUL-a")).closest("tr")!;
+    const row = (await screen.findByText("LUM-a")).closest("tr")!;
     await user.click(
       within(row).getByRole("button", { name: "Create sub-issue" }),
     );
 
     expect(onCreateIssue).toHaveBeenCalledWith({
       parent_issue_id: "a",
-      parent_issue_identifier: "MUL-a",
+      parent_issue_identifier: "LUM-a",
       project_id: "project-1",
     });
   });
@@ -444,7 +444,7 @@ describe("TableView cell editors under data refresh", () => {
       </QueryClientProvider>,
     );
 
-    const row = (await screen.findByText("MUL-a")).closest("tr")!;
+    const row = (await screen.findByText("LUM-a")).closest("tr")!;
     const title = within(row).getByRole("button", { name: "Alpha task" });
 
     await user.click(title);
@@ -460,14 +460,14 @@ describe("TableView cell editors under data refresh", () => {
     fireEvent.click(title, { metaKey: true });
     expect(navigationMocks.openInNewTab).toHaveBeenCalledWith(
       "/test/issues/a",
-      "MUL-a",
+      "LUM-a",
     );
 
     navigationMocks.openInNewTab.mockClear();
     fireEvent.click(row, { metaKey: true, shiftKey: true });
     expect(navigationMocks.openInNewTab).toHaveBeenCalledWith(
       "/test/issues/a",
-      "MUL-a",
+      "LUM-a",
       { activate: true },
     );
     expect(navigationMocks.push).not.toHaveBeenCalled();
@@ -485,7 +485,7 @@ describe("TableView cell editors under data refresh", () => {
       </QueryClientProvider>,
     );
 
-    const row = (await screen.findByText("MUL-a")).closest("tr")!;
+    const row = (await screen.findByText("LUM-a")).closest("tr")!;
     const auxClick = (el: HTMLElement) =>
       el.dispatchEvent(
         new MouseEvent("auxclick", { bubbles: true, button: 1, cancelable: true }),
@@ -504,7 +504,7 @@ describe("TableView cell editors under data refresh", () => {
     auxClick(row);
     expect(navigationMocks.openInNewTab).toHaveBeenCalledWith(
       "/test/issues/a",
-      "MUL-a",
+      "LUM-a",
     );
   });
 
@@ -524,7 +524,7 @@ describe("TableView cell editors under data refresh", () => {
       </QueryClientProvider>,
     );
 
-    const row = (await screen.findByText("MUL-a")).closest("tr")!;
+    const row = (await screen.findByText("LUM-a")).closest("tr")!;
     const title = within(row).getByRole("button", { name: "Alpha task" });
 
     await user.click(title);

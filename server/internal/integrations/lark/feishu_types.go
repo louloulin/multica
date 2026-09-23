@@ -99,7 +99,7 @@ type DispatchResult struct {
 	TaskID         pgtype.UUID
 	IssueID        pgtype.UUID
 	IssueNumber    int32
-	// IssueIdentifier is the workspace-qualified key ("MUL-42") for the
+	// IssueIdentifier is the workspace-qualified key ("LUM-42") for the
 	// created issue, used verbatim in the confirmation message.
 	IssueIdentifier string
 	// IssueWorkspaceSlug is the workspace route segment used in deep links.

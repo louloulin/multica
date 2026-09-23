@@ -79,7 +79,7 @@ const baseIssue = {
   id: "11111111-1111-1111-1111-111111111111",
   workspace_id: "ws-1",
   number: 1,
-  identifier: "MUL-1",
+  identifier: "LUM-1",
   title: "Test",
   description: null,
   status: "todo",
@@ -231,7 +231,7 @@ describe("IssueSchema (via ListIssuesResponseSchema)", () => {
       },
       snapshot: {
         source_issue: {
-          id: "issue-1", identifier: "MUL-1", number: 1, title: "Source",
+          id: "issue-1", identifier: "LUM-1", number: 1, title: "Source",
           description: null, created_at: "now", updated_at: "now", revision: 1,
           attachments: [],
         },
@@ -377,7 +377,7 @@ describe("SourceContextPreviewSchema", () => {
   it("parses a thread-history preview and rejects a missing token", () => {
     const preview = {
       source_issue: {
-        id: "issue-1", identifier: "MUL-1", number: 1, title: "Source",
+        id: "issue-1", identifier: "LUM-1", number: 1, title: "Source",
         description: null, created_at: "now", updated_at: "now", revision: 1,
         attachments: [],
       },
@@ -397,7 +397,7 @@ describe("SourceContextPreviewSchema", () => {
   it("normalizes null attachment lists from early source-context servers", () => {
     const preview = {
       source_issue: {
-        id: "issue-1", identifier: "MUL-1", number: 1, title: "Source",
+        id: "issue-1", identifier: "LUM-1", number: 1, title: "Source",
         description: null, created_at: "now", updated_at: "now", revision: 1,
         attachments: null,
       },
@@ -931,7 +931,7 @@ describe("DuplicateIssueErrorBodySchema", () => {
     error: "An active issue with this title already exists: MUL-12 – Login bug",
     issue: {
       id: "11111111-1111-1111-1111-111111111111",
-      identifier: "MUL-12",
+      identifier: "LUM-12",
       title: "Login bug",
     },
   };

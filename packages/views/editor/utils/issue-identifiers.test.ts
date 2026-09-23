@@ -29,15 +29,15 @@ describe("preprocessIssueIdentifiers", () => {
   });
 
   it("links identifiers wrapped in prose punctuation", () => {
-    expect(preprocessIssueIdentifiers("(MUL-1) and [MUL-2]")).toContain(
+    expect(preprocessIssueIdentifiers("(MUL-1) and [LUM-2]")).toContain(
       "([MUL-1](mention://issue/MUL-1))",
     );
   });
 
   // --- skip: code -------------------------------------------------------
   it("skips identifiers inside inline code", () => {
-    expect(preprocessIssueIdentifiers("use `MUL-1` here")).toBe(
-      "use `MUL-1` here",
+    expect(preprocessIssueIdentifiers("use `LUM-1` here")).toBe(
+      "use `LUM-1` here",
     );
   });
 
@@ -48,18 +48,18 @@ describe("preprocessIssueIdentifiers", () => {
 
   // --- skip: existing links / mentions ----------------------------------
   it("does not double-process an existing mention link", () => {
-    const input = "[MUL-1](mention://issue/00000000-0000-0000-0000-000000000001)";
+    const input = "[LUM-1](mention://issue/00000000-0000-0000-0000-000000000001)";
     expect(preprocessIssueIdentifiers(input)).toBe(input);
   });
 
   it("skips an identifier used as a markdown link label", () => {
-    const input = "[MUL-1](https://example.com/x)";
+    const input = "[LUM-1](https://example.com/x)";
     expect(preprocessIssueIdentifiers(input)).toBe(input);
   });
 
   // --- skip: urls / filenames / paths -----------------------------------
   it("skips an identifier inside a URL", () => {
-    const input = "https://example.com/board/MUL-1";
+    const input = "https://example.com/board/LUM-1";
     expect(preprocessIssueIdentifiers(input)).toBe(input);
   });
 

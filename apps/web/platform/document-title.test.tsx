@@ -47,8 +47,8 @@ beforeEach(() => {
 
 describe("formatDocumentTitle", () => {
   it("puts the page name in front of the product name", () => {
-    expect(formatDocumentTitle("MUL-123: Fix login")).toBe(
-      "MUL-123: Fix login | Lumen",
+    expect(formatDocumentTitle("LUM-123: Fix login")).toBe(
+      "LUM-123: Fix login | Lumen",
     );
   });
 
@@ -60,10 +60,10 @@ describe("formatDocumentTitle", () => {
   });
 
   it("clips an over-long title and keeps the identifying prefix", () => {
-    const title = `MUL-123: ${"long ".repeat(60)}`;
+    const title = `LUM-123: ${"long ".repeat(60)}`;
     const formatted = formatDocumentTitle(title);
 
-    expect(formatted.startsWith("MUL-123: long")).toBe(true);
+    expect(formatted.startsWith("LUM-123: long")).toBe(true);
     expect(formatted.endsWith("… | Lumen")).toBe(true);
     // Ellipsis replaces the clipped remainder, and no trailing space survives.
     expect(formatted).not.toContain(" … ");
@@ -86,22 +86,22 @@ describe("formatDocumentTitle", () => {
 
 describe("WorkspaceDocumentTitle", () => {
   it("names the tab after the open issue", () => {
-    open("/acme/issues/MUL-123");
-    presentation.title = "MUL-123: Fix login";
+    open("/acme/issues/LUM-123");
+    presentation.title = "LUM-123: Fix login";
 
     render(<WorkspaceDocumentTitle />);
 
-    expect(document.title).toBe("MUL-123: Fix login | Lumen");
+    expect(document.title).toBe("LUM-123: Fix login | Lumen");
   });
 
   it("resolves against the full URL so a container's selection titles the tab", () => {
     open("/acme/inbox", "issue=abc&view=archived");
-    presentation.title = "MUL-9: Ping";
+    presentation.title = "LUM-9: Ping";
 
     render(<WorkspaceDocumentTitle />);
 
     expect(presentation.urls).toContain("/acme/inbox?issue=abc&view=archived");
-    expect(document.title).toBe("MUL-9: Ping | Lumen");
+    expect(document.title).toBe("LUM-9: Ping | Lumen");
   });
 
   it("keeps the site title on an unrecognized route", () => {

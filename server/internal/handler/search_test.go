@@ -182,7 +182,7 @@ func assertSQLBefore(t *testing.T, query, earlier, later string) {
 }
 
 func TestBuildSearchQuery_WithNumber(t *testing.T) {
-	query, args := buildSearchQuery("MUL-42", []string{"MUL-42"}, 42, true, false, []string{"done", "cancelled"})
+	query, args := buildSearchQuery("LUM-42", []string{"LUM-42"}, 42, true, false, []string{"done", "cancelled"})
 
 	_ = args
 	// Number match should be in WHERE.
@@ -490,7 +490,7 @@ func TestBuildSearchQuery_CancelledDirectHitExempt(t *testing.T) {
 		t.Errorf("non-numeric query should not reference i.number in the demotion:\n%s", textOnly)
 	}
 
-	withNumber := buildSearchQueryForTest(t, "MUL-42", []string{"MUL-42"}, 42, true, true)
+	withNumber := buildSearchQueryForTest(t, "LUM-42", []string{"LUM-42"}, 42, true, true)
 	if !strings.Contains(withNumber, "NOT (im.title_exact OR im.number_exact)") {
 		t.Errorf("identifier lookup is not exempt from the cancelled demotion, so MUL-42 sinks below every fuzzy match:\n%s", withNumber)
 	}

@@ -71,10 +71,10 @@ Changing the assignee, unassigning, or changing the issue status doesn't stop a 
 ## Use the CLI
 
 ```bash
-lumen issue assign MUL-42 --to "Agent name"
-lumen issue assign MUL-42 --to-id <agent-uuid> --no-start
-lumen issue status MUL-42 in_progress --no-start
-lumen issue assign MUL-42 --unassign
+lumen issue assign LUM-42 --to "Agent name"
+lumen issue assign LUM-42 --to-id <agent-uuid> --no-start
+lumen issue status LUM-42 in_progress --no-start
+lumen issue assign LUM-42 --unassign
 ```
 
 In scripts, use `--to-id <uuid>` to avoid matching the wrong object with the same name. Look up UUIDs with `lumen agent list --output json` or `lumen workspace member list --output json`.

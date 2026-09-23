@@ -20,11 +20,11 @@ describe("currentPath", () => {
   // MUL-6784: a share/feedback link rebuilt without the fragment silently
   // points at the whole issue instead of the comment the user was reading.
   it("keeps the fragment, with and without a search string", () => {
-    expect(currentPath(location("/acme/issues/MUL-1", "", "#comment-c1"))).toBe(
-      "/acme/issues/MUL-1#comment-c1",
+    expect(currentPath(location("/acme/issues/LUM-1", "", "#comment-c1"))).toBe(
+      "/acme/issues/LUM-1#comment-c1",
     );
     expect(
-      currentPath(location("/acme/issues/MUL-1", "tab=activity", "#comment-c1")),
-    ).toBe("/acme/issues/MUL-1?tab=activity#comment-c1");
+      currentPath(location("/acme/issues/LUM-1", "tab=activity", "#comment-c1")),
+    ).toBe("/acme/issues/LUM-1?tab=activity#comment-c1");
   });
 });

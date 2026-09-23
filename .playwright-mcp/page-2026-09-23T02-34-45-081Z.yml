@@ -1,0 +1,52 @@
+- generic [active] [ref=f4e1]:
+  - generic [ref=f4e114]:
+    - complementary [ref=f4e115]:
+      - generic [ref=f4e117]:
+        - generic [ref=f4e118]:
+          - generic [ref=f4e119]: Lumen
+          - button "返回" [ref=f4e123]
+        - group "引导步骤" [ref=f4e125]:
+          - navigation [ref=f4e126]:
+            - heading "关于你" [level=3] [ref=f4e133]
+            - generic [ref=f4e136]:
+              - generic [ref=f4e137]: "2"
+              - heading "工作区" [level=3] [ref=f4e140]
+            - generic [ref=f4e143]:
+              - generic [ref=f4e144]: "3"
+              - heading "认识 Mika" [level=3] [ref=f4e147]
+        - button "退出登录" [ref=f4e149]
+    - main [ref=f4e150]:
+      - generic [ref=f4e151]:
+        - generic [ref=f4e152]:
+          - heading "简单介绍一下你自己。" [level=1] [ref=f4e154]
+          - generic [ref=f4e155]:
+            - heading "哪一项最符合你？" [level=2] [ref=f4e156]
+            - radiogroup "哪一项最符合你？" [ref=f4e157]:
+              - radio "工程师 / 开发者" [ref=f4e158]
+              - radio "产品经理" [ref=f4e161]
+              - radio "设计师" [ref=f4e164]
+              - radio "创始人 / 高管" [ref=f4e167]
+              - radio "市场 / 增长" [ref=f4e170]
+              - radio "写作 / 内容" [ref=f4e173]
+              - radio "研究员 / 分析师" [ref=f4e176]
+              - radio "运营 / 项目管理" [ref=f4e179]
+              - radio "学生 / 个人使用" [ref=f4e182]
+              - radio "其他" [ref=f4e185]
+          - generic [ref=f4e188]:
+            - heading "你打算用 Lumen 做什么？" [level=2] [ref=f4e189]
+            - group "你打算用 Lumen 做什么？" [ref=f4e190]:
+              - checkbox "让 AI 智能体帮我写代码" [ref=f4e191]
+              - checkbox "给团队做任务管理" [ref=f4e194]
+              - checkbox "管理我自己的任务" [ref=f4e197]
+              - checkbox "计划、头脑风暴、调研" [ref=f4e200]
+              - checkbox "写作、编辑、发布" [ref=f4e203]
+              - checkbox "自动化日常运营" [ref=f4e206]
+              - checkbox "只是随便看看" [ref=f4e209]
+              - checkbox "其他" [ref=f4e212]
+        - generic [ref=f4e215]:
+          - paragraph [ref=f4e216]: 可跳过。
+          - button "继续" [disabled]
+          - button "跳过" [ref=f4e217]
+  - region "Notifications alt+T"
+  - button "Open Next.js Dev Tools" [ref=f4e7] [cursor=pointer]
+  - alert [ref=f4e11]: Lumen — Project Management for Human + Agent Teams

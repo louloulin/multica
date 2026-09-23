@@ -30,8 +30,8 @@ afterEach(() => {
 describe("toInternalAppPath", () => {
   it("returns the path (with search and hash) for a URL on the app origin", () => {
     expect(
-      toInternalAppPath(`${APP_ORIGIN}/acme/issues/MUL-1?tab=a#c`, APP_ORIGIN),
-    ).toBe("/acme/issues/MUL-1?tab=a#c");
+      toInternalAppPath(`${APP_ORIGIN}/acme/issues/LUM-1?tab=a#c`, APP_ORIGIN),
+    ).toBe("/acme/issues/LUM-1?tab=a#c");
   });
 
   it("returns null for another origin", () => {
@@ -75,14 +75,14 @@ describe("toInternalAppPath", () => {
 
 describe("openLink", () => {
   it("navigates in-app for a URL pointing back at this deployment (MUL-5208)", () => {
-    openLink(`${APP_ORIGIN}/acme/issues/MUL-1`, "acme", APP_ORIGIN);
-    expect(navigatedPaths()).toEqual(["/acme/issues/MUL-1"]);
+    openLink(`${APP_ORIGIN}/acme/issues/LUM-1`, "acme", APP_ORIGIN);
+    expect(navigatedPaths()).toEqual(["/acme/issues/LUM-1"]);
     expect(openSpy).not.toHaveBeenCalled();
   });
 
   it("navigates in-app for a cross-workspace app URL without rewriting the slug", () => {
-    openLink(`${APP_ORIGIN}/other/issues/MUL-1`, "acme", APP_ORIGIN);
-    expect(navigatedPaths()).toEqual(["/other/issues/MUL-1"]);
+    openLink(`${APP_ORIGIN}/other/issues/LUM-1`, "acme", APP_ORIGIN);
+    expect(navigatedPaths()).toEqual(["/other/issues/LUM-1"]);
   });
 
   it("opens an external URL in a new window", () => {
@@ -96,30 +96,30 @@ describe("openLink", () => {
   });
 
   it("still opens an app URL externally when no app origin is known", () => {
-    openLink(`${APP_ORIGIN}/acme/issues/MUL-1`, "acme");
+    openLink(`${APP_ORIGIN}/acme/issues/LUM-1`, "acme");
     expect(dispatched).toHaveLength(0);
     expect(openSpy).toHaveBeenCalled();
   });
 
   it("prefixes the current slug on a slugless workspace path", () => {
-    openLink("/issues/MUL-1", "acme", APP_ORIGIN);
-    expect(navigatedPaths()).toEqual(["/acme/issues/MUL-1"]);
+    openLink("/issues/LUM-1", "acme", APP_ORIGIN);
+    expect(navigatedPaths()).toEqual(["/acme/issues/LUM-1"]);
   });
 
   it("leaves a path that already carries a slug alone", () => {
-    openLink("/other/issues/MUL-1", "acme", APP_ORIGIN);
-    expect(navigatedPaths()).toEqual(["/other/issues/MUL-1"]);
+    openLink("/other/issues/LUM-1", "acme", APP_ORIGIN);
+    expect(navigatedPaths()).toEqual(["/other/issues/LUM-1"]);
   });
 
   it("defaults the disposition to push and carries an explicit click intent through the event", () => {
-    openLink("/acme/issues/MUL-1", "acme", APP_ORIGIN);
-    openLink("/acme/issues/MUL-2", "acme", APP_ORIGIN, "background-tab");
+    openLink("/acme/issues/LUM-1", "acme", APP_ORIGIN);
+    openLink("/acme/issues/LUM-2", "acme", APP_ORIGIN, "background-tab");
     const details = dispatched.map(
       (e) => (e as CustomEvent<{ path: string; disposition: string }>).detail,
     );
     expect(details).toEqual([
-      { path: "/acme/issues/MUL-1", disposition: "push" },
-      { path: "/acme/issues/MUL-2", disposition: "background-tab" },
+      { path: "/acme/issues/LUM-1", disposition: "push" },
+      { path: "/acme/issues/LUM-2", disposition: "background-tab" },
     ]);
   });
 
@@ -233,9 +233,9 @@ describe("parseWorkspaceEntityLink", () => {
   // the issue route rewrites a UUID URL back to the identifier, so this — not
   // the UUID form — is what a user actually copies out of the app.
   it("parses an issue addressed by identifier", () => {
-    expect(parseWorkspaceEntityLink("/acme/issues/MUL-1")).toEqual({
+    expect(parseWorkspaceEntityLink("/acme/issues/LUM-1")).toEqual({
       kind: "issue",
-      id: "MUL-1",
+      id: "LUM-1",
       slug: "acme",
     });
   });
@@ -243,7 +243,7 @@ describe("parseWorkspaceEntityLink", () => {
   // A project has no shorthand, so an identifier-shaped id under /projects/
   // addresses nothing this parser could resolve.
   it("returns null for an identifier-shaped project id", () => {
-    expect(parseWorkspaceEntityLink("/acme/projects/MUL-1")).toBeNull();
+    expect(parseWorkspaceEntityLink("/acme/projects/LUM-1")).toBeNull();
   });
 
   it("returns null for an id that is neither a UUID nor an identifier", () => {

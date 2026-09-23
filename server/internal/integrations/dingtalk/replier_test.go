@@ -16,7 +16,7 @@ import (
 
 func TestIssueCreatedText(t *testing.T) {
 	issueID := pgtype.UUID{Valid: true}
-	if got := issueCreatedText(engine.Result{IssueID: issueID, IssueIdentifier: "MUL-42", IssueTitle: "Fix login"}, ""); got != "✅ Created MUL-42 — Fix login" {
+	if got := issueCreatedText(engine.Result{IssueID: issueID, IssueIdentifier: "LUM-42", IssueTitle: "Fix login"}, ""); got != "✅ Created MUL-42 — Fix login" {
 		t.Fatalf("got %q", got)
 	}
 	if got := issueCreatedText(engine.Result{IssueID: issueID, IssueNumber: 7}, ""); got != "✅ Created #7" {
@@ -27,7 +27,7 @@ func TestIssueCreatedText(t *testing.T) {
 func TestIssueDuplicateText(t *testing.T) {
 	issueID := pgtype.UUID{Bytes: [16]byte{9}, Valid: true}
 	got := issueDuplicateText(engine.Result{
-		IssueID: issueID, IssueIdentifier: "MUL-42", IssueTitle: "Fix login", IssueDuplicate: true,
+		IssueID: issueID, IssueIdentifier: "LUM-42", IssueTitle: "Fix login", IssueDuplicate: true,
 	}, "")
 	if got != "⚠️ Not created — active issue MUL-42 already exists: Fix login" {
 		t.Fatalf("duplicate text = %q", got)
@@ -81,9 +81,9 @@ func TestReplierCommandConfirmationsKeepSuccessMarker(t *testing.T) {
 	}{
 		{name: "clear", result: engine.Result{Outcome: engine.OutcomeFreshPending}, text: "Fresh start ready. Your next chat message will run without previous context.", success: true},
 		{name: "new", result: engine.Result{Outcome: engine.OutcomeChatStarted}, text: "Started a new Lumen chat. Your next message will enter it.", success: true},
-		{name: "issue", result: engine.Result{Outcome: engine.OutcomeIngested, IssueID: pgtype.UUID{Valid: true}, IssueWorkspaceSlug: "team-b", IssueIdentifier: "MUL-42", IssueTitle: "✅ Keep this title"}, text: "Created [MUL\\-42](https://lumen.example/team-b/issues/00000000-0000-0000-0000-000000000000) — ✅ Keep this title", success: true},
+		{name: "issue", result: engine.Result{Outcome: engine.OutcomeIngested, IssueID: pgtype.UUID{Valid: true}, IssueWorkspaceSlug: "team-b", IssueIdentifier: "LUM-42", IssueTitle: "✅ Keep this title"}, text: "Created [MUL\\-42](https://lumen.example/team-b/issues/00000000-0000-0000-0000-000000000000) — ✅ Keep this title", success: true},
 		{name: "issue without title", result: engine.Result{Outcome: engine.OutcomeIngested, IssueID: pgtype.UUID{Valid: true}, IssueWorkspaceSlug: "team-b", IssueNumber: 7}, text: "Created [\\#7](https://lumen.example/team-b/issues/00000000-0000-0000-0000-000000000000)", success: true},
-		{name: "duplicate issue", result: engine.Result{Outcome: engine.OutcomeIngested, IssueID: pgtype.UUID{Valid: true}, IssueWorkspaceSlug: "team-b", IssueIdentifier: "MUL-42", IssueTitle: "✅ Keep this title", IssueDuplicate: true}, text: "⚠️ Not created — active issue [MUL\\-42](https://lumen.example/team-b/issues/00000000-0000-0000-0000-000000000000) already exists: ✅ Keep this title"},
+		{name: "duplicate issue", result: engine.Result{Outcome: engine.OutcomeIngested, IssueID: pgtype.UUID{Valid: true}, IssueWorkspaceSlug: "team-b", IssueIdentifier: "LUM-42", IssueTitle: "✅ Keep this title", IssueDuplicate: true}, text: "⚠️ Not created — active issue [MUL\\-42](https://lumen.example/team-b/issues/00000000-0000-0000-0000-000000000000) already exists: ✅ Keep this title"},
 		{name: "offline", result: engine.Result{Outcome: engine.OutcomeAgentOffline}, text: "⚠️ The agent is offline, so this message won't be processed automatically."},
 		{name: "ordinary reply", text: "✅ Keep this reply", plainReply: true},
 	} {

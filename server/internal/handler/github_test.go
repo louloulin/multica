@@ -48,12 +48,12 @@ func TestExtractIdentifiers(t *testing.T) {
 		{
 			name: "title_and_body",
 			in:   []string{"Fix MUL-82", "Closes MUL-1510 and ABC-7", ""},
-			want: []string{"MUL-82", "MUL-1510", "ABC-7"},
+			want: []string{"LUM-82", "MUL-1510", "ABC-7"},
 		},
 		{
 			name: "dedupe_across_fields",
-			in:   []string{"MUL-1", "MUL-1 again", "mul-1/branch"},
-			want: []string{"MUL-1"},
+			in:   []string{"LUM-1", "LUM-1 again", "mul-1/branch"},
+			want: []string{"LUM-1"},
 		},
 		{
 			name: "ignore_email_and_versions",
@@ -91,7 +91,7 @@ func TestExtractClosingIdentifiers(t *testing.T) {
 		{
 			name: "single_closes",
 			in:   []string{"", "Closes MUL-1"},
-			want: []string{"MUL-1"},
+			want: []string{"LUM-1"},
 		},
 		{
 			name: "single_character_prefix",
@@ -104,12 +104,12 @@ func TestExtractClosingIdentifiers(t *testing.T) {
 				"",
 				"close MUL-1\nclosed MUL-2\ncloses MUL-3\nfix MUL-4\nfixes MUL-5\nfixed MUL-6\nresolve MUL-7\nresolves MUL-8\nresolved MUL-9",
 			},
-			want: []string{"MUL-1", "MUL-2", "MUL-3", "MUL-4", "MUL-5", "MUL-6", "MUL-7", "MUL-8", "MUL-9"},
+			want: []string{"LUM-1", "LUM-2", "LUM-3", "LUM-4", "LUM-5", "LUM-6", "LUM-7", "LUM-8", "LUM-9"},
 		},
 		{
 			name: "case_insensitive_and_colon",
 			in:   []string{"CLOSES: MUL-1", "Fixes:MUL-2 resolves   MUL-3"},
-			want: []string{"MUL-1", "MUL-2", "MUL-3"},
+			want: []string{"LUM-1", "LUM-2", "LUM-3"},
 		},
 		{
 			name: "bare_reference_does_not_close",
@@ -130,7 +130,7 @@ func TestExtractClosingIdentifiers(t *testing.T) {
 		{
 			name: "dedupe_across_fields",
 			in:   []string{"Closes MUL-1", "fixes mul-1"},
-			want: []string{"MUL-1"},
+			want: []string{"LUM-1"},
 		},
 		{
 			name: "no_match_on_disclosed_or_foreclose",

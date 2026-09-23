@@ -136,7 +136,7 @@ func TestValidateQuickActionPromptRejectsSideEffectMentions(t *testing.T) {
 	}{
 		{"plain prose", "review this code", false},
 		{"an @ that is not mention markup", "ask @someone on the team", false},
-		{"issue mention reaches nobody", "see [MUL-1](mention://issue/" + id + ")", false},
+		{"issue mention reaches nobody", "see [LUM-1](mention://issue/" + id + ")", false},
 		{"member mention pings an inbox on every click", "ask [@Jia](mention://member/" + id + ")", true},
 		{"agent mention would enqueue a second target", "also [@Nova](mention://agent/" + id + ")", true},
 		{"squad mention would enqueue a second target", "also [@Core](mention://squad/" + id + ")", true},

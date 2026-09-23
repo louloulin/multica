@@ -8,7 +8,7 @@
  *
  * Header note: the parent _layout.tsx already declares the `issue/[id]`
  * Stack.Screen with title "Issue". We override that here once the data
- * lands so the navigation bar shows `MUL-123` (Linear-style).
+ * lands so the navigation bar shows `LUM-123` (Linear-style).
  */
 import { useCallback, useEffect } from "react";
 import { ActivityIndicator, Alert, Linking, View } from "react-native";

@@ -264,9 +264,9 @@ describe("current location", () => {
   it("splits the active tab URL into pathname, search and fragment", () => {
     const getAdapter = renderProvider();
 
-    act(() => getAdapter().push("/acme/issues/MUL-1?tab=activity#comment-c1"));
+    act(() => getAdapter().push("/acme/issues/LUM-1?tab=activity#comment-c1"));
 
-    expect(getAdapter().pathname).toBe("/acme/issues/MUL-1");
+    expect(getAdapter().pathname).toBe("/acme/issues/LUM-1");
     expect(getAdapter().searchParams.get("tab")).toBe("activity");
     expect(getAdapter().hash).toBe("#comment-c1");
   });
@@ -274,7 +274,7 @@ describe("current location", () => {
   it('reports "" for a tab URL that carries no fragment', () => {
     const getAdapter = renderProvider();
 
-    act(() => getAdapter().push("/acme/issues/MUL-1?tab=activity"));
+    act(() => getAdapter().push("/acme/issues/LUM-1?tab=activity"));
 
     expect(getAdapter().hash).toBe("");
   });
@@ -282,21 +282,21 @@ describe("current location", () => {
   it("rebuilds the current page as a web URL that keeps the fragment", () => {
     const getAdapter = renderProvider();
 
-    act(() => getAdapter().push("/acme/issues/MUL-1#comment-c1"));
+    act(() => getAdapter().push("/acme/issues/LUM-1#comment-c1"));
 
     const adapter = getAdapter();
     expect(adapter.getShareableUrl(currentPath(adapter))).toBe(
-      "https://app.example/acme/issues/MUL-1#comment-c1",
+      "https://app.example/acme/issues/LUM-1#comment-c1",
     );
   });
 });
 
 describe("routeContentLinkPath (links inside content — MUL-5208)", () => {
   it("opens a same-workspace path in a foreground tab of its own", () => {
-    routeContentLinkPath("/acme/issues/MUL-1");
+    routeContentLinkPath("/acme/issues/LUM-1");
 
     const group = useTabStore.getState().byWorkspace.acme;
-    const opened = group.tabs.find((t) => t.url === "/acme/issues/MUL-1")!;
+    const opened = group.tabs.find((t) => t.url === "/acme/issues/LUM-1")!;
     expect(opened).toBeDefined();
     expect(group.activeTabId).toBe(opened.id);
   });

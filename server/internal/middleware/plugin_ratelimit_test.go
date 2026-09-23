@@ -17,7 +17,7 @@ func TestPluginRateLimitIsPerCredentialAndUsesStableProblem(t *testing.T) {
 	handler := PluginRateLimit(rdb, 1, time.Minute)(okHandler)
 
 	call := func(token string) *httptest.ResponseRecorder {
-		request := httptest.NewRequest(http.MethodGet, "/v1/issues/MUL-1", nil)
+		request := httptest.NewRequest(http.MethodGet, "/v1/issues/LUM-1", nil)
 		request.Header.Set("Authorization", "Bearer "+token)
 		response := httptest.NewRecorder()
 		handler.ServeHTTP(response, request)

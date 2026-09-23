@@ -57,7 +57,7 @@ const sourceContextPanelData = () => ({
   source_context_preview: {
     source_issue: {
       id: "issue-source",
-      identifier: "MUL-9",
+      identifier: "LUM-9",
       number: 9,
       title: "Source",
       description: "Historical body",
@@ -1342,12 +1342,12 @@ describe("CreateIssueModal", () => {
     const user = userEvent.setup();
     const onClose = vi.fn();
     mockCreateIssue.mockRejectedValue(
-      new ApiError("An active issue with this title already exists: MUL-7 – Login bug", 409, "Conflict", {
+      new ApiError("An active issue with this title already exists: LUM-7 – Login bug", 409, "Conflict", {
         code: "active_duplicate_issue",
-        error: "An active issue with this title already exists: MUL-7 – Login bug",
+        error: "An active issue with this title already exists: LUM-7 – Login bug",
         issue: {
           id: "issue-dup",
-          identifier: "MUL-7",
+          identifier: "LUM-7",
           title: "Login bug",
         },
       }),
@@ -1366,7 +1366,7 @@ describe("CreateIssueModal", () => {
     render(renderToast("toast-dup"));
 
     expect(screen.getByText("Duplicate issue")).toBeInTheDocument();
-    expect(screen.getByText(/MUL-7/)).toBeInTheDocument();
+    expect(screen.getByText(/LUM-7/)).toBeInTheDocument();
     expect(screen.getByText(/Login bug/)).toBeInTheDocument();
 
     await user.click(screen.getByRole("button", { name: "View existing issue" }));
@@ -2052,7 +2052,7 @@ describe("CreateIssueModal", () => {
       });
 
       await act(async () => {
-        release({ id: "issue-1", identifier: "MUL-1", title: "Double tap", status: "todo" });
+        release({ id: "issue-1", identifier: "LUM-1", title: "Double tap", status: "todo" });
       });
       expect(mockCreateIssue).toHaveBeenCalledTimes(1);
     });

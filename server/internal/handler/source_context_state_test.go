@@ -11,7 +11,7 @@ func sourceContextStateFixture() service.SourceContextSnapshot {
 	description := "Captured description"
 	return service.SourceContextSnapshot{
 		SourceIssue: service.SourceContextIssueSnapshot{
-			ID: "issue-1", Identifier: "MUL-1", Number: 1, Title: "Captured title", Description: &description,
+			ID: "issue-1", Identifier: "LUM-1", Number: 1, Title: "Captured title", Description: &description,
 			Attachments: []service.SourceContextAttachment{{
 				ID: "clone-1", SourceAttachmentID: "attachment-1", Filename: "issue.txt", ContentType: "text/plain", SizeBytes: 12,
 			}},

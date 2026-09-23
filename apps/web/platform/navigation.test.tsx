@@ -53,9 +53,9 @@ describe("WebNavigationProvider internal link bridge", () => {
   it("pushes the path a content link resolved to", () => {
     render(<WebNavigationProvider>{null}</WebNavigationProvider>);
 
-    navigate("/acme/issues/MUL-1");
+    navigate("/acme/issues/LUM-1");
 
-    expect(router.push).toHaveBeenCalledWith("/acme/issues/MUL-1");
+    expect(router.push).toHaveBeenCalledWith("/acme/issues/LUM-1");
   });
 
   it("ignores an event without a path", () => {
@@ -72,7 +72,7 @@ describe("WebNavigationProvider internal link bridge", () => {
     );
 
     unmount();
-    navigate("/acme/issues/MUL-1");
+    navigate("/acme/issues/LUM-1");
 
     expect(router.push).not.toHaveBeenCalled();
   });

@@ -46,7 +46,7 @@ function makeIssue(idx: number, overrides: Partial<Issue> = {}): Issue {
     id: `issue-${idx}`,
     workspace_id: WS_ID,
     number: idx,
-    identifier: `MUL-${idx}`,
+    identifier: `LUM-${idx}`,
     title: `Issue ${idx}`,
     description: null,
     status: "todo",
@@ -526,11 +526,11 @@ describe("issueIdentifierOptions", () => {
       .mockResolvedValue(makeIssue(7));
     installFakeIssueApi(getIssue);
 
-    const data = await qc.fetchQuery(issueIdentifierOptions(WS_ID, "MUL-7"));
+    const data = await qc.fetchQuery(issueIdentifierOptions(WS_ID, "LUM-7"));
 
     expect(data?.id).toBe("issue-7");
     expect(getIssue).toHaveBeenCalledTimes(1);
-    expect(getIssue.mock.calls[0]?.[0]).toBe("MUL-7");
+    expect(getIssue.mock.calls[0]?.[0]).toBe("LUM-7");
   });
 
   it("returns null on 404 (unknown number or wrong workspace prefix)", async () => {
@@ -552,7 +552,7 @@ describe("issueIdentifierOptions", () => {
     installFakeIssueApi(getIssue);
 
     await expect(
-      qc.fetchQuery(issueIdentifierOptions(WS_ID, "MUL-9")),
+      qc.fetchQuery(issueIdentifierOptions(WS_ID, "LUM-9")),
     ).rejects.toThrow("boom");
   });
 
@@ -574,7 +574,7 @@ describe("issueIdentifierOptions", () => {
         }));
       installFakeIssueApi(getIssue);
 
-      const options = issueIdentifierOptions(WS_ID, "MUL-7");
+      const options = issueIdentifierOptions(WS_ID, "LUM-7");
       // Streaming rich content can remove the last mention observer before
       // its response arrives, then render that same identifier again.
       for (let i = 0; i < 20; i++) {
@@ -603,11 +603,11 @@ describe("issueIdentifierOptions", () => {
   );
 
   it("keys the query by workspace and identifier", () => {
-    expect(issueKeys.identifier(WS_ID, "MUL-7")).toEqual([
+    expect(issueKeys.identifier(WS_ID, "LUM-7")).toEqual([
       "issues",
       WS_ID,
       "identifier",
-      "MUL-7",
+      "LUM-7",
     ]);
   });
 });

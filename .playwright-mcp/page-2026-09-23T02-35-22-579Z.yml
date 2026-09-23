@@ -1,0 +1,35 @@
+- generic [ref=f4e1]:
+  - generic [ref=f4e114]:
+    - complementary [ref=f4e115]:
+      - generic [ref=f4e117]:
+        - generic [ref=f4e118]:
+          - generic [ref=f4e119]: Lumen
+          - button "返回" [ref=f4e123]
+        - group "引导步骤" [ref=f4e125]:
+          - navigation [ref=f4e126]:
+            - button [ref=f4e218]:
+              - heading "关于你" [level=3] [ref=f4e224]
+            - heading "工作区" [level=3] [ref=f4e140]
+            - generic [ref=f4e143]:
+              - generic [ref=f4e144]: "3"
+              - heading "认识 Mika" [level=3] [ref=f4e147]
+        - button "退出登录" [ref=f4e149]
+    - main [ref=f4e150]:
+      - generic [ref=f4e151]:
+        - generic [ref=f4e226]:
+          - generic [ref=f4e227]:
+            - heading "继续 Lumen Demo，或新建一个。" [level=1] [ref=f4e228]
+            - paragraph [ref=f4e229]: 用已有的工作区继续，或者另建一个新的——你可以同时属于多个工作区。
+          - generic [ref=f4e231]:
+            - radio "L Lumen Demo localhost:13949/lumen-demo" [checked] [active] [ref=f4e232]:
+              - generic [ref=f4e233]: L
+              - generic [ref=f4e234]:
+                - generic [ref=f4e235]: Lumen Demo
+                - generic [ref=f4e236]: localhost:13949/lumen-demo
+            - radio "创建一个新工作区" [ref=f4e239]
+        - generic [ref=f4e245]:
+          - paragraph [ref=f4e246]: 正在打开 Lumen Demo。
+          - button "打开 Lumen Demo" [ref=f4e248]
+  - region "Notifications alt+T"
+  - button "Open Next.js Dev Tools" [ref=f4e7] [cursor=pointer]
+  - alert [ref=f4e11]: Lumen — Project Management for Human + Agent Teams

@@ -341,7 +341,7 @@ func TestLarkOutcomeReplierUsesAppURLForWebLinks(t *testing.T) {
 			Outcome:            OutcomeIngested,
 			IssueID:            mustUUID("22222222-2222-2222-2222-222222222222"),
 			IssueNumber:        42,
-			IssueIdentifier:    "MUL-42",
+			IssueIdentifier:    "LUM-42",
 			IssueWorkspaceSlug: "demo-web",
 		})
 
@@ -356,7 +356,7 @@ func TestLarkOutcomeReplierUsesAppURLForWebLinks(t *testing.T) {
 	if len(stub.textOut) != 1 {
 		t.Fatalf("expected one issue-created text, got %d", len(stub.textOut))
 	}
-	if !strings.Contains(stub.textOut[0].Text, "https://app.lumen.test/demo-web/issues/MUL-42") {
+	if !strings.Contains(stub.textOut[0].Text, "https://app.lumen.test/demo-web/issues/LUM-42") {
 		t.Fatalf("issue-created text should use AppURL and workspace slug; got %q", stub.textOut[0].Text)
 	}
 }
@@ -611,7 +611,7 @@ func TestLarkOutcomeReplierIssueCreatedSendsConfirmation(t *testing.T) {
 		Outcome:            OutcomeIngested,
 		IssueID:            mustUUID("22222222-2222-2222-2222-222222222222"),
 		IssueNumber:        42,
-		IssueIdentifier:    "MUL-42",
+		IssueIdentifier:    "LUM-42",
 		IssueWorkspaceSlug: "demo-web",
 		IssueTitle:         "fix login bug",
 	})
@@ -625,13 +625,13 @@ func TestLarkOutcomeReplierIssueCreatedSendsConfirmation(t *testing.T) {
 	if got.ChatID != "oc_chat_42" {
 		t.Errorf("ChatID = %q; want oc_chat_42", got.ChatID)
 	}
-	if !strings.Contains(got.Text, "MUL-42") {
+	if !strings.Contains(got.Text, "LUM-42") {
 		t.Errorf("text should embed the workspace-qualified key; got %q", got.Text)
 	}
 	if !strings.Contains(got.Text, "fix login bug") {
 		t.Errorf("text should embed the issue title; got %q", got.Text)
 	}
-	if !strings.Contains(got.Text, "https://lumen.test/demo-web/issues/MUL-42") {
+	if !strings.Contains(got.Text, "https://lumen.test/demo-web/issues/LUM-42") {
 		t.Errorf("text should embed the workspace issue deep link back to Lumen; got %q", got.Text)
 	}
 	// No interactive card on this path — the confirmation must be
@@ -660,7 +660,7 @@ func TestLarkOutcomeReplierIssueDuplicateSendsConflict(t *testing.T) {
 		Outcome:            OutcomeIngested,
 		IssueID:            mustUUID("22222222-2222-2222-2222-222222222222"),
 		IssueNumber:        42,
-		IssueIdentifier:    "MUL-42",
+		IssueIdentifier:    "LUM-42",
 		IssueWorkspaceSlug: "demo-web",
 		IssueTitle:         "fix login bug",
 		IssueDuplicate:     true,
@@ -672,13 +672,13 @@ func TestLarkOutcomeReplierIssueDuplicateSendsConflict(t *testing.T) {
 		t.Fatalf("expected one duplicate reply, got %d", len(stub.textOut))
 	}
 	text := stub.textOut[0].Text
-	if !strings.Contains(text, "Not created") || !strings.Contains(text, "MUL-42") || !strings.Contains(text, "fix login bug") {
+	if !strings.Contains(text, "Not created") || !strings.Contains(text, "LUM-42") || !strings.Contains(text, "fix login bug") {
 		t.Fatalf("duplicate reply = %q", text)
 	}
 	if strings.Contains(text, "Created MUL-42") {
 		t.Fatalf("duplicate reply falsely claimed creation: %q", text)
 	}
-	if !strings.Contains(text, "https://lumen.test/demo-web/issues/MUL-42") {
+	if !strings.Contains(text, "https://lumen.test/demo-web/issues/LUM-42") {
 		t.Fatalf("duplicate reply should embed the workspace issue deep link; got %q", text)
 	}
 }
@@ -781,7 +781,7 @@ func TestLarkOutcomeReplierIssueCreatedThreadFallback(t *testing.T) {
 		Outcome:         OutcomeIngested,
 		IssueID:         mustUUID("22222222-2222-2222-2222-222222222222"),
 		IssueNumber:     42,
-		IssueIdentifier: "MUL-42",
+		IssueIdentifier: "LUM-42",
 		IssueTitle:      "fix login bug",
 	})
 
@@ -818,7 +818,7 @@ func TestLarkOutcomeReplierIssueCreatedNoFallbackOnAmbiguous(t *testing.T) {
 		Outcome:         OutcomeIngested,
 		IssueID:         mustUUID("22222222-2222-2222-2222-222222222222"),
 		IssueNumber:     42,
-		IssueIdentifier: "MUL-42",
+		IssueIdentifier: "LUM-42",
 	})
 
 	stub.mu.Lock()
@@ -924,7 +924,7 @@ func TestLarkOutcomeReplierRepliesNativelyInOrdinaryGroup(t *testing.T) {
 			Outcome:         OutcomeIngested,
 			IssueID:         mustUUID("22222222-2222-2222-2222-222222222222"),
 			IssueNumber:     42,
-			IssueIdentifier: "MUL-42",
+			IssueIdentifier: "LUM-42",
 		})
 
 	stub.mu.Lock()
@@ -963,7 +963,7 @@ func TestLarkOutcomeReplierSendsToChatWithoutTriggerMessage(t *testing.T) {
 			Outcome:         OutcomeIngested,
 			IssueID:         mustUUID("22222222-2222-2222-2222-222222222222"),
 			IssueNumber:     42,
-			IssueIdentifier: "MUL-42",
+			IssueIdentifier: "LUM-42",
 		})
 
 	stub.mu.Lock()

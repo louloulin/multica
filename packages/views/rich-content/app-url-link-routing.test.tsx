@@ -83,11 +83,11 @@ function renderContent(content: string) {
 
 describe("RichContent link routing", () => {
   it("routes a link to this deployment into the app instead of the browser", () => {
-    renderContent(`[MUL-1](${APP_ORIGIN}/acme/issues/MUL-1)`);
+    renderContent(`[LUM-1](${APP_ORIGIN}/acme/issues/LUM-1)`);
 
-    screen.getByText("MUL-1").click();
+    screen.getByText("LUM-1").click();
 
-    expect(navigatedPaths).toEqual(["/acme/issues/MUL-1"]);
+    expect(navigatedPaths).toEqual(["/acme/issues/LUM-1"]);
     expect(openSpy).not.toHaveBeenCalled();
   });
 

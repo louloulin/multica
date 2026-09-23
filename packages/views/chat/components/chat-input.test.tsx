@@ -543,7 +543,7 @@ describe("ChatInput conversation starter prefill", () => {
 describe("ChatInput @ context wiring", () => {
   it("configures chat @ with current/recent issue/project context", () => {
     const contextItems = [
-      { id: "issue-1", label: "MUL-1", type: "issue" as const, group: "current" as const },
+      { id: "issue-1", label: "LUM-1", type: "issue" as const, group: "current" as const },
     ];
 
     renderInput({ contextItems });

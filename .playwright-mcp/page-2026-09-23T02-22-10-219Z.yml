@@ -1,0 +1,22 @@
+- generic [ref=f3e1]:
+  - generic [ref=f3e3]:
+    - generic [ref=f3e4]:
+      - generic [ref=f3e5]: 查看你的邮箱
+      - generic [ref=f3e6]: 已发送验证码至 admin@lumen.local
+    - generic [ref=f3e7]:
+      - textbox [active] [ref=f3e36]
+      - button "60 秒后可重新发送" [disabled] [ref=f3e38]
+    - button "返回" [ref=f3e39]
+  - region "Notifications alt+T"
+  - generic [ref=f3e20] [cursor=pointer]:
+    - button "Open Next.js Dev Tools" [ref=f3e21]
+    - generic [ref=f3e26]:
+      - button "Open issues overlay" [ref=f3e27]:
+        - generic [ref=f3e28]:
+          - generic [aria-hidden] [ref=f3e29]: "1"
+          - generic [ref=f3e30]: "2"
+        - generic [ref=f3e31]:
+          - text: Issue
+          - generic [aria-hidden] [ref=f3e32]: s
+      - button "Collapse issues badge" [ref=f3e33]
+  - alert [ref=f3e25]

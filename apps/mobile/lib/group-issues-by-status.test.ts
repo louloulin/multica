@@ -8,7 +8,7 @@ function issue(id: string, status: string, statusCategory?: string): Issue {
     id,
     workspace_id: "ws-1",
     number: 1,
-    identifier: `MUL-${id}`,
+    identifier: `LUM-${id}`,
     title: id,
     description: null,
     status,

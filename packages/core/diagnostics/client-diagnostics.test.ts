@@ -16,7 +16,7 @@ describe("client diagnostics", () => {
       category: "request",
       operation: "GET /api/me",
       phase: "error",
-      route: "/acme/issues/MUL-123?token=secret",
+      route: "/acme/issues/LUM-123?token=secret",
       errorCode: "network error",
       durationMs: 12.6,
     });
@@ -24,7 +24,7 @@ describe("client diagnostics", () => {
     expect(event).toMatchObject({
       operation: "GET /api/me",
       phase: "error",
-      route: "/acme/issues/MUL-123?token=secret",
+      route: "/acme/issues/LUM-123?token=secret",
       errorCode: "network_error",
       durationMs: 13,
     });

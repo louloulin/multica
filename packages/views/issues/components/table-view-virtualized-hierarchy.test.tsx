@@ -195,7 +195,7 @@ function makeIssue(id: string): Issue {
     id,
     workspace_id: "ws-1",
     number: 1,
-    identifier: `MUL-${id}`,
+    identifier: `LUM-${id}`,
     title: `Task ${id}`,
     description: null,
     status: "todo",
@@ -329,12 +329,12 @@ describe("Table view on the production virtualized hierarchy path", () => {
 
     // The virtualizer is real, so rows appear only if it saw a viewport. This is
     // the part every other Table test skips by replacing it.
-    await screen.findByText("MUL-a");
+    await screen.findByText("LUM-a");
     // Depth 1 arrives only by a branch sentinel activating its own query.
-    await waitFor(() => expect(screen.queryByText("MUL-a1")).toBeTruthy(), {
+    await waitFor(() => expect(screen.queryByText("LUM-a1")).toBeTruthy(), {
       timeout: 5000,
     });
-    await waitFor(() => expect(screen.queryByText("MUL-c2")).toBeTruthy(), {
+    await waitFor(() => expect(screen.queryByText("LUM-c2")).toBeTruthy(), {
       timeout: 5000,
     });
 

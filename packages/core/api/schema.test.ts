@@ -197,7 +197,7 @@ describe("ApiClient schema fallback", () => {
       id: "issue-1",
       workspace_id: "ws-1",
       number: 1,
-      identifier: "MUL-1",
+      identifier: "LUM-1",
       title: "Existing",
       description: null,
       status: "todo",
@@ -218,7 +218,7 @@ describe("ApiClient schema fallback", () => {
     it("resolves a well-formed issue, defaulting the fields older servers omit", async () => {
       stubFetchJson({ ...validIssue, unknown_field: "kept" });
       const client = new ApiClient("https://api.example.test");
-      const issue = await client.getIssue("MUL-1");
+      const issue = await client.getIssue("LUM-1");
       expect(issue.id).toBe("issue-1");
       expect(issue.stage).toBeNull();
       expect(issue.metadata).toEqual({});
@@ -228,19 +228,19 @@ describe("ApiClient schema fallback", () => {
     it("rejects a 200 body that is not a usable issue (no truthy issue with an undefined id)", async () => {
       stubFetchJson({ not: "an issue" });
       const client = new ApiClient("https://api.example.test");
-      await expect(client.getIssue("MUL-1")).rejects.toThrow();
+      await expect(client.getIssue("LUM-1")).rejects.toThrow();
     });
 
     it("rejects a 200 body whose required field drifted type", async () => {
       stubFetchJson({ ...validIssue, number: "1" });
       const client = new ApiClient("https://api.example.test");
-      await expect(client.getIssue("MUL-1")).rejects.toThrow();
+      await expect(client.getIssue("LUM-1")).rejects.toThrow();
     });
 
     it("does not disguise a malformed body as a 404", async () => {
       stubFetchJson({ id: "issue-1" });
       const client = new ApiClient("https://api.example.test");
-      await expect(client.getIssue("MUL-1")).rejects.not.toBeInstanceOf(
+      await expect(client.getIssue("LUM-1")).rejects.not.toBeInstanceOf(
         ApiError,
       );
     });
@@ -265,7 +265,7 @@ describe("ApiClient schema fallback", () => {
       id: "issue-1",
       workspace_id: "ws-1",
       number: 1,
-      identifier: "MUL-1",
+      identifier: "LUM-1",
       title: "Created",
       description: null,
       status: "todo",
@@ -417,7 +417,7 @@ describe("ApiClient schema fallback", () => {
         id: "issue-2",
         workspace_id: "ws-1",
         number: 2,
-        identifier: "MUL-2",
+        identifier: "LUM-2",
         title: "Child",
         description: null,
         status: "todo",

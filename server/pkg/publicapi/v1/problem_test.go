@@ -8,7 +8,7 @@ import (
 )
 
 func TestWriteProblemKeepsLegacyErrorAndStableFields(t *testing.T) {
-	req := httptest.NewRequest(http.MethodGet, "/v1/issues/MUL-1", nil)
+	req := httptest.NewRequest(http.MethodGet, "/v1/issues/LUM-1", nil)
 	req.Header.Set("X-Request-ID", "request-123")
 	response := httptest.NewRecorder()
 

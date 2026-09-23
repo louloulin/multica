@@ -16,17 +16,17 @@ The GitHub webhook runs two separate scans over an incoming PR. They are not the
 same gate and they read different fields.
 
 **Linking** scans three places for a routable issue key (`PREFIX-NUMBER`, e.g.
-`MUL-123`): the PR **title**, the **branch name**, and the **body right after a
+`LUM-123`): the PR **title**, the **branch name**, and the **body right after a
 closing keyword**. Each match writes an issue to PR link row — the link that
 `lumen issue pull-requests` reads back. A key that appears in the body as a
 bare mention, with nothing in the title or branch and no closing keyword, is a
 passing reference and links nothing.
 
 ```text
-MUL-123: add the thing the issue asks for        # key anywhere in title → links
+LUM-123: add the thing the issue asks for        # key anywhere in title → links
 agent/dana/mul-123-add-the-thing             # branch ref   → links
-Closes MUL-123                                   # body + closing keyword → links
-Related to MUL-123                               # body mention only → no link
+Closes LUM-123                                   # body + closing keyword → links
+Related to LUM-123                               # body mention only → no link
 ```
 
 **Close intent** is stricter and is a separate scan over **title or body only —
@@ -36,10 +36,10 @@ adjacency is what sets the link row's close-intent flag, the gate that
 auto-advances the issue to `done` when the PR merges.
 
 ```text
-Closes MUL-123                                    # links AND records close intent
-Fixes MUL-123
-Resolves MUL-123
-Fix login MUL-123                                 # in a title: links, no close intent
+Closes LUM-123                                    # links AND records close intent
+Fixes LUM-123
+Resolves LUM-123
+Fix login LUM-123                                 # in a title: links, no close intent
 ```
 
 Consequence: a bare key in the title or a branch reference links the PR but does
@@ -49,7 +49,7 @@ records close intent; on merge, that close intent can move the linked issue to
 
 **Passing mentions link nothing.** A key that appears **only** as a bare mention
 in the body — no closing keyword, and not in the title or branch — does not link
-the PR at all. This keeps `Related MUL-123` or `Follow up in MUL-123` from
+the PR at all. This keeps `Related LUM-123` or `Follow up in LUM-123` from
 surfacing an unrelated PR as if it were working on that issue. To make a PR show
 up for an issue, put the key in the title, the branch, or after a closing keyword
 in the body — not as a loose body reference.
@@ -62,8 +62,8 @@ key is repairable after the fact. That late link does not move the issue to
 `done`; close intent is decided at merge time.
 
 ```text
-Closes MUL-123 in the body                        # links
-Related to MUL-123 in the body (no title/branch)  # no link
+Closes LUM-123 in the body                        # links
+Related to LUM-123 in the body (no title/branch)  # no link
 ```
 
 ### Default for code-changing issue work
@@ -81,9 +81,9 @@ body links nothing. Do not use a closing keyword (`Closes` / `Fixes` /
 `Resolves`) unless the issue should auto-advance to `done` on merge.
 
 ```text
-MUL-123: fix login redirect        # key anywhere in title → links
-Closes MUL-123                     # only when merge should mark the issue done
-Part of MUL-123                    # body mention only → no link at all
+LUM-123: fix login redirect        # key anywhere in title → links
+Closes LUM-123                     # only when merge should mark the issue done
+Part of LUM-123                    # body mention only → no link at all
 ```
 
 In the final issue comment, include the PR URL when a PR exists. If the task did
@@ -383,8 +383,8 @@ PR title (link the issue):
 
 ```text
 Fix login redirect                  # incorrect — no issue key, won't link
-Body-only "Part of MUL-123"         # incorrect — passing mention, won't link
-MUL-123: fix login redirect        # correct — links the PR
+Body-only "Part of LUM-123"         # incorrect — passing mention, won't link
+LUM-123: fix login redirect        # correct — links the PR
 ```
 
 Serial / phased sub-issues (don't start the whole chain at once):

@@ -17,7 +17,7 @@ function makeIssue(id: string, status: string, category: IssueStatusCategory): I
     id,
     workspace_id: "ws-1",
     number: 1,
-    identifier: `MUL-${id}`,
+    identifier: `LUM-${id}`,
     title: id,
     description: null,
     status,

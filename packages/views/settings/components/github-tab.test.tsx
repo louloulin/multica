@@ -154,7 +154,7 @@ describe("GitHubTab", () => {
     const row = within(toggle.parentElement!);
     expect(row.getByText(/is in its branch name or title, or its body says Closes MUL-123/)).toBeTruthy();
     expect(row.getByText("Done")).toBeTruthy();
-    expect(screen.getAllByText("MUL-123")).toHaveLength(1);
+    expect(screen.getAllByText("LUM-123")).toHaveLength(1);
   });
 
   it("offers the master switch without a separate turn-off callout", () => {

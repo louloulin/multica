@@ -9,7 +9,7 @@ const historyState = vi.hoisted(() => ({
   historyIndex: 1,
   browsingHistory: [
     { url: "/acme/settings", title: "Settings" },
-    { url: "/acme/issues/issue-1", title: "MUL-1: Fix history" },
+    { url: "/acme/issues/issue-1", title: "LUM-1: Fix history" },
     { url: "/acme/projects", title: "Projects" },
   ],
   goBack: vi.fn(),
@@ -64,7 +64,7 @@ beforeEach(() => {
   historyState.historyIndex = 1;
   historyState.browsingHistory = [
     { url: "/acme/settings", title: "Settings" },
-    { url: "/acme/issues/issue-1", title: "MUL-1: Fix history" },
+    { url: "/acme/issues/issue-1", title: "LUM-1: Fix history" },
     { url: "/acme/projects", title: "Projects" },
   ];
   historyState.goBack.mockReset();
@@ -173,10 +173,10 @@ describe("WindowToolbar history controls", () => {
 
     fireEvent.click(screen.getByRole("button", { name: "History" }));
     expect(screen.getByText("Recently viewed")).toBeInTheDocument();
-    expect(screen.getByTitle("MUL-1: Fix history")).toBeInTheDocument();
+    expect(screen.getByTitle("LUM-1: Fix history")).toBeInTheDocument();
 
     fireEvent.click(
-      screen.getByRole("menuitem", { name: "MUL-1: Fix history" }),
+      screen.getByRole("menuitem", { name: "LUM-1: Fix history" }),
     );
     expect(navigationState.push).toHaveBeenCalledWith(
       "/acme/issues/issue-1",
@@ -191,7 +191,7 @@ describe("WindowToolbar history controls", () => {
     historyState.historyIndex = 0;
     historyState.browsingHistory = [
       { url: "/acme/issues", title: "Issues" },
-      { url: "/acme/issues/issue-1", title: "MUL-1: Fix history" },
+      { url: "/acme/issues/issue-1", title: "LUM-1: Fix history" },
     ];
 
     render(<WindowToolbar />);

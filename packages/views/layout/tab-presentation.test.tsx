@@ -52,13 +52,13 @@ function makeClient() {
 function seed(qc: QueryClient) {
   qc.setQueryData(issueDetailOptions("ws1", "i1").queryKey, {
     id: "i1",
-    identifier: "MUL-1",
+    identifier: "LUM-1",
     title: "Fix login",
     status: "in_progress",
   } as never);
   qc.setQueryData(issueDetailOptions("ws1", "i9").queryKey, {
     id: "i9",
-    identifier: "MUL-9",
+    identifier: "LUM-9",
     title: "Crash",
     status: "todo",
   } as never);
@@ -117,7 +117,7 @@ it("updates a tab's custom icon from the shared catalog cache without fetching",
   const qc = makeClient();
   seed(qc);
   qc.setQueryData(issueDetailOptions("ws1", "i1").queryKey, {
-    id: "i1", identifier: "MUL-1", title: "QA", status: "qa", status_category: "started",
+    id: "i1", identifier: "LUM-1", title: "QA", status: "qa", status_category: "started",
   } as never);
   qc.setQueryData(issueStatusListOptions("ws1").queryKey, {
     statuses: [{
@@ -148,7 +148,7 @@ describe("useTabPresentation — live from cache", () => {
       // `category` travels with the visual so the tab strip never resolves a
       // custom status key itself. (MUL-6243)
       visual: { kind: "issue-status", status: "in_progress", category: "started" },
-      title: "MUL-1: Fix login",
+      title: "LUM-1: Fix login",
     });
   });
 
@@ -195,7 +195,7 @@ describe("useTabPresentation — live from cache", () => {
     // Selection key is issue_id ?? id — n1 links issue i9.
     expect(presentationOf("/acme/inbox?issue=i9")).toEqual({
       visual: { kind: "icon", icon: "Inbox" },
-      title: "MUL-9: Crash",
+      title: "LUM-9: Crash",
     });
   });
 
@@ -217,11 +217,11 @@ describe("useTabPresentation — live from cache", () => {
     // (see the deep-link fallback in inbox-page).
     expect(presentationOf("/acme/inbox?issue=i1")).toEqual({
       visual: { kind: "icon", icon: "Inbox" },
-      title: "MUL-1: Fix login",
+      title: "LUM-1: Fix login",
     });
     expect(presentationOf("/acme/inbox?view=archived&issue=i1")).toEqual({
       visual: { kind: "icon", icon: "Inbox" },
-      title: "MUL-1: Fix login",
+      title: "LUM-1: Fix login",
     });
   });
 
@@ -238,11 +238,11 @@ describe("useTabPresentation — live from cache", () => {
     );
 
     const { result } = renderHook(
-      () => useTabPresentation("/acme/inbox?issue=i9", "MUL-9: Crash"),
+      () => useTabPresentation("/acme/inbox?issue=i9", "LUM-9: Crash"),
       { wrapper },
     );
 
-    expect(result.current.title).toBe("MUL-9: Crash");
+    expect(result.current.title).toBe("LUM-9: Crash");
   });
 
   it("falls back to the persisted title while a selection is unresolved", () => {
@@ -266,7 +266,7 @@ describe("useTabPresentation — live from cache", () => {
     // The fallback is for a PENDING identity only. An Inbox tab with no
     // selection is fully resolved — it really is just "Inbox", and a stale
     // persisted title must not override it.
-    expect(presentationOf("/acme/inbox", "MUL-9: Crash").title).toBe("Inbox");
+    expect(presentationOf("/acme/inbox", "LUM-9: Crash").title).toBe("Inbox");
   });
 
   it("archived inbox: selected non-issue resolves against the archived list", () => {
@@ -297,9 +297,9 @@ describe("useTabPresentation — live from cache", () => {
 
 describe("useTabPresentation — pending / fallback", () => {
   it("pending issue keeps the issue-status slot and uses the persisted fallback", () => {
-    expect(presentationOf("/acme/issues/unloaded", "MUL-7: Prior")).toEqual({
+    expect(presentationOf("/acme/issues/unloaded", "LUM-7: Prior")).toEqual({
       visual: { kind: "issue-status", status: null },
-      title: "MUL-7: Prior",
+      title: "LUM-7: Prior",
     });
   });
 

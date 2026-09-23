@@ -1043,7 +1043,7 @@ var identifierRe = regexp.MustCompile(`(?i)\b([a-z][a-z0-9]{0,9})-(\d+)\b`)
 // does not. This mirrors GitHub's own closing-keyword grammar and is the
 // gate the webhook uses to decide whether to auto-advance an issue to
 // `done` after a PR merges. References like "Follow up in MUL-2" and bare
-// title prefixes like "MUL-1: ..." link the PR (via identifierRe) but
+// title prefixes like "LUM-1: ..." link the PR (via identifierRe) but
 // never auto-close.
 var closingIdentifierRe = regexp.MustCompile(
 	`(?i)\b(?:close[sd]?|fix(?:e[sd])?|resolve[sd]?)[:\s]+([a-z][a-z0-9]{0,9})-(\d+)\b`,

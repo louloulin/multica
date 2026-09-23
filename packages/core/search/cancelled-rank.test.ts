@@ -14,7 +14,7 @@ function issue(
   return {
     id: partial.id,
     number: partial.number ?? 1,
-    identifier: partial.identifier ?? `MUL-${partial.number ?? 1}`,
+    identifier: partial.identifier ?? `LUM-${partial.number ?? 1}`,
     title: partial.title ?? "Untitled",
     status: partial.status ?? "todo",
     match_source: partial.match_source ?? "title",
@@ -34,7 +34,7 @@ function project(
 
 describe("parseSearchQueryNumber", () => {
   it("reads an identifier and a bare number, like the server does", () => {
-    expect(parseSearchQueryNumber("MUL-123")).toBe(123);
+    expect(parseSearchQueryNumber("LUM-123")).toBe(123);
     expect(parseSearchQueryNumber("mul-123")).toBe(123);
     expect(parseSearchQueryNumber("  123 ")).toBe(123);
   });
@@ -49,8 +49,8 @@ describe("parseSearchQueryNumber", () => {
 
 describe("direct hits", () => {
   it("treats an exact identifier, number, or title as targeting the issue", () => {
-    const it1 = issue({ id: "i1", number: 42, identifier: "MUL-42", title: "Ship it" });
-    expect(isIssueDirectHit(it1, "MUL-42")).toBe(true);
+    const it1 = issue({ id: "i1", number: 42, identifier: "LUM-42", title: "Ship it" });
+    expect(isIssueDirectHit(it1, "LUM-42")).toBe(true);
     expect(isIssueDirectHit(it1, "42")).toBe(true);
     expect(isIssueDirectHit(it1, "  ship IT ")).toBe(true);
     expect(isIssueDirectHit(it1, "ship")).toBe(false);
@@ -66,9 +66,9 @@ describe("direct hits", () => {
   // The @mention picker holds the identifier and title but no `number`, so the
   // number has to be derived from the identifier for it to share this rule.
   it("derives the issue number from the identifier when number is absent", () => {
-    const row = { identifier: "MUL-77", title: "Abandoned plan" };
+    const row = { identifier: "LUM-77", title: "Abandoned plan" };
     expect(isIssueDirectHit(row, "77")).toBe(true);
-    expect(isIssueDirectHit(row, "MUL-77")).toBe(true);
+    expect(isIssueDirectHit(row, "LUM-77")).toBe(true);
     expect(isIssueDirectHit(row, "mul-77")).toBe(true);
     expect(isIssueDirectHit(row, "Abandoned plan")).toBe(true);
     expect(isIssueDirectHit(row, "plan")).toBe(false);
@@ -77,13 +77,13 @@ describe("direct hits", () => {
 
   it("prefers an explicit number over the identifier", () => {
     // Defensive: if the two ever disagree, `number` is the authoritative field.
-    const row = { number: 42, identifier: "MUL-77", title: "t" };
+    const row = { number: 42, identifier: "LUM-77", title: "t" };
     expect(isIssueDirectHit(row, "42")).toBe(true);
     expect(isIssueDirectHit(row, "77")).toBe(false);
   });
 
   it("is not a direct hit when nothing identifies the row", () => {
-    expect(isIssueDirectHit({}, "MUL-1")).toBe(false);
+    expect(isIssueDirectHit({}, "LUM-1")).toBe(false);
     expect(isProjectDirectHit({}, "anything")).toBe(false);
   });
 });
@@ -139,9 +139,9 @@ describe("partitionAggregatedSearchResults", () => {
 
   it("exempts direct hits of either type", () => {
     const parts = partitionAggregatedSearchResults({
-      issues: [issue({ id: "i-hit", number: 7, identifier: "MUL-7", status: "cancelled" })],
-      projects: [project({ id: "p-other", title: "MUL-7 cleanup", status: "cancelled" })],
-      query: "MUL-7",
+      issues: [issue({ id: "i-hit", number: 7, identifier: "LUM-7", status: "cancelled" })],
+      projects: [project({ id: "p-other", title: "LUM-7 cleanup", status: "cancelled" })],
+      query: "LUM-7",
     });
 
     expect(parts.liveIssues.map((i) => i.id)).toEqual(["i-hit"]);

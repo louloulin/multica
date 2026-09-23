@@ -422,7 +422,7 @@ func TestPost_HonoursTheCallersDeadline(t *testing.T) {
 // and carries the bot's authority. A title is the reporter's own text.
 func TestIssueConfirmationDoesNotRenderReporterLinks(t *testing.T) {
 	res := engine.Result{
-		IssueIdentifier: "MUL-1",
+		IssueIdentifier: "LUM-1",
 		IssueTitle:      "安全升级：请点击 [重置密码](https://evil.example) 完成验证",
 	}
 	got := issueCreatedText(res)
@@ -442,7 +442,7 @@ func TestIssueConfirmationDoesNotRenderReporterLinks(t *testing.T) {
 // working link with no "](" anywhere in it.
 func TestIssueConfirmationDefinesNoLinkReference(t *testing.T) {
 	res := engine.Result{
-		IssueIdentifier: "MUL-1",
+		IssueIdentifier: "LUM-1",
 		IssueTitle:      "安全升级\n\n[重置密码]: https://evil.example\n\n[重置密码]",
 	}
 	got := issueCreatedText(res)
@@ -464,7 +464,7 @@ func TestIssueConfirmationKeepsAnOrdinaryTitleVerbatim(t *testing.T) {
 		"[Bug] 登录失败 (P0)!",
 		"[Bug]: 登录失败",
 	} {
-		res := engine.Result{IssueIdentifier: "MUL-1", IssueTitle: title}
+		res := engine.Result{IssueIdentifier: "LUM-1", IssueTitle: title}
 		if got, want := issueCreatedText(res), "✅ 已创建 MUL-1 — "+title; got != want {
 			t.Fatalf("the reporter's own title came back altered:\n got %q\nwant %q", got, want)
 		}
@@ -480,7 +480,7 @@ func TestIssueDuplicateIsNotReportedAsCreated(t *testing.T) {
 	t.Parallel()
 	res := engine.Result{
 		IssueID:         pgtype.UUID{Bytes: [16]byte{7}, Valid: true},
-		IssueIdentifier: "MUL-99",
+		IssueIdentifier: "LUM-99",
 		IssueTitle:      "somebody else's title",
 		IssueDuplicate:  true,
 	}
@@ -491,7 +491,7 @@ func TestIssueDuplicateIsNotReportedAsCreated(t *testing.T) {
 	if strings.Contains(text, "已创建") {
 		t.Errorf("a duplicate was reported as created: %q", text)
 	}
-	if !strings.Contains(text, "MUL-99") {
+	if !strings.Contains(text, "LUM-99") {
 		t.Errorf("the duplicate reply does not name the issue that already exists: %q", text)
 	}
 }
@@ -518,7 +518,7 @@ func TestIssueDuplicateTitleCannotFormALinkInTheRoom(t *testing.T) {
 		engine.Result{
 			Outcome:         engine.OutcomeIngested,
 			IssueID:         pgtype.UUID{Bytes: [16]byte{7}, Valid: true},
-			IssueIdentifier: "MUL-99",
+			IssueIdentifier: "LUM-99",
 			IssueTitle:      hostileTitle,
 			IssueDuplicate:  true,
 		})
@@ -538,7 +538,7 @@ func TestIssueDuplicateTitleCannotFormALinkInTheRoom(t *testing.T) {
 	if strings.Contains(content, "](") {
 		t.Errorf("a member-authored title formed a working markdown link in the room: %q", content)
 	}
-	if !strings.Contains(content, "MUL-99") {
+	if !strings.Contains(content, "LUM-99") {
 		t.Errorf("the duplicate reply does not name the issue that already exists: %q", content)
 	}
 	if !strings.Contains(content, "重置密码") || !strings.Contains(content, "https://evil.example") {
@@ -563,7 +563,7 @@ func TestIssueDuplicateTitleDefinesNoLinkReference(t *testing.T) {
 		engine.Result{
 			Outcome:         engine.OutcomeIngested,
 			IssueID:         pgtype.UUID{Bytes: [16]byte{7}, Valid: true},
-			IssueIdentifier: "MUL-99",
+			IssueIdentifier: "LUM-99",
 			IssueTitle:      hostileTitle,
 			IssueDuplicate:  true,
 		})

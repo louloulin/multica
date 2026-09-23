@@ -46,11 +46,11 @@ describe("parseTabSubject", () => {
     ],
     // Containers — selection (and archived sub-list) live in the query string
     ["/acme/inbox", { kind: "inbox", selectedKey: null, archived: false }],
-    ["/acme/inbox?issue=MUL-9", { kind: "inbox", selectedKey: "MUL-9", archived: false }],
+    ["/acme/inbox?issue=LUM-9", { kind: "inbox", selectedKey: "LUM-9", archived: false }],
     ["/acme/inbox?view=archived", { kind: "inbox", selectedKey: null, archived: true }],
     [
-      "/acme/inbox?view=archived&issue=MUL-9",
-      { kind: "inbox", selectedKey: "MUL-9", archived: true },
+      "/acme/inbox?view=archived&issue=LUM-9",
+      { kind: "inbox", selectedKey: "LUM-9", archived: true },
     ],
     ["/acme/chat", { kind: "chat", sessionId: null }],
     ["/acme/chat?session=sess-1", { kind: "chat", sessionId: "sess-1" }],

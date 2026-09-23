@@ -48,7 +48,7 @@ function CurrentPath() {
 
 function renderWindow() {
   return render(
-    <MemoryRouter initialEntries={["/acme/issues/MUL-1"]}>
+    <MemoryRouter initialEntries={["/acme/issues/LUM-1"]}>
       <Routes>
         <Route
           path=":workspaceSlug/issues/:id"
@@ -77,9 +77,9 @@ describe("IssueWindowNavigationProvider content links", () => {
   it("opens another issue in place", () => {
     renderWindow();
 
-    navigate("/acme/issues/MUL-2");
+    navigate("/acme/issues/LUM-2");
 
-    expect(screen.getByTestId("path")).toHaveTextContent("/acme/issues/MUL-2");
+    expect(screen.getByTestId("path")).toHaveTextContent("/acme/issues/LUM-2");
     expect(openExternal).not.toHaveBeenCalled();
   });
 
@@ -88,7 +88,7 @@ describe("IssueWindowNavigationProvider content links", () => {
 
     navigate("/acme/chat");
 
-    expect(screen.getByTestId("path")).toHaveTextContent("/acme/issues/MUL-1");
+    expect(screen.getByTestId("path")).toHaveTextContent("/acme/issues/LUM-1");
     expect(openExternal).toHaveBeenCalledWith(`${APP_URL}/acme/chat`);
   });
 
@@ -134,20 +134,20 @@ describe("IssueWindowNavigationProvider current location", () => {
   it("reports the route's fragment, which window.location cannot", () => {
     expect(window.location.hash).toBe("");
 
-    expect(renderAdapter("/acme/issues/MUL-1#comment-c1")().hash).toBe(
+    expect(renderAdapter("/acme/issues/LUM-1#comment-c1")().hash).toBe(
       "#comment-c1",
     );
   });
 
   it('reports "" for a route without a fragment', () => {
-    expect(renderAdapter("/acme/issues/MUL-1")().hash).toBe("");
+    expect(renderAdapter("/acme/issues/LUM-1")().hash).toBe("");
   });
 
   it("rebuilds the current page as a web URL that keeps the fragment", () => {
-    const adapter = renderAdapter("/acme/issues/MUL-1#comment-c1")();
+    const adapter = renderAdapter("/acme/issues/LUM-1#comment-c1")();
 
     expect(adapter.getShareableUrl(currentPath(adapter))).toBe(
-      `${APP_URL}/acme/issues/MUL-1#comment-c1`,
+      `${APP_URL}/acme/issues/LUM-1#comment-c1`,
     );
   });
 });

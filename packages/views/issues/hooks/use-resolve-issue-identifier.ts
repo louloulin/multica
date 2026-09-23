@@ -7,7 +7,7 @@ import { isIssueIdentifier } from "@lumen/ui/markdown";
 import type { Issue } from "@lumen/core/types";
 
 /**
- * Resolve a bare issue identifier ("MUL-123") to a real issue in the current
+ * Resolve a bare issue identifier ("LUM-123") to a real issue in the current
  * workspace, or `null`. Backs the Linear-style autolink render path.
  *
  * Server state → TanStack Query (key includes wsId + identifier, so identical

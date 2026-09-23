@@ -33,13 +33,15 @@ export const RESERVED_SLUGS: ReadonlySet<string> = new Set([
   "onboarding",
 
   // Platform / marketing routes (current + likely-future)
-  // `lumen` is reserved as the brand name to block impersonation workspaces.
-  // `www`, `new`, `home`, `homepage`, `dashboard` are confusables or
-  // likely-future global landing/entry routes; `homepage` matches the existing
-  // `/homepage` landing variant in apps/web.
+  // `lumen` and `multica` are reserved as the brand name to block impersonation
+  // workspaces (Lumen is the current name; Multica was the previous one). `www`,
+  // `new`, `home`, `homepage`, `dashboard` are confusables or likely-future
+  // global landing/entry routes; `homepage` matches the existing `/homepage`
+  // landing variant in apps/web.
   "api",
   "admin",
   "lumen",
+  "multica",
   "www",
   "new",
   "home",

@@ -64,7 +64,7 @@ const baseIssue: Issue = {
   id: ISSUE_ID,
   workspace_id: WS_ID,
   number: 1,
-  identifier: "MUL-1",
+  identifier: "LUM-1",
   title: "Test",
   description: null,
   status: "todo",
@@ -94,7 +94,7 @@ const parentedIssue: Issue = {
 const otherIssue: Issue = {
   ...baseIssue,
   id: OTHER_ISSUE_ID,
-  identifier: "MUL-2",
+  identifier: "LUM-2",
   title: "Other",
 };
 

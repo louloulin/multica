@@ -113,7 +113,7 @@ function makeIssue(id: string, title: string, projectId: string): Issue {
     id,
     workspace_id: "ws-1",
     number: 1,
-    identifier: `MUL-${id}`,
+    identifier: `LUM-${id}`,
     title,
     description: null,
     status: "todo",

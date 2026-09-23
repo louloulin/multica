@@ -1,0 +1,18 @@
+- generic [ref=f3e1]:
+  - generic [ref=f3e3]:
+    - generic [ref=f3e4]:
+      - generic [ref=f3e5]: 登录 Lumen
+      - generic [ref=f3e6]: 输入邮箱以获取登录验证码
+    - generic [ref=f3e9]:
+      - generic [ref=f3e10]: 邮箱
+      - textbox "邮箱" [active] [ref=f3e11]:
+        - /placeholder: you@example.com
+    - generic [ref=f3e12]:
+      - button "继续" [disabled]
+      - generic [ref=f3e14]:
+        - text: 想用桌面应用？
+        - link "下载" [ref=f3e15] [cursor=pointer]:
+          - /url: /download
+  - region "Notifications alt+T"
+  - button "Open Next.js Dev Tools" [ref=f3e21] [cursor=pointer]
+  - alert [ref=f3e25]

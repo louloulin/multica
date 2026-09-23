@@ -14,7 +14,7 @@ function issue(revision: number, title: string): Issue {
   return {
     id: "issue-1",
     workspace_id: "ws-1",
-    identifier: "MUL-1",
+    identifier: "LUM-1",
     number: 1,
     title,
     description: null,

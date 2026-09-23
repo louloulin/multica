@@ -1,0 +1,43 @@
+- generic [active] [ref=f4e1]:
+  - generic [ref=f4e114]:
+    - complementary [ref=f4e115]:
+      - generic [ref=f4e117]:
+        - generic [ref=f4e118]:
+          - generic [ref=f4e119]: Lumen
+          - button "返回" [ref=f4e123]
+        - group "引导步骤" [ref=f4e125]:
+          - navigation [ref=f4e126]:
+            - button [ref=f4e218]:
+              - heading "关于你" [level=3] [ref=f4e224]
+            - button [ref=f4e249]:
+              - heading "工作区" [level=3] [ref=f4e255]
+            - heading "认识 Mika" [level=3] [ref=f4e147]
+        - button "退出登录" [ref=f4e149]
+    - main [ref=f4e150]:
+      - generic [ref=f4e151]:
+        - generic [ref=f4e257]:
+          - generic [ref=f4e258]:
+            - heading "连接一台电脑来运行你的智能体。" [level=1] [ref=f4e259]
+            - paragraph [ref=f4e260]: 连接一台电脑，让 Mika 开始工作。
+          - generic [ref=f4e261]:
+            - button "使用这台电脑 安装桌面端，连接这台电脑。" [ref=f4e262]:
+              - generic [ref=f4e263]:
+                - generic [ref=f4e264]: 使用这台电脑
+                - generic [ref=f4e268]: 安装桌面端，连接这台电脑。
+              - generic [aria-hidden] [ref=f4e269]: 下载
+            - generic [ref=f4e272]:
+              - generic [ref=f4e273]:
+                - generic [ref=f4e274]: 通过终端连接
+                - generic [ref=f4e275]: 连接一台服务器、远程开发机或任意无头电脑。需要终端。
+              - button "查看步骤" [ref=f4e276]
+            - generic [ref=f4e277]:
+              - generic [ref=f4e278]:
+                - generic [ref=f4e279]: 使用云电脑
+                - generic [ref=f4e280]: 我们会在云上为你运行一台电脑。尚未上线。
+              - generic [ref=f4e281]: 即将推出
+        - generic [ref=f4e282]:
+          - paragraph [ref=f4e283]: 可稍后连接。
+          - button "暂时跳过" [ref=f4e284]
+  - region "Notifications alt+T"
+  - button "Open Next.js Dev Tools" [ref=f4e7] [cursor=pointer]
+  - alert [ref=f4e11]: Lumen — Project Management for Human + Agent Teams

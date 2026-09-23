@@ -1,5 +1,5 @@
 {
-  "$comment": "Source of truth for reserved workspace slugs. Edit this file only. The Go side embeds this JSON directly; the TS side (packages/core/paths/reserved-slugs.ts) is regenerated from this file by `pnpm generate:reserved-slugs`. CI re-runs the generator and fails on any diff, so the two sides cannot drift. Convention for new global routes: single word (`/login`, `/inbox`) or `/{noun}/{verb}` (`/workspaces/new`). Never add hyphenated root-level word groups (`/new-workspace`, `/create-team`) — they collide with common user workspace names.",
+  "$comment": "Source of truth for reserved workspace slugs. Edit this file only. The Go side embeds this JSON directly; the TS side (packages/core/paths/reserved-slugs.ts) is regenerated from this file by `pnpm generate:reserved-slugs`. CI re-runs the generator and fails on any diff, so the two sides cannot drift. Convention for new global routes: single word (`/login`, `/inbox`) or `/{noun}/{verb}` (`/workspaces/new`). Never add hyphenated root-level word groups (`/new-workspace`, `/create-team`) \u2014 they collide with common user workspace names.",
   "groups": [
     {
       "label": "Auth flow",
@@ -23,11 +23,12 @@
     },
     {
       "label": "Platform / marketing routes (current + likely-future)",
-      "description": "`lumen` is reserved as the brand name to block impersonation workspaces. `www`, `new`, `home`, `homepage`, `dashboard` are confusables or likely-future global landing/entry routes; `homepage` matches the existing `/homepage` landing variant in apps/web.",
+      "description": "`lumen` and `multica` are reserved as the brand name to block impersonation workspaces (Lumen is the current name; Multica was the previous one). `www`, `new`, `home`, `homepage`, `dashboard` are confusables or likely-future global landing/entry routes; `homepage` matches the existing `/homepage` landing variant in apps/web.",
       "slugs": [
         "api",
         "admin",
         "lumen",
+        "multica",
         "www",
         "new",
         "home",
@@ -116,7 +117,7 @@
       ]
     },
     {
-      "label": "RFC 2142 — privileged email mailboxes",
+      "label": "RFC 2142 \u2014 privileged email mailboxes",
       "description": "Allowing user workspaces with these slugs would let attackers spoof system messaging.",
       "slugs": [
         "postmaster",
@@ -142,7 +143,7 @@
     },
     {
       "label": "Next.js / web standards",
-      "description": "These entries contain characters (dots, underscores) that today's slug regex `^[a-z0-9]+(?:-[a-z0-9]+)*$` already rejects at the format-validation step — so `isReservedSlug` never actually matches them. They are kept as defense-in-depth so that if the slug regex is ever relaxed (e.g. to support dotted corporate slugs like `acme.io`), these system paths stay protected.",
+      "description": "These entries contain characters (dots, underscores) that today's slug regex `^[a-z0-9]+(?:-[a-z0-9]+)*$` already rejects at the format-validation step \u2014 so `isReservedSlug` never actually matches them. They are kept as defense-in-depth so that if the slug regex is ever relaxed (e.g. to support dotted corporate slugs like `acme.io`), these system paths stay protected.",
       "slugs": [
         "_next",
         "favicon.ico",

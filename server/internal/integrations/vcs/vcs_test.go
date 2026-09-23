@@ -247,7 +247,7 @@ func TestGitlabParseTimestamps(t *testing.T) {
 	pr, err := p.ParsePullRequest([]byte(`{
 		"object_kind":"merge_request",
 		"project":{"path_with_namespace":"g/r"},
-		"object_attributes":{"iid":1,"title":"MUL-1","state":"opened","action":"open",
+		"object_attributes":{"iid":1,"title":"LUM-1","state":"opened","action":"open",
 			"created_at":"2017-09-20 08:31:45 UTC","updated_at":"2017-09-21 09:00:00 UTC",
 			"last_commit":{"id":"abc"}}}`))
 	if err != nil {

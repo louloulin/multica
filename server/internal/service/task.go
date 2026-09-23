@@ -7591,7 +7591,7 @@ func IssueToMap(issue db.Issue, issuePrefix string) map[string]any {
 	}
 }
 
-// IssueIdentifier renders the human-facing issue key ("MUL-42"). Callers that
+// IssueIdentifier renders the human-facing issue key ("LUM-42"). Callers that
 // resolve the workspace prefix defensively may pass "": a failed workspace
 // lookup should not surface as a stray "-42", so the number stands alone as
 // "#42". The HTTP layer never passes "" — handler.getIssuePrefix derives a

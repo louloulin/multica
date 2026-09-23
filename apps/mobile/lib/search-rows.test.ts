@@ -12,7 +12,7 @@ function issue(
   return {
     id: partial.id,
     number: partial.number ?? 1,
-    identifier: partial.identifier ?? `MUL-${partial.number ?? 1}`,
+    identifier: partial.identifier ?? `LUM-${partial.number ?? 1}`,
     title: partial.title ?? "Untitled",
     status: partial.status ?? "todo",
     match_source: partial.match_source ?? "title",
@@ -99,8 +99,8 @@ describe("buildSearchRows", () => {
 
   it("keeps a cancelled direct hit at the top", () => {
     const rows = buildSearchRows({
-      query: "MUL-7",
-      issues: [issue({ id: "i-hit", number: 7, identifier: "MUL-7", status: "cancelled" })],
+      query: "LUM-7",
+      issues: [issue({ id: "i-hit", number: 7, identifier: "LUM-7", status: "cancelled" })],
       projects: [],
       recentIssues: [],
     });

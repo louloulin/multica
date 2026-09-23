@@ -48,7 +48,7 @@ const baseContext: IssueSourceContext = {
     captured_by_user_id: "creator-1",
     captured_at: "2026-08-21T12:00:00Z",
     source_issue: {
-      id: "source-issue", identifier: "MUL-7", number: 7, title: "Source title",
+      id: "source-issue", identifier: "LUM-7", number: 7, title: "Source title",
       description: "Source body", created_at: "2026-08-20T00:00:00Z",
       updated_at: "2026-08-21T00:00:00Z", revision: 2, attachments: [],
     },
@@ -89,7 +89,7 @@ describe("SourceContextBadge", () => {
   it("groups the parent relation, progress, and snapshot action into one quiet summary", () => {
     const parentIssue = {
       id: "source-issue",
-      identifier: "MUL-7",
+      identifier: "LUM-7",
       title: "Current source title",
       status: "in_progress",
     } as Issue;
@@ -100,7 +100,7 @@ describe("SourceContextBadge", () => {
 
     const summary = screen.getByText("Sub-issue of").closest('[data-slot="source-context-summary"]');
     expect(summary).toHaveClass("border-border/60", "bg-muted/30");
-    expect(screen.getByRole("link", { name: /MUL-7 Current source title/ })).toHaveAttribute(
+    expect(screen.getByRole("link", { name: /LUM-7 Current source title/ })).toHaveAttribute(
       "href",
       "/acme/issues/source-issue",
     );
@@ -231,7 +231,7 @@ describe("SourceContextBadge", () => {
     fireEvent.click(screen.getByRole("button", { name: "Context snapshot" }));
 
     expect(await screen.findByRole("dialog")).toBeTruthy();
-    expect(screen.getByText("MUL-7 · Source title · at capture · now NEW-7")).toBeTruthy();
+    expect(screen.getByText("LUM-7 · Source title · at capture · now NEW-7")).toBeTruthy();
     expect(screen.getByText("Alice at capture · now Fox")).toBeTruthy();
     const alert = screen.getByText("Source changed after capture.").closest("[data-slot='source-context-change-summary']");
     expect(alert).toHaveTextContent("Source changed after capture.");

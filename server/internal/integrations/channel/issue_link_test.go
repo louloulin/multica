@@ -5,13 +5,13 @@ import "testing"
 func TestIssueWebLink(t *testing.T) {
 	t.Parallel()
 
-	if got, want := IssueWebLink("https://app.lumen.test/", "demo-web", "MUL-42"), "https://app.lumen.test/demo-web/issues/MUL-42"; got != want {
+	if got, want := IssueWebLink("https://app.lumen.test/", "demo-web", "LUM-42"), "https://app.lumen.test/demo-web/issues/LUM-42"; got != want {
 		t.Fatalf("IssueWebLink with workspace slug = %q, want %q", got, want)
 	}
-	if got := IssueWebLink("https://app.lumen.test", "", "MUL-42"); got != "" {
+	if got := IssueWebLink("https://app.lumen.test", "", "LUM-42"); got != "" {
 		t.Fatalf("IssueWebLink without workspace slug = %q, want empty: a workspace-less path cannot route to the issue", got)
 	}
-	if got := IssueWebLink("", "demo-web", "MUL-42"); got != "" {
+	if got := IssueWebLink("", "demo-web", "LUM-42"); got != "" {
 		t.Fatalf("IssueWebLink without app URL = %q, want empty", got)
 	}
 	if got := IssueWebLink("https://app.lumen.test", "demo-web", ""); got != "" {

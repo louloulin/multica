@@ -293,7 +293,7 @@ function MessageRow({
 
   if (isUser) {
     // User bubble: same Markdown pipeline as assistant — `@mention`
-    // serialisation `[MUL-1](mention://issue/<id>)`, inline links, and
+    // serialisation `[LUM-1](mention://issue/<id>)`, inline links, and
     // inline code resolve identically to web's
     // `packages/views/chat/components/chat-message-list.tsx` user branch.
     // Width is capped at 80% so the bubble keeps the iMessage-style

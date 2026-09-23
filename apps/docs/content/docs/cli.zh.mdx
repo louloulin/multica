@@ -87,34 +87,34 @@ lumen workspace member invite admin@example.com --role admin
 ```bash
 # 查看和搜索
 lumen issue list
-lumen issue get MUL-123
+lumen issue get LUM-123
 lumen issue search "登录失败"
 
 # 创建和修改
 lumen issue create --title "修复登录失败"
-lumen issue status MUL-123 in_progress
-lumen issue assign MUL-123 --to "Backend Agent"
+lumen issue status LUM-123 in_progress
+lumen issue assign LUM-123 --to "Backend Agent"
 
 # 评论和执行记录
-lumen issue comment list MUL-123
-lumen issue comment add MUL-123 --content "请先检查回归测试"
+lumen issue comment list LUM-123
+lumen issue comment add LUM-123 --content "请先检查回归测试"
 lumen issue comment update <comment-id> --expected-revision 2 --content "请检查回归测试和发布说明"
-lumen issue runs MUL-123
+lumen issue runs LUM-123
 ```
 
 长描述或评论从 stdin 读取，避免处理换行和引号：
 
 ```bash
 lumen issue create --title "升级说明" --description-stdin < notes.md
-lumen issue comment add MUL-123 --content-stdin < review.md
+lumen issue comment add LUM-123 --content-stdin < review.md
 lumen issue comment update <comment-id> --expected-revision 2 --content-file revised-review.md
 ```
 
 查看某次运行的消息，或停止运行：
 
 ```bash
-lumen issue run-messages <task-id> --issue MUL-123
-lumen issue cancel-task <task-id> --issue MUL-123
+lumen issue run-messages <task-id> --issue LUM-123
+lumen issue cancel-task <task-id> --issue LUM-123
 ```
 
 ## 智能体和 skill
@@ -182,7 +182,7 @@ lumen runtime activity <runtime-id>
 
 ## ID 和输出格式
 
-任务使用 `MUL-123` 这样的 key 或完整 UUID，不接受 UUID 短前缀。
+任务使用 `LUM-123` 这样的 key 或完整 UUID，不接受 UUID 短前缀。
 
 其他资源的 `list` 命令通常显示可复制的短 ID，并支持 `--full-id` 输出完整 UUID。短 ID 不唯一时，CLI 会要求增加字符或改用完整 UUID。运行的短 ID 还需要通过 `--issue` 指明所属任务。
 

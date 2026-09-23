@@ -87,34 +87,34 @@ lumen workspace member invite admin@example.com --role admin
 ```bash
 # View and search
 lumen issue list
-lumen issue get MUL-123
+lumen issue get LUM-123
 lumen issue search "login failure"
 
 # Create and update
 lumen issue create --title "Fix login failure"
-lumen issue status MUL-123 in_progress
-lumen issue assign MUL-123 --to "Backend Agent"
+lumen issue status LUM-123 in_progress
+lumen issue assign LUM-123 --to "Backend Agent"
 
 # Comments and runs
-lumen issue comment list MUL-123
-lumen issue comment add MUL-123 --content "Check the regression tests first"
+lumen issue comment list LUM-123
+lumen issue comment add LUM-123 --content "Check the regression tests first"
 lumen issue comment update <comment-id> --expected-revision 2 --content "Check the regression tests and release notes"
-lumen issue runs MUL-123
+lumen issue runs LUM-123
 ```
 
 Read long descriptions or comments from stdin to avoid dealing with newlines and quoting:
 
 ```bash
 lumen issue create --title "Upgrade notes" --description-stdin < notes.md
-lumen issue comment add MUL-123 --content-stdin < review.md
+lumen issue comment add LUM-123 --content-stdin < review.md
 lumen issue comment update <comment-id> --expected-revision 2 --content-file revised-review.md
 ```
 
 View the messages of a single run, or stop one:
 
 ```bash
-lumen issue run-messages <task-id> --issue MUL-123
-lumen issue cancel-task <task-id> --issue MUL-123
+lumen issue run-messages <task-id> --issue LUM-123
+lumen issue cancel-task <task-id> --issue LUM-123
 ```
 
 ## Agents and skills
@@ -182,7 +182,7 @@ See [Daemon and runtimes](/daemon-runtimes) for how it works and for custom prof
 
 ## IDs and output formats
 
-Issues use keys like `MUL-123` or full UUIDs; short UUID prefixes are not accepted.
+Issues use keys like `LUM-123` or full UUIDs; short UUID prefixes are not accepted.
 
 `list` commands for other resources usually print copyable short IDs and support `--full-id` for the full UUID. When a short ID is ambiguous, the CLI asks for more characters or the full UUID. Short task IDs also require `--issue` to identify the owning issue.
 

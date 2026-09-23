@@ -110,7 +110,7 @@ retrying. Pass an empty value to clear it back to the default.
 
 ## Referring to a project in a comment
 
-A project has no `MUL-123`-style identifier, so writing its title as prose
+A project has no `LUM-123`-style identifier, so writing its title as prose
 produces dead text — there is nothing for the reader's client to autolink. Use
 the mention-link form instead, with the project UUID from
 `lumen project list --output json`:

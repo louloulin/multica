@@ -421,7 +421,7 @@ describe("live → persisted row identity", () => {
 
 describe("semantic parity beyond Mermaid", () => {
   const FIXTURE = [
-    "A [link](https://example.com) and a mention [MUL-7](mention://issue/MUL-7).",
+    "A [link](https://example.com) and a mention [LUM-7](mention://issue/LUM-7).",
     "",
     "```html",
     "<b>preview</b>",
@@ -454,7 +454,7 @@ describe("semantic parity beyond Mermaid", () => {
 
   it("produces the same block set in Issue/Comment and Chat", async () => {
     resolveIssueIdentifierMock.mockImplementation((id: string) =>
-      id === "MUL-7" ? { id: "issue-7", identifier: "MUL-7" } : null,
+      id === "LUM-7" ? { id: "issue-7", identifier: "LUM-7" } : null,
     );
 
     const readonly = renderReadonly();

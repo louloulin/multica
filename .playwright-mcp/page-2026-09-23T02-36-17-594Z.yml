@@ -1,0 +1,10 @@
+- generic [active] [ref=f5e1]:
+  - main [ref=f5e2]:
+    - paragraph [ref=f5e3]: "404"
+    - heading "页面未找到" [level=1] [ref=f5e4]
+    - paragraph [ref=f5e5]: 你要查找的页面不存在或已被移动。
+    - link "返回 Lumen" [ref=f5e6] [cursor=pointer]:
+      - /url: /
+  - region "Notifications alt+T"
+  - button "Open Next.js Dev Tools" [ref=f5e12] [cursor=pointer]
+  - alert [ref=f5e16]

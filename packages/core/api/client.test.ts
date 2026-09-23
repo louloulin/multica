@@ -119,7 +119,7 @@ describe("ApiClient edit guards", () => {
       id: "issue-1",
       workspace_id: "ws-1",
       number: 1,
-      identifier: "MUL-1",
+      identifier: "LUM-1",
       title: "Legacy issue",
       description: null,
       status: "todo",
@@ -167,7 +167,7 @@ describe("ApiClient pull-request response schema", () => {
     repo_owner: "acme",
     repo_name: "widget",
     number: 7,
-    title: "MUL-1: fix",
+    title: "LUM-1: fix",
     state: "open",
     html_url: "https://github.example/acme/widget/pull/7",
     branch: "fix/mul-1",
@@ -285,7 +285,7 @@ describe("ApiClient Plugin surface bridge routes", () => {
 
     await new ApiClient("https://api.example.test").callPluginAction(
       "installation-1",
-      { method: "GET", path: "/context", issueId: "MUL-42" },
+      { method: "GET", path: "/context", issueId: "LUM-42" },
     );
 
     expect(fetchMock.mock.calls[0]?.[0]).toBe(
@@ -561,7 +561,7 @@ describe("ApiClient server Table query", () => {
                 parent: {
                   id: "parent-1",
                   number: 10,
-                  identifier: "MUL-10",
+                  identifier: "LUM-10",
                   title: "Parent",
                   status: "todo",
                 },

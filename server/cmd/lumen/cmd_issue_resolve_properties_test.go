@@ -103,8 +103,8 @@ func newResolveTestServer(t *testing.T, page ...map[string]any) *resolveTestServ
 		case "/api/issues":
 			s.issueQueries = append(s.issueQueries, r.URL.Query())
 			_ = json.NewEncoder(w).Encode(map[string]any{"issues": s.page, "total": len(s.page)})
-		case "/api/issues/MUL-1":
-			_ = json.NewEncoder(w).Encode(map[string]any{"id": "issue-1", "identifier": "MUL-1"})
+		case "/api/issues/LUM-1":
+			_ = json.NewEncoder(w).Encode(map[string]any{"id": "issue-1", "identifier": "LUM-1"})
 		case "/api/issues/issue-1":
 			_ = json.NewEncoder(w).Encode(s.page[0])
 		case "/api/issues/issue-1/properties/" + testReviewerDefID:
@@ -185,10 +185,10 @@ func issuesOf(t *testing.T, resp map[string]any) []map[string]any {
 
 func TestRunIssueListResolvesProperties(t *testing.T) {
 	srv := newResolveTestServer(t,
-		testIssue("issue-1", "MUL-1", alphaBag()),
-		testIssue("issue-2", "MUL-2", map[string]any{}),
-		testIssue("issue-3", "MUL-3", map[string]any{testImpactDefID: testStaleOptionID}),
-		testIssue("issue-4", "MUL-4", nil),
+		testIssue("issue-1", "LUM-1", alphaBag()),
+		testIssue("issue-2", "LUM-2", map[string]any{}),
+		testIssue("issue-3", "LUM-3", map[string]any{testImpactDefID: testStaleOptionID}),
+		testIssue("issue-4", "LUM-4", nil),
 	)
 
 	_, resp, err := runIssueListJSON(t, map[string]string{"resolve-properties": "true"})
@@ -218,7 +218,7 @@ func TestRunIssueListResolvesProperties(t *testing.T) {
 			t.Errorf("row %v: archived present = %v", row["name"], hasArchived)
 		}
 	}
-	if got := issues[0]["title"]; got != "MUL-1 title" {
+	if got := issues[0]["title"]; got != "LUM-1 title" {
 		t.Errorf("other issue fields must survive; title = %v", got)
 	}
 
@@ -249,7 +249,7 @@ func TestRunIssueListResolvesProperties(t *testing.T) {
 }
 
 func TestRunIssueListWithoutResolveKeepsRawBag(t *testing.T) {
-	srv := newResolveTestServer(t, testIssue("issue-1", "MUL-1", alphaBag()))
+	srv := newResolveTestServer(t, testIssue("issue-1", "LUM-1", alphaBag()))
 
 	plain, resp, err := runIssueListJSON(t, nil)
 	if err != nil {
@@ -272,7 +272,7 @@ func TestRunIssueListWithoutResolveKeepsRawBag(t *testing.T) {
 }
 
 func TestRunIssueListResolvePropertiesTableUnaffected(t *testing.T) {
-	srv := newResolveTestServer(t, testIssue("issue-1", "MUL-1", alphaBag()))
+	srv := newResolveTestServer(t, testIssue("issue-1", "LUM-1", alphaBag()))
 	srv.catalogStatus = http.StatusInternalServerError
 
 	cmd := newIssueListTestCmd()
@@ -286,7 +286,7 @@ func TestRunIssueListResolvePropertiesTableUnaffected(t *testing.T) {
 }
 
 func TestRunIssueListResolvePropertiesCatalogError(t *testing.T) {
-	srv := newResolveTestServer(t, testIssue("issue-1", "MUL-1", alphaBag()))
+	srv := newResolveTestServer(t, testIssue("issue-1", "LUM-1", alphaBag()))
 	srv.catalogStatus = http.StatusInternalServerError
 
 	_, _, err := runIssueListJSON(t, map[string]string{"resolve-properties": "true"})
@@ -296,7 +296,7 @@ func TestRunIssueListResolvePropertiesCatalogError(t *testing.T) {
 }
 
 func TestRunIssueListResolvePropertiesMembersError(t *testing.T) {
-	srv := newResolveTestServer(t, testIssue("issue-1", "MUL-1", alphaBag()))
+	srv := newResolveTestServer(t, testIssue("issue-1", "LUM-1", alphaBag()))
 	srv.membersStatus = http.StatusInternalServerError
 
 	// The flag promises names; a failed member lookup must not print raw
@@ -308,7 +308,7 @@ func TestRunIssueListResolvePropertiesMembersError(t *testing.T) {
 }
 
 func TestRunIssueListResolvePropertiesSharesCatalogFetch(t *testing.T) {
-	srv := newResolveTestServer(t, testIssue("issue-1", "MUL-1", alphaBag()))
+	srv := newResolveTestServer(t, testIssue("issue-1", "LUM-1", alphaBag()))
 
 	_, resp, err := runIssueListJSON(t, map[string]string{"resolve-properties": "true", "property": "Impact=High"})
 	if err != nil {
@@ -327,8 +327,8 @@ func TestRunIssueListResolvePropertiesSharesCatalogFetch(t *testing.T) {
 
 func TestRunIssueListResolvePropertiesSkipsCatalogWhenNothingToResolve(t *testing.T) {
 	srv := newResolveTestServer(t,
-		testIssue("issue-2", "MUL-2", map[string]any{}),
-		testIssue("issue-4", "MUL-4", nil),
+		testIssue("issue-2", "LUM-2", map[string]any{}),
+		testIssue("issue-4", "LUM-4", nil),
 	)
 	// A server old enough to omit properties has no catalog route either.
 	srv.catalogStatus = http.StatusNotFound
@@ -353,16 +353,16 @@ func TestRunIssueListResolvePropertiesUnknownDefinition(t *testing.T) {
 	const orphan = "0d0d0d0d-1111-4111-8111-111111111111"
 	bag := alphaBag()
 	bag[orphan] = "stray"
-	newResolveTestServer(t, testIssue("issue-1", "MUL-1", bag))
+	newResolveTestServer(t, testIssue("issue-1", "LUM-1", bag))
 
 	_, _, err := runIssueListJSON(t, map[string]string{"resolve-properties": "true"})
-	if err == nil || !strings.Contains(err.Error(), "MUL-1") || !strings.Contains(err.Error(), orphan) {
+	if err == nil || !strings.Contains(err.Error(), "LUM-1") || !strings.Contains(err.Error(), orphan) {
 		t.Fatalf("err = %v, want the issue key and the unknown definition id", err)
 	}
 }
 
 func TestRunIssueListResolvePropertiesRejectsNonObjectBag(t *testing.T) {
-	newResolveTestServer(t, testIssue("issue-1", "MUL-1", "oops"))
+	newResolveTestServer(t, testIssue("issue-1", "LUM-1", "oops"))
 
 	_, _, err := runIssueListJSON(t, map[string]string{"resolve-properties": "true"})
 	if err == nil || !strings.Contains(err.Error(), "expected an object") {
@@ -373,8 +373,8 @@ func TestRunIssueListResolvePropertiesRejectsNonObjectBag(t *testing.T) {
 func TestRunIssueListResolvePropertiesOneMembersRequestPerPage(t *testing.T) {
 	reviewer := map[string]any{testReviewerDefID: "member:" + testMemberAdaID}
 	srv := newResolveTestServer(t,
-		testIssue("issue-1", "MUL-1", reviewer),
-		testIssue("issue-2", "MUL-2", reviewer),
+		testIssue("issue-1", "LUM-1", reviewer),
+		testIssue("issue-2", "LUM-2", reviewer),
 	)
 	if _, _, err := runIssueListJSON(t, map[string]string{"resolve-properties": "true"}); err != nil {
 		t.Fatalf("runIssueList: %v", err)
@@ -383,7 +383,7 @@ func TestRunIssueListResolvePropertiesOneMembersRequestPerPage(t *testing.T) {
 		t.Errorf("members calls = %d, want one for the whole page", srv.membersCalls)
 	}
 
-	srv = newResolveTestServer(t, testIssue("issue-1", "MUL-1", map[string]any{testImpactDefID: testImpactHighID}))
+	srv = newResolveTestServer(t, testIssue("issue-1", "LUM-1", map[string]any{testImpactDefID: testImpactHighID}))
 	if _, _, err := runIssueListJSON(t, map[string]string{"resolve-properties": "true"}); err != nil {
 		t.Fatalf("runIssueList: %v", err)
 	}
@@ -396,7 +396,7 @@ func TestRunIssueListResolvePropertiesOneMembersRequestPerPage(t *testing.T) {
 // turns ids back into names. Both read the member list, and the command
 // fetches it once however many actor filters it carries.
 func TestRunIssueListActorFilterSharesMembersRequest(t *testing.T) {
-	srv := newResolveTestServer(t, testIssue("issue-1", "MUL-1", map[string]any{
+	srv := newResolveTestServer(t, testIssue("issue-1", "LUM-1", map[string]any{
 		testReviewerDefID: "member:" + testMemberAdaID,
 		testOwnersDefID:   []any{"member:" + testMemberAdaID},
 	}))
@@ -441,9 +441,9 @@ func newIssueGetTestCmd(output string, resolve bool) *cobra.Command {
 }
 
 func TestRunIssueGetResolvesProperties(t *testing.T) {
-	srv := newResolveTestServer(t, testIssue("issue-1", "MUL-1", alphaBag()))
+	srv := newResolveTestServer(t, testIssue("issue-1", "LUM-1", alphaBag()))
 
-	out, err := captureStdout(t, func() error { return runIssueGet(newIssueGetTestCmd("json", true), []string{"MUL-1"}) })
+	out, err := captureStdout(t, func() error { return runIssueGet(newIssueGetTestCmd("json", true), []string{"LUM-1"}) })
 	if err != nil {
 		t.Fatalf("runIssueGet: %v", err)
 	}
@@ -458,8 +458,8 @@ func TestRunIssueGetResolvesProperties(t *testing.T) {
 		t.Errorf("catalog calls = %d, members calls = %d; want one each", srv.propertiesCalls, srv.membersCalls)
 	}
 
-	srv = newResolveTestServer(t, testIssue("issue-1", "MUL-1", alphaBag()))
-	out, err = captureStdout(t, func() error { return runIssueGet(newIssueGetTestCmd("json", false), []string{"MUL-1"}) })
+	srv = newResolveTestServer(t, testIssue("issue-1", "LUM-1", alphaBag()))
+	out, err = captureStdout(t, func() error { return runIssueGet(newIssueGetTestCmd("json", false), []string{"LUM-1"}) })
 	if err != nil {
 		t.Fatalf("runIssueGet: %v", err)
 	}
@@ -473,9 +473,9 @@ func TestRunIssueGetResolvesProperties(t *testing.T) {
 		t.Errorf("catalog calls = %d, want none without the flag", srv.propertiesCalls)
 	}
 
-	srv = newResolveTestServer(t, testIssue("issue-1", "MUL-1", alphaBag()))
+	srv = newResolveTestServer(t, testIssue("issue-1", "LUM-1", alphaBag()))
 	srv.catalogStatus = http.StatusInternalServerError
-	if _, err := captureStdout(t, func() error { return runIssueGet(newIssueGetTestCmd("table", true), []string{"MUL-1"}) }); err != nil {
+	if _, err := captureStdout(t, func() error { return runIssueGet(newIssueGetTestCmd("table", true), []string{"LUM-1"}) }); err != nil {
 		t.Fatalf("runIssueGet table: %v", err)
 	}
 	if srv.propertiesCalls != 0 {
@@ -488,7 +488,7 @@ func TestRunIssueGetResolvesProperties(t *testing.T) {
 // rejected up front rather than silently ignoring the flag or paying for a
 // catalog and member request whose output is deleted a line later.
 func TestRunIssueListResolvePropertiesWithFields(t *testing.T) {
-	srv := newResolveTestServer(t, testIssue("issue-1", "MUL-1", alphaBag()))
+	srv := newResolveTestServer(t, testIssue("issue-1", "LUM-1", alphaBag()))
 
 	_, resp, err := runIssueListJSON(t, map[string]string{
 		"fields":             "id,title,properties",
@@ -509,7 +509,7 @@ func TestRunIssueListResolvePropertiesWithFields(t *testing.T) {
 	}
 
 	// properties filtered out: refuse rather than resolve into the void.
-	srv = newResolveTestServer(t, testIssue("issue-1", "MUL-1", alphaBag()))
+	srv = newResolveTestServer(t, testIssue("issue-1", "LUM-1", alphaBag()))
 	_, _, err = runIssueListJSON(t, map[string]string{
 		"fields":             "id,title",
 		"resolve-properties": "true",
@@ -524,7 +524,7 @@ func TestRunIssueListResolvePropertiesWithFields(t *testing.T) {
 	// Table output ignores both flags, so the guard must not fire there: a
 	// reader who keeps them on the command line and switches back to a table
 	// still gets the table (found in final review of the guard commit).
-	srv = newResolveTestServer(t, testIssue("issue-1", "MUL-1", alphaBag()))
+	srv = newResolveTestServer(t, testIssue("issue-1", "LUM-1", alphaBag()))
 	tableCmd := newIssueListTestCmd()
 	_ = tableCmd.Flags().Set("output", "table")
 	_ = tableCmd.Flags().Set("fields", "id,title")
@@ -533,7 +533,7 @@ func TestRunIssueListResolvePropertiesWithFields(t *testing.T) {
 	if err != nil {
 		t.Fatalf("table output must ignore both flags, got: %v", err)
 	}
-	if !strings.Contains(out, "MUL-1") {
+	if !strings.Contains(out, "LUM-1") {
 		t.Errorf("table output lost its row:\n%s", out)
 	}
 	if srv.propertiesCalls != 0 || srv.membersCalls != 0 {
@@ -541,7 +541,7 @@ func TestRunIssueListResolvePropertiesWithFields(t *testing.T) {
 	}
 
 	// --fields alone keeps the raw bag; the guard must not fire without the flag.
-	srv = newResolveTestServer(t, testIssue("issue-1", "MUL-1", alphaBag()))
+	srv = newResolveTestServer(t, testIssue("issue-1", "LUM-1", alphaBag()))
 	_, resp, err = runIssueListJSON(t, map[string]string{"fields": "id,title"})
 	if err != nil {
 		t.Fatalf("runIssueList without --resolve-properties: %v", err)

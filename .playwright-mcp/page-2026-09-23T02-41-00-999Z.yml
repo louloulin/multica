@@ -1,0 +1,331 @@
+- generic [active] [ref=f9e1]:
+  - generic [ref=f9e14]:
+    - generic [ref=f9e16]:
+      - generic [ref=f9e17]:
+        - list [ref=f9e18]:
+          - listitem [ref=f9e19]:
+            - button "L Lumen Demo" [ref=f9e20]:
+              - generic [ref=f9e21]: L
+              - generic [ref=f9e23]: Lumen Demo
+        - list [ref=f9e26]:
+          - listitem [ref=f9e27]:
+            - button "搜索..." [ref=f9e28]:
+              - generic [aria-hidden]:
+                - generic [aria-hidden]: K
+          - listitem [ref=f9e33]:
+            - button "新建任务" [ref=f9e34]:
+              - generic [aria-hidden]:
+                - generic [aria-hidden]: C
+      - generic [ref=f9e40]:
+        - list [ref=f9e43]:
+          - listitem [ref=f9e44]:
+            - link "收件箱" [ref=f9e45] [cursor=pointer]:
+              - /url: /lumen-demo/inbox
+          - listitem [ref=f9e50]:
+            - link "我的任务" [ref=f9e51] [cursor=pointer]:
+              - /url: /lumen-demo/my-issues
+          - listitem [ref=f9e57]:
+            - link "聊天" [ref=f9e58] [cursor=pointer]:
+              - /url: /lumen-demo/chat
+        - generic [ref=f9e62]:
+          - generic [ref=f9e63]: 工作
+          - list [ref=f9e65]:
+            - listitem [ref=f9e66]:
+              - link "任务" [ref=f9e67] [cursor=pointer]:
+                - /url: /lumen-demo/issues
+            - listitem [ref=f9e72]:
+              - link "项目" [ref=f9e73] [cursor=pointer]:
+                - /url: /lumen-demo/projects
+            - listitem [ref=f9e77]:
+              - link "自动化" [ref=f9e78] [cursor=pointer]:
+                - /url: /lumen-demo/autopilots
+        - generic [ref=f9e82]:
+          - generic [ref=f9e83]: AI 团队
+          - list [ref=f9e85]:
+            - listitem [ref=f9e86]:
+              - link "智能体" [ref=f9e87] [cursor=pointer]:
+                - /url: /lumen-demo/agents
+            - listitem [ref=f9e92]:
+              - link "小队" [ref=f9e93] [cursor=pointer]:
+                - /url: /lumen-demo/squads
+            - listitem [ref=f9e100]:
+              - link "Skills" [ref=f9e101] [cursor=pointer]:
+                - /url: /lumen-demo/skills
+            - listitem [ref=f9e105]:
+              - link "运行时" [ref=f9e106] [cursor=pointer]:
+                - /url: /lumen-demo/runtimes
+      - generic [ref=f9e110]:
+        - list [ref=f9e111]:
+          - listitem [ref=f9e112]:
+            - link "统计" [ref=f9e113] [cursor=pointer]:
+              - /url: /lumen-demo/usage
+          - listitem [ref=f9e117]:
+            - link "设置" [ref=f9e118] [cursor=pointer]:
+              - /url: /lumen-demo/settings
+        - generic [ref=f9e123]:
+          - generic [ref=f9e124]:
+            - link "加入 Discord" [ref=f9e125] [cursor=pointer]:
+              - /url: https://discord.gg/W8gYBn226t
+            - button "关闭" [ref=f9e129] [cursor=pointer]
+          - button "帮助" [ref=f9e133] [cursor=pointer]
+      - button "切换左侧边栏" [ref=f9e137]
+    - main [ref=f9e138]:
+      - generic [ref=f9e139]:
+        - generic [ref=f9e140]:
+          - button "切换左侧边栏" [ref=f9e141]
+          - heading "任务" [level=1] [ref=f9e147]
+        - generic [ref=f9e149]:
+          - generic [ref=f9e151]:
+            - button "全部" [ref=f9e153]
+            - button "成员" [ref=f9e156]
+            - button "智能体" [ref=f9e159]
+            - status [ref=f9e161]
+            - button "视图" [ref=f9e162]
+          - generic [ref=f9e163]:
+            - button "0 个智能体工作中" [ref=f9e164]
+            - generic [ref=f9e166]:
+              - button "筛选" [ref=f9e167]
+              - button "显示" [ref=f9e169]
+              - button "看板" [ref=f9e171]
+        - generic [ref=f9e173]:
+          - generic [ref=f9e174]:
+            - generic [ref=f9e175]:
+              - generic [ref=f9e176]:
+                - generic [ref=f9e177]:
+                  - generic [ref=f9e178]: 待规划
+                  - generic [ref=f9e197]: "4"
+                - generic [ref=f9e198]:
+                  - button [ref=f9e199]
+                  - button [ref=f9e200]
+              - generic [ref=f9e202]:
+                - button [ref=f9e204]:
+                  - link [ref=f9e205] [cursor=pointer]:
+                    - /url: /lumen-demo/issues/6ad40db0-08c8-4c4d-b61b-d287fc5aa983
+                    - generic [ref=f9e206]:
+                      - generic [ref=f9e208]:
+                        - button "低" [ref=f9e210]
+                        - paragraph [ref=f9e215]: LUM-4
+                      - paragraph [ref=f9e216]: Integrate Sentry error monitoring
+                - button [ref=f9e218]:
+                  - link [ref=f9e219] [cursor=pointer]:
+                    - /url: /lumen-demo/issues/0b369814-2c7c-45d4-a4c3-18cb0b56b804
+                    - generic [ref=f9e220]:
+                      - generic [ref=f9e222]:
+                        - button "中" [ref=f9e224]
+                        - paragraph [ref=f9e229]: LUM-3
+                      - paragraph [ref=f9e230]: Mobile responsive optimization
+                - button [ref=f9e232]:
+                  - link [ref=f9e233] [cursor=pointer]:
+                    - /url: /lumen-demo/issues/1b2262f7-27b4-4b1b-b571-3b872b76b400
+                    - generic [ref=f9e234]:
+                      - paragraph [ref=f9e237]: LUM-2
+                      - paragraph [ref=f9e238]: Add CSV and PDF export for reports
+                - button [ref=f9e240]:
+                  - link [ref=f9e241] [cursor=pointer]:
+                    - /url: /lumen-demo/issues/3e6ee809-f3c6-4fc9-aa50-9a71506f7685
+                    - generic [ref=f9e242]:
+                      - generic [ref=f9e244]:
+                        - button "低" [ref=f9e246]
+                        - paragraph [ref=f9e251]: LUM-1
+                      - paragraph [ref=f9e252]: Evaluate Redis for caching layer
+            - generic [ref=f9e253]:
+              - generic [ref=f9e254]:
+                - generic [ref=f9e255]:
+                  - generic [ref=f9e256]: 待办
+                  - generic [ref=f9e259]: "5"
+                - generic [ref=f9e260]:
+                  - button [ref=f9e261]
+                  - button [ref=f9e262]
+              - generic [ref=f9e264]:
+                - button [ref=f9e266]:
+                  - link [ref=f9e267] [cursor=pointer]:
+                    - /url: /lumen-demo/issues/467d4172-46e0-48c3-bd66-5d6378bfef83
+                    - generic [ref=f9e268]:
+                      - generic [ref=f9e270]:
+                        - button "低" [ref=f9e272]
+                        - paragraph [ref=f9e277]: LUM-9
+                      - paragraph [ref=f9e278]: Add dark mode support
+                - button [ref=f9e280]:
+                  - link [ref=f9e281] [cursor=pointer]:
+                    - /url: /lumen-demo/issues/4739c42c-1eec-4dd2-9ef0-a22bd3bb2282
+                    - generic [ref=f9e282]:
+                      - generic [ref=f9e284]:
+                        - button "低" [ref=f9e286]
+                        - paragraph [ref=f9e291]: LUM-8
+                      - paragraph [ref=f9e292]: Implement email notification preferences
+                - button [ref=f9e294]:
+                  - link [ref=f9e295] [cursor=pointer]:
+                    - /url: /lumen-demo/issues/873ac83c-f812-4baf-833b-03f8ff8f26b9
+                    - generic [ref=f9e296]:
+                      - generic [ref=f9e298]:
+                        - button "低" [ref=f9e300]
+                        - paragraph [ref=f9e305]: LUM-7
+                      - paragraph [ref=f9e306]: Write API documentation with OpenAPI spec
+                - button [ref=f9e308]:
+                  - link [ref=f9e309] [cursor=pointer]:
+                    - /url: /lumen-demo/issues/cac8c2fd-d930-4d4f-845a-4df73995166a
+                    - generic [ref=f9e310]:
+                      - generic [ref=f9e312]:
+                        - button "中" [ref=f9e314]
+                        - paragraph [ref=f9e319]: LUM-6
+                      - paragraph [ref=f9e320]: Create analytics dashboard for workspace activity
+                - button [ref=f9e322]:
+                  - link [ref=f9e323] [cursor=pointer]:
+                    - /url: /lumen-demo/issues/9d58da63-285f-4dde-a9ae-2bfe1a20e971
+                    - generic [ref=f9e324]:
+                      - generic [ref=f9e326]:
+                        - button "中" [ref=f9e328]
+                        - paragraph [ref=f9e333]: LUM-5
+                      - paragraph [ref=f9e334]: Add end-to-end encryption for messages
+            - generic [ref=f9e335]:
+              - generic [ref=f9e336]:
+                - generic [ref=f9e337]:
+                  - generic [ref=f9e338]: 进行中
+                  - generic [ref=f9e342]: "5"
+                - generic [ref=f9e343]:
+                  - button [ref=f9e344]
+                  - button [ref=f9e345]
+              - generic [ref=f9e347]:
+                - button [ref=f9e349]:
+                  - link [ref=f9e350] [cursor=pointer]:
+                    - /url: /lumen-demo/issues/15272fa7-40cd-492e-b4ca-65fdb5c26f32
+                    - generic [ref=f9e351]:
+                      - generic [ref=f9e353]:
+                        - button "高" [ref=f9e355]
+                        - paragraph [ref=f9e360]: LUM-14
+                      - paragraph [ref=f9e361]: Implement role-based access control
+                - button [ref=f9e363]:
+                  - link [ref=f9e364] [cursor=pointer]:
+                    - /url: /lumen-demo/issues/43927320-25e3-48ac-9dc0-cadf5440659e
+                    - generic [ref=f9e365]:
+                      - generic [ref=f9e367]:
+                        - button "高" [ref=f9e369]
+                        - paragraph [ref=f9e374]: LUM-13
+                      - paragraph [ref=f9e375]: Add real-time collaborative editing
+                - button [ref=f9e377]:
+                  - link [ref=f9e378] [cursor=pointer]:
+                    - /url: /lumen-demo/issues/500df778-d8d3-4b98-a261-38f37342ace7
+                    - generic [ref=f9e379]:
+                      - generic [ref=f9e381]:
+                        - button "中" [ref=f9e383]
+                        - paragraph [ref=f9e388]: LUM-12
+                      - paragraph [ref=f9e389]: Refactor API error handling middleware
+                - button [ref=f9e391]:
+                  - link [ref=f9e392] [cursor=pointer]:
+                    - /url: /lumen-demo/issues/8fe95040-f88b-43d3-a195-a4591c95718a
+                    - generic [ref=f9e393]:
+                      - generic [ref=f9e395]:
+                        - button "高" [ref=f9e397]
+                        - paragraph [ref=f9e402]: LUM-11
+                      - paragraph [ref=f9e403]: Integrate Stripe billing and subscriptions
+                - button [ref=f9e405]:
+                  - link [ref=f9e406] [cursor=pointer]:
+                    - /url: /lumen-demo/issues/f871f573-48e1-489d-9ecf-31e6fe76bef3
+                    - generic [ref=f9e407]:
+                      - generic [ref=f9e409]:
+                        - button "高" [ref=f9e411]
+                        - paragraph [ref=f9e416]: LUM-10
+                      - paragraph [ref=f9e417]: Build WebSocket notification system
+            - generic [ref=f9e418]:
+              - generic [ref=f9e419]:
+                - generic [ref=f9e420]:
+                  - generic [ref=f9e421]: 审核中
+                  - generic [ref=f9e425]: "0"
+                - generic [ref=f9e426]:
+                  - button [ref=f9e427]
+                  - button [ref=f9e428]
+              - paragraph [ref=f9e431]: 无任务
+            - generic [ref=f9e432]:
+              - generic [ref=f9e433]:
+                - generic [ref=f9e434]:
+                  - generic [ref=f9e435]: 已阻塞
+                  - generic [ref=f9e439]: "0"
+                - generic [ref=f9e440]:
+                  - button [ref=f9e441]
+                  - button [ref=f9e442]
+              - paragraph [ref=f9e445]: 无任务
+            - generic [ref=f9e446]:
+              - generic [ref=f9e447]:
+                - generic [ref=f9e448]:
+                  - generic [ref=f9e449]: 已完成
+                  - generic [ref=f9e454]: "5"
+                - generic [ref=f9e455]:
+                  - button [ref=f9e456]
+                  - button [ref=f9e457]
+              - generic [ref=f9e459]:
+                - button [ref=f9e461]:
+                  - link [ref=f9e462] [cursor=pointer]:
+                    - /url: /lumen-demo/issues/39a29820-64ea-4830-9e2c-c37b0bfdc749
+                    - generic [ref=f9e463]:
+                      - generic [ref=f9e465]:
+                        - button "低" [ref=f9e467]
+                        - paragraph [ref=f9e472]: LUM-19
+                      - paragraph [ref=f9e473]: Build user settings and profile page
+                - button [ref=f9e475]:
+                  - link [ref=f9e476] [cursor=pointer]:
+                    - /url: /lumen-demo/issues/01c2046f-03d8-4e46-887c-c5f9636f7b9f
+                    - generic [ref=f9e477]:
+                      - generic [ref=f9e479]:
+                        - button "高" [ref=f9e481]
+                        - paragraph [ref=f9e486]: LUM-18
+                      - paragraph [ref=f9e487]: Set up database schema and migrations
+                - button [ref=f9e489]:
+                  - link [ref=f9e490] [cursor=pointer]:
+                    - /url: /lumen-demo/issues/2c8f4318-b007-4fde-95fd-b3743d9e2f19
+                    - generic [ref=f9e491]:
+                      - generic [ref=f9e493]:
+                        - button "中" [ref=f9e495]
+                        - paragraph [ref=f9e500]: LUM-17
+                      - paragraph [ref=f9e501]: Design and build component library
+                - button [ref=f9e503]:
+                  - link [ref=f9e504] [cursor=pointer]:
+                    - /url: /lumen-demo/issues/ba45fa77-5b19-4d7d-9951-709a03182a49
+                    - generic [ref=f9e505]:
+                      - generic [ref=f9e507]:
+                        - button "高" [ref=f9e509]
+                        - paragraph [ref=f9e514]: LUM-16
+                      - paragraph [ref=f9e515]: Implement user authentication with OAuth
+                - button [ref=f9e517]:
+                  - link [ref=f9e518] [cursor=pointer]:
+                    - /url: /lumen-demo/issues/e47b3e4c-b3b9-448e-a39e-3620e3e9eb9e
+                    - generic [ref=f9e519]:
+                      - generic [ref=f9e521]:
+                        - button "高" [ref=f9e523]
+                        - paragraph [ref=f9e528]: LUM-15
+                      - paragraph [ref=f9e529]: Set up CI/CD pipeline with GitHub Actions
+            - generic [ref=f9e530]:
+              - generic [ref=f9e531]: 隐藏的列
+              - generic [ref=f9e534]:
+                - generic [ref=f9e535]: 已取消
+                - generic [ref=f9e540]:
+                  - generic [ref=f9e541]: "0"
+                  - button "显示列" [ref=f9e542]
+          - status [ref=f9e543]
+      - generic:
+        - generic:
+          - generic:
+            - button
+            - generic:
+              - button "新对话"
+          - generic:
+            - button
+            - button
+        - generic:
+          - generic:
+            - heading "和你的智能体对话" [level=3]
+            - paragraph: 让它做一份总结、规划你的一天，或交给它一个小任务。
+        - generic: 需要先有一个智能体才能开始对话。
+        - generic:
+          - generic:
+            - generic:
+              - generic:
+                - generic:
+                  - generic:
+                    - paragraph: 创建一个智能体后才能开始对话
+            - generic: 暂无智能体
+            - generic:
+              - button "发送" [disabled]
+      - button "问 Lumen" [ref=f9e544]
+  - region "Notifications alt+T"
+  - button "Open Next.js Dev Tools" [ref=f9e10] [cursor=pointer]
+  - alert [ref=f9e547]

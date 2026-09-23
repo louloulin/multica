@@ -313,7 +313,7 @@ describe("execution log header geometry", () => {
     queryClient.setQueryData(issueKeys.tasks("issue-1"), tasks);
     return renderWithI18n(
       <QueryClientProvider client={queryClient}>
-        <ExecutionLogSection issueId="issue-1" identifier="MUL-1" />
+        <ExecutionLogSection issueId="issue-1" identifier="LUM-1" />
       </QueryClientProvider>,
     );
   }

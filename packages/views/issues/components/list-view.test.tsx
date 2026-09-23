@@ -168,7 +168,7 @@ vi.mock("react-virtuoso", () => ({
 const ISSUES: Issue[] = [
   {
     id: "issue-1",
-    identifier: "MUL-1",
+    identifier: "LUM-1",
     title: "First todo issue",
     status: "todo",
     priority: "none",
@@ -179,7 +179,7 @@ const ISSUES: Issue[] = [
   } as Issue,
   {
     id: "issue-2",
-    identifier: "MUL-2",
+    identifier: "LUM-2",
     title: "Second todo issue",
     status: "todo",
     priority: "none",
@@ -263,7 +263,7 @@ describe("ListView status header collapse", () => {
     styles.textContent = `[class~="group/row"] { height: ${height}px; }`;
     document.head.append(styles);
     const issues = Array.from({ length: 100 }, (_, index) => ({
-      ...ISSUES[0]!, id: `issue-${index}`, identifier: `MUL-${index}`, position: index,
+      ...ISSUES[0]!, id: `issue-${index}`, identifier: `LUM-${index}`, position: index,
     }));
     let seedRows = 0;
     let spacerHeight: string | undefined;
@@ -374,7 +374,7 @@ describe("ListView custom statuses", () => {
     const custom = {
       ...ISSUES[0]!,
       id: "issue-custom",
-      identifier: "MUL-3",
+      identifier: "LUM-3",
       title: "Waiting on the reporter",
       status: "awaiting_response",
       status_category: "started",

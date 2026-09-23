@@ -226,14 +226,14 @@ describe("TabBar hover action buttons", () => {
 
 describe("TabBar active-tab title persistence", () => {
   it("persists the resolved title only for the active tab", () => {
-    pres.title = "MUL-1: Fixed";
+    pres.title = "LUM-1: Fixed";
     state.byWorkspace.acme.tabs = [
       { id: "tA", url: "/acme/issues/i1", title: "Issues", pinned: false },
       { id: "tB", url: "/acme/projects", title: "Projects", pinned: false },
     ];
     state.byWorkspace.acme.activeTabId = "tA";
     render(<TabBar />);
-    expect(state.updateTab).toHaveBeenCalledWith("tA", { title: "MUL-1: Fixed" });
+    expect(state.updateTab).toHaveBeenCalledWith("tA", { title: "LUM-1: Fixed" });
     expect(state.updateTab).not.toHaveBeenCalledWith("tB", expect.anything());
     expect(state.updateTab).toHaveBeenCalledTimes(1);
   });
@@ -534,18 +534,18 @@ describe("TabBar context menu", () => {
       {
         id: "tA",
         url: "/acme/issues/issue-1?comment=comment-1",
-        title: "MUL-1: Fix tabs",
+        title: "LUM-1: Fix tabs",
         pinned: false,
       },
     ];
 
     const { findByText, getByLabelText } = render(<TabBar />);
-    fireEvent.contextMenu(getByLabelText("MUL-1: Fix tabs"));
+    fireEvent.contextMenu(getByLabelText("LUM-1: Fix tabs"));
     fireEvent.click(await findByText("Open as new window"));
 
     expect(state.openIssueWindow).toHaveBeenCalledWith({
       path: "/acme/issues/issue-1?comment=comment-1",
-      title: "MUL-1: Fix tabs",
+      title: "LUM-1: Fix tabs",
     });
   });
 

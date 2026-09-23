@@ -138,7 +138,7 @@ func ambiguousIDPrefixError(kind, input string, matches []idCandidate) error {
 // Short UUID prefixes (e.g. "1881abcd") were briefly supported but are no
 // longer — on large workspaces the CLI had to page the entire issue list
 // client-side to disambiguate, causing 14–35s timeouts (GH #4701). Since
-// `MUL-123` already covers every human use case for an issue reference, the
+// `LUM-123` already covers every human use case for an issue reference, the
 // short-prefix path is removed instead of being moved server-side. Other
 // resources without a human-readable key (autopilots, projects, labels,
 // task runs, workspaces, ...) continue to accept short UUID prefixes; see

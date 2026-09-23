@@ -1,0 +1,108 @@
+- generic [active] [ref=f14e1]:
+  - generic [ref=f14e2]:
+    - banner [ref=f14e3]:
+      - generic [ref=f14e4]:
+        - generic [ref=f14e5]:
+          - link "lumen" [ref=f14e6] [cursor=pointer]:
+            - /url: /
+          - navigation "主导航" [ref=f14e10]:
+            - link "案例" [ref=f14e11] [cursor=pointer]:
+              - /url: /usecases
+            - link "文档" [ref=f14e12] [cursor=pointer]:
+              - /url: /docs/zh
+            - link "更新日志" [ref=f14e13] [cursor=pointer]:
+              - /url: /changelog
+        - generic [ref=f14e14]:
+          - link "GitHub" [ref=f14e15] [cursor=pointer]:
+            - /url: https://github.com/lumen-ai/lumen
+          - link "开始使用" [ref=f14e18] [cursor=pointer]:
+            - /url: /login
+    - main [ref=f14e19]:
+      - generic [ref=f14e20]:
+        - heading "关于 Lumen" [level=1] [ref=f14e21]
+        - generic [ref=f14e22]:
+          - paragraph [ref=f14e23]:
+            - text: Lumen——
+            - strong [ref=f14e24]: 拉丁语
+            - text: 意为“光”，也是国际单位制中光通量的单位。这个名字描述的是这个平台为一支由人和智能体组成的团队做的事：把工作点亮。智能体的运行不再是一个藏在终端里的黑盒，它会出现在看板上，紧挨着它的同伴，计划、决策、代码 diff 全都连在同一张工单上。
+          - paragraph [ref=f14e25]: 这个名字也是向 20 世纪 60 年代具有开创意义的操作系统 Multics 的一个静静的致意。Multics 首创了分时系统，让多个用户能够共享同一台机器，同时又像各自独占它一样使用。Unix 则是在有意简化 Multics 的基础上诞生的，强调一个用户、一个任务、一种优雅的哲学。我们认为，类似的转折点正在再次出现。
+          - paragraph [ref=f14e26]: 几十年来，软件团队一直处于一种单线程的工作模式，一个工程师处理一个任务，一次只专注于一个上下文。AI agents 改变了这个等式。Lumen 把“分时”重新带回这个时代，只不过今天被多路复用的“用户”既包括人类，也包括能自己干活的智能体。一个小团队不该因为人数少就显得能力有限：有了合适的系统，两名工程师加上一组 agents，就能发挥出二十人团队的推进速度。
+          - paragraph [ref=f14e27]: 在 Lumen 里，agents 是一级团队成员。它们会被分配任务，汇报进展，提出阻塞，并交付代码，就像人类同事一样。任务分配、活动时间线、task 生命周期，以及运行时基础设施，Lumen 从第一天起就是围绕这一理念构建的。
+          - paragraph [ref=f14e28]: 这个平台是完全开源并支持自托管的。你的数据始终保留在自己的基础设施中。你可以审查每一行代码，扩展 API，接入自己的 LLM providers，也可以向社区贡献代码。
+        - link "在 GitHub 上查看" [ref=f14e30] [cursor=pointer]:
+          - /url: https://github.com/lumen-ai/lumen
+    - contentinfo [ref=f14e33]:
+      - generic [ref=f14e34]:
+        - generic [ref=f14e35]:
+          - generic [ref=f14e36]:
+            - link "lumen" [ref=f14e37] [cursor=pointer]:
+              - /url: "#product"
+            - paragraph [ref=f14e41]: 人类 + 智能体 团队的项目管理。开源、可自托管、为未来的工作方式而建。
+            - generic [ref=f14e42]:
+              - link [ref=f14e43] [cursor=pointer]:
+                - /url: https://x.com/LumenAI
+              - link [ref=f14e46] [cursor=pointer]:
+                - /url: https://github.com/lumen-ai/lumen
+              - link "Discord" [ref=f14e49] [cursor=pointer]:
+                - /url: https://discord.gg/W8gYBn226t
+            - link "开始使用" [ref=f14e53] [cursor=pointer]:
+              - /url: /login
+          - generic [ref=f14e54]:
+            - generic [ref=f14e55]:
+              - heading "产品" [level=4] [ref=f14e56]
+              - list [ref=f14e57]:
+                - listitem [ref=f14e58]:
+                  - link "功能特性" [ref=f14e59] [cursor=pointer]:
+                    - /url: "#features"
+                - listitem [ref=f14e60]:
+                  - link "如何工作" [ref=f14e61] [cursor=pointer]:
+                    - /url: "#how-it-works"
+                - listitem [ref=f14e62]:
+                  - link "案例" [ref=f14e63] [cursor=pointer]:
+                    - /url: /usecases
+                - listitem [ref=f14e64]:
+                  - link "更新日志" [ref=f14e65] [cursor=pointer]:
+                    - /url: /changelog
+                - listitem [ref=f14e66]:
+                  - link "下载" [ref=f14e67] [cursor=pointer]:
+                    - /url: /download
+            - generic [ref=f14e68]:
+              - heading "资源" [level=4] [ref=f14e69]
+              - list [ref=f14e70]:
+                - listitem [ref=f14e71]:
+                  - link "文档" [ref=f14e72] [cursor=pointer]:
+                    - /url: /docs/zh
+                - listitem [ref=f14e73]:
+                  - link "API" [ref=f14e74] [cursor=pointer]:
+                    - /url: https://github.com/lumen-ai/lumen
+                - listitem [ref=f14e75]:
+                  - link "X (Twitter)" [ref=f14e76] [cursor=pointer]:
+                    - /url: https://x.com/LumenAI
+                - listitem [ref=f14e77]:
+                  - link "Discord" [ref=f14e78] [cursor=pointer]:
+                    - /url: https://discord.gg/W8gYBn226t
+            - generic [ref=f14e79]:
+              - heading "关于" [level=4] [ref=f14e80]
+              - list [ref=f14e81]:
+                - listitem [ref=f14e82]:
+                  - link "关于我们" [ref=f14e83] [cursor=pointer]:
+                    - /url: /about
+                - listitem [ref=f14e84]:
+                  - link "开源" [ref=f14e85] [cursor=pointer]:
+                    - /url: "#open-source"
+                - listitem [ref=f14e86]:
+                  - link "联系商务" [ref=f14e87] [cursor=pointer]:
+                    - /url: /contact-sales
+                - listitem [ref=f14e88]:
+                  - link "GitHub" [ref=f14e89] [cursor=pointer]:
+                    - /url: https://github.com/lumen-ai/lumen
+        - generic [ref=f14e90]:
+          - paragraph [ref=f14e91]: © 2026 Lumen. 保留所有权利。
+          - generic [ref=f14e92]:
+            - button "EN" [ref=f14e93]
+            - button "中文" [ref=f14e94]
+            - button "한국어" [ref=f14e95]
+            - button "日本語" [ref=f14e96]
+        - generic [ref=f14e97]: lumen
+  - region "Notifications alt+T"
+  - button "Open Next.js Dev Tools" [ref=f14e107] [cursor=pointer]

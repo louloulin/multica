@@ -34,7 +34,7 @@ const sourceContextPanelData = {
   source_context_preview: {
     source_issue: {
       id: "issue-source",
-      identifier: "MUL-9",
+      identifier: "LUM-9",
       number: 9,
       title: "Source",
       description: "Historical body",
@@ -1087,7 +1087,7 @@ describe("AgentCreatePanel", () => {
       data: {
         ...sourceContextPanelData,
         parent_issue_id: "parent-uuid-1",
-        parent_issue_identifier: "MUL-9",
+        parent_issue_identifier: "LUM-9",
       },
     });
 

@@ -23,7 +23,7 @@ func TestRunIssueReorderPaginationIntegrity(t *testing.T) {
 			t.Chdir(t.TempDir())
 			all := make([]map[string]any, 145)
 			for i := range all {
-				all[i] = mkIssue(fmt.Sprintf("11111111-1111-4111-8111-%012d", i+1), fmt.Sprintf("MUL-%d", i+1), "todo", float64(i))
+				all[i] = mkIssue(fmt.Sprintf("11111111-1111-4111-8111-%012d", i+1), fmt.Sprintf("LUM-%d", i+1), "todo", float64(i))
 				all[i]["project_id"] = "project-1"
 			}
 			target := all[0]

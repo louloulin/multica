@@ -29,10 +29,10 @@ func TestCommentMentionsAnyone(t *testing.T) {
 		{name: "member mention", content: "[@Bob](mention://member/22222222-2222-2222-2222-222222222222)", want: true},
 		{name: "squad mention", content: "[@Squad](mention://squad/44444444-4444-4444-4444-444444444444)", want: true},
 		{name: "mention all", content: "[@all](mention://all/all)", want: true},
-		{name: "issue mention only", content: "see [MUL-1](mention://issue/33333333-3333-3333-3333-333333333333)", want: false},
-		{name: "issue + plain text", content: "see [MUL-1](mention://issue/33333333-3333-3333-3333-333333333333) for context", want: false},
+		{name: "issue mention only", content: "see [LUM-1](mention://issue/33333333-3333-3333-3333-333333333333)", want: false},
+		{name: "issue + plain text", content: "see [LUM-1](mention://issue/33333333-3333-3333-3333-333333333333) for context", want: false},
 		{name: "agent plus member", content: "[@A](mention://agent/11111111-1111-1111-1111-111111111111) cc [@B](mention://member/22222222-2222-2222-2222-222222222222)", want: true},
-		{name: "issue plus member", content: "blocks [MUL-1](mention://issue/33333333-3333-3333-3333-333333333333) — [@Bob](mention://member/22222222-2222-2222-2222-222222222222)", want: true},
+		{name: "issue plus member", content: "blocks [LUM-1](mention://issue/33333333-3333-3333-3333-333333333333) — [@Bob](mention://member/22222222-2222-2222-2222-222222222222)", want: true},
 	}
 	for _, tc := range cases {
 		t.Run(tc.name, func(t *testing.T) {
@@ -156,7 +156,7 @@ func TestShouldEnqueueSquadLeaderOnComment_SkipsWhenMemberMentionsAnyone(t *test
 		},
 		{
 			name:        "member issue cross-reference only triggers leader",
-			content:     "blocked by [MUL-1](mention://issue/" + testUserID + ")",
+			content:     "blocked by [LUM-1](mention://issue/" + testUserID + ")",
 			authorType:  "member",
 			authorID:    testUserID,
 			want:        true,

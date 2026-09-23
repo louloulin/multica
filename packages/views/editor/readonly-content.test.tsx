@@ -304,24 +304,24 @@ describe("ReadonlyContent highlight Markdown", () => {
 describe("ReadonlyContent issue mention Markdown", () => {
   it("renders an issue mention inside a task list as an issue mention card", () => {
     const { container, getByTestId } = render(
-      <ReadonlyContent content="- [ ] [MUL-123](mention://issue/issue-123)" />,
+      <ReadonlyContent content="- [ ] [LUM-123](mention://issue/issue-123)" />,
     );
 
     expect(container.querySelector('input[type="checkbox"]')).not.toBeNull();
-    expect(getByTestId("issue-mention-card").textContent).toBe("MUL-123");
+    expect(getByTestId("issue-mention-card").textContent).toBe("LUM-123");
   });
 
   it("autolinks a resolved bare identifier as an issue mention card", () => {
     resolveIssueIdentifierMock.mockImplementation((id: string) =>
-      id === "MUL-7" ? { id: "issue-7", identifier: "MUL-7" } : null,
+      id === "LUM-7" ? { id: "issue-7", identifier: "LUM-7" } : null,
     );
 
     const { getByTestId } = render(
-      <ReadonlyContent content="See MUL-7 for context" />,
+      <ReadonlyContent content="See LUM-7 for context" />,
     );
 
-    expect(getByTestId("issue-mention-card").textContent).toBe("MUL-7");
-    expect(resolveIssueIdentifierMock).toHaveBeenCalledWith("MUL-7");
+    expect(getByTestId("issue-mention-card").textContent).toBe("LUM-7");
+    expect(resolveIssueIdentifierMock).toHaveBeenCalledWith("LUM-7");
   });
 
   it("leaves an unresolved bare identifier as plain text", () => {
@@ -332,14 +332,14 @@ describe("ReadonlyContent issue mention Markdown", () => {
     );
 
     expect(queryByTestId("issue-mention-card")).toBeNull();
-    expect(container.textContent).toContain("MUL-999");
+    expect(container.textContent).toContain("LUM-999");
   });
 
   it("does not autolink a bare identifier inside inline code", () => {
     resolveIssueIdentifierMock.mockReturnValue(null);
 
     const { queryByTestId } = render(
-      <ReadonlyContent content={"use `MUL-7` here"} />,
+      <ReadonlyContent content={"use `LUM-7` here"} />,
     );
 
     expect(resolveIssueIdentifierMock).not.toHaveBeenCalled();

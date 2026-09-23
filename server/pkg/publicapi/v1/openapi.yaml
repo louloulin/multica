@@ -176,7 +176,7 @@ components:
       name: issue_ref
       in: path
       required: true
-      description: Issue UUID or workspace identifier such as MUL-123
+      description: Issue UUID or workspace identifier such as LUM-123
       schema:
         type: string
     StorageScope:
