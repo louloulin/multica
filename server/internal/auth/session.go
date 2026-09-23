@@ -69,8 +69,8 @@ const (
 )
 
 // ErrNotSessionToken is returned by RenewSessionToken when handed something
-// that is not one of our own UI session JWTs. PATs (mul_), agent task tokens
-// (mat_) and cloud-node PATs (mcn_) authenticate fine at the middleware but
+// that is not one of our own UI session JWTs. PATs (lum_), agent task tokens
+// (lat_) and cloud-node PATs (mcn_) authenticate fine at the middleware but
 // must never be exchanged for an interactive session.
 var ErrNotSessionToken = errors.New("not an interactive session token")
 

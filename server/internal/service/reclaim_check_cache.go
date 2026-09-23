@@ -11,8 +11,8 @@ import (
 )
 
 const (
-	reclaimCheckSchedulePrefix = "mul:claim:runtime:reclaim-schedule:"
-	reclaimCheckBackstopPrefix = "mul:claim:runtime:reclaim-backstop:"
+	reclaimCheckSchedulePrefix = "lumen:claim:runtime:reclaim-schedule:"
+	reclaimCheckBackstopPrefix = "lumen:claim:runtime:reclaim-backstop:"
 	reclaimCheckRetryBatchSize = 256
 
 	// The backstop remains at or below the PostgreSQL recovery window so a

@@ -26,7 +26,7 @@ func TestCLIConfig_BackwardCompat_OldFileLoadsWithNilBackends(t *testing.T) {
   "server_url": "https://api.lumen.ai",
   "app_url": "https://lumen.ai",
   "workspace_id": "ws-123",
-  "token": "mul_abcdef"
+  "token": "lum_abcdef"
 }`
 	if err := os.WriteFile(filepath.Join(cfgDir, "config.json"), []byte(historical), 0o600); err != nil {
 		t.Fatal(err)
@@ -40,7 +40,7 @@ func TestCLIConfig_BackwardCompat_OldFileLoadsWithNilBackends(t *testing.T) {
 	if cfg.ServerURL != "https://api.lumen.ai" {
 		t.Errorf("ServerURL: got %q, want historical value", cfg.ServerURL)
 	}
-	if cfg.Token != "mul_abcdef" {
+	if cfg.Token != "lum_abcdef" {
 		t.Errorf("Token: got %q, want historical value", cfg.Token)
 	}
 	if cfg.Backends != nil {
@@ -59,7 +59,7 @@ func TestCLIConfig_BackwardCompat_NilBackendsOmittedFromJSON(t *testing.T) {
 
 	cfg := CLIConfig{
 		ServerURL: "https://api.lumen.ai",
-		Token:     "mul_xyz",
+		Token:     "lum_xyz",
 	}
 	if err := SaveCLIConfig(cfg); err != nil {
 		t.Fatal(err)
@@ -91,7 +91,7 @@ func TestCLIConfig_OpenClawOverride_RoundTrip(t *testing.T) {
 
 	original := CLIConfig{
 		ServerURL: "https://api.lumen.ai",
-		Token:     "mul_xyz",
+		Token:     "lum_xyz",
 		Backends: &BackendOverrides{
 			OpenClaw: &OpenClawOverride{
 				BinaryPath: "/opt/openclaw-prod/bin/openclaw",
@@ -132,7 +132,7 @@ func TestCLIConfig_OpenClawOverride_PartialFieldsOmitted(t *testing.T) {
 
 	cfg := CLIConfig{
 		ServerURL: "https://api.lumen.ai",
-		Token:     "mul_xyz",
+		Token:     "lum_xyz",
 		Backends: &BackendOverrides{
 			OpenClaw: &OpenClawOverride{
 				StateDir: "/var/lib/openclaw-prod",
@@ -179,7 +179,7 @@ func TestCLIConfig_ProfileCommandOverrides_RoundTrip(t *testing.T) {
 		ServerURL:   "https://api.lumen.ai",
 		AppURL:      "https://lumen.ai",
 		WorkspaceID: "ws-123",
-		Token:       "mul_xyz",
+		Token:       "lum_xyz",
 		Backends: &BackendOverrides{
 			OpenClaw: &OpenClawOverride{StateDir: "/var/lib/openclaw-prod"},
 		},
@@ -234,7 +234,7 @@ func TestCLIConfig_ProfileCommandOverrides_OmittedWhenEmpty(t *testing.T) {
 	tmp := t.TempDir()
 	t.Setenv("HOME", tmp)
 
-	cfg := CLIConfig{ServerURL: "https://api.lumen.ai", Token: "mul_xyz"}
+	cfg := CLIConfig{ServerURL: "https://api.lumen.ai", Token: "lum_xyz"}
 	if err := SaveCLIConfig(cfg); err != nil {
 		t.Fatal(err)
 	}
@@ -273,7 +273,7 @@ func TestCLIConfig_UnknownFieldsArePreserved(t *testing.T) {
 	}
 	withFutureField := `{
   "server_url": "https://api.lumen.ai",
-  "token": "mul_xyz",
+  "token": "lum_xyz",
   "backends": {
     "openclaw": {"state_dir": "/x"},
     "future_backend_xyz": {"some_setting": "preserve me"}
@@ -347,7 +347,7 @@ func TestCLIConfig_TaskRootOverridesOwnerHome(t *testing.T) {
 	if err := os.MkdirAll(filepath.Dir(ownerPath), 0o755); err != nil {
 		t.Fatal(err)
 	}
-	ownerBytes := []byte("{\n  \"server_url\": \"https://owner.invalid\",\n  \"token\": \"mul_owner_sentinel\"\n}\n")
+	ownerBytes := []byte("{\n  \"server_url\": \"https://owner.invalid\",\n  \"token\": \"lum_owner_sentinel\"\n}\n")
 	if err := os.WriteFile(ownerPath, ownerBytes, 0o600); err != nil {
 		t.Fatal(err)
 	}
@@ -445,7 +445,7 @@ func TestCLIConfig_OpenClawCLITimeout_RoundTrip(t *testing.T) {
 
 	original := CLIConfig{
 		ServerURL: "https://api.lumen.ai",
-		Token:     "mul_xyz",
+		Token:     "lum_xyz",
 		Backends: &BackendOverrides{
 			OpenClaw: &OpenClawOverride{CLITimeout: "45s"},
 		},

@@ -216,8 +216,8 @@ func (h *Handler) GetChatThread(w http.ResponseWriter, r *http.Request) {
 // chatHistorySession authorizes the request and returns the caller's own chat
 // session. It is authorized by the task-scoped token alone: the auth middleware
 // deletes client-supplied X-Actor-Source / X-Agent-ID / X-Task-ID from every
-// request and re-stamps them only on the mat_ branch (MUL-3428), so a normal
-// JWT / mul_ PAT arrives here carrying no task context at all.
+// request and re-stamps them only on the lat_ branch (MUL-3428), so a normal
+// JWT / lum_ PAT arrives here carrying no task context at all.
 //
 // The actor check stays anyway, and stays load-bearing: this endpoint returns
 // another member's chat history if its task binding is ever wrong, so it names

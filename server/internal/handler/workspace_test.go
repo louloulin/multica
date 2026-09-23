@@ -891,7 +891,7 @@ INSERT INTO member (workspace_id, user_id, role) VALUES ($1, $2, 'owner')
 
 	// daemon_token row — paired with the runtime's daemon_id so the
 	// revocation should sweep its hash up via DeleteDaemonTokensByWorkspaceAndDaemons.
-	rawToken := "mdt_test_" + slug
+	rawToken := "ldt_test_" + slug
 	sum := sha256.Sum256([]byte(rawToken))
 	tokenHash := hex.EncodeToString(sum[:])
 	dbfx.Exec(t, `

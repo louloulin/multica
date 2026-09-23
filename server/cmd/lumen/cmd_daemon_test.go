@@ -236,7 +236,7 @@ func TestRequireDaemonAuth(t *testing.T) {
 
 	t.Run("authenticated", func(t *testing.T) {
 		t.Setenv("HOME", t.TempDir())
-		if err := cli.SaveCLIConfig(cli.CLIConfig{Token: "mul_test_token"}); err != nil {
+		if err := cli.SaveCLIConfig(cli.CLIConfig{Token: "lum_test_token"}); err != nil {
 			t.Fatalf("SaveCLIConfig: %v", err)
 		}
 		if err := requireDaemonAuth(""); err != nil {
@@ -429,7 +429,7 @@ func TestDaemonStartBackgroundReportsEarlyChildExit(t *testing.T) {
 	t.Cleanup(func() { daemonExecutable = orig })
 
 	const profile = "child-exit-test"
-	if err := cli.SaveCLIConfigForProfile(cli.CLIConfig{Token: "mul_fake"}, profile); err != nil {
+	if err := cli.SaveCLIConfigForProfile(cli.CLIConfig{Token: "lum_fake"}, profile); err != nil {
 		t.Fatalf("SaveCLIConfigForProfile: %v", err)
 	}
 
@@ -532,7 +532,7 @@ func TestDaemonRestartRejectedTokenFailsBeforeStopping(t *testing.T) {
 	}))
 	defer api.Close()
 
-	if err := cli.SaveCLIConfigForProfile(cli.CLIConfig{Token: "mul_revoked", ServerURL: api.URL}, profile); err != nil {
+	if err := cli.SaveCLIConfigForProfile(cli.CLIConfig{Token: "lum_revoked", ServerURL: api.URL}, profile); err != nil {
 		t.Fatalf("SaveCLIConfigForProfile: %v", err)
 	}
 
@@ -570,7 +570,7 @@ func TestDaemonRestartUnreachableServerFailsBeforeStopping(t *testing.T) {
 	deadURL := "http://" + ln.Addr().String()
 	ln.Close()
 
-	if err := cli.SaveCLIConfigForProfile(cli.CLIConfig{Token: "mul_fake", ServerURL: deadURL}, profile); err != nil {
+	if err := cli.SaveCLIConfigForProfile(cli.CLIConfig{Token: "lum_fake", ServerURL: deadURL}, profile); err != nil {
 		t.Fatalf("SaveCLIConfigForProfile: %v", err)
 	}
 

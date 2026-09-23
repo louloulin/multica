@@ -674,7 +674,7 @@ async function ensureRunningDaemonVersionMatches(): Promise<
 
 /**
  * Exchange the user's JWT for a long-lived PAT via POST /api/tokens. The
- * daemon needs a PAT (or `mul_` / `mdt_` token) because JWTs expire in 30
+ * daemon needs a PAT (or `lum_` / `ldt_` token) because JWTs expire in 30
  * days and signatures are tied to a specific backend instance.
  */
 async function mintPat(jwt: string): Promise<string> {
@@ -710,7 +710,7 @@ async function mintPat(jwt: string): Promise<string> {
     () => res.json() as Promise<{ token?: unknown }>,
     15_000,
   );
-  if (typeof data.token !== "string" || !data.token.startsWith("mul_")) {
+  if (typeof data.token !== "string" || !data.token.startsWith("lum_")) {
     throw new Error("mint PAT: response missing token");
   }
   return data.token;
@@ -721,7 +721,7 @@ async function mintPat(jwt: string): Promise<string> {
  *
  * - Input from the renderer is the user's JWT (from localStorage) plus the
  *   current user's id, so we can detect session changes.
- * - If the profile already has a cached PAT (`mul_...`) AND the sidecar user
+ * - If the profile already has a cached PAT (`lum_...`) AND the sidecar user
  *   id matches the caller, reuse it — minting fresh on every launch would
  *   accumulate garbage in the user's tokens page.
  * - On user mismatch (or first run) call POST /api/tokens with the JWT to
@@ -749,10 +749,10 @@ async function syncToken(
     !userChanged &&
     previousUserId === userId &&
     typeof config.token === "string" &&
-    config.token.startsWith("mul_");
+    config.token.startsWith("lum_");
 
   let finalToken: string;
-  if (tokenFromRenderer.startsWith("mul_")) {
+  if (tokenFromRenderer.startsWith("lum_")) {
     finalToken = tokenFromRenderer;
   } else if (sameUserWithCachedPat) {
     finalToken = config.token as string;

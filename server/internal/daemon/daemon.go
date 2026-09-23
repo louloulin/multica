@@ -167,7 +167,7 @@ func taskScopedAuthToken(task Task) (string, error) {
 	if token == "" {
 		return "", errors.New("server did not provide task-scoped auth token")
 	}
-	if !strings.HasPrefix(token, "mat_") {
+	if !strings.HasPrefix(token, "lat_") {
 		return "", errors.New("server provided non-task-scoped auth token")
 	}
 	return token, nil

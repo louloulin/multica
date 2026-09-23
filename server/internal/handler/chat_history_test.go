@@ -104,7 +104,7 @@ func newChatHistoryTaskForSession(t *testing.T, sessionID string) string {
 	return taskID
 }
 
-// taskActorReq builds a request as the Auth middleware would leave it for a mat_
+// taskActorReq builds a request as the Auth middleware would leave it for a lat_
 // task token: the server-set X-Actor-Source=task_token + the authoritative
 // X-Task-ID. target may carry query params (e.g. "?id=70.0").
 func taskActorReq(target, taskID string) *http.Request {
@@ -594,7 +594,7 @@ func TestGetChatHistory_TranscriptPagesWithoutDuplicatesOrGaps(t *testing.T) {
 
 // TestGetChatHistory_RejectsForgedTaskID: a normal request (no server-set
 // X-Actor-Source) that forges X-Task-ID — what a member could do with a JWT /
-// mul_ PAT, since the Auth middleware does NOT strip a client-sent X-Task-ID —
+// lum_ PAT, since the Auth middleware does NOT strip a client-sent X-Task-ID —
 // must be rejected, never served another session's history.
 func TestGetChatHistory_RejectsForgedTaskID(t *testing.T) {
 	if testHandler == nil {

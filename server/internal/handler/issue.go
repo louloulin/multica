@@ -3225,7 +3225,7 @@ func (h *Handler) CreateIssue(w http.ResponseWriter, r *http.Request) {
 		//
 		// The task id is taken from the SERVER-trusted X-Task-ID: the auth
 		// middleware deletes whatever the client sent and re-stamps
-		// X-Agent-ID / X-Task-ID only from a validated mat_ token (MUL-3428), so
+		// X-Agent-ID / X-Task-ID only from a validated lat_ token (MUL-3428), so
 		// a member-forged pair never reaches here — it is gone before
 		// resolveActor runs, and the request resolves to creatorType=="member".
 		// We still re-check the task belongs to the acting agent before trusting

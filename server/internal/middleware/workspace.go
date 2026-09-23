@@ -66,7 +66,7 @@ var errWorkspaceNotFound = errors.New("workspace not found")
 // internal resolver instead — this helper collapses both cases to "" for
 // simpler handler-level checks.
 func ResolveWorkspaceIDFromRequest(r *http.Request, queries *db.Queries) string {
-	// A mat_ task token is bound to exactly one workspace by the token
+	// A lat_ task token is bound to exactly one workspace by the token
 	// row. Auth middleware writes that workspace into X-Workspace-ID
 	// after stripping any client-supplied X-Actor-Source. Any other
 	// workspace identifier on the request (slug header/query, ID

@@ -256,17 +256,17 @@ func resolveProfile(cmd *cobra.Command) string {
 func newAPIClient(cmd *cobra.Command) (*cli.APIClient, error) {
 	taskContext := inDaemonManagedExecutionContext()
 	token := resolveToken(cmd)
-	if taskContext && !strings.HasPrefix(token, "mat_") {
+	if taskContext && !strings.HasPrefix(token, "lat_") {
 		// When the ONLY daemon signal is a workdir marker (no LUMEN_AGENT_ID /
 		// LUMEN_TASK_ID / LUMEN_DAEMON_PORT), the likeliest cause outside a
 		// real task is a leftover marker from a crashed daemon task in a
 		// local_directory. Name the exact file so a normal user can recover
-		// instead of hitting an opaque "requires mat_ token" error. Shares its
+		// instead of hitting an opaque "requires lat_ token" error. Shares its
 		// wording with requireHumanLocalCommand: same cause, same remedy.
 		if markerPath := leftoverDaemonTaskMarkerPath(); markerPath != "" {
-			return nil, fmt.Errorf("agent execution context requires LUMEN_TOKEN to be a task-scoped mat_ token%s", leftoverMarkerSuffix(markerPath))
+			return nil, fmt.Errorf("agent execution context requires LUMEN_TOKEN to be a task-scoped lat_ token%s", leftoverMarkerSuffix(markerPath))
 		}
-		return nil, fmt.Errorf("agent execution context requires LUMEN_TOKEN to be a task-scoped mat_ token%s", daemonPortOnlyContextHint())
+		return nil, fmt.Errorf("agent execution context requires LUMEN_TOKEN to be a task-scoped lat_ token%s", daemonPortOnlyContextHint())
 	}
 
 	serverURL := resolveServerURL(cmd)
@@ -423,7 +423,7 @@ func requireTaskLocalConfigRoot() error {
 
 // requireHumanLocalCommand rejects commands whose purpose is to authenticate,
 // set up, or operate the human-owned local daemon/profile. Task API commands
-// remain available with the injected mat_ token; these local commands do not.
+// remain available with the injected lat_ token; these local commands do not.
 func requireHumanLocalCommand(command string) error {
 	if !inDaemonTaskIdentityContext() {
 		return nil

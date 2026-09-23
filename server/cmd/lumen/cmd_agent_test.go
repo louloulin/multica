@@ -216,9 +216,9 @@ func TestMissingServerConfigMessageExplainsPortOnlyContext(t *testing.T) {
 // itself — carries the fail-closed signal. This test builds that tree shape
 // and asserts the CLI refuses the config-PAT fallback from the escaped cwd.
 func TestNewAPIClient_WorkdirParentEscapeFailsClosed(t *testing.T) {
-	// Seed a user config with a mul_ PAT that must never be picked up.
+	// Seed a user config with a lum_ PAT that must never be picked up.
 	t.Setenv("HOME", t.TempDir())
-	if err := cli.SaveCLIConfig(cli.CLIConfig{Token: "mul_owner_pat"}); err != nil {
+	if err := cli.SaveCLIConfig(cli.CLIConfig{Token: "lum_owner_pat"}); err != nil {
 		t.Fatalf("seed config: %v", err)
 	}
 
@@ -263,15 +263,15 @@ func TestNewAPIClient_WorkdirParentEscapeFailsClosed(t *testing.T) {
 	}
 	if _, err := newAPIClient(testCmd()); err == nil {
 		t.Fatal("newAPIClient(): expected fail-closed error from workdir-parent escape, got nil")
-	} else if !strings.Contains(err.Error(), "mat_") {
-		t.Fatalf("error should demand a task-scoped mat_ token; got %q", err.Error())
+	} else if !strings.Contains(err.Error(), "lat_") {
+		t.Fatalf("error should demand a task-scoped lat_ token; got %q", err.Error())
 	}
 }
 
 // TestNewAPIClient_LeftoverMarkerActionableError verifies that a stale
 // daemon-task marker with no daemon env (the local_directory crash-leftover
 // case) fails closed with an actionable message that names the marker file,
-// rather than an opaque "requires mat_ token" error.
+// rather than an opaque "requires lat_ token" error.
 func TestNewAPIClient_LeftoverMarkerActionableError(t *testing.T) {
 	chdirWithDaemonTaskMarker(t)
 	t.Setenv("LUMEN_AGENT_ID", "")
@@ -396,7 +396,7 @@ func TestResolveWorkspaceID_AgentContextSkipsConfig(t *testing.T) {
 func TestResolveToken_AgentContextSkipsConfig(t *testing.T) {
 	t.Setenv("HOME", t.TempDir())
 
-	if err := cli.SaveCLIConfig(cli.CLIConfig{Token: "mul_profile_token"}); err != nil {
+	if err := cli.SaveCLIConfig(cli.CLIConfig{Token: "lum_profile_token"}); err != nil {
 		t.Fatalf("seed config: %v", err)
 	}
 
@@ -406,7 +406,7 @@ func TestResolveToken_AgentContextSkipsConfig(t *testing.T) {
 		t.Setenv("LUMEN_DAEMON_PORT", "")
 		t.Setenv("LUMEN_TOKEN", "")
 
-		if got := resolveToken(testCmd()); got != "mul_profile_token" {
+		if got := resolveToken(testCmd()); got != "lum_profile_token" {
 			t.Fatalf("resolveToken() = %q, want profile token", got)
 		}
 	})
@@ -419,7 +419,7 @@ func TestResolveToken_AgentContextSkipsConfig(t *testing.T) {
 		t.Setenv("LUMEN_TOKEN", "")
 		t.Setenv("LUMEN_DAEMON_PORT", "")
 
-		if got := resolveToken(testCmd()); got != "mul_profile_token" {
+		if got := resolveToken(testCmd()); got != "lum_profile_token" {
 			t.Fatalf("resolveToken() = %q, want profile token", got)
 		}
 	})
@@ -493,7 +493,7 @@ func TestResolveToken_AgentContextSkipsConfig(t *testing.T) {
 		t.Setenv("LUMEN_SERVER_URL", "")
 		t.Setenv("LUMEN_TOKEN", "")
 
-		if got := resolveToken(testCmd()); got != "mul_profile_token" {
+		if got := resolveToken(testCmd()); got != "lum_profile_token" {
 			t.Fatalf("resolveToken() = %q, want profile token (unreadable marker path must not fail closed)", got)
 		}
 	})
@@ -502,9 +502,9 @@ func TestResolveToken_AgentContextSkipsConfig(t *testing.T) {
 		t.Setenv("LUMEN_AGENT_ID", "agent-123")
 		t.Setenv("LUMEN_TASK_ID", "task-456")
 		t.Setenv("LUMEN_DAEMON_PORT", "")
-		t.Setenv("LUMEN_TOKEN", "mat_task_token")
+		t.Setenv("LUMEN_TOKEN", "lat_task_token")
 
-		if got := resolveToken(testCmd()); got != "mat_task_token" {
+		if got := resolveToken(testCmd()); got != "lat_task_token" {
 			t.Fatalf("resolveToken() = %q, want LUMEN_TOKEN", got)
 		}
 	})
@@ -523,10 +523,10 @@ func TestResolveToken_AgentContextSkipsConfig(t *testing.T) {
 	t.Run("daemon port set with explicit task token uses task token", func(t *testing.T) {
 		t.Setenv("LUMEN_AGENT_ID", "")
 		t.Setenv("LUMEN_TASK_ID", "")
-		t.Setenv("LUMEN_TOKEN", "mat_task_token")
+		t.Setenv("LUMEN_TOKEN", "lat_task_token")
 		t.Setenv("LUMEN_DAEMON_PORT", "19514")
 
-		if got := resolveToken(testCmd()); got != "mat_task_token" {
+		if got := resolveToken(testCmd()); got != "lat_task_token" {
 			t.Fatalf("resolveToken() = %q, want LUMEN_TOKEN (task token wins over daemon signal)", got)
 		}
 	})
@@ -542,7 +542,7 @@ func TestResolveToken_AgentContextSkipsConfig(t *testing.T) {
 		t.Setenv("LUMEN_DAEMON_PORT", "")
 		t.Setenv("LUMEN_SERVER_URL", "https://api.lumen.ai")
 
-		if got := resolveToken(testCmd()); got != "mul_profile_token" {
+		if got := resolveToken(testCmd()); got != "lum_profile_token" {
 			t.Fatalf("resolveToken() = %q, want profile token (SERVER_URL is not a daemon identity signal)", got)
 		}
 	})
@@ -557,7 +557,7 @@ func TestResolveToken_AgentContextSkipsConfig(t *testing.T) {
 		t.Setenv("LUMEN_DAEMON_PORT", "")
 		t.Setenv("LUMEN_SERVER_URL", "")
 
-		if got := resolveToken(testCmd()); got != "mul_profile_token" {
+		if got := resolveToken(testCmd()); got != "lum_profile_token" {
 			t.Fatalf("resolveToken() = %q, want profile token (normal CLI flow)", got)
 		}
 	})
@@ -576,31 +576,31 @@ func TestNewAPIClient_AgentContextRequiresTaskToken(t *testing.T) {
 		if err == nil {
 			t.Fatal("newAPIClient(): expected error without task token")
 		}
-		if !strings.Contains(err.Error(), "mat_ token") {
-			t.Fatalf("newAPIClient() error = %q, want mat_ token guidance", err.Error())
+		if !strings.Contains(err.Error(), "lat_ token") {
+			t.Fatalf("newAPIClient() error = %q, want lat_ token guidance", err.Error())
 		}
 	})
 
 	t.Run("member token fails closed", func(t *testing.T) {
-		t.Setenv("LUMEN_TOKEN", "mul_member_token")
+		t.Setenv("LUMEN_TOKEN", "lum_member_token")
 
 		_, err := newAPIClient(testCmd())
 		if err == nil {
 			t.Fatal("newAPIClient(): expected error with member token")
 		}
-		if !strings.Contains(err.Error(), "mat_ token") {
-			t.Fatalf("newAPIClient() error = %q, want mat_ token guidance", err.Error())
+		if !strings.Contains(err.Error(), "lat_ token") {
+			t.Fatalf("newAPIClient() error = %q, want lat_ token guidance", err.Error())
 		}
 	})
 
 	t.Run("task token succeeds", func(t *testing.T) {
-		t.Setenv("LUMEN_TOKEN", "mat_task_token")
+		t.Setenv("LUMEN_TOKEN", "lat_task_token")
 
 		client, err := newAPIClient(testCmd())
 		if err != nil {
 			t.Fatalf("newAPIClient(): %v", err)
 		}
-		if client.Token != "mat_task_token" {
+		if client.Token != "lat_task_token" {
 			t.Fatalf("client token = %q, want task token", client.Token)
 		}
 	})
@@ -616,7 +616,7 @@ func TestNewAPIClient_DaemonPortRequiresTaskToken(t *testing.T) {
 	t.Setenv("LUMEN_DAEMON_PORT", "27182")
 	t.Setenv("LUMEN_TOKEN", "")
 
-	if err := cli.SaveCLIConfig(cli.CLIConfig{Token: "mul_profile_token", WorkspaceID: "config-file-ws"}); err != nil {
+	if err := cli.SaveCLIConfig(cli.CLIConfig{Token: "lum_profile_token", WorkspaceID: "config-file-ws"}); err != nil {
 		t.Fatalf("seed config: %v", err)
 	}
 
@@ -624,8 +624,8 @@ func TestNewAPIClient_DaemonPortRequiresTaskToken(t *testing.T) {
 	if err == nil {
 		t.Fatal("newAPIClient(): expected error without task token")
 	}
-	if !strings.Contains(err.Error(), "mat_ token") {
-		t.Fatalf("newAPIClient() error = %q, want mat_ token guidance", err.Error())
+	if !strings.Contains(err.Error(), "lat_ token") {
+		t.Fatalf("newAPIClient() error = %q, want lat_ token guidance", err.Error())
 	}
 	if !strings.Contains(err.Error(), "LUMEN_DAEMON_PORT") || !strings.Contains(err.Error(), "remove") {
 		t.Fatalf("newAPIClient() error = %q, want stale port recovery guidance", err.Error())
@@ -641,7 +641,7 @@ func TestNewAPIClient_WorkdirMarkerRequiresTaskToken(t *testing.T) {
 	t.Setenv("LUMEN_TOKEN", "")
 	chdirWithDaemonTaskMarker(t)
 
-	if err := cli.SaveCLIConfig(cli.CLIConfig{Token: "mul_profile_token", WorkspaceID: "config-file-ws"}); err != nil {
+	if err := cli.SaveCLIConfig(cli.CLIConfig{Token: "lum_profile_token", WorkspaceID: "config-file-ws"}); err != nil {
 		t.Fatalf("seed config: %v", err)
 	}
 
@@ -649,8 +649,8 @@ func TestNewAPIClient_WorkdirMarkerRequiresTaskToken(t *testing.T) {
 	if err == nil {
 		t.Fatal("newAPIClient(): expected error without task token")
 	}
-	if !strings.Contains(err.Error(), "mat_ token") {
-		t.Fatalf("newAPIClient() error = %q, want mat_ token guidance", err.Error())
+	if !strings.Contains(err.Error(), "lat_ token") {
+		t.Fatalf("newAPIClient() error = %q, want lat_ token guidance", err.Error())
 	}
 }
 

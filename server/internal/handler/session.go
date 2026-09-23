@@ -39,8 +39,8 @@ type RefreshSessionResponse struct {
 // returning to the foreground, and on use; the server owns the "is it time
 // yet" decision so no client ever has to read `exp` or trust its own clock.
 //
-// Only our own UI session JWTs are refreshable. A PAT (mul_), an agent task
-// token (mat_) and a cloud-node PAT (mcn_) all authenticate perfectly well at
+// Only our own UI session JWTs are refreshable. A PAT (lum_), an agent task
+// token (lat_) and a cloud-node PAT (mcn_) all authenticate perfectly well at
 // the middleware, and every one of them must be refused here: none of them is
 // an interactive session, and exchanging a machine credential for one would
 // turn a scoped, revocable token into an unscoped, unrevocable one. An

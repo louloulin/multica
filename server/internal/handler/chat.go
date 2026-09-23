@@ -650,7 +650,7 @@ func (h *Handler) SetChatSessionArchived(w http.ResponseWriter, r *http.Request)
 
 	// Post-commit broadcasts, same as DeleteChatSession: subscribers should
 	// never observe events for a tx that didn't actually persist. This is the
-	// call that captures the cancellation and revokes the tasks' mat_ tokens,
+	// call that captures the cancellation and revokes the tasks' lat_ tokens,
 	// reconciles each agent off 'working', emits task:cancelled so other
 	// clients drop the row instead of showing it queued until the next
 	// refresh, and wakes the runtime so a queued successor is claimed now

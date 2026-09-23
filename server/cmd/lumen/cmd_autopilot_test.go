@@ -635,7 +635,7 @@ func TestRunAutopilotUpdateAgentSwitchesAssigneeType(t *testing.T) {
 
 	t.Setenv("LUMEN_SERVER_URL", srv.URL)
 	t.Setenv("LUMEN_WORKSPACE_ID", "ws-1")
-	t.Setenv("LUMEN_TOKEN", "mat_test-token")
+	t.Setenv("LUMEN_TOKEN", "lat_test-token")
 
 	cmd := newAutopilotUpdateTestCmd()
 	_ = cmd.Flags().Set("agent", "Codex Agent")
@@ -833,9 +833,9 @@ func TestRunAutopilotTriggerListSurfacesIDs(t *testing.T) {
 
 	t.Setenv("LUMEN_SERVER_URL", srv.URL)
 	t.Setenv("LUMEN_WORKSPACE_ID", "ws-1")
-	// A task-scoped mat_ token so the test also passes inside an agent workdir,
+	// A task-scoped lat_ token so the test also passes inside an agent workdir,
 	// where a daemon task marker makes newAPIClient reject a plain token.
-	t.Setenv("LUMEN_TOKEN", "mat_test-token")
+	t.Setenv("LUMEN_TOKEN", "lat_test-token")
 
 	out, err := captureStdout(t, func() error {
 		return runAutopilotTriggerList(newAutopilotTriggerListTestCmd("table"), []string{autopilotID})
@@ -902,9 +902,9 @@ func TestRunAutopilotTriggerListRedactsWebhookCredentials(t *testing.T) {
 
 	t.Setenv("LUMEN_SERVER_URL", srv.URL)
 	t.Setenv("LUMEN_WORKSPACE_ID", "ws-1")
-	// A task-scoped mat_ token so the test also passes inside an agent workdir,
+	// A task-scoped lat_ token so the test also passes inside an agent workdir,
 	// where a daemon task marker makes newAPIClient reject a plain token.
-	t.Setenv("LUMEN_TOKEN", "mat_test-token")
+	t.Setenv("LUMEN_TOKEN", "lat_test-token")
 
 	out, err := captureStdout(t, func() error {
 		return runAutopilotTriggerList(newAutopilotTriggerListTestCmd("json"), []string{autopilotID})

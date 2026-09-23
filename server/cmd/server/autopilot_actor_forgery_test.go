@@ -15,7 +15,7 @@ import (
 // Autopilot writes are judged as the human the caller acts for, and for an
 // agent caller that human is the run's ORIGINATOR (MUL-7108). That makes the
 // question "is this really an agent?" load-bearing, so this test pins the
-// answer at the router: only a server-issued mat_ task token makes a request an
+// answer at the router: only a server-issued lat_ task token makes a request an
 // agent's. A member replaying an observable (agent_id, task_id) pair — both are
 // returned by GET /api/issues/{id}/task-runs — stays themselves (MUL-3428).
 //

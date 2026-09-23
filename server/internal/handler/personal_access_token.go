@@ -152,8 +152,8 @@ type RenewPATResponse struct {
 // (auth.AuthCacheTTL ≤ 10m) that the cache catches up to the new expiry on
 // the next cache miss without an explicit invalidation.
 //
-// Only mul_ PATs may be renewed: a cookie/JWT session has no PAT row to
-// extend, and an mat_ task token is single-purpose and short-lived. mcn_
+// Only lum_ PATs may be renewed: a cookie/JWT session has no PAT row to
+// extend, and an lat_ task token is single-purpose and short-lived. mcn_
 // cloud-node PATs are owned by Lumen Cloud Fleet, not us — we don't even
 // see the expiry locally.
 func (h *Handler) RenewCurrentPersonalAccessToken(w http.ResponseWriter, r *http.Request) {
@@ -167,7 +167,7 @@ func (h *Handler) RenewCurrentPersonalAccessToken(w http.ResponseWriter, r *http
 	// and we need the row, not just the user.
 	authHeader := r.Header.Get("Authorization")
 	rawToken := strings.TrimPrefix(authHeader, "Bearer ")
-	if rawToken == "" || rawToken == authHeader || !strings.HasPrefix(rawToken, "mul_") {
+	if rawToken == "" || rawToken == authHeader || !strings.HasPrefix(rawToken, "lum_") {
 		writeError(w, http.StatusBadRequest, "only personal access tokens can be renewed")
 		return
 	}

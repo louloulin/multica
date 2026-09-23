@@ -24,10 +24,10 @@ func TestPluginRateLimitIsPerCredentialAndUsesStableProblem(t *testing.T) {
 		return response
 	}
 
-	if response := call("mpi_first-secret"); response.Code != http.StatusOK {
+	if response := call("lpi_first-secret"); response.Code != http.StatusOK {
 		t.Fatalf("first credential call status = %d", response.Code)
 	}
-	limited := call("mpi_first-secret")
+	limited := call("lpi_first-secret")
 	if limited.Code != http.StatusTooManyRequests || limited.Header().Get("Retry-After") != "60" {
 		t.Fatalf("limited response status=%d retry-after=%q body=%s", limited.Code, limited.Header().Get("Retry-After"), limited.Body.String())
 	}
@@ -38,11 +38,11 @@ func TestPluginRateLimitIsPerCredentialAndUsesStableProblem(t *testing.T) {
 	if problem.Code != "rate_limited" || problem.RequestID == "" || problem.Error == "" {
 		t.Fatalf("unexpected problem: %+v", problem)
 	}
-	if response := call("mpi_second-secret"); response.Code != http.StatusOK {
+	if response := call("lpi_second-secret"); response.Code != http.StatusOK {
 		t.Fatalf("different credential shared budget: status=%d", response.Code)
 	}
 
-	keys, err := rdb.Keys(context.Background(), "mul:ratelimit:plugin:*").Result()
+	keys, err := rdb.Keys(context.Background(), "lumen:ratelimit:plugin:*").Result()
 	if err != nil {
 		t.Fatalf("list limiter keys: %v", err)
 	}
@@ -56,7 +56,7 @@ func TestPluginRateLimitIsPerCredentialAndUsesStableProblem(t *testing.T) {
 func TestPluginRateLimitWithoutRedisFailsOpen(t *testing.T) {
 	handler := PluginRateLimit(nil, 1, time.Minute)(okHandler)
 	request := httptest.NewRequest(http.MethodGet, "/v1/context", nil)
-	request.Header.Set("Authorization", "Bearer mpi_local")
+	request.Header.Set("Authorization", "Bearer lpi_local")
 	response := httptest.NewRecorder()
 	handler.ServeHTTP(response, request)
 	if response.Code != http.StatusOK {

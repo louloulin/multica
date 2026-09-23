@@ -102,7 +102,7 @@ func TestClient_IdentityHeaders_GetJSON(t *testing.T) {
 
 func TestClient_ResolveRemoteMCPCredentialUsesExplicitDaemonToken(t *testing.T) {
 	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		if got := r.Header.Get("Authorization"); got != "Bearer mdt_task_broker" {
+		if got := r.Header.Get("Authorization"); got != "Bearer ldt_task_broker" {
 			t.Errorf("Authorization = %q, want short-lived daemon token", got)
 		}
 		if got := r.URL.Path; got != "/api/daemon/tasks/task-1/remote-mcp/contribution-1/credential" {
@@ -114,15 +114,15 @@ func TestClient_ResolveRemoteMCPCredentialUsesExplicitDaemonToken(t *testing.T) 
 	defer srv.Close()
 
 	c := NewClient(srv.URL)
-	c.SetToken("mul_owner_pat")
-	headers, err := c.ResolveRemoteMCPCredential(context.Background(), "mdt_task_broker", "task-1", "contribution-1")
+	c.SetToken("lum_owner_pat")
+	headers, err := c.ResolveRemoteMCPCredential(context.Background(), "ldt_task_broker", "task-1", "contribution-1")
 	if err != nil {
 		t.Fatalf("ResolveRemoteMCPCredential: %v", err)
 	}
 	if got := headers.Get("Authorization"); got != "Bearer upstream" {
 		t.Fatalf("resolved credential = %q", got)
 	}
-	if got := c.Token(); got != "mul_owner_pat" {
+	if got := c.Token(); got != "lum_owner_pat" {
 		t.Fatalf("client PAT was mutated to %q", got)
 	}
 }
@@ -143,7 +143,7 @@ func TestClient_ResolveRemoteMCPCredentialRoutesPluginContributions(t *testing.T
 
 	c := NewClient(srv.URL)
 	for _, contribution := range []string{"contribution-1", remotemcp.PluginContributionPrefix + "install-1:toolbox"} {
-		if _, err := c.ResolveRemoteMCPCredential(context.Background(), "mdt_task_broker", "task-1", contribution); err != nil {
+		if _, err := c.ResolveRemoteMCPCredential(context.Background(), "ldt_task_broker", "task-1", contribution); err != nil {
 			t.Fatalf("resolve %q: %v", contribution, err)
 		}
 	}

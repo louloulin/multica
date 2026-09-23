@@ -442,7 +442,7 @@ func TestRepoCheckoutRejectsUnknownTaskCredential(t *testing.T) {
 	rec := httptest.NewRecorder()
 	body := strings.NewReader(`{"url":"` + repoURL + `","workspace_id":"` + workspaceID + `","workdir":"` + workDir + `","task_id":"task-1"}`)
 	req := httptest.NewRequest(http.MethodPost, "/repo/checkout", body)
-	req.Header.Set("Authorization", "Bearer mat_not_an_active_task")
+	req.Header.Set("Authorization", "Bearer lat_not_an_active_task")
 	d.repoCheckoutHandler().ServeHTTP(rec, req)
 
 	if rec.Code != http.StatusUnauthorized {
@@ -461,7 +461,7 @@ func TestRepoCheckoutRejectsUnknownTaskCredential(t *testing.T) {
 		t.Fatalf("expected a WARN naming the reason, got: %s", logs.String())
 	}
 	// The token is a live task credential and must never reach the log.
-	if strings.Contains(logs.String(), "mat_not_an_active_task") {
+	if strings.Contains(logs.String(), "lat_not_an_active_task") {
 		t.Fatalf("task credential leaked into daemon.log: %s", logs.String())
 	}
 }
@@ -678,7 +678,7 @@ func newRepoCheckoutTestDaemon(t *testing.T, workspaceID, repoURL, workDir strin
 		},
 		logger: slog.Default(),
 	}
-	d.registerActiveRepoCheckoutTask("mat_repo_checkout_test", activeRepoCheckoutTask{
+	d.registerActiveRepoCheckoutTask("lat_repo_checkout_test", activeRepoCheckoutTask{
 		WorkspaceID: workspaceID,
 		TaskID:      "task-1",
 		AgentID:     "agent-1",
@@ -690,7 +690,7 @@ func newRepoCheckoutTestDaemon(t *testing.T, workspaceID, repoURL, workDir strin
 
 func authorizedRepoCheckoutRequest(body io.Reader) *http.Request {
 	req := httptest.NewRequest(http.MethodPost, "/repo/checkout", body)
-	req.Header.Set("Authorization", "Bearer mat_repo_checkout_test")
+	req.Header.Set("Authorization", "Bearer lat_repo_checkout_test")
 	return req
 }
 

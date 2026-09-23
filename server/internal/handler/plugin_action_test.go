@@ -83,7 +83,7 @@ func TestPluginActionRequiresTheFeatureFlag(t *testing.T) {
 	withPluginsV1Flag(t, testHandler, false)
 	recorder := httptest.NewRecorder()
 
-	testHandler.GetPluginContext(recorder, pluginInstallTokenRequest(http.MethodGet, "/v1/context", "mpi_invalid", nil, nil))
+	testHandler.GetPluginContext(recorder, pluginInstallTokenRequest(http.MethodGet, "/v1/context", "lpi_invalid", nil, nil))
 
 	if recorder.Code != http.StatusForbidden {
 		t.Fatalf("status=%d body=%s, want 403", recorder.Code, recorder.Body.String())

@@ -105,7 +105,7 @@ ref by default for the current task; an explicit
 
 ## Task CLI boundary
 
-The daemon injects a task-scoped `mat_` credential for Lumen API commands and
+The daemon injects a task-scoped `lat_` credential for Lumen API commands and
 a private task-local Lumen configuration root. Inside that managed task
 context:
 

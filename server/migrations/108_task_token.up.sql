@@ -5,7 +5,7 @@
 -- agent-resource secrets reachable from the agent (MUL-2600).
 --
 -- The daemon now mints a short-lived task-scoped token at task-claim
--- time and injects THAT into the agent. The server treats `mat_`
+-- time and injects THAT into the agent. The server treats `lat_`
 -- tokens as authoritative for actor identity (agent + task), so a
 -- request from the agent process is recognised as actor=agent
 -- regardless of whether the agent strips or forges X-Agent-ID /

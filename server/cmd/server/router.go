@@ -1326,8 +1326,8 @@ func NewRouterWithOptions(pool *pgxpool.Pool, hub *realtime.Hub, bus *events.Bus
 		h.HeartbeatScheduler = opts.HeartbeatScheduler
 	}
 	// Auth caches: PAT cache is shared between the regular Auth middleware,
-	// the DaemonAuth fallback (mul_) path, and the revoke handler
-	// (invalidate). DaemonTokenCache backs the DaemonAuth mdt_ path. Both
+	// the DaemonAuth fallback (lum_) path, and the revoke handler
+	// (invalidate). DaemonTokenCache backs the DaemonAuth ldt_ path. Both
 	// constructors return nil when rdb is nil — every consumer handles that
 	// as "no cache, always hit DB".
 	patCache := auth.NewPATCache(rdb)
@@ -1339,7 +1339,7 @@ func NewRouterWithOptions(pool *pgxpool.Pool, hub *realtime.Hub, bus *events.Bus
 	// Cloud PAT verifier: validates mcn_ tokens against Lumen Cloud
 	// Fleet. Returns nil when no Cloud URL is configured — the Auth /
 	// DaemonAuth middlewares treat nil as "mcn_ not supported" and
-	// reject with 401, instead of falling through to mul_/JWT paths.
+	// reject with 401, instead of falling through to lum_/JWT paths.
 	// Reuses LUMEN_CLOUD_URL (the same URL the cloud-runtime proxy uses) so a
 	// deployment has one authoritative lumen-cloud connection.
 	cloudPATVerifier := auth.NewCloudPATVerifier(auth.CloudPATVerifierConfig{
@@ -1572,7 +1572,7 @@ func NewRouterWithOptions(pool *pgxpool.Pool, hub *realtime.Hub, bus *events.Bus
 	})
 
 	// Public Plugin Action API. This is the stable, globally versioned contract
-	// exposed on the Plugin API origin. It accepts only mpi_/mpc_ bearer tokens;
+	// exposed on the Plugin API origin. It accepts only lpi_/lpc_ bearer tokens;
 	// browser sessions use the bridge group below and cannot cross this trust
 	// boundary even when both hostnames route to the same Go service.
 	r.Group(func(r chi.Router) {
@@ -1898,7 +1898,7 @@ func NewRouterWithOptions(pool *pgxpool.Pool, hub *realtime.Hub, bus *events.Bus
 		// and lives outside the entire Auth group (see above).
 		//
 		// IMPORTANT — task-token actors are blocked here. The Auth
-		// middleware happily turns an mat_ task token into a normal
+		// middleware happily turns an lat_ task token into a normal
 		// X-User-ID stamp (so agents can comment, claim issues, etc.
 		// as their owner), but billing is account-level and a running
 		// agent reading its owner's balance / opening a checkout

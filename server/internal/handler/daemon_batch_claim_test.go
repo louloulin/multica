@@ -64,7 +64,7 @@ func batchClaimRequest(workspaceID string, runtimeIDs []string, maxTasks int, ca
 	return req
 }
 
-// batchClaimTestDaemonID is the daemon id used by both the mdt_ token context
+// batchClaimTestDaemonID is the daemon id used by both the ldt_ token context
 // and the request body in batch-claim handler tests, so the daemon_id
 // consistency check passes on the happy path.
 const batchClaimTestDaemonID = "batch-claim-review"
@@ -201,8 +201,8 @@ func TestClaimTasksByRuntime_RoutesAcrossRuntimesAndMintsTokens(t *testing.T) {
 	seen := map[string]int{}
 	for _, task := range resp.Tasks {
 		seen[task.RuntimeID]++
-		if !strings.HasPrefix(task.AuthToken, "mat_") {
-			t.Fatalf("task %s missing mat_ task token, got %q", task.ID, task.AuthToken)
+		if !strings.HasPrefix(task.AuthToken, "lat_") {
+			t.Fatalf("task %s missing lat_ task token, got %q", task.ID, task.AuthToken)
 		}
 	}
 	if seen[rt1] != 1 || seen[rt2] != 1 {

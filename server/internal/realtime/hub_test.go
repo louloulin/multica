@@ -72,8 +72,8 @@ func TestAuthenticateTokenRejectsTemporarilyDisabledJWTUser(t *testing.T) {
 }
 
 func TestAuthenticateTokenRejectsTemporarilyDisabledPATUser(t *testing.T) {
-	uid, errMsg := authenticateToken("mul_disabled", staticPATResolver{
-		"mul_disabled": "1d542296-17c6-484a-9914-dcee589be116",
+	uid, errMsg := authenticateToken("lum_disabled", staticPATResolver{
+		"lum_disabled": "1d542296-17c6-484a-9914-dcee589be116",
 	}, context.Background())
 	if uid != "" {
 		t.Fatalf("expected no user ID, got %q", uid)

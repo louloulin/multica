@@ -16,8 +16,8 @@ func TestPluginBearerOnlyRejectsNonPluginCredentials(t *testing.T) {
 	}{
 		{name: "missing"},
 		{name: "session jwt", authorization: "Bearer eyJhbGciOiJIUzI1NiJ9.payload.signature"},
-		{name: "personal access token", authorization: "Bearer mul_personal"},
-		{name: "wrong scheme", authorization: "Basic mpi_installation"},
+		{name: "personal access token", authorization: "Bearer lum_personal"},
+		{name: "wrong scheme", authorization: "Basic lpi_installation"},
 	}
 
 	for _, tt := range tests {
@@ -55,7 +55,7 @@ func TestPluginBearerOnlyRejectsNonPluginCredentials(t *testing.T) {
 }
 
 func TestPluginBearerOnlyPassesPluginTokenKindsToTheHandler(t *testing.T) {
-	for _, token := range []string{"mpi_installation", "mpc_callback"} {
+	for _, token := range []string{"lpi_installation", "lpc_callback"} {
 		t.Run(token[:3], func(t *testing.T) {
 			called := false
 			next := http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {

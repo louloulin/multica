@@ -29,7 +29,7 @@ import (
 // Note on scope: this revokes every runtime whose owner_id matches userID,
 // regardless of how the daemon authenticates. Today most daemons fall back to
 // PAT/JWT and `daemon_token` rows are unused in production; deleting them is
-// a no-op for those daemons but takes effect once the mdt_ flow is live.
+// a no-op for those daemons but takes effect once the ldt_ flow is live.
 // Either way the agent-archive + task-cancel + force-offline writes are the
 // actual production safety net: even if the daemon races back online with a
 // still-valid PAT, it finds no agent it can run for, no queued task to claim,

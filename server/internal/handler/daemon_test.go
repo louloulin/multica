@@ -82,7 +82,7 @@ func setHandlerTestWorkspaceRepos(t *testing.T, repos []map[string]string) {
 }
 
 // newDaemonTokenRequest creates an HTTP request with daemon token context set
-// (simulating DaemonAuth middleware for mdt_ tokens).
+// (simulating DaemonAuth middleware for ldt_ tokens).
 func newDaemonTokenRequest(method, path string, body any, workspaceID, daemonID string) *http.Request {
 	var buf bytes.Buffer
 	if body != nil {
@@ -106,7 +106,7 @@ func TestRemoteMCPDaemonTokenForClaim(t *testing.T) {
 	if err != nil {
 		t.Fatalf("remoteMCPDaemonTokenForClaim: %v", err)
 	}
-	if !strings.HasPrefix(raw, "mdt_") {
+	if !strings.HasPrefix(raw, "ldt_") {
 		t.Fatalf("raw token has unexpected prefix")
 	}
 	if len(params) != 1 || params[0].TokenHash != auth.HashToken(raw) {

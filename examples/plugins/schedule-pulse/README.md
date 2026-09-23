@@ -45,4 +45,4 @@ changes and `count` does not.
 
 The callback token is revoked when this HTTP request returns. All storage
 writes happen before the 200. Work that must continue after the response
-should use the standing `mpi_` install token instead.
+should use the standing `lpi_` install token instead.

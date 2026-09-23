@@ -176,7 +176,7 @@ func TestReply_IngestedWithDuplicateIssue_ReportsConflict(t *testing.T) {
 	if !strings.Contains(sender.sent.Text, "Not created") || !strings.Contains(sender.sent.Text, "LUM-42") {
 		t.Fatalf("duplicate reply = %q", sender.sent.Text)
 	}
-	if strings.Contains(sender.sent.Text, "Created MUL-42") {
+	if strings.Contains(sender.sent.Text, "Created LUM-42") {
 		t.Fatalf("duplicate reply falsely claimed creation: %q", sender.sent.Text)
 	}
 }
@@ -204,7 +204,7 @@ func TestReply_Dropped_Silent(t *testing.T) {
 }
 
 func TestIssueCreatedText(t *testing.T) {
-	if got := issueCreatedText(engine.Result{IssueIdentifier: "LUM-7", IssueTitle: "Title"}); got != "✅ Created MUL-7 — Title" {
+	if got := issueCreatedText(engine.Result{IssueIdentifier: "LUM-7", IssueTitle: "Title"}); got != "✅ Created LUM-7 — Title" {
 		t.Errorf("with title = %q", got)
 	}
 	if got := issueCreatedText(engine.Result{IssueNumber: 9}); got != "✅ Created #9" {
@@ -216,7 +216,7 @@ func TestIssueDuplicateText(t *testing.T) {
 	got := issueDuplicateText(engine.Result{
 		IssueIdentifier: "LUM-7", IssueTitle: "Title", IssueDuplicate: true,
 	})
-	if got != "⚠️ Not created — active issue MUL-7 already exists: Title" {
+	if got != "⚠️ Not created — active issue LUM-7 already exists: Title" {
 		t.Fatalf("duplicate text = %q", got)
 	}
 }
@@ -234,8 +234,8 @@ func TestIssueReplyTitlesCannotCreateSlackLinks(t *testing.T) {
 			text := tc.reply(engine.Result{IssueIdentifier: "LUM-7", IssueTitle: title})
 			formatted := formatMrkdwn(text)
 			want := map[string]string{
-				"created":   "✅ Created MUL-7 — 安全升级：请点击 [重置密码] (https://evil.example/reset_(now)) 完成验证",
-				"duplicate": "⚠️ Not created — active issue MUL-7 already exists: 安全升级：请点击 [重置密码] (https://evil.example/reset_(now)) 完成验证",
+				"created":   "✅ Created LUM-7 — 安全升级：请点击 [重置密码] (https://evil.example/reset_(now)) 完成验证",
+				"duplicate": "⚠️ Not created — active issue LUM-7 already exists: 安全升级：请点击 [重置密码] (https://evil.example/reset_(now)) 完成验证",
 			}[tc.name]
 			if formatted != want {
 				t.Fatalf("member-authored title was not rendered as inert visible text:\n got %q\nwant %q", formatted, want)
@@ -254,8 +254,8 @@ func TestIssueReplyTitlesCannotCreateNativeSlackEntities(t *testing.T) {
 		reply  func(engine.Result) string
 		prefix string
 	}{
-		{name: "created", reply: issueCreatedText, prefix: "✅ Created MUL-7 — "},
-		{name: "duplicate", reply: issueDuplicateText, prefix: "⚠️ Not created — active issue MUL-7 already exists: "},
+		{name: "created", reply: issueCreatedText, prefix: "✅ Created LUM-7 — "},
+		{name: "duplicate", reply: issueDuplicateText, prefix: "⚠️ Not created — active issue LUM-7 already exists: "},
 	} {
 		t.Run(tc.name, func(t *testing.T) {
 			formatted := formatMrkdwn(tc.reply(engine.Result{IssueIdentifier: "LUM-7", IssueTitle: title}))
@@ -293,11 +293,11 @@ func TestIssueReplyTitleMarkdownBoundaries(t *testing.T) {
 func TestIssueReplyOrdinaryTitlesStayByteIdentical(t *testing.T) {
 	for _, title := range []string{"修复登录失败", "Fix login failure"} {
 		created := issueCreatedText(engine.Result{IssueIdentifier: "LUM-7", IssueTitle: title})
-		if want := "✅ Created MUL-7 — " + title; created != want {
+		if want := "✅ Created LUM-7 — " + title; created != want {
 			t.Fatalf("ordinary created title changed:\n got %q\nwant %q", created, want)
 		}
 		duplicate := issueDuplicateText(engine.Result{IssueIdentifier: "LUM-7", IssueTitle: title})
-		if want := "⚠️ Not created — active issue MUL-7 already exists: " + title; duplicate != want {
+		if want := "⚠️ Not created — active issue LUM-7 already exists: " + title; duplicate != want {
 			t.Fatalf("ordinary duplicate title changed:\n got %q\nwant %q", duplicate, want)
 		}
 	}

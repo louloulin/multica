@@ -549,7 +549,7 @@ location /ws {
 
 See [WebSocket for LAN / Non-localhost Access](#websocket-for-lan--non-localhost-access) for why the rewrites cannot carry the `Upgrade` handshake.
 
-This keeps cookies, CORS, and the WebSocket origin check on a single origin. It is both the configuration least likely to break and the safer one: the session cookie stays host-only, so no sibling subdomain can ever receive it. An `api.example.com` vhost can still be kept for CLI and daemon use: those clients authenticate with a `mul_` personal access token over `Authorization: Bearer`, which never goes through the cookie or CSRF path.
+This keeps cookies, CORS, and the WebSocket origin check on a single origin. It is both the configuration least likely to break and the safer one: the session cookie stays host-only, so no sibling subdomain can ever receive it. An `api.example.com` vhost can still be kept for CLI and daemon use: those clients authenticate with a `lum_` personal access token over `Authorization: Bearer`, which never goes through the cookie or CSRF path.
 
 ## LAN / Non-localhost Access
 

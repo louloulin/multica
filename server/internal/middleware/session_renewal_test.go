@@ -194,7 +194,7 @@ func TestAuth_RenewsLegacySessionAndMintsSessionID(t *testing.T) {
 // no claims to copy forward and must pass through untouched.
 func TestAuth_DoesNotRenewOpaqueCredentials(t *testing.T) {
 	req := httptest.NewRequest(http.MethodGet, "/api/issues", nil)
-	req.AddCookie(&http.Cookie{Name: auth.AuthCookieName, Value: "mul_0123456789abcdef0123456789abcdef01234567"})
+	req.AddCookie(&http.Cookie{Name: auth.AuthCookieName, Value: "lum_0123456789abcdef0123456789abcdef01234567"})
 
 	rec, called := runAuth(t, req)
 	if called {

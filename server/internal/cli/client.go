@@ -53,9 +53,9 @@ type APIClient struct {
 	// AgentID / TaskID travel as X-Agent-ID / X-Task-ID execution context.
 	// They are NOT what makes the server treat a request as the agent's: the
 	// server strips both headers on entry and re-stamps them from the bound
-	// mat_ task token, so attribution follows the token, not these fields
+	// lat_ task token, so attribution follows the token, not these fields
 	// (MUL-3428). The CLI only sets them inside a daemon-managed task, where
-	// LUMEN_TOKEN is that mat_ token.
+	// LUMEN_TOKEN is that lat_ token.
 	AgentID    string
 	TaskID     string
 	HTTPClient *http.Client
@@ -74,7 +74,7 @@ type APIClient struct {
 // something the CLI can see — a terminal task is the usual cause, but a
 // malformed token, one sent to the wrong server, and one dropped by an
 // unrelated cleanup all look identical from here.
-const TaskTokenPrefix = "mat_"
+const TaskTokenPrefix = "lat_"
 
 type HTTPError struct {
 	Method     string
@@ -82,7 +82,7 @@ type HTTPError struct {
 	StatusCode int
 	Body       string
 	// TaskScoped records that the failing request actually carried a
-	// task-scoped `mat_` token. It changes nothing about the request; it only
+	// task-scoped `lat_` token. It changes nothing about the request; it only
 	// lets FormatError tell a 401 worth signing in again for from one where
 	// the right move is to stop (GH #7522).
 	TaskScoped bool
@@ -114,7 +114,7 @@ func newHTTPError(method, path string, resp *http.Response) *HTTPError {
 // Reading the client's own Token field would be wrong twice over. DownloadFile
 // deliberately sends no Authorization header for an absolute signed URL, so a
 // 401 from object storage would be reported as a rejected task token purely
-// because the client happened to hold a `mat_` token. And Go strips Authorization
+// because the client happened to hold a `lat_` token. And Go strips Authorization
 // across a cross-host redirect, so the request that was sent is not always the
 // one the caller built. resp.Request is the request that actually went out,
 // after redirects, which is the only thing this claim can honestly rest on.

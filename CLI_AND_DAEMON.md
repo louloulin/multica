@@ -86,7 +86,7 @@ Opens your browser for OAuth authentication, creates a 90-day personal access to
 ### Token Login
 
 ```bash
-lumen login --token <mul_...>
+lumen login --token <lum_...>
 ```
 
 Authenticate using a personal access token directly. Useful for headless environments. Pass `--token=` with an empty value to be prompted interactively (so the token never lands in shell history).

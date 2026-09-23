@@ -473,7 +473,7 @@ func TestPlatformSkillCoversPlatformContracts(t *testing.T) {
 				"redelivered once the receiving side is fixed",
 				"unless the issue should auto-advance",
 				"include the PR URL when a PR exists",
-				"Closes MUL-123",
+				"Closes LUM-123",
 				"--status backlog",
 				// The link table is the only sanctioned source of PR state,
 				// and the guard against stale data survives MUL-6966 without

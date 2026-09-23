@@ -96,7 +96,7 @@ func doUpload(t *testing.T, formTaskID string, headers map[string]string) *httpt
 
 // uploadWithTaskID performs a multipart upload as a genuine task-token agent
 // request: it stamps the server-set X-Actor-Source=task_token + X-Task-ID pair
-// exactly as the auth middleware would for a `mat_` token (the boundary the
+// exactly as the auth middleware would for a `lat_` token (the boundary the
 // handler trusts). actorTaskID is what goes on X-Task-ID (the token's task);
 // formTaskID is the upload's task_id form field. They match in the happy path.
 // When agentID is empty the caller is a plain member (no task-token headers).
@@ -174,7 +174,7 @@ func TestUploadFile_TaskScopedChatAttachment(t *testing.T) {
 	})
 
 	t.Run("forged agent headers without task token rejected", func(t *testing.T) {
-		// The real forgery vector: a normal JWT / mul_ PAT request that the auth
+		// The real forgery vector: a normal JWT / lum_ PAT request that the auth
 		// middleware did NOT stamp with X-Actor-Source=task_token, but which
 		// forges a valid X-Agent-ID + X-Task-ID pair (resolveActor's fallback
 		// would otherwise accept it). Even with the form task_id equal to the

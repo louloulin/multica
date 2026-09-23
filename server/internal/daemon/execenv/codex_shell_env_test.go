@@ -50,7 +50,7 @@ func TestCodexShellEnvAllowlistUsesExactTaskAndSafeInheritedNames(t *testing.T) 
 		"LUMEN_SERVER_URL=https://wrong.example",
 	}
 	explicit := map[string]string{
-		"LUMEN_TOKEN":      "mat_task",
+		"LUMEN_TOKEN":      "lat_task",
 		"LUMEN_SERVER_URL": "https://task.example",
 		"CUSTOM_FLAG":        "enabled",
 		"ANTHROPIC_API_KEY":  "agent-secret",
@@ -94,7 +94,7 @@ func TestCodexShellEnvAllowlistOnlyAuthorizesExplicitCustomSecrets(t *testing.T)
 		"x_secret":            "agent-secret",
 		"Y_KEY":               "agent-secret",
 		"UNAUTHORIZED_TOKEN":  "daemon-secret",
-		"LUMEN_TOKEN":       "mat_task",
+		"LUMEN_TOKEN":       "lat_task",
 	}
 	authorizedExplicit := []string{
 		"custom_access_token", // Authorization matching is case-insensitive.

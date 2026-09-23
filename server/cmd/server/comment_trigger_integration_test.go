@@ -15,7 +15,7 @@ import (
 )
 
 // authRequestWithAgent makes a request the server resolves as coming from an
-// agent, by authenticating with a real `mat_` task token bound to (agent, task,
+// agent, by authenticating with a real `lat_` task token bound to (agent, task,
 // workspace, user) — the same credential the daemon injects into an agent
 // process.
 //
@@ -45,7 +45,7 @@ func authRequestWithAgent(t *testing.T, method, path string, body any, agentID s
 	return r
 }
 
-// mintAgentTaskToken issues a task-scoped mat_ token for (agentID, taskID) in
+// mintAgentTaskToken issues a task-scoped lat_ token for (agentID, taskID) in
 // the test workspace and returns its raw value. The auth middleware re-stamps
 // X-User-ID / X-Agent-ID / X-Task-ID / X-Workspace-ID from the stored row, so
 // callers pass no identity headers of their own.
@@ -54,7 +54,7 @@ func authRequestWithAgent(t *testing.T, method, path string, body any, agentID s
 // originator (MUL-6951), which is why the two are separable in tests.
 func mintAgentTaskToken(t *testing.T, agentID, taskID, boundUserID string) string {
 	t.Helper()
-	raw := fmt.Sprintf("mat_test_%s_%d", strings.ReplaceAll(agentID, "-", ""), time.Now().UnixNano())
+	raw := fmt.Sprintf("lat_test_%s_%d", strings.ReplaceAll(agentID, "-", ""), time.Now().UnixNano())
 	if _, err := testPool.Exec(context.Background(), `
 		INSERT INTO task_token (token_hash, task_id, agent_id, workspace_id, user_id, expires_at)
 		VALUES ($1, $2, $3, $4, $5, now() + interval '1 hour')
@@ -68,7 +68,7 @@ func mintAgentTaskToken(t *testing.T, agentID, taskID, boundUserID string) strin
 }
 
 // ensureAgentTask returns a task UUID belonging to the given agent, inserting a
-// queued one if none exists. authRequestWithAgent binds its mat_ token to that
+// queued one if none exists. authRequestWithAgent binds its lat_ token to that
 // task, so callers keep treating "name the agent" as the single knob for
 // posing as one.
 func ensureAgentTask(t *testing.T, agentID string) string {
@@ -249,7 +249,7 @@ func postComment(t *testing.T, issueID, content string, parentID *string) string
 }
 
 // postCommentAsAgent posts a comment authenticated as the agent, using the
-// real mat_ task token authRequestWithAgent mints.
+// real lat_ task token authRequestWithAgent mints.
 func postCommentAsAgent(t *testing.T, issueID, content, agentID string, parentID *string) string {
 	t.Helper()
 	body := map[string]any{

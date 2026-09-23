@@ -857,7 +857,7 @@ func (s *TaskService) captureTaskCancelled(ctx context.Context, task db.AgentTas
 		source, runtimeMode, _ := s.taskMetricsContext(ctx, task)
 		s.Metrics.RecordTaskTerminal(util.UUIDToString(task.ID), source, runtimeMode, task.Status, taskRunSeconds(task), taskTotalSeconds(task), task.Attempt)
 	}
-	// Revoke any mat_ task tokens minted for this task. Cancellation is
+	// Revoke any lat_ task tokens minted for this task. Cancellation is
 	// a terminal transition, so the running agent process no longer
 	// needs to call back; eagerly deleting the token closes the
 	// window where a compromised process could keep authenticating

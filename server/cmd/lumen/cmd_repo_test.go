@@ -200,7 +200,7 @@ func TestRunRepoCheckoutForwardsManagedCheckoutMode(t *testing.T) {
 		if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
 			t.Fatalf("decode checkout body: %v", err)
 		}
-		if got := r.Header.Get("Authorization"); got != "Bearer mat_repo_checkout_test" {
+		if got := r.Header.Get("Authorization"); got != "Bearer lat_repo_checkout_test" {
 			t.Fatalf("Authorization = %q, want task-scoped bearer", got)
 		}
 		json.NewEncoder(w).Encode(map[string]string{
@@ -214,7 +214,7 @@ func TestRunRepoCheckoutForwardsManagedCheckoutMode(t *testing.T) {
 	t.Setenv("LUMEN_WORKSPACE_ID", "ws-1")
 	t.Setenv("LUMEN_AGENT_NAME", "Test Agent")
 	t.Setenv("LUMEN_TASK_ID", "task-1")
-	t.Setenv("LUMEN_TOKEN", "mat_repo_checkout_test")
+	t.Setenv("LUMEN_TOKEN", "lat_repo_checkout_test")
 	t.Setenv("LUMEN_REPO_CHECKOUT_MODE", "isolated")
 
 	previousRef, previousFresh := repoCheckoutRef, repoCheckoutFresh
@@ -316,7 +316,7 @@ func TestRunRepoCheckoutRetriesServiceUnavailable(t *testing.T) {
 	t.Setenv("LUMEN_WORKSPACE_ID", "ws-1")
 	t.Setenv("LUMEN_AGENT_NAME", "Test Agent")
 	t.Setenv("LUMEN_TASK_ID", "task-1")
-	t.Setenv("LUMEN_TOKEN", "mat_repo_checkout_test")
+	t.Setenv("LUMEN_TOKEN", "lat_repo_checkout_test")
 
 	if err := runRepoCheckout(&cobra.Command{}, []string{"https://github.com/org/repo.git"}); err != nil {
 		t.Fatalf("runRepoCheckout: %v", err)
@@ -335,7 +335,7 @@ func TestRunRepoCheckoutDoesNotRetryUnmarkedServiceUnavailable(t *testing.T) {
 	defer srv.Close()
 
 	t.Setenv("LUMEN_DAEMON_PORT", strings.TrimPrefix(srv.URL, "http://127.0.0.1:"))
-	t.Setenv("LUMEN_TOKEN", "mat_repo_checkout_test")
+	t.Setenv("LUMEN_TOKEN", "lat_repo_checkout_test")
 	if err := runRepoCheckout(&cobra.Command{}, []string{"https://github.com/org/repo.git"}); err == nil {
 		t.Fatal("runRepoCheckout unexpectedly succeeded")
 	}

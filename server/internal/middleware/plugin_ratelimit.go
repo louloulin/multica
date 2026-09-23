@@ -22,7 +22,7 @@ func PluginRateLimit(rdb redis.UniversalClient, limit int, window time.Duration)
 		}
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			digest := sha256.Sum256([]byte(BearerToken(r)))
-			key := fmt.Sprintf("mul:ratelimit:plugin:%x", digest)
+			key := fmt.Sprintf("lumen:ratelimit:plugin:%x", digest)
 			count, err := rateLimitScript.Run(r.Context(), rdb, []string{key}, int(window.Seconds())).Int64()
 			if err != nil {
 				slog.Warn("plugin ratelimit: redis error; allowing request", "error", err)

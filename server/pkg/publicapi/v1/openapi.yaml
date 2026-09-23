@@ -170,7 +170,7 @@ components:
     pluginBearer:
       type: http
       scheme: bearer
-      bearerFormat: mpi_ or mpc_ token
+      bearerFormat: lpi_ or lpc_ token
   parameters:
     IssueRef:
       name: issue_ref

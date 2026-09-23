@@ -25,7 +25,7 @@ import (
 // are no plugin credentials" but "plugin credentials only move between
 // servers".
 //
-//	install token  (mpi_…)  plugin -> host, long-lived, rotatable.
+//	install token  (lpi_…)  plugin -> host, long-lived, rotatable.
 //	                        The host only ever verifies it, so it is stored
 //	                        hashed and cannot be recovered from the database.
 //	callback token          host -> plugin, minutes, one INVOCATION.
@@ -33,8 +33,8 @@ import (
 //	                        Action API without being given standing access.
 
 const (
-	installTokenPrefix   = "mpi_"
-	callbackTokenPrefix  = "mpc_"
+	installTokenPrefix   = "lpi_"
+	callbackTokenPrefix  = "lpc_"
 	callbackTokenTTL     = 5 * time.Minute
 	callbackTokenEntropy = 32
 )

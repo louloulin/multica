@@ -1111,7 +1111,7 @@ func TestAgentEnv_AgentActorRejected(t *testing.T) {
 
 // TestAgentEnv_TaskTokenActorSource locks in the post-MUL-2600 attack
 // model: an agent process that strips its identifying headers
-// (X-Agent-ID / X-Task-ID) but is still authenticated by an `mat_`
+// (X-Agent-ID / X-Task-ID) but is still authenticated by an `lat_`
 // task token MUST be recognized as actor=agent and rejected on the
 // env endpoint. The auth middleware sets X-Actor-Source=task_token
 // from the token row; resolveActor honors that header before the
@@ -1129,7 +1129,7 @@ func TestAgentEnv_TaskTokenActorSource(t *testing.T) {
 
 	req := newRequest(http.MethodGet, "/api/agents/"+targetID+"/env", nil)
 	req = withURLParam(req, "id", targetID)
-	// Simulate the auth middleware's post-mat_-resolution state: the
+	// Simulate the auth middleware's post-lat_-resolution state: the
 	// only header touching actor identity is X-Actor-Source. The agent
 	// process stripped X-Agent-ID and X-Task-ID, hoping to fall back
 	// to the member auth path — the server-set X-Actor-Source must

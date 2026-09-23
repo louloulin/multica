@@ -368,7 +368,7 @@ func TestConfigureCodexTaskShellEnvironment(t *testing.T) {
 			"UNAUTHORIZED_TOKEN":       "daemon-secret",
 			"LUMEN_TASK_CONFIG_ROOT": "/task/lumen-config",
 			"LUMEN_SERVER_URL":       "https://task.example",
-			"LUMEN_TOKEN":            "mat_task",
+			"LUMEN_TOKEN":            "lat_task",
 		}
 		agentCustomEnv := map[string]string{
 			"CUSTOM_ACCESS_TOKEN": "agent-secret",
@@ -387,7 +387,7 @@ func TestConfigureCodexTaskShellEnvironment(t *testing.T) {
 				t.Errorf("config.toml missing %q:\n%s", want, config)
 			}
 		}
-		for _, unwanted := range []string{"OPENAI_API_KEY", "LUMEN_LLM_API_KEY", "UNAUTHORIZED_TOKEN", "LUMEN_*", "agent-secret", "daemon-secret", "mat_task"} {
+		for _, unwanted := range []string{"OPENAI_API_KEY", "LUMEN_LLM_API_KEY", "UNAUTHORIZED_TOKEN", "LUMEN_*", "agent-secret", "daemon-secret", "lat_task"} {
 			if strings.Contains(config, unwanted) {
 				t.Errorf("config.toml unexpectedly contains %q:\n%s", unwanted, config)
 			}
@@ -396,7 +396,7 @@ func TestConfigureCodexTaskShellEnvironment(t *testing.T) {
 
 	t.Run("Codex without task home fails closed", func(t *testing.T) {
 		t.Parallel()
-		err := configureCodexTaskShellEnvironment("codex", "", nil, map[string]string{"LUMEN_TOKEN": "mat_task"}, nil, slog.Default())
+		err := configureCodexTaskShellEnvironment("codex", "", nil, map[string]string{"LUMEN_TOKEN": "lat_task"}, nil, slog.Default())
 		if err == nil || !strings.Contains(err.Error(), "CODEX_HOME is missing") {
 			t.Fatalf("error = %v, want missing CODEX_HOME", err)
 		}
@@ -428,7 +428,7 @@ func TestCodexTaskShellEnvInheritsRealHome(t *testing.T) {
 	explicit := map[string]string{
 		"CODEX_HOME":               codexHome,
 		"LUMEN_TASK_CONFIG_ROOT": "/task/lumen-config",
-		"LUMEN_TOKEN":            "mat_task",
+		"LUMEN_TOKEN":            "lat_task",
 		"LUMEN_SERVER_URL":       "https://task.example",
 	}
 
@@ -500,13 +500,13 @@ func TestTaskScopedAuthToken(t *testing.T) {
 		},
 		{
 			name:    "member token fails closed",
-			token:   "mul_member_token",
+			token:   "lum_member_token",
 			wantErr: "server provided non-task-scoped auth token",
 		},
 		{
 			name:  "task token accepted",
-			token: " mat_task_token ",
-			want:  "mat_task_token",
+			token: " lat_task_token ",
+			want:  "lat_task_token",
 		},
 	}
 
@@ -538,7 +538,7 @@ func TestTaskLumenEnvironmentIncludesPrivateConfigRoot(t *testing.T) {
 	t.Parallel()
 
 	const (
-		fakeToken      = "mat_task_environment_sentinel"
+		fakeToken      = "lat_task_environment_sentinel"
 		taskRoot       = "/task/private-lumen-config"
 		workspacesRoot = "/daemon/lumen_workspaces_staging"
 	)
@@ -571,7 +571,7 @@ func TestTaskLumenEnvironmentIncludesPrivateConfigRoot(t *testing.T) {
 	layerCustomEnvAndHermesHome(env, map[string]string{
 		"LUMEN_TASK_CONFIG_ROOT":     "/owner/config",
 		"LUMEN_TASK_WORKSPACES_ROOT": "/owner/lumen_workspaces",
-		"LUMEN_TOKEN":                "mul_owner_sentinel",
+		"LUMEN_TOKEN":                "lum_owner_sentinel",
 	}, "", nil)
 	if env["LUMEN_TASK_CONFIG_ROOT"] != taskRoot {
 		t.Fatalf("custom env replaced task config root: %q", env["LUMEN_TASK_CONFIG_ROOT"])

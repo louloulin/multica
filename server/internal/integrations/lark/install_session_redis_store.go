@@ -34,7 +34,7 @@ import (
 //     status and re-runs EXPIRE unconditionally, so replaying it after a
 //     lost or failed response converges on the right state instead of
 //     reporting "someone else won" and leaving retention stale.
-const installSessionKeyPrefix = "mul:lark:install:"
+const installSessionKeyPrefix = "lumen:lark:install:"
 
 func installSessionKey(id string) string { return installSessionKeyPrefix + id }
 

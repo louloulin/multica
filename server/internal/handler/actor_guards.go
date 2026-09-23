@@ -5,7 +5,7 @@ import (
 )
 
 // RequireHumanActor is a chi-style middleware that rejects requests
-// authenticated via a machine credential — currently mat_ task tokens
+// authenticated via a machine credential — currently lat_ task tokens
 // and mcn_ cloud-node PATs. It exists for endpoints whose
 // authorization model is "the human owner authorized this", not
 // "anyone holding the owner's credentials authorized this".
@@ -17,9 +17,9 @@ import (
 // `X-User-ID` header — so downstream handlers don't have to care which
 // token kind the caller used:
 //
-//   - JWT cookie / mul_ PAT  → X-User-ID = the human's user id.
+//   - JWT cookie / lum_ PAT  → X-User-ID = the human's user id.
 //     X-Actor-Source is left empty.
-//   - mat_ task token        → X-User-ID = the OWNING human's user id,
+//   - lat_ task token        → X-User-ID = the OWNING human's user id,
 //     plus X-Agent-ID, X-Task-ID, and the
 //     authoritative server-set header
 //     `X-Actor-Source: task_token`.
@@ -28,10 +28,10 @@ import (
 //     The token authenticates a cloud-runtime
 //     EC2 node operating on the owner's
 //     behalf — same conceptual category as
-//     mat_ (machine running owner-scoped
+//     lat_ (machine running owner-scoped
 //     code) for authorization purposes.
 //
-// The mat_ and mcn_ designs (MUL-2600 and the cloud-node PAT story
+// The lat_ and mcn_ designs (MUL-2600 and the cloud-node PAT story
 // respectively) were both deliberately built this way: every request
 // the agent / node makes is treated as the owner's, so they can
 // post comments, claim issues, register runtimes, etc., as if the
@@ -55,7 +55,7 @@ import (
 //
 // `X-Actor-Source` is server-set only. The Auth middleware deletes any
 // client-supplied value first (see auth.go: `r.Header.Del("X-Actor-Source")`),
-// then re-sets it ONLY on the mat_ and mcn_ branches. So checking
+// then re-sets it ONLY on the lat_ and mcn_ branches. So checking
 // this header is the safe, fast, single-source-of-truth way to know
 // "is the request from a machine credential?" — without re-querying
 // the token table.

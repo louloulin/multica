@@ -9,7 +9,7 @@ import (
 )
 
 // TestRequireHumanActor_AllowsHumanRequest pins the happy path: a
-// request that passed Auth as a JWT or mul_ PAT does NOT carry
+// request that passed Auth as a JWT or lum_ PAT does NOT carry
 // X-Actor-Source, so the guard lets it through and the inner handler
 // runs.
 //
@@ -26,7 +26,7 @@ func TestRequireHumanActor_AllowsHumanRequest(t *testing.T) {
 	mw := RequireHumanActor(next)
 
 	req := httptest.NewRequest(http.MethodGet, "/api/cloud-billing/balance", nil)
-	// No X-Actor-Source — this is the JWT / mul_ PAT shape.
+	// No X-Actor-Source — this is the JWT / lum_ PAT shape.
 	w := httptest.NewRecorder()
 	mw.ServeHTTP(w, req)
 
@@ -49,14 +49,14 @@ func TestRequireHumanActor_BlocksMachineCredentials(t *testing.T) {
 		name        string
 		actorSource string
 	}{
-		// mat_ task token — set in middleware/auth.go's mat_ branch.
+		// lat_ task token — set in middleware/auth.go's lat_ branch.
 		// An agent process holding its task-scoped token must not be
 		// able to read its owner's billing data.
 		{name: "task_token", actorSource: "task_token"},
 		// mcn_ cloud-node PAT — set in BOTH middleware/auth.go and
 		// middleware/daemon_auth.go's mcn_ branches. A cloud-runtime
 		// EC2 node operating on the owner's behalf is the same kind
-		// of machine credential as mat_ for billing-authorization
+		// of machine credential as lat_ for billing-authorization
 		// purposes.
 		{name: "cloud_pat", actorSource: "cloud_pat"},
 	}
@@ -93,8 +93,8 @@ func TestRequireHumanActor_BlocksMachineCredentials(t *testing.T) {
 // Why the denylist shape:
 //
 //   - The Auth middleware today sets X-Actor-Source for exactly one
-//     case: mat_ task tokens. Every other authenticated path (JWT,
-//     mul_ PAT) leaves the header empty. So "non-empty AND not
+//     case: lat_ task tokens. Every other authenticated path (JWT,
+//     lum_ PAT) leaves the header empty. So "non-empty AND not
 //     task_token" is unreachable in current production.
 //
 //   - If a future actor kind is added (say a hypothetical

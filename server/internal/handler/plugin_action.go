@@ -163,7 +163,7 @@ func (h *Handler) pluginTokenCaller(w http.ResponseWriter, r *http.Request, toke
 	var issueScope pgtype.UUID
 
 	switch {
-	case strings.HasPrefix(token, "mpc_"):
+	case strings.HasPrefix(token, "lpc_"):
 		if h.PluginService.Callbacks == nil {
 			publicapiv1.WriteProblem(w, r, http.StatusForbidden, "callback_tokens_disabled", "callback tokens are not enabled")
 			return service.PluginActionCaller{}, pluginActor{}, false

@@ -158,8 +158,8 @@ func TestRenewPAT_RejectsNonPATAuthHeader(t *testing.T) {
 		header string
 	}{
 		{"empty", ""},
-		{"missing bearer prefix", "mul_abc123"},
-		{"wrong prefix", "Bearer mdt_abc123"},
+		{"missing bearer prefix", "lum_abc123"},
+		{"wrong prefix", "Bearer ldt_abc123"},
 		{"jwt", "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0In0.sig"},
 	}
 	for _, tt := range tests {

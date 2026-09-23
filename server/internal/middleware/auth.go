@@ -54,15 +54,15 @@ func rejectTemporarilyDisabledUser(w http.ResponseWriter, r *http.Request, userI
 // cloudPAT is optional; when non-nil, tokens with the mcn_ prefix are
 // validated by calling the Lumen Cloud Fleet service rather than the
 // local DB. When nil (Fleet URL unset) mcn_ tokens are rejected at the
-// prefix branch — we don't fall through to the mul_ / JWT paths, since
-// an mcn_ string is by construction not a valid mul_ PAT or JWT.
+// prefix branch — we don't fall through to the lum_ / JWT paths, since
+// an mcn_ string is by construction not a valid lum_ PAT or JWT.
 func Auth(queries *db.Queries, patCache *auth.PATCache, cloudPAT *auth.CloudPATVerifier, cfSigner *auth.CloudFrontSigner) func(http.Handler) http.Handler {
 	return func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			// X-Actor-Source is server-set only — any value supplied by
 			// the client is untrusted and discarded before the auth
-			// branches run. Only the mat_ branch below re-sets it. This
-			// is what prevents a client from sending a normal mul_ PAT
+			// branches run. Only the lat_ branch below re-sets it. This
+			// is what prevents a client from sending a normal lum_ PAT
 			// plus a forged `X-Actor-Source: member` (or anything else)
 			// to convince a downstream handler that its request came
 			// from a non-task-token path.
@@ -70,7 +70,7 @@ func Auth(queries *db.Queries, patCache *auth.PATCache, cloudPAT *auth.CloudPATV
 
 			// Agent identity is server-set for exactly the same reason,
 			// and the rest of the codebase already assumes it (see
-			// resolveActor, actor_guards.go, CreateIssue). Only the mat_
+			// resolveActor, actor_guards.go, CreateIssue). Only the lat_
 			// branch below re-stamps these from the token row.
 			//
 			// Without the strip, resolveActor's pair requirement was not a
@@ -97,7 +97,7 @@ func Auth(queries *db.Queries, patCache *auth.PATCache, cloudPAT *auth.CloudPATV
 				return
 			}
 
-			// Agent task token: "mat_" prefix. Minted by the server at
+			// Agent task token: "lat_" prefix. Minted by the server at
 			// task-claim time and injected by the daemon into the agent
 			// process. Authoritative for actor identity — the bound
 			// (user_id, agent_id, task_id, workspace_id) triple is
@@ -107,7 +107,7 @@ func Auth(queries *db.Queries, patCache *auth.PATCache, cloudPAT *auth.CloudPATV
 			// X-Task-ID. Human-only endpoints (e.g. agent env
 			// management) reject requests authenticated this way; see
 			// `actorSourceFromRequest`. MUL-2600.
-			if strings.HasPrefix(tokenString, "mat_") {
+			if strings.HasPrefix(tokenString, "lat_") {
 				if queries == nil {
 					http.Error(w, `{"error":"invalid token"}`, http.StatusUnauthorized)
 					return
@@ -142,7 +142,7 @@ func Auth(queries *db.Queries, patCache *auth.PATCache, cloudPAT *auth.CloudPATV
 			// authoritative owner of the token's status and owner_id
 			// binding. We never look at the local
 			// personal_access_tokens table for this prefix; an mcn_
-			// string is not a valid mul_ value, so falling through
+			// string is not a valid lum_ value, so falling through
 			// would just be a redundant DB miss. When the verifier
 			// is unconfigured (no LUMEN_CLOUD_URL) we reject
 			// at this branch rather than treating the token as a
@@ -184,7 +184,7 @@ func Auth(queries *db.Queries, patCache *auth.PATCache, cloudPAT *auth.CloudPATV
 				// Tag the auth path so account-level guards (e.g.
 				// handler.RequireHumanActor on /api/cloud-billing/*)
 				// can distinguish a cloud-node machine credential
-				// from a human PAT/JWT. Mirrors the mat_ branch's
+				// from a human PAT/JWT. Mirrors the lat_ branch's
 				// stamp of "task_token" — both are server-set,
 				// authoritative, and stripped from any client-
 				// supplied value at the top of this middleware. Same
@@ -197,8 +197,8 @@ func Auth(queries *db.Queries, patCache *auth.PATCache, cloudPAT *auth.CloudPATV
 				return
 			}
 
-			// PAT: tokens starting with "mul_"
-			if strings.HasPrefix(tokenString, "mul_") {
+			// PAT: tokens starting with "lum_"
+			if strings.HasPrefix(tokenString, "lum_") {
 				hash := auth.HashToken(tokenString)
 
 				// Cache hit: TTL has not expired, the token was valid the

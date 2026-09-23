@@ -614,7 +614,7 @@ func TestMergeEnvFiltersClaudeCodeVars(t *testing.T) {
 	}, map[string]string{
 		"FOO":                "bar",
 		"LUMEN_SERVER_URL": "https://task.example",
-		"LUMEN_TOKEN":      "mat_task",
+		"LUMEN_TOKEN":      "lat_task",
 	})
 
 	// Internal runtime/session markers must be stripped so the child does not
@@ -663,7 +663,7 @@ func TestMergeEnvFiltersClaudeCodeVars(t *testing.T) {
 	if !found["FOO=bar"] {
 		t.Fatalf("expected extra env var to be appended, got %v", env)
 	}
-	if !found["LUMEN_SERVER_URL=https://task.example"] || !found["LUMEN_TOKEN=mat_task"] {
+	if !found["LUMEN_SERVER_URL=https://task.example"] || !found["LUMEN_TOKEN=lat_task"] {
 		t.Fatalf("expected explicit task LUMEN_* values to be appended, got %v", env)
 	}
 }

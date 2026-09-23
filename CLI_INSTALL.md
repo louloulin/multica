@@ -140,7 +140,7 @@ lumen auth status
 Expected output should show the authenticated user and server URL.
 
 **If login fails:**
-- If no browser is available (headless environment), the user can generate a Personal Access Token at `https://lumen.ai/settings?tab=tokens` and run: `lumen login --token <mul_...>` (use `--token=` with an empty value to be prompted interactively).
+- If no browser is available (headless environment), the user can generate a Personal Access Token at `https://lumen.ai/settings?tab=tokens` and run: `lumen login --token <lum_...>` (use `--token=` with an empty value to be prompted interactively).
 - If the server URL needs to be customized: `lumen config set server_url <url>` before logging in.
 
 ---

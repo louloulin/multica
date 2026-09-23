@@ -631,7 +631,7 @@ func TestRunIssueCommentUpdateSendsExpectedRequest(t *testing.T) {
 	}))
 	defer srv.Close()
 	setCLITestServerEnv(t, srv.URL)
-	t.Setenv("LUMEN_TOKEN", "mat_test-token")
+	t.Setenv("LUMEN_TOKEN", "lat_test-token")
 
 	cmd := newIssueCommentUpdateTestCmd()
 	_ = cmd.Flags().Set("content", `updated\ncomment`)
@@ -755,7 +755,7 @@ func TestRunIssueCommentUpdateWrapsAPIError(t *testing.T) {
 	}))
 	defer srv.Close()
 	setCLITestServerEnv(t, srv.URL)
-	t.Setenv("LUMEN_TOKEN", "mat_test-token")
+	t.Setenv("LUMEN_TOKEN", "lat_test-token")
 
 	cmd := newIssueCommentUpdateTestCmd()
 	_ = cmd.Flags().Set("content", "not allowed")
@@ -794,9 +794,9 @@ func TestRunIssueCommentAddRejectsExternalAttachmentWithZeroUploads(t *testing.T
 	}))
 	defer srv.Close()
 	setCLITestServerEnv(t, srv.URL)
-	// mat_ prefix clears the daemon-managed execution-context guard both in CI
+	// lat_ prefix clears the daemon-managed execution-context guard both in CI
 	// and when the suite runs inside an agent task (leftover daemon marker).
-	t.Setenv("LUMEN_TOKEN", "mat_test-token")
+	t.Setenv("LUMEN_TOKEN", "lat_test-token")
 
 	// A valid attachment inside the workdir, FOLLOWED BY an external one.
 	t.Chdir(t.TempDir())
@@ -867,7 +867,7 @@ func TestRunIssueCreatePropertiesFailClosedBeforePost(t *testing.T) {
 	defer srv.Close()
 	t.Setenv("LUMEN_SERVER_URL", srv.URL)
 	t.Setenv("LUMEN_WORKSPACE_ID", "ws-1")
-	t.Setenv("LUMEN_TOKEN", "mat_test-token")
+	t.Setenv("LUMEN_TOKEN", "lat_test-token")
 
 	cmd := newIssueCreateTestCmd()
 	_ = cmd.Flags().Set("title", "Must stay atomic")
@@ -916,7 +916,7 @@ func TestRunIssueCreateSendsCanonicalIDKeyedProperties(t *testing.T) {
 	defer srv.Close()
 	t.Setenv("LUMEN_SERVER_URL", srv.URL)
 	t.Setenv("LUMEN_WORKSPACE_ID", "ws-1")
-	t.Setenv("LUMEN_TOKEN", "mat_test-token")
+	t.Setenv("LUMEN_TOKEN", "lat_test-token")
 
 	cmd := newIssueCreateTestCmd()
 	_ = cmd.Flags().Set("title", "With properties")
@@ -961,7 +961,7 @@ func TestRunIssueCreateRejectsDuplicateAndFilterPropertySyntaxBeforePost(t *test
 	defer srv.Close()
 	t.Setenv("LUMEN_SERVER_URL", srv.URL)
 	t.Setenv("LUMEN_WORKSPACE_ID", "ws-1")
-	t.Setenv("LUMEN_TOKEN", "mat_test-token")
+	t.Setenv("LUMEN_TOKEN", "lat_test-token")
 
 	for _, test := range []struct {
 		name  string
@@ -1216,7 +1216,7 @@ func TestRunIssueUsageReturnsTokenSummaryAsJSON(t *testing.T) {
 
 	t.Setenv("LUMEN_SERVER_URL", srv.URL)
 	t.Setenv("LUMEN_WORKSPACE_ID", "ws-1")
-	t.Setenv("LUMEN_TOKEN", "mat_test-token")
+	t.Setenv("LUMEN_TOKEN", "lat_test-token")
 
 	cmd := newIssueUsageTestCmd()
 	_ = cmd.Flags().Set("output", "json")
@@ -1303,7 +1303,7 @@ func TestRunIssueUsageTableKeepsNonterminalUsage(t *testing.T) {
 
 	t.Setenv("LUMEN_SERVER_URL", srv.URL)
 	t.Setenv("LUMEN_WORKSPACE_ID", "ws-1")
-	t.Setenv("LUMEN_TOKEN", "mat_test-token")
+	t.Setenv("LUMEN_TOKEN", "lat_test-token")
 
 	out, err := captureStdout(t, func() error {
 		return runIssueUsage(newIssueUsageTestCmd(), []string{"MUL-2818"})
@@ -1344,7 +1344,7 @@ func TestRunIssueUsageTableSeparatesRunsFromMeteredRuns(t *testing.T) {
 
 	t.Setenv("LUMEN_SERVER_URL", srv.URL)
 	t.Setenv("LUMEN_WORKSPACE_ID", "ws-1")
-	t.Setenv("LUMEN_TOKEN", "mat_test-token")
+	t.Setenv("LUMEN_TOKEN", "lat_test-token")
 
 	out, err := captureStdout(t, func() error {
 		return runIssueUsage(newIssueUsageTestCmd(), []string{"MUL-2818"})
@@ -3658,7 +3658,7 @@ func TestRunIssueUpdateNoStartSendsSuppressRun(t *testing.T) {
 	defer srv.Close()
 	setCLITestServerEnv(t, srv.URL)
 	t.Setenv("LUMEN_TASK_CONFIG_ROOT", t.TempDir())
-	t.Setenv("LUMEN_TOKEN", "mat_test-token")
+	t.Setenv("LUMEN_TOKEN", "lat_test-token")
 
 	cmd := newIssueUpdateTestCmd()
 	_ = cmd.Flags().Set("status", "in_progress")
@@ -3689,7 +3689,7 @@ func TestRunIssueStatusNoStartSendsSuppressRun(t *testing.T) {
 	defer srv.Close()
 	setCLITestServerEnv(t, srv.URL)
 	t.Setenv("LUMEN_TASK_CONFIG_ROOT", t.TempDir())
-	t.Setenv("LUMEN_TOKEN", "mat_test-token")
+	t.Setenv("LUMEN_TOKEN", "lat_test-token")
 
 	cmd := newIssueStatusTestCmd()
 	_ = cmd.Flags().Set("no-start", "true")
@@ -3729,7 +3729,7 @@ func TestRunIssueAssignNoStartSendsSuppressRun(t *testing.T) {
 	defer srv.Close()
 	setCLITestServerEnv(t, srv.URL)
 	t.Setenv("LUMEN_TASK_CONFIG_ROOT", t.TempDir())
-	t.Setenv("LUMEN_TOKEN", "mat_test-token")
+	t.Setenv("LUMEN_TOKEN", "lat_test-token")
 
 	cmd := newIssueAssignTestCmd()
 	_ = cmd.Flags().Set("to-id", agentID)
@@ -3753,7 +3753,7 @@ func TestRunIssueAssignRejectsNoStartWithUnassign(t *testing.T) {
 }
 
 func TestIssueReadCommandsUseInjectedTaskToken(t *testing.T) {
-	const fakeTaskToken = "mat_task_issue_sentinel"
+	const fakeTaskToken = "lat_task_issue_sentinel"
 	ownerHome := t.TempDir()
 	t.Setenv("HOME", ownerHome)
 	t.Setenv("LUMEN_AGENT_ID", "agent-test")
@@ -3766,7 +3766,7 @@ func TestIssueReadCommandsUseInjectedTaskToken(t *testing.T) {
 	if err := os.MkdirAll(filepath.Dir(ownerPath), 0o755); err != nil {
 		t.Fatal(err)
 	}
-	if err := os.WriteFile(ownerPath, []byte("{\n  \"server_url\": \"https://owner.invalid\",\n  \"workspace_id\": \"owner-workspace-sentinel\",\n  \"token\": \"mul_owner_sentinel\"\n}\n"), 0o600); err != nil {
+	if err := os.WriteFile(ownerPath, []byte("{\n  \"server_url\": \"https://owner.invalid\",\n  \"workspace_id\": \"owner-workspace-sentinel\",\n  \"token\": \"lum_owner_sentinel\"\n}\n"), 0o600); err != nil {
 		t.Fatal(err)
 	}
 
@@ -3833,13 +3833,13 @@ func TestIssueReadCommandsFailClosedWithoutTaskToken(t *testing.T) {
 	if err := os.MkdirAll(filepath.Dir(ownerPath), 0o755); err != nil {
 		t.Fatal(err)
 	}
-	if err := os.WriteFile(ownerPath, []byte("{\n  \"token\": \"mul_owner_sentinel\"\n}\n"), 0o600); err != nil {
+	if err := os.WriteFile(ownerPath, []byte("{\n  \"token\": \"lum_owner_sentinel\"\n}\n"), 0o600); err != nil {
 		t.Fatal(err)
 	}
 
 	cmd := newIssueListTestCmd()
 	err := runIssueList(cmd, nil)
-	if err == nil || !strings.Contains(err.Error(), "task-scoped mat_ token") {
+	if err == nil || !strings.Contains(err.Error(), "task-scoped lat_ token") {
 		t.Fatalf("issue list error = %v, want missing task token failure", err)
 	}
 }
@@ -4756,7 +4756,7 @@ func TestRunIssueCommentListCompactWiring(t *testing.T) {
 	}))
 	defer srv.Close()
 	setCLITestServerEnv(t, srv.URL)
-	t.Setenv("LUMEN_TOKEN", "mat_test-token")
+	t.Setenv("LUMEN_TOKEN", "lat_test-token")
 
 	run := func(compact bool) []map[string]any {
 		t.Helper()

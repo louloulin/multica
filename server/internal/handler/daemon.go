@@ -51,7 +51,7 @@ const claimPollHintMinDelay = time.Second
 // ---------------------------------------------------------------------------
 
 // requireDaemonWorkspaceAccess verifies the caller has access to the given workspace.
-// For daemon tokens (mdt_), compares the token's workspace ID directly.
+// For daemon tokens (ldt_), compares the token's workspace ID directly.
 // For PAT/JWT fallback, verifies user membership in the workspace.
 func (h *Handler) requireDaemonWorkspaceAccess(w http.ResponseWriter, r *http.Request, workspaceID string) bool {
 	if workspaceID == "" {
@@ -432,7 +432,7 @@ func (h *Handler) DaemonRegister(w http.ResponseWriter, r *http.Request) {
 	req.WorkspaceID = uuidToString(wsUUID)
 
 	// Verify workspace access and resolve owner.
-	// Daemon tokens (mdt_) prove workspace access directly; OwnerID will be zero
+	// Daemon tokens (ldt_) prove workspace access directly; OwnerID will be zero
 	// (the SQL COALESCE preserves any existing owner on upsert).
 	// PAT/JWT tokens require a membership check and set OwnerID from the member.
 	var ownerID pgtype.UUID
@@ -1719,7 +1719,7 @@ func (h *Handler) ClaimTasksByRuntime(w http.ResponseWriter, r *http.Request) {
 	// single daemon. daemon_id is required so the server can reject any
 	// runtime_id that belongs to a different machine (guards against a stale /
 	// crossed runtime set claiming another daemon's tasks — which would land
-	// local_directory / machine-local work on the wrong host). For an mdt_
+	// local_directory / machine-local work on the wrong host). For an ldt_
 	// token the body daemon_id must equal the token's daemon_id, so a
 	// workspace-scoped token can't spoof a peer.
 	if req.DaemonID == "" {
@@ -3791,7 +3791,7 @@ func (h *Handler) ClaimTaskByRuntime(w http.ResponseWriter, r *http.Request) {
 			)
 		}
 	}
-	// Mint a task-scoped `mat_` token bound to (agent, task, workspace,
+	// Mint a task-scoped `lat_` token bound to (agent, task, workspace,
 	// owner). The daemon will inject this as LUMEN_TOKEN into the agent
 	// process instead of its own credential, so any API call the agent
 	// makes — even one that strips X-Agent-ID / X-Task-ID headers — is
@@ -4995,7 +4995,7 @@ func (h *Handler) failTask(w http.ResponseWriter, r *http.Request, taskID, works
 	}
 	h.TaskService.NotifyTaskFinished(*task)
 
-	// Best-effort revoke of the mat_ task token minted at claim. Same
+	// Best-effort revoke of the lat_ task token minted at claim. Same
 	// rationale as CompleteTask — eager deletion shrinks the post-
 	// terminal window. The 24h expiry / cascade are the durable guards.
 	if err := h.Queries.DeleteTaskTokensByTask(r.Context(), task.ID); err != nil {

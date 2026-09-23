@@ -33,7 +33,7 @@ func TestPluginActionRouteTrustBoundaries(t *testing.T) {
 		{
 			name:          "public API passes plugin tokens to the Action handler",
 			path:          "/v1/context",
-			authorization: "Bearer mpi_invalid",
+			authorization: "Bearer lpi_invalid",
 			wantHandler:   true,
 		},
 		{
@@ -50,14 +50,14 @@ func TestPluginActionRouteTrustBoundaries(t *testing.T) {
 		{
 			name:          "public API does not expose person-triggered hooks",
 			path:          "/v1/hooks/summarize",
-			authorization: "Bearer mpi_invalid",
+			authorization: "Bearer lpi_invalid",
 			wantStatus:    http.StatusNotFound,
 			wantProblem:   true,
 		},
 		{
 			name:          "public API empty resource path uses the problem contract",
 			path:          "/v1/issues/",
-			authorization: "Bearer mpi_invalid",
+			authorization: "Bearer lpi_invalid",
 			wantStatus:    http.StatusNotFound,
 			wantProblem:   true,
 		},
@@ -65,7 +65,7 @@ func TestPluginActionRouteTrustBoundaries(t *testing.T) {
 			name:          "public API unsupported method uses the problem contract",
 			method:        http.MethodPut,
 			path:          "/v1/context",
-			authorization: "Bearer mpi_invalid",
+			authorization: "Bearer lpi_invalid",
 			wantStatus:    http.StatusMethodNotAllowed,
 			wantProblem:   true,
 		},

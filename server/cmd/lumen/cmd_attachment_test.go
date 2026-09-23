@@ -42,10 +42,10 @@ func TestRunAttachmentDownloadWritesBasenameIntoOutputDir(t *testing.T) {
 	}))
 	defer srv.Close()
 	setCLITestServerEnv(t, srv.URL)
-	// A task-scoped mat_ token so the test also runs inside an agent workdir,
+	// A task-scoped lat_ token so the test also runs inside an agent workdir,
 	// where a daemon task marker makes newAPIClient reject the helper's
-	// default non-mat_ token before the download logic is reached.
-	t.Setenv("LUMEN_TOKEN", "mat_test-token")
+	// default non-lat_ token before the download logic is reached.
+	t.Setenv("LUMEN_TOKEN", "lat_test-token")
 
 	outputDir := t.TempDir()
 	cmd := newAttachmentDownloadTestCmd()
@@ -101,7 +101,7 @@ func TestRunAttachmentDownloadCreatesMissingOutputDir(t *testing.T) {
 	}))
 	defer srv.Close()
 	setCLITestServerEnv(t, srv.URL)
-	t.Setenv("LUMEN_TOKEN", "mat_test-token")
+	t.Setenv("LUMEN_TOKEN", "lat_test-token")
 
 	outputDir := filepath.Join(t.TempDir(), "attachments", "images")
 	cmd := newAttachmentDownloadTestCmd()
@@ -157,9 +157,9 @@ func TestRunAttachmentUploadSendsTaskIDAndPrintsContract(t *testing.T) {
 	}))
 	defer srv.Close()
 	setCLITestServerEnv(t, srv.URL)
-	// An agent upload always carries a task-scoped mat_ token; set one so the
+	// An agent upload always carries a task-scoped lat_ token; set one so the
 	// daemon-managed-context gate in newAPIClient admits the request.
-	t.Setenv("LUMEN_TOKEN", "mat_test-token")
+	t.Setenv("LUMEN_TOKEN", "lat_test-token")
 
 	dir := t.TempDir()
 	imgPath := filepath.Join(dir, "chart.png")
@@ -211,7 +211,7 @@ func TestRunAttachmentUploadNonImageUsesFileCardMarkdown(t *testing.T) {
 	}))
 	defer srv.Close()
 	setCLITestServerEnv(t, srv.URL)
-	t.Setenv("LUMEN_TOKEN", "mat_test-token")
+	t.Setenv("LUMEN_TOKEN", "lat_test-token")
 
 	dir := t.TempDir()
 	docPath := filepath.Join(dir, "report.pdf")
@@ -256,7 +256,7 @@ func TestRunAttachmentUploadEscapesFilename(t *testing.T) {
 	}))
 	defer srv.Close()
 	setCLITestServerEnv(t, srv.URL)
-	t.Setenv("LUMEN_TOKEN", "mat_test-token")
+	t.Setenv("LUMEN_TOKEN", "lat_test-token")
 
 	dir := t.TempDir()
 	docPath := filepath.Join(dir, "a]b.pdf")
@@ -284,7 +284,7 @@ func TestRunAttachmentUploadRequiresTask(t *testing.T) {
 	}))
 	defer srv.Close()
 	setCLITestServerEnv(t, srv.URL)
-	t.Setenv("LUMEN_TOKEN", "mat_test-token")
+	t.Setenv("LUMEN_TOKEN", "lat_test-token")
 
 	dir := t.TempDir()
 	imgPath := filepath.Join(dir, "chart.png")
@@ -310,7 +310,7 @@ func TestRunAttachmentDownloadRequiresDownloadURL(t *testing.T) {
 	}))
 	defer srv.Close()
 	setCLITestServerEnv(t, srv.URL)
-	t.Setenv("LUMEN_TOKEN", "mat_test-token")
+	t.Setenv("LUMEN_TOKEN", "lat_test-token")
 
 	cmd := newAttachmentDownloadTestCmd()
 	if err := runAttachmentDownload(cmd, []string{"att-no-url"}); err == nil || !strings.Contains(err.Error(), "no download URL") {

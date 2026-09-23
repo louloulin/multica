@@ -23,11 +23,11 @@ import (
 )
 
 // loginTokenPrefixes are the token prefixes `lumen login --token` accepts.
-// The CLI used to hardcode `mul_` only, which made it impossible to log in
+// The CLI used to hardcode `lum_` only, which made it impossible to log in
 // with a Lumen Cloud Node PAT (`mcn_`) even though the server happily
 // authenticates both kinds. Keep this list in sync with the prefix branches
 // in server/internal/middleware/auth.go.
-var loginTokenPrefixes = []string{"mul_", auth.CloudPATPrefix}
+var loginTokenPrefixes = []string{"lum_", auth.CloudPATPrefix}
 
 // validateLoginTokenPrefix returns nil if token starts with one of the
 // CLI-recognised PAT prefixes, or an error describing the accepted set.
@@ -127,7 +127,7 @@ func runAuthLogin(cmd *cobra.Command, args []string) error {
 	}
 	if cmd.Flags().Changed("token") {
 		tokenFlag, _ := cmd.Flags().GetString("token")
-		// `--token mul_xxx` (space form) is what users actually type — that's
+		// `--token lum_xxx` (space form) is what users actually type — that's
 		// the form from the docs and from #1994. NoOptDefVal prevents pflag
 		// from consuming the next arg as the flag value, so it lands here as
 		// a positional. Promote it to the token value.
@@ -469,8 +469,8 @@ func runAuthStatus(cmd *cobra.Command, _ []string) error {
 	}
 	taskContext := inDaemonManagedExecutionContext()
 	token := resolveToken(cmd)
-	if taskContext && !strings.HasPrefix(token, "mat_") {
-		return fmt.Errorf("agent execution context requires LUMEN_TOKEN to be a task-scoped mat_ token")
+	if taskContext && !strings.HasPrefix(token, "lat_") {
+		return fmt.Errorf("agent execution context requires LUMEN_TOKEN to be a task-scoped lat_ token")
 	}
 	serverURL := resolveServerURL(cmd)
 

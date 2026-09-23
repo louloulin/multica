@@ -31,8 +31,8 @@ func TestClient_RenewToken_PostsToCorrectEndpoint(t *testing.T) {
 		if r.URL.Path != "/api/tokens/current/renew" {
 			t.Errorf("expected /api/tokens/current/renew, got %s", r.URL.Path)
 		}
-		if got := r.Header.Get("Authorization"); got != "Bearer mul_abc" {
-			t.Errorf("expected Bearer mul_abc, got %q", got)
+		if got := r.Header.Get("Authorization"); got != "Bearer lum_abc" {
+			t.Errorf("expected Bearer lum_abc, got %q", got)
 		}
 		// Body must be valid JSON — postJSON marshals an empty object when
 		// reqBody is a non-nil map[string]any{}.
@@ -49,7 +49,7 @@ func TestClient_RenewToken_PostsToCorrectEndpoint(t *testing.T) {
 	t.Cleanup(srv.Close)
 
 	c := NewClient(srv.URL)
-	c.SetToken("mul_abc")
+	c.SetToken("lum_abc")
 
 	resp, err := c.RenewToken(context.Background())
 	if err != nil {
@@ -197,7 +197,7 @@ func TestPreflightAuth_RenewsBeforeWorkspaceSyncOnExpiredToken(t *testing.T) {
 
 	var buf bytes.Buffer
 	d := &Daemon{client: NewClient(srv.URL), logger: captureLogger(&buf)}
-	d.client.SetToken("mul_already_revoked")
+	d.client.SetToken("lum_already_revoked")
 
 	err := d.preflightAuth(context.Background())
 	if err == nil {
@@ -250,7 +250,7 @@ func TestPreflightAuth_SyncProceedsWhenRenewIsNoOp(t *testing.T) {
 
 	var buf bytes.Buffer
 	d := &Daemon{client: NewClient(srv.URL), logger: captureLogger(&buf)}
-	d.client.SetToken("mul_healthy")
+	d.client.SetToken("lum_healthy")
 
 	if err := d.preflightAuth(context.Background()); err != nil {
 		t.Fatalf("preflightAuth returned error on healthy startup: %v", err)
@@ -283,7 +283,7 @@ func TestPreflightAuth_TransientRenewFailureDoesNotBlockStartup(t *testing.T) {
 
 	var buf bytes.Buffer
 	d := &Daemon{client: NewClient(srv.URL), logger: captureLogger(&buf)}
-	d.client.SetToken("mul_healthy")
+	d.client.SetToken("lum_healthy")
 
 	if err := d.preflightAuth(context.Background()); err != nil {
 		t.Fatalf("preflightAuth must not surface transient renew failures: %v", err)

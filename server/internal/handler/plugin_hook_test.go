@@ -268,7 +268,7 @@ func TestRevokePluginTokenStopsAuthentication(t *testing.T) {
 // lookup is by hash, so an empty or malformed value must be refused before it
 // reaches the query.
 func TestAuthenticateInstallTokenRefusesMalformedValues(t *testing.T) {
-	for _, token := range []string{"", "mpi_", "not-a-token", "mpc_something", "Bearer mpi_x"} {
+	for _, token := range []string{"", "lpi_", "not-a-token", "lpc_something", "Bearer lpi_x"} {
 		if _, err := testHandler.PluginService.AuthenticateInstallToken(context.Background(), token); err == nil {
 			t.Fatalf("token %q must not authenticate", token)
 		}

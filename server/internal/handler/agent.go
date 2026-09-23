@@ -555,7 +555,7 @@ type AgentTaskResponse struct {
 	// model call, genuinely has no number, and showing 0 would assert it was
 	// free. omitempty keeps both off the wire.
 	Usage []TaskUsageData `json:"usage,omitempty"`
-	// AuthToken is the task-scoped `mat_` token the daemon must inject as
+	// AuthToken is the task-scoped `lat_` token the daemon must inject as
 	// LUMEN_TOKEN in the agent process environment. The server binds it to
 	// this (agent_id, task_id) pair at claim time and treats any request
 	// authenticated with it as actor=agent, regardless of headers — so the

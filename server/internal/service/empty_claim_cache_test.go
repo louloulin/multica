@@ -43,10 +43,10 @@ func newRedisTestClient(t *testing.T) *redis.Client {
 
 func TestEmptyClaimKeysRemainRollingDeploymentCompatible(t *testing.T) {
 	const runtimeID = "runtime-a"
-	if got, want := emptyClaimKey(runtimeID), "mul:claim:runtime:empty:runtime-a"; got != want {
+	if got, want := emptyClaimKey(runtimeID), "lumen:claim:runtime:empty:runtime-a"; got != want {
 		t.Fatalf("empty claim key = %q, want %q", got, want)
 	}
-	if got, want := emptyClaimVersion(runtimeID), "mul:claim:runtime:version:runtime-a"; got != want {
+	if got, want := emptyClaimVersion(runtimeID), "lumen:claim:runtime:version:runtime-a"; got != want {
 		t.Fatalf("empty claim version key = %q, want %q", got, want)
 	}
 }

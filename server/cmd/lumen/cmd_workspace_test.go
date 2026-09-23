@@ -351,7 +351,7 @@ func TestRunWorkspaceSwitchFailsClosedInTaskContext(t *testing.T) {
 	t.Setenv("HOME", t.TempDir())
 	t.Setenv("LUMEN_AGENT_ID", "agent-test")
 	t.Setenv("LUMEN_TASK_ID", "task-test")
-	t.Setenv("LUMEN_TOKEN", "mat_task_sentinel")
+	t.Setenv("LUMEN_TOKEN", "lat_task_sentinel")
 	t.Setenv("LUMEN_SERVER_URL", "https://task.invalid")
 	t.Setenv("LUMEN_WORKSPACE_ID", "task-workspace")
 	t.Setenv("LUMEN_TASK_CONFIG_ROOT", filepath.Join(t.TempDir(), "task-lumen"))
@@ -371,7 +371,7 @@ func TestFetchWorkspacesExplainsPortOnlyFailClosedContext(t *testing.T) {
 	t.Setenv("LUMEN_DAEMON_PORT", "20032")
 	t.Setenv("LUMEN_SERVER_URL", "https://api.example.test")
 	t.Setenv("LUMEN_TOKEN", "")
-	if err := cli.SaveCLIConfig(cli.CLIConfig{Token: "mul_owner_pat"}); err != nil {
+	if err := cli.SaveCLIConfig(cli.CLIConfig{Token: "lum_owner_pat"}); err != nil {
 		t.Fatalf("seed config: %v", err)
 	}
 

@@ -1769,7 +1769,7 @@ func (h *Handler) CreateComment(w http.ResponseWriter, r *http.Request) {
 	// private-agent gate denies the wake (MUL-4015).
 	//
 	// The header is NOT client-chosen: the auth middleware deletes any
-	// client-supplied X-Agent-ID / X-Task-ID and re-stamps both from the mat_
+	// client-supplied X-Agent-ID / X-Task-ID and re-stamps both from the lat_
 	// token's own row (MUL-3428). So the stamp always records the authoring
 	// agent's own run.
 	//

@@ -63,7 +63,7 @@ token exists instead of just handing out the install token.
 The callback token is revoked when this HTTP request returns and is held by one
 Lumen server instance. Use it only for work completed before responding. A
 scheduled integration that needs to continue asynchronously or reconcile a
-large external backlog should store the `mpi_` install token shown to the admin
+large external backlog should store the `lpi_` install token shown to the admin
 at token rotation and use that standing credential instead.
 
 ## Scheduled delivery identity

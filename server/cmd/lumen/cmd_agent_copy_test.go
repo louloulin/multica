@@ -77,7 +77,7 @@ func setCopyTestEnv(t *testing.T, serverURL string) {
 	t.Helper()
 	// Run from a fresh temp dir so no daemon-task marker sits in the cwd
 	// ancestry: the CLI then treats this as a normal (non-agent) context and
-	// accepts the plain test token instead of demanding a task-scoped mat_ one.
+	// accepts the plain test token instead of demanding a task-scoped lat_ one.
 	t.Chdir(t.TempDir())
 	t.Setenv("LUMEN_SERVER_URL", serverURL)
 	t.Setenv("LUMEN_WORKSPACE_ID", "ws-1")

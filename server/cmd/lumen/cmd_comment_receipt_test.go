@@ -60,7 +60,7 @@ func TestCommentReplyReceipt(t *testing.T) {
 				}))
 				defer srv.Close()
 				setCLITestServerEnv(t, srv.URL)
-				t.Setenv("LUMEN_TOKEN", "mat_test-token")
+				t.Setenv("LUMEN_TOKEN", "lat_test-token")
 				cmd := newIssueCommentAddTestCmd()
 				var flags []string
 				for _, line := range strings.Split(execenv.BuildCommentReplyInstructions("claude", issueID, parentID, false), "\n") {

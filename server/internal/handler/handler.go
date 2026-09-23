@@ -824,7 +824,7 @@ func requestUserID(r *http.Request) string {
 // resolveActor determines whether the request is from an agent or a human member.
 //
 // First-class signal: X-Actor-Source set to "task_token" means the request
-// authenticated via an `mat_` task-scoped token. The auth middleware sets
+// authenticated via an `lat_` task-scoped token. The auth middleware sets
 // that header (and stripped any client-supplied value first), so it is
 // authoritative — the bound (agent_id, task_id) cannot be forged or
 // stripped by the agent process. This is the path MUL-2600 relies on to
@@ -839,7 +839,7 @@ func requestUserID(r *http.Request) string {
 // returns the pair), so requiring both proves nothing on its own — the older
 // comment here claimed it "closes the impersonation path", and it did not.
 // What closes it is the Auth / DaemonAuth middleware stripping both headers
-// from every client, leaving the mat_ branch as the only writer (MUL-3428).
+// from every client, leaving the lat_ branch as the only writer (MUL-3428).
 // The fallback survives that strip only for in-process callers and handler
 // unit tests, which set the headers directly.
 //

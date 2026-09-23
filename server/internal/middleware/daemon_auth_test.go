@@ -11,7 +11,7 @@ import (
 )
 
 // TestDaemonAuth_DaemonTokenCacheHit pins the daemon-token cache short-circuit:
-// when the cache holds an entry for an mdt_ token, DaemonAuth must skip the DB
+// when the cache holds an entry for an ldt_ token, DaemonAuth must skip the DB
 // lookup. nil queries would otherwise nil-deref on a miss.
 func TestDaemonAuth_DaemonTokenCacheHit(t *testing.T) {
 	rdb := newRedisTestClient(t)
@@ -20,7 +20,7 @@ func TestDaemonAuth_DaemonTokenCacheHit(t *testing.T) {
 		t.Fatal("expected non-nil cache")
 	}
 
-	const rawToken = "mdt_cache_hit_test_token"
+	const rawToken = "ldt_cache_hit_test_token"
 	hash := auth.HashToken(rawToken)
 	cache.Set(context.Background(), hash, auth.DaemonTokenIdentity{
 		WorkspaceID: "ws-cached",
@@ -53,7 +53,7 @@ func TestDaemonAuth_DaemonTokenCacheHit(t *testing.T) {
 }
 
 // TestDaemonAuth_PATCacheHit pins the PAT-fallback short-circuit. Production
-// daemon traffic today uses mul_ PATs (mdt_ minting isn't wired up yet), so
+// daemon traffic today uses lum_ PATs (ldt_ minting isn't wired up yet), so
 // this is the cache hit that actually matters for /api/daemon/* DB load.
 func TestDaemonAuth_PATCacheHit(t *testing.T) {
 	rdb := newRedisTestClient(t)
@@ -62,7 +62,7 @@ func TestDaemonAuth_PATCacheHit(t *testing.T) {
 		t.Fatal("expected non-nil cache")
 	}
 
-	const rawToken = "mul_daemon_pat_cache_hit_test"
+	const rawToken = "lum_daemon_pat_cache_hit_test"
 	hash := auth.HashToken(rawToken)
 	cache.Set(context.Background(), hash, "cached-user-id", auth.AuthCacheTTL)
 
@@ -112,8 +112,8 @@ func TestDaemonAuth_MissingAuth(t *testing.T) {
 // handler.RequireHumanActor) can trust the header regardless of
 // which auth chain a request arrived on.
 //
-// We exercise an mdt_ token with an attempted forged X-Actor-Source.
-// On the mdt_ path no actor-source stamp is added (daemon tokens
+// We exercise an ldt_ token with an attempted forged X-Actor-Source.
+// On the ldt_ path no actor-source stamp is added (daemon tokens
 // aren't a "machine credential" in the billing sense — they're a
 // runtime-bound proof for the daemon API itself), so a clean strip
 // leaves the header empty downstream.
@@ -121,7 +121,7 @@ func TestDaemonAuth_StripsClientSuppliedActorSource(t *testing.T) {
 	rdb := newRedisTestClient(t)
 	cache := auth.NewDaemonTokenCache(rdb)
 
-	const rawToken = "mdt_strip_test"
+	const rawToken = "ldt_strip_test"
 	hash := auth.HashToken(rawToken)
 	cache.Set(context.Background(), hash, auth.DaemonTokenIdentity{
 		WorkspaceID: "ws-1",
@@ -146,7 +146,7 @@ func TestDaemonAuth_StripsClientSuppliedActorSource(t *testing.T) {
 		t.Fatalf("expected 200, got %d: %s", w.Code, w.Body.String())
 	}
 	if gotActorSource != "" {
-		t.Fatalf("X-Actor-Source must be cleared on the mdt_ path, got %q", gotActorSource)
+		t.Fatalf("X-Actor-Source must be cleared on the ldt_ path, got %q", gotActorSource)
 	}
 }
 
@@ -159,7 +159,7 @@ func TestDaemonAuth_StripsForgedAgentIdentityHeaders(t *testing.T) {
 	rdb := newRedisTestClient(t)
 	cache := auth.NewDaemonTokenCache(rdb)
 
-	const rawToken = "mdt_agent_header_strip_test"
+	const rawToken = "ldt_agent_header_strip_test"
 	hash := auth.HashToken(rawToken)
 	cache.Set(context.Background(), hash, auth.DaemonTokenIdentity{
 		WorkspaceID: "ws-1",
@@ -185,17 +185,17 @@ func TestDaemonAuth_StripsForgedAgentIdentityHeaders(t *testing.T) {
 		t.Fatalf("expected 200, got %d: %s", w.Code, w.Body.String())
 	}
 	if gotAgentID != "" || gotTaskID != "" {
-		t.Fatalf("agent identity headers must be cleared on the mdt_ path, got agent=%q task=%q", gotAgentID, gotTaskID)
+		t.Fatalf("agent identity headers must be cleared on the ldt_ path, got agent=%q task=%q", gotAgentID, gotTaskID)
 	}
 }
 
-func TestDaemonAuth_InvalidMDT_NilQueries(t *testing.T) {
+func TestDaemonAuth_InvalidLDT_NilQueries(t *testing.T) {
 	mw := DaemonAuth(nil, nil, nil, nil) // no caches, no DB
 	handler := mw(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		t.Fatal("next must not be called")
 	}))
 	req := httptest.NewRequest("POST", "/api/daemon/heartbeat", nil)
-	req.Header.Set("Authorization", "Bearer mdt_unknown")
+	req.Header.Set("Authorization", "Bearer ldt_unknown")
 	w := httptest.NewRecorder()
 	handler.ServeHTTP(w, req)
 	if w.Code != http.StatusUnauthorized {
@@ -206,7 +206,7 @@ func TestDaemonAuth_InvalidMDT_NilQueries(t *testing.T) {
 // TestDaemonAuth_MCN_NoVerifierConfigured pins the fail-closed
 // behaviour when LUMEN_CLOUD_URL is empty: an mcn_ token MUST
 // be rejected at the prefix branch with 401, not silently fall
-// through to the mul_/JWT paths (an mcn_ string would never match a
+// through to the lum_/JWT paths (an mcn_ string would never match a
 // valid PAT or JWT, but failing closed makes the contract explicit).
 func TestDaemonAuth_MCN_NoVerifierConfigured(t *testing.T) {
 	mw := DaemonAuth(nil, nil, nil, nil)

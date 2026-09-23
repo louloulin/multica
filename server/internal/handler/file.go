@@ -510,7 +510,7 @@ func (h *Handler) UploadFile(w http.ResponseWriter, r *http.Request) {
 		if taskID := r.FormValue("task_id"); taskID != "" {
 			// Authoritative task-token boundary (load-bearing, mirrors
 			// chat_history.go:chatHistorySession). X-Task-ID is only trustworthy
-			// when the auth middleware set it from a task-scoped `mat_` token:
+			// when the auth middleware set it from a task-scoped `lat_` token:
 			// that is the only branch that stamps it, because the middleware
 			// deletes any client-supplied agent/task identity first (MUL-3428).
 			// The gate is kept explicit because of what it protects — an

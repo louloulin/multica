@@ -275,8 +275,8 @@ func TestRenewSessionToken_RejectsClaimsWithoutSubject(t *testing.T) {
 // a session.
 func TestParseSessionToken_RejectsNonSessionCredentials(t *testing.T) {
 	cases := map[string]string{
-		"personal access token": "mul_0123456789abcdef0123456789abcdef01234567",
-		"agent task token":      "mat_0123456789abcdef0123456789abcdef01234567",
+		"personal access token": "lum_0123456789abcdef0123456789abcdef01234567",
+		"agent task token":      "lat_0123456789abcdef0123456789abcdef01234567",
 		"cloud node pat":        "mcn_0123456789abcdef0123456789abcdef01234567",
 		"empty":                 "",
 		"garbage":               "not-a-token",
@@ -317,7 +317,7 @@ func TestSessionIDFromToken(t *testing.T) {
 		t.Errorf("legacy token session id = %q, want empty", got)
 	}
 
-	if got := SessionIDFromToken("mul_deadbeef"); got != "" {
+	if got := SessionIDFromToken("lum_deadbeef"); got != "" {
 		t.Errorf("PAT session id = %q, want empty", got)
 	}
 }

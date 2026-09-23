@@ -253,7 +253,7 @@ func TestBuildQuickCreatePromptExplicitPriorityAndDueDate(t *testing.T) {
 func TestBuildQuickCreatePromptParentPinning(t *testing.T) {
 	const (
 		parentID         = "33333333-2222-1111-4444-555555555555"
-		parentIdentifier = "MUL-2534"
+		parentIdentifier = "LUM-2534"
 	)
 	out := buildQuickCreatePrompt(Task{
 		QuickCreatePrompt:     "fix the login button color",
@@ -1967,7 +1967,7 @@ func TestSharedLocalDirectoryBlock(t *testing.T) {
 func TestWorktreeReplayConflictBlock(t *testing.T) {
 	t.Parallel()
 
-	task := Task{IssueID: "issue-1", IssueIdentifier: "MUL-6881"}
+	task := Task{IssueID: "issue-1", IssueIdentifier: "LUM-6881"}
 
 	t.Run("absent when the replay was clean", func(t *testing.T) {
 		out := BuildPrompt(task, "claude")
