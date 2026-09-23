@@ -1023,7 +1023,7 @@ describe("AgentCreatePanel", () => {
       setIsExpanded: vi.fn(),
       data: {
         parent_issue_id: "parent-uuid-1",
-        parent_issue_identifier: "MUL-2534",
+        parent_issue_identifier: "LUM-2534",
       },
     });
 

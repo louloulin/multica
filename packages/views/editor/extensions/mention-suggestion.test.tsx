@@ -318,7 +318,7 @@ describe("createMentionSuggestion", () => {
       issues: [
         {
           id: "i-1007",
-          identifier: "MUL-1007",
+          identifier: "LUM-1007",
           title: "多 Agent 协作探索",
           status: "done",
         },
@@ -331,7 +331,7 @@ describe("createMentionSuggestion", () => {
     expect(screen.getByText("Searching...")).toBeInTheDocument();
 
     await waitFor(() => {
-      expect(screen.getByText("MUL-1007")).toBeInTheDocument();
+      expect(screen.getByText("LUM-1007")).toBeInTheDocument();
     });
     expect(screen.getByText("多 Agent 协作探索")).toBeInTheDocument();
     expect(searchIssuesMock).toHaveBeenCalledWith(

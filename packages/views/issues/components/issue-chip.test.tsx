@@ -58,13 +58,13 @@ describe("IssueChip", () => {
           data: [
             {
               id: "issue-1",
-              identifier: "MUL-3405",
+              identifier: "LUM-3405",
               title: "A very long issue title that should stay inside a narrow chat bubble",
               status: "todo",
             },
             {
               id: "issue-2",
-              identifier: "MUL-6956",
+              identifier: "LUM-6956",
               title: "Custom status color in Chat",
               status: "awaiting_response",
               status_category: "started",

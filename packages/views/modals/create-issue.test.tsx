@@ -1511,7 +1511,7 @@ describe("CreateIssueModal", () => {
         onSwitchMode={onSwitchMode}
         data={{
           parent_issue_id: "parent-uuid-1",
-          parent_issue_identifier: "MUL-2534",
+          parent_issue_identifier: "LUM-2534",
         }}
         isExpanded={false}
         setIsExpanded={vi.fn()}
@@ -1526,7 +1526,7 @@ describe("CreateIssueModal", () => {
     // still rides the carry channel. The prompt rides the store now.
     expect(onSwitchMode.mock.calls[0]?.[0]).toEqual({
       parent_issue_id: "parent-uuid-1",
-      parent_issue_identifier: "MUL-2534",
+      parent_issue_identifier: "LUM-2534",
     });
     expect(mockSetAgent).toHaveBeenCalledWith({ prompt: "Refactor auth" });
   });
@@ -1568,14 +1568,14 @@ describe("CreateIssueModal", () => {
         data={{
           ...sourceContextPanelData(),
           parent_issue_id: "parent-uuid-1",
-          parent_issue_identifier: "MUL-2534",
+          parent_issue_identifier: "LUM-2534",
         }}
         isExpanded={false}
         setIsExpanded={vi.fn()}
       />,
     );
 
-    expect(screen.getByTestId("manual-sub-issue-chip")).toHaveTextContent("Sub-issue of MUL-2534");
+    expect(screen.getByTestId("manual-sub-issue-chip")).toHaveTextContent("Sub-issue of LUM-2534");
     await user.click(screen.getByRole("button", { name: "More options" }));
     expect(screen.queryByText("Set parent issue...")).toBeNull();
     expect(screen.queryByText("Remove parent")).toBeNull();
@@ -1587,7 +1587,7 @@ describe("CreateIssueModal", () => {
         onSwitchMode={vi.fn()}
         data={{
           parent_issue_id: "parent-uuid-1",
-          parent_issue_identifier: "MUL-2534",
+          parent_issue_identifier: "LUM-2534",
         }}
         isExpanded={false}
         setIsExpanded={vi.fn()}
