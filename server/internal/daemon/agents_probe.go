@@ -331,6 +331,15 @@ var probeAgentCLIs = func() map[string]AgentEntry {
 	if e, ok := probe("LUMEN_ZEROCLAW_PATH", "zeroclaw", ""); ok {
 		agents["zeroclaw"] = e
 	}
+	// Lumos (`lumos acp`) is a first-party ACP protocol family. It owns its
+	// own model selection through the agent profile, so there is no model
+	// env var: do_set_config_option ignores the value the client sends (see
+	// crates/lumos-acp/src/acp/agent.rs:1462). Reading one would surface a
+	// knob the picker silently ignores, the same ZeroClaw anti-pattern
+	// MUL-6511 called out.
+	if e, ok := probe("LUMEN_LUMOS_PATH", "lumos", ""); ok {
+		agents["lumos-acp"] = e
+	}
 	return agents
 }
 

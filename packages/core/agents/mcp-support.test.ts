@@ -16,6 +16,9 @@ describe("providerSupportsMcpConfig", () => {
     // ZeroClaw's ACP server never reads `params.mcpServers` — MCP lives in
     // ZeroClaw's own config-dir, so a value saved here could not be honoured.
     expect(providerSupportsMcpConfig("zeroclaw")).toBe(false);
+    // Lumos's ACP server advertises no mcpCapabilities (it does not yet
+    // connect per-session mcpServers), so the MCP config tab must stay hidden.
+    expect(providerSupportsMcpConfig("lumos-acp")).toBe(false);
     expect(providerSupportsMcpConfig(undefined)).toBe(false);
     expect(providerSupportsMcpConfig(null)).toBe(false);
   });

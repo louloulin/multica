@@ -508,6 +508,34 @@ func TestZeroclawLaunchPrefixFiltersBlockedFlags(t *testing.T) {
 	}
 }
 
+// TestLumosACPLaunchPrefixFiltersBlockedFlags proves the Lumos launch-prefix
+// safety policy mirrors ZeroClaw: allowed positional tokens reach the command
+// ahead of the hardcoded `acp` subcommand, while protocol-breaking flags
+// (--help, -h, --version, tui, gui, server, acp) are stripped.
+func TestLumosACPLaunchPrefixFiltersBlockedFlags(t *testing.T) {
+	t.Parallel()
+
+	// Allowed positional prefix tokens survive and precede `acp`.
+	cfg := Config{LaunchPrefix: []string{"start", "q36"}, Logger: slog.Default()}
+	argv := cfg.commandAt("wrapper").Argv("acp")
+	if idx := prefixIndex(argv, []string{"start", "q36", "acp"}); idx != 0 {
+		t.Fatalf("lumos-acp: allowed prefix must precede the acp subcommand, got %v", argv)
+	}
+
+	// Protocol-breaking flags are removed from the prefix; positional tokens
+	// like the `tui` and `server` subcommands pass through — in custom_args a
+// bare `tui` really is someone re-issuing the backend's own subcommand, but
+// in a launch prefix it is the command's identity, and dropping it would
+// silently rewrite the operator's command.
+	got := filterLaunchPrefix(
+		[]string{"start", "--help", "--version", "tui", "server", "-h", "q36"},
+		"lumos-acp", slog.Default())
+	want := []string{"start", "tui", "server", "q36"}
+	if strings.Join(got, "\x00") != strings.Join(want, "\x00") {
+		t.Fatalf("lumos-acp: blocked flags must be stripped, got %v, want %v", got, want)
+	}
+}
+
 // TestHermesLaunchArgvMatchesBackendAssembly is the root of the second-round
 // Hermes finding: the daemon must resolve the profile from the argv the backend
 // actually builds, not from a concatenation that leaves out `acp`.

@@ -354,6 +354,27 @@ function DimLogo({ className }: { className: string }) {
   return <img src={staticAssetSrc(dimLogo)} alt="" aria-hidden className={className} />;
 }
 
+// Lumos — placeholder mark (three rising rays) until an official brand asset
+// is sourced. currentColor keeps it legible in both themes; swap for the real
+// asset once Lumos ships one, following the DimLogo <img> pattern.
+function LumosLogo({ className }: { className: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      <path d="M12 3v18" />
+      <path d="M5 19l7-12" />
+      <path d="M19 19l-7-12" />
+    </svg>
+  );
+}
+
 // ZeroClaw — no official brand asset has been sourced for this runtime yet
 // (lumen-ai/lumen#1543), so this is a deliberately simple placeholder
 // mark (three claw-scratch strokes) rather than a claimed "official" logo.
@@ -435,6 +456,8 @@ export function ProviderLogo({
       return <DimLogo className={className} />;
     case "zeroclaw":
       return <ZeroClawLogo className={className} />;
+    case "lumos-acp":
+      return <LumosLogo className={className} />;
     default:
       return <Monitor className={className} />;
   }

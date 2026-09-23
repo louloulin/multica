@@ -303,6 +303,14 @@ func ListModels(ctx context.Context, providerType string, runtimeCmd Command) (C
 		// ModelSelectionSupported. Return an empty list rather than spawning
 		// an ACP subprocess that can only ever come back empty.
 		return Catalog{Models: []Model{}}, nil
+	case "lumos-acp":
+		// Lumos's session/new returns modes (the configured agents) plus a
+		// static config option (`reasoning_effort`) but no model catalog, and
+		// do_set_config_option ignores the value the client sends — so the
+		// model is owned by the Lumos agent profile. Spawning an ACP
+		// subprocess for discovery would only ever come back empty; return
+		// an empty catalog and let the UI keep manual entry available.
+		return Catalog{Models: []Model{}}, nil
 	default:
 		return Catalog{}, fmt.Errorf("unknown agent type: %q", providerType)
 	}
@@ -406,7 +414,7 @@ func QualifyModelID(catalog Catalog, model string) (string, bool) {
 // dropdown plus a silently-ignored manual-entry field.
 func ModelSelectionSupported(providerType string) bool {
 	switch providerType {
-	case "qwenpaw", "mcode", "zeroclaw":
+	case "qwenpaw", "mcode", "zeroclaw", "lumos-acp":
 		// QwenPaw's `session/set_model` persists to agent.json at the agent
 		// scope, not the session scope. Calling it would mutate the user's
 		// shared, persistent agent config. Model override is therefore

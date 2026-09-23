@@ -160,6 +160,7 @@ var (
 		"dim":           "dim",
 		"mcode":         "mcode",
 		"zeroclaw":      "zeroclaw",
+		"lumos-acp":     "lumos-acp",
 		"lumen_agent": "lumen_agent",
 		"openclaw":      "openclaw",
 		"opencode":      "opencode",

@@ -412,6 +412,12 @@ func skillsDirPath(workDir, provider string) string {
 	case "mcode":
 		// MiniMax Code discovers project-level skills from .minimax/skills/.
 		return filepath.Join(workDir, ".minimax", "skills")
+	case "lumos-acp":
+		// Lumos discovers project-level skills from .lumos/skills/ relative to
+		// the task workdir (crates/lumos-core/src/skills/discovery.rs —
+		// managed ~/.lumos/skills is on the user side, see
+		// localSkillRootsForProvider).
+		return filepath.Join(workDir, ".lumos", "skills")
 	case "traecli":
 		// Official TRAE CLI discovers project-level skills from .traecli/skills/
 		// in the workdir (global skills live in ~/.traecli/skills). See

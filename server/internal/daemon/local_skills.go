@@ -244,6 +244,16 @@ func localSkillRootsForProvider(provider string) ([]localSkillRoot, bool, error)
 			// directly below it. Project skills are injected separately under
 			// <workDir>/.minimax/skills.
 			providerRoot = filepath.Join(home, ".minimax", "skills")
+		case "lumos-acp":
+			// Lumos's data directory defaults to ~/.lumos and holds user/managed
+			// skills under <root>/skills (crates/lumos-base/src/paths.rs). The
+			// LUMOS_DATA_DIR env var replaces ~/.lumos for a relocated install,
+			// and the skills directory follows the relocated root.
+			lumosRoot := strings.TrimSpace(os.Getenv("LUMOS_DATA_DIR"))
+			if lumosRoot == "" {
+				lumosRoot = filepath.Join(home, ".lumos")
+			}
+			providerRoot = filepath.Join(lumosRoot, "skills")
 		default:
 			return nil, false, nil
 		}

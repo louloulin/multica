@@ -121,6 +121,13 @@ describe("runtimeDisplayLabel", () => {
         provider: "zeroclaw",
       }),
     ).toBe("box (ZeroClaw)");
+    expect(
+      runtimeDisplayLabel({
+        name: "Lumos (ACP) (host)",
+        custom_name: "box",
+        provider: "lumos-acp",
+      }),
+    ).toBe("box (Lumos (ACP))");
   });
 
   it("first-letter-capitalizes non-overridden slugs, matching the daemon", () => {

@@ -1,7 +1,7 @@
 // Package agent provides a unified interface for executing prompts via
 // coding agents (Claude Code, CodeBuddy, Codex, Copilot, OpenCode, DevEco Code,
 // OpenClaw, Hermes, Pi, Oh-My-Pi, Cursor, Kimi, Reasonix, Kiro, Antigravity, Qoder,
-// Trae, Grok, Qwen Code, QwenPaw, MiniMax Code). It
+// Trae, Grok, Qwen Code, QwenPaw, MiniMax Code, Lumos ACP). It
 // mirrors the happy-cli AgentBackend pattern, translated to idiomatic Go.
 package agent
 
@@ -337,9 +337,10 @@ type Config struct {
 // add deveco, migration 179 to add grok, migration 202 to add qwen,
 // migration 242 to add qoderclicn, migration 253 to add qwenpaw,
 // migration 254 to add reasonix, migration 313 to add dsh, migration 342 to
-// add mcode, migration 370 to add dim, migration 403 to add zeroclaw, and
-// migration 441 to add codearts): a custom runtime profile may
-// only be based on a backend Lumen officially supports.
+// add mcode, migration 370 to add dim, migration 403 to add zeroclaw,
+// migration 441 to add codearts, and migration 536 to add lumos-acp): a
+// custom runtime profile may only be based on a backend Lumen officially
+// supports.
 // qoder and qoderclicn share the same ACP backend; keeping both provider keys
 // lets the daemon auto-detect and register the international and China-region
 // binaries independently. traecli (Trae) has a New backend, launch
@@ -373,6 +374,7 @@ var SupportedTypes = []string{
 	"mcode",
 	"dim",
 	"zeroclaw",
+	"lumos-acp",
 }
 
 // IsSupportedType reports whether agentType is in the SupportedTypes whitelist.
@@ -478,6 +480,12 @@ func New(agentType string, cfg Config) (Backend, error) {
 		return &mcodeBackend{cfg: cfg}, nil
 	case "zeroclaw":
 		return &zeroclawBackend{cfg: cfg}, nil
+	case "lumos-acp":
+		// First-party ACP protocol family added by migration 536 so the
+		// runtime_profile.protocol_family CHECK accepts `lumos-acp` for new
+		// profiles. The backend reuses the shared hermesClient ACP
+		// transport, like grok/traecli/kimi/kiro/qoder/zeroclaw/dim/mcode.
+		return &lumosBackend{cfg: cfg}, nil
 	default:
 		return nil, fmt.Errorf("unknown agent type: %q (supported: %s)", agentType, strings.Join(SupportedTypes, ", "))
 	}
@@ -525,6 +533,7 @@ var launchHeaders = map[string]string{
 	"dim":         "dim acp",
 	"mcode":       "mcode acp",
 	"zeroclaw":    "zeroclaw acp",
+	"lumos-acp": "lumos acp",
 }
 
 // LaunchHeader returns the user-visible launch skeleton for agentType, or an
